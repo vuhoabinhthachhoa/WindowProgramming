@@ -153,4 +153,11 @@
     <value>Customer</value>
     <comment>Page title for CustomerPage</comment>
   </data>
+  <data name="ShellMenuItem_Views_DataGrid.Text" xml:space="preserve">
+    <value>DataGrid</value>
+  </data>
+  <data name="DataGrid_Title.Text" xml:space="preserve">
+    <value>DataGrid</value>
+    <comment>Page title for DataGridPage</comment>
+  </data>
 </root>
