@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "lnzCdrq15MI=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\quyma\\source\\repos\\.Windows-Programming\\WindowProgramming\\src\\winui\\Project.Core\\Project.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\quyma\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
