@@ -133,17 +133,17 @@
     <comment>Page title for SettingsPage</comment>
   </data>
   <data name="ShellMenuItem_Views_ProductCategory.Text" xml:space="preserve">
-    <value>ProductCategory</value>
+    <value>Danh mục</value>
   </data>
   <data name="ProductCategory_Title.Text" xml:space="preserve">
-    <value>ProductCategory</value>
+    <value>Hàng hóa</value>
     <comment>Page title for ProductCategoryPage</comment>
   </data>
   <data name="ShellMenuItem_Views_ProductPricing.Text" xml:space="preserve">
-    <value>ProductPricing</value>
+    <value>Thiết lập giá</value>
   </data>
   <data name="ProductPricing_Title.Text" xml:space="preserve">
-    <value>ProductPricing</value>
+    <value>Bảng giá chung</value>
     <comment>Page title for ProductPricingPage</comment>
   </data>
   <data name="ShellMenuItem_Views_Customer.Text" xml:space="preserve">
