@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
@@ -11,15 +12,209 @@
             <RowDefinition Height="48" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="400" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
         <TextBlock
-            Grid.Row="0"
-            x:Uid="Customer_Title"
-            Style="{StaticResource PageTitleStyle}" />
+        Grid.Row="0"
+        x:Uid="Customer_Title"
+        Style="{StaticResource PageTitleStyle}" />
+        <TextBox Grid.Row="0" Grid.Column="1" PlaceholderText="Theo mã, tên, điện thoại" Margin="10" />
+        <StackPanel Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Content="Thêm khách hàng"></Button>
+            <Button Content="Import"></Button>
+            <Button Content="Xuất file"></Button>
+        </StackPanel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto"  Grid.Column="0" Grid.Row="1">
+            <Grid>
+                <StackPanel>
+                    <Expander x:Name="Expander1" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Nhóm khách hàng" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <TextBox Width="190" PlaceholderText="Tất cả các nhóm"/>
+                        </Expander.Content>
+                    </Expander>
 
-        <Grid Grid.Row="1">
-            
-        </Grid>
-        
+                    <Expander x:Name="Expander2" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Ngày tạo" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <RadioButtons>
+                                <TextBox PlaceholderText="Toàn thời gian"/>
+                                <TextBox PlaceholderText="Lựa chọn khác"/>
+                            </RadioButtons>
+                        </Expander.Content>
+                    </Expander>
+
+                    <Expander x:Name="Expander3" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Người tạo" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <TextBox PlaceholderText="Chọn người tạo"/>
+                        </Expander.Content>
+                    </Expander>
+
+                    <Expander x:Name="Expander4" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Sinh nhật" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <RadioButtons>
+                                <TextBox PlaceholderText="Toàn thời gian"/>
+                                <TextBox PlaceholderText="Lựa chọn khác"/>
+                            </RadioButtons>
+                        </Expander.Content>
+                    </Expander>
+
+
+                    <Expander x:Name="Expander5" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Ngày giao dịch cuối" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <RadioButtons>
+                                <TextBox PlaceholderText="Toàn thời gian"/>
+                                <TextBox PlaceholderText="Lựa chọn khác"/>
+                            </RadioButtons>
+                        </Expander.Content>
+                    </Expander>
+
+
+                    <Expander x:Name="Expander61" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Tổng bán" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Từ" Grid.Column ="0" Grid.Row="0" Width="Auto"/>
+                                <TextBox Text="0" Grid.Column="1" Grid.Row="0" Width="150"/>
+
+                                <TextBlock Text="Tới" Grid.Column ="0" Grid.Row="1" Width="Auto"/>
+                                <TextBox PlaceholderText="Giá trị" Grid.Column="1" Grid.Row="1" Width="150"/>
+
+
+                                <RadioButtons Grid.Row="2" Grid.ColumnSpan="1">
+                                    <TextBox PlaceholderText="Toàn thời gian"/>
+                                    <TextBox PlaceholderText="Lựa chọn khác"/>
+                                </RadioButtons>
+                            </Grid>
+                        </Expander.Content>
+                    </Expander>
+
+                    <Expander x:Name="Expander6" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Nợ hiện tại" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Từ" Grid.Column ="0" Grid.Row="0" Width="Auto"/>
+                                <TextBox PlaceholderText="Giá trị" Grid.Column="1" Grid.Row="0" Width="150"/>
+
+                                <TextBlock Text="Tới" Grid.Column ="0" Grid.Row="1" Width="Auto"/>
+                                <TextBox PlaceholderText="Giá trị" Grid.Column="1" Grid.Row="1" Width="150"/>
+                            </Grid>
+                        </Expander.Content>
+                    </Expander>
+
+                    <Expander x:Name="Expander7" Header="Loại khách" VerticalAlignment="Top" Width="200">
+                        <Expander.Content>
+                            <RadioButtons>
+                                <RadioButton Content="Tất cả " />
+                                <RadioButton Content="Cá nhân" />
+                                <RadioButton Content="Công ty" />
+                            </RadioButtons>
+                        </Expander.Content>
+                    </Expander>
+
+
+                    <Expander x:Name="Expander8" Header="Giới tính" VerticalAlignment="Top" Width="200">
+                        <Expander.Content>
+                            <RadioButtons>
+                                <RadioButton Content="Tất cả " />
+                                <RadioButton Content="Nam" />
+                                <RadioButton Content="Nữ" />
+                            </RadioButtons>
+                        </Expander.Content>
+                    </Expander>
+
+                    <Expander x:Name="Expander9" Header="Khu vực giao hàng" VerticalAlignment="Top" Width="200">
+                        <Expander.Content>
+                            <TextBox PlaceholderText="Chọn Tỉnh/TP - Quận/Huyện" Grid.Column="1" Grid.Row="1" Width="150"/>
+                        </Expander.Content>
+                    </Expander>
+
+                    <Expander x:Name="Expander10" Header="Trạng thái" VerticalAlignment="Top" Width="200">
+                        <Expander.Content>
+                            <RadioButtons>
+                                <RadioButton Content="Tất cả " />
+                                <RadioButton Content="Đang hoạt động" />
+                                <RadioButton Content="Ngừng hoạt động" />
+                            </RadioButtons>
+                        </Expander.Content>
+                    </Expander>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+        <!--<controls:DataGrid
+Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+AutoGenerateColumns="False"
+GridLinesVisibility="Horizontal"
+ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}">-->
+        <controls:DataGrid
+Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+AutoGenerateColumns="False"
+GridLinesVisibility="Horizontal">
+            <controls:DataGrid.Resources>
+                <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
+            </controls:DataGrid.Resources>
+            <controls:DataGrid.Columns>
+                <!-- TODO: Replace column definitions to match real data. Consider adding Header values to Resources.resw. -->
+                <controls:DataGridTextColumn Binding="{Binding OrderID}" Header="OrderID" />
+                <controls:DataGridTextColumn Binding="{Binding OrderDate}" Header="OrderDate" />
+                <controls:DataGridTextColumn Binding="{Binding Company}" Header="Company" />
+                <controls:DataGridTextColumn Binding="{Binding ShipTo}" Header="ShipTo" />
+                <controls:DataGridTextColumn Binding="{Binding OrderTotal}" Header="OrderTotal" />
+                <controls:DataGridTextColumn Binding="{Binding Status}" Header="Status" />
+                <controls:DataGridTemplateColumn Header="Symbol">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <FontIcon
+                    HorizontalAlignment="Left"
+                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                    Glyph="{Binding Symbol}"
+                    AutomationProperties.Name="{Binding SymbolName}" />
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+            </controls:DataGrid.Columns>
+        </controls:DataGrid>
     </Grid>
 </Page>
