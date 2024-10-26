@@ -20,6 +20,11 @@ public partial class ShellViewModel : ObservableRecipient
         get;
     }
 
+    public ICommand MenuViewsEmployeeCommand
+    {
+        get;
+    }
+
     public ICommand MenuSettingsCommand
     {
         get;
@@ -66,6 +71,7 @@ public partial class ShellViewModel : ObservableRecipient
         NavigationService.Navigated += OnNavigated;
 
         MenuFileExitCommand = new RelayCommand(OnMenuFileExit);
+        MenuViewsEmployeeCommand = new RelayCommand(OnMenuViewsEmployee);
         MenuSettingsCommand = new RelayCommand(OnMenuSettings);
         MenuViewsAccountCommand = new RelayCommand(OnMenuViewsAccount);
         MenuViewsSaleCommand = new RelayCommand(OnMenuViewsSale);
@@ -78,6 +84,8 @@ public partial class ShellViewModel : ObservableRecipient
     private void OnNavigated(object sender, NavigationEventArgs e) => IsBackEnabled = NavigationService.CanGoBack;
 
     private void OnMenuFileExit() => Application.Current.Exit();
+
+    private void OnMenuViewsEmployee() => NavigationService.NavigateTo(typeof(EmployeeViewModel).FullName!);
 
     private void OnMenuSettings() => NavigationService.NavigateTo(typeof(SettingsViewModel).FullName!);
 
