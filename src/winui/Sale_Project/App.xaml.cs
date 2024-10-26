@@ -68,6 +68,7 @@ public partial class App : Application
 
             // Core Services
             services.AddSingleton<IFileService, FileService>();
+            services.AddSingleton<ICustomerDataService, CustomerDataService>();
 
             // Views and ViewModels
             services.AddTransient<SettingsViewModel>();
