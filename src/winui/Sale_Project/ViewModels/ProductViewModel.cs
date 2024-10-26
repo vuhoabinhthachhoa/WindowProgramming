@@ -6,9 +6,28 @@ using Sale_Project.Core.Models;
 
 namespace Sale_Project.ViewModels;
 
-public partial class ProductViewModel : ObservableRecipient
+public partial class ProductViewModel : ObservableRecipient, INavigationAware
 {
-    public ProductViewModel()
+    private readonly IProductDataService _productDataService;
+
+    public ObservableCollection<Product> Source { get; } = new ObservableCollection<Product>();
+
+    public ProductViewModel(IProductDataService productDataService)
+    {
+        _productDataService = productDataService;
+    }
+
+    public async void OnNavigatedTo(object parameter)
+    {
+        Source.Clear();
+        var data = await _productDataService.LoadDataAsync();
+        foreach (var item in data)
+        {
+            Source.Add(item);
+        }
+    }
+
+    public void OnNavigatedFrom()
     {
     }
 }
