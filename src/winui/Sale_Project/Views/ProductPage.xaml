@@ -25,7 +25,8 @@
                         SuggestionChosen="AutoSuggestBox_SuggestionChosen"
                         Grid.Row="0" Grid.Column="1" PlaceholderText="Search"  Margin="10" />
         <StackPanel Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Content="Thêm hàng hóa"></Button>
+            <Button Content="Thêm hàng hóa"
+                    Click="ShowAddProductDialog_Click"></Button>
             <Button Content="Import"></Button>
             <Button Content="Xuất file"></Button>
         </StackPanel>

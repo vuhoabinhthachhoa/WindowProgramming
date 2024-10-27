@@ -88,10 +88,12 @@
 //}
 
 
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Sale_Project.Core.Contracts.Services;
 using Sale_Project.Core.Models;
 using Sale_Project.ViewModels;
+using Sale_Project.Views;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -186,5 +188,22 @@ public sealed partial class ProductPage : Page
                 ViewModel.Source.Add(product);
             }
         }
+    }
+
+    private async void ShowAddProductDialog_Click(object sender, RoutedEventArgs e)
+    {
+        ContentDialog dialog = new ContentDialog();
+
+        // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
+        dialog.XamlRoot = this.XamlRoot;
+        dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+        dialog.Title = "Thêm hàng";
+        dialog.PrimaryButtonText = "Lưu";
+        //dialog.SecondaryButtonText = "Don't Save";
+        dialog.CloseButtonText = "Bỏ qua";
+        dialog.DefaultButton = ContentDialogButton.Primary;
+        dialog.Content = new AddProductDialog();
+
+        var result = await dialog.ShowAsync();
     }
 }
