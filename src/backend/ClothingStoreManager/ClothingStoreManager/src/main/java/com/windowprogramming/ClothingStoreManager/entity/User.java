@@ -7,7 +7,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "users")
@@ -23,21 +25,47 @@ public class User implements UserDetails {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String id;
+    Long id;
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     String username;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     String password;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_name")
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "employee_id")
+    Employee employee;
+
+    @Column(name = "phonenumber")
+    String phoneNumber;
+
+    @Column(name = "email")
+    String email;
+
+    @Column(name = "date_of_birth")
+    @Temporal(TemporalType.DATE)
+    LocalDate dateOfBirth;
+
+    @Column(name = "address")
+    String address;
+
+    @Column(name = "area")
+    String area;
+
+    @Column(name = "ward")
+    String ward;
+
+    @Column(name = "notes")
+    String notes;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_name", nullable = false)
     Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.getName()));
+        return List.of(new SimpleGrantedAuthority(role.getName().toString()));
     }
 
     @Override
