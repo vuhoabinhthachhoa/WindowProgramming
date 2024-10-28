@@ -1,0 +1,44 @@
+[
+  {
+    "Id": "1",
+    "Code": "SP001",
+    "Name": "Product 1",
+    "Category_id": "1",
+    "Import_price": 1000,
+    "Selling_price": 2000,
+    "Branch_id": "1",
+    "Inventory_quantity": 10,
+    "Images": "Image 1",
+    "Business_status": "Active",
+    "Size": "M",
+    "Discount_percent": 0.1
+  },
+  {
+    "Id": "2",
+    "Code": "SP002",
+    "Name": "Product 2",
+    "Category_id": "2",
+    "Import_price": 1000,
+    "Selling_price": 2000,
+    "Branch_id": "2",
+    "Inventory_quantity": 10,
+    "Images": "Image 2",
+    "Business_status": "Active",
+    "Size": "M",
+    "Discount_percent": 0.1
+  },
+  {
+    "Id": "3",
+    "Code": "SP003",
+    "Name": "Product 3",
+    "Category_id": "3",
+    "Import_price": 1000,
+    "Selling_price": 2000,
+    "Branch_id": "3",
+    "Inventory_quantity": 10,
+    "Images": "Image 3",
+    "Business_status": "Active",
+    "Size": "M",
+    "Discount_percent": 0.1
+  }
+]

@@ -10,7 +10,9 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <!--<StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        --><!-- Content body --><!--
+        -->
+    <!-- Content body -->
+    <!--
         <TextBlock Text="Lorem ipsum dolor sit amet, adipisicing elit." TextWrapping="Wrap" />
         <CheckBox Content="Upload your content to the cloud."/>
     </StackPanel>-->
@@ -28,34 +30,43 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+
         </Grid.RowDefinitions>
 
         <TextBlock Text="Mã hàng" Grid.Column="0" Grid.Row="0"/>
-        <TextBox PlaceholderText="Mã hàng tự động" Grid.Column="1" Grid.Row="0"/>
+        <TextBox x:Name="Id_Input"  PlaceholderText="Mã hàng tự động" Grid.Column="1" Grid.Row="0"/>
 
         <TextBlock Text="Giá vốn" Grid.Column="2" Grid.Row="0"/>
-        <TextBlock Text="0" Grid.Column="3" Grid.Row="0"/>
+        <TextBox Text="0" x:Name="Import_price_Input" Grid.Column="3" Grid.Row="0"/>
 
         <TextBlock Text="Mã vạch" Grid.Column="0" Grid.Row="1"/>
-        <TextBox Grid.Column="1" Grid.Row="1"/>
+        <TextBox x:Name="Code_Input" Grid.Column="1" Grid.Row="1"/>
 
         <TextBlock Text="Giá bán" Grid.Column="2" Grid.Row="1"/>
-        <TextBox Text="0" Grid.Column="3" Grid.Row="1"/>
+        <TextBox x:Name="Selling_price_Input" Text="0" Grid.Column="3" Grid.Row="1"/>
 
         <TextBlock Text="Tên hàng" Grid.Column="0" Grid.Row="2"/>
-        <TextBox Grid.Column="1" Grid.Row="2"/>
+        <TextBox x:Name="Name_Input" Grid.Column="1" Grid.Row="2"/>
 
         <TextBlock Text="Tồn kho" Grid.Column="2" Grid.Row="2"/>
-        <TextBox Text="0" Grid.Column="3" Grid.Row="2"/>
+        <TextBox x:Name="Inventory_quantity_Input" Text="0" Grid.Column="3" Grid.Row="2"/>
 
         <TextBlock Text="Nhóm hàng" Grid.Column="0" Grid.Row="3"/>
-        <ComboBox Grid.Column="1" Grid.Row="3"/>
+        <TextBox x:Name="Category_id_Input" Grid.Column="1" Grid.Row="3"/>
 
-        <TextBlock Text="Trọng lượng" Grid.Column="2" Grid.Row="3"/>
-        <TextBox Text="0" Grid.Column="3" Grid.Row="3"/>
+        <TextBlock Text="Branch id" Grid.Column="2" Grid.Row="3"/>
+        <TextBox x:Name="Branch_id_Input"  Text="0" Grid.Column="3" Grid.Row="3"/>
 
-        <TextBlock Text="Vị trí" Grid.Column="0" Grid.Row="4"/>
-        <ComboBox Grid.Column="1" Grid.Row="4"/>
+        <TextBlock Text="Business status" Grid.Column="0" Grid.Row="4"/>
+        <ComboBox x:Name="Business_status_Input" Grid.Column="1" Grid.Row="4">
+            <x:String>Active</x:String>
+        </ComboBox>
+
+        <TextBlock Text="Size" Grid.Column="2" Grid.Row="4"/>
+        <TextBox x:Name="Size_Input" Grid.Column="3" Grid.Row="4"/>
+
+        <TextBlock x:Name="Warning" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3"/>
     </Grid>
 
 </Page>

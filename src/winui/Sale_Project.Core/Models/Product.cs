@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Sale_Project.Core.Models;
-public class Product
+public class Product : INotifyPropertyChanged 
 {
     public string Id
     {
@@ -51,7 +52,7 @@ public class Product
     public string Images
     {
         get; set;
-    }
+    } = "";
 
     public string Business_status
     {
@@ -66,5 +67,7 @@ public class Product
     public double Discount_percent
     {
         get; set;
-    }
+    } = 0;
+
+    public event PropertyChangedEventHandler PropertyChanged;
 }

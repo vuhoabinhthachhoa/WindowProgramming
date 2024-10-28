@@ -1,8 +1,12 @@
-﻿using Sale_Project.Core.Contracts.Services;
+﻿using System.IO;
+using System.Reflection;
+using Sale_Project.Core.Contracts.Services;
 using Sale_Project.Core.Models;
+using System.Text.Json;
+using System.ComponentModel;
 
 namespace Sale_Project.Core.Services;
-public class ProductDataService : IProductDataService
+public class ProductDataService : IProductDataService, INotifyPropertyChanged
 {
     private List<Product> _allProducts;
 
@@ -10,62 +14,17 @@ public class ProductDataService : IProductDataService
     {
     }
 
-    private static IEnumerable<Product> AllProducts()
+    public IEnumerable<Product> AllProducts()
     {
-        return new List<Product>()
-        {
-            new Product()
-            {
-                // create new product
-                Id = "1",
-                Code = "SP001",
-                Name = "Product 1",
-                Category_id = "1",
-                Import_price = 1000,
-                Selling_price = 2000,
-                Branch_id = "1",
-                Inventory_quantity = 10,
-                Images = "Image 1",
-                Business_status = "Active",
-                Size = "M",
-                Discount_percent = 0.1
-            },
+        //string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Sale_Project.Core\MockData\products.json");
+        string path = Path.Combine(
+        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+        @"..\..\..\..\..\..\MockData\products.json");
 
-            new Product()
-            {
-                // create new product
-                Id = "2",
-                Code = "SP002",
-                Name = "Product 2",
-                Category_id = "2",
-                Import_price = 2000,
-                Selling_price = 3000,
-                Branch_id = "2",
-                Inventory_quantity = 20,
-                Images = "Image 2",
-                Business_status = "Active",
-                Size = "L",
-                Discount_percent = 0.2
-            },
-
-            new Product()
-            {
-                Id = "3",
-                Code = "SP003",
-                Name = "Product 3",
-                Category_id = "3",
-                Import_price = 3000,
-                Selling_price = 4000,
-                Branch_id = "3",
-                Inventory_quantity = 30,
-                Images = "Image 3",
-                Business_status = "Active",
-                Size = "S",
-                Discount_percent = 0.3
-
-            }
-
-        };
+        var result = new List<Product>();
+        string json = System.IO.File.ReadAllText(path);
+        result = JsonSerializer.Deserialize<List<Product>>(json);
+        return result;
     }
 
     public async Task<IEnumerable<Product>> LoadDataAsync()
@@ -75,4 +34,6 @@ public class ProductDataService : IProductDataService
         await Task.CompletedTask;
         return _allProducts;
     }
+
+    public event PropertyChangedEventHandler PropertyChanged;
 }
