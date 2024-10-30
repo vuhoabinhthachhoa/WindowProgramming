@@ -60,35 +60,5 @@ namespace Sale_Project.Views
                 Size = Size_Input.Text
             };
         }
-        // public async void AddProductDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        // {
-        //     string path = Path.Combine(
-        //Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-        //@"..\..\..\..\..\..\MockData\products.json");
-
-
-        //     var json = File.ReadAllText(path);
-        //     var list = JsonConvert.DeserializeObject<List<Product>>(json);
-        //     list.Add(new Product()
-        //     {
-        //         Id = "999",
-        //         Code = "SP099",
-        //         Name = "Product 999",
-        //         Category_id = "999",
-        //         Import_price = 3000,
-        //         Selling_price = 4000,
-        //         Branch_id = "999",
-        //         Inventory_quantity = 30,
-        //         Images = "Image 999",
-        //         Business_status = "Active",
-        //         Size = "L",
-        //         Discount_percent = 0.3
-        //     });
-
-        //     var convertedJson = JsonConvert.SerializeObject(list, Formatting.Indented);
-        //     File.WriteAllText(path, convertedJson);
-
-
-        // }
     }
 }
