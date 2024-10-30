@@ -21,7 +21,7 @@ public class Customer
     public string Email
     {
         get; set;
-    }
+    } = "";
 
     public string Phonenumber
     {
@@ -31,5 +31,5 @@ public class Customer
     public string Address
     {
         get; set;
-    }
+    } = "";
 }

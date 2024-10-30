@@ -1,8 +1,12 @@
-﻿using Sale_Project.Core.Contracts.Services;
+﻿using System.IO;
+using System.Reflection;
+using Sale_Project.Core.Contracts.Services;
 using Sale_Project.Core.Models;
+using System.Text.Json;
+using System.ComponentModel;
 
 namespace Sale_Project.Core.Services;
-public class CustomerDataService : ICustomerDataService
+public class CustomerDataService : ICustomerDataService, INotifyPropertyChanged
 {
     private List<Customer> _allCustomers;
 
@@ -10,36 +14,17 @@ public class CustomerDataService : ICustomerDataService
     {
     }
 
-    private static IEnumerable<Customer> AllCustomers()
+    public IEnumerable<Customer> AllCustomers()
     {
-        return new List<Customer>()
-        {
-            //add sample customer data 
-            new Customer()
-            {
-                Id = "1",
-                Name = "John Doe",
-                Email = "johndoe@mail.com",
-                Phonenumber = "1234567890",
-                Address = "1234 Main St",
-            },
-            new Customer()
-            {
-                Id = "2",
-                Name = "Jane Doe",
-                Email = "janedoe@mail.com",
-                Phonenumber = "0987654321",
-                Address = "5678 Elm"
-            },
-            new Customer()
-            {
-                Id = "3",
-                Name = "John Smith",
-                Email = "johnsmith@mail.com",
-                Phonenumber = "1234567890",
-                Address = "1234 Main St",
-            },
-        };
+        //string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Sale_Project.Core\MockData\Customers.json");
+        string path = Path.Combine(
+        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+        @"..\..\..\..\..\..\MockData\customers.json");
+
+        var result = new List<Customer>();
+        string json = System.IO.File.ReadAllText(path);
+        result = JsonSerializer.Deserialize<List<Customer>>(json);
+        return result;
     }
 
     public async Task<IEnumerable<Customer>> LoadDataAsync()
@@ -49,4 +34,6 @@ public class CustomerDataService : ICustomerDataService
         await Task.CompletedTask;
         return _allCustomers;
     }
+
+    public event PropertyChangedEventHandler PropertyChanged;
 }
