@@ -28,7 +28,6 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware, I
         }
     }
 
-     
 
     public void OnNavigatedFrom()
     {
@@ -36,3 +35,5 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware, I
 
     public event PropertyChangedEventHandler PropertyChanged;
 }
+
+

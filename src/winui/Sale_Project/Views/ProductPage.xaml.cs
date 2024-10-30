@@ -121,6 +121,24 @@ public sealed partial class ProductPage : Page
         InitializeAsync();
     }
 
+    private void UpdateProduct()
+    {
+        var path = Path.Combine(
+            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+            @"..\..\..\..\..\..\MockData\products.json");
+
+        var json = File.ReadAllText(path);
+
+        ViewModel.Source.Clear();
+        json = File.ReadAllText(path);
+        Products = System.Text.Json.JsonSerializer.Deserialize<List<Product>>(json);
+
+        foreach (var item in Products)
+        {
+            ViewModel.Source.Add(item);
+        }
+    }
+
     private async void InitializeAsync()
     {
         await LoadProductsAsync();
@@ -264,44 +282,49 @@ public sealed partial class ProductPage : Page
 
         list.Add(product); // Add the product from the dialog
 
+        
+
         var convertedJson = JsonConvert.SerializeObject(list, Formatting.Indented);
         File.WriteAllText(path, convertedJson);
 
         // Update ViewModel Source from the updated JSON file
-        ViewModel.Source.Clear();
-        json = File.ReadAllText(path);
-        Products = System.Text.Json.JsonSerializer.Deserialize<List<Product>>(json);
+        //InitializeAsync();
+        //ViewModel.Source.Clear();
+        //json = File.ReadAllText(path);
+        //Products = System.Text.Json.JsonSerializer.Deserialize<List<Product>>(json);
 
-        foreach (var item in Products)
-        {
-            ViewModel.Source.Add(item);
-        }
+        //foreach (var item in Products)
+        //{
+        //    ViewModel.Source.Add(item);
+        //}
+
+        UpdateProduct();
     }
     
 
-    private async void DeleteProduct_Click(object sender, RoutedEventArgs e)
+private async void DeleteProduct_Click(object sender, RoutedEventArgs e)
     {
-        var product = itemsDataGrid.SelectedIndex;
+        var item= itemsDataGrid.SelectedItem as Product;
+    
+
+        //var product = Products.FirstOrDefault(p => p.Id == item.Id);
+        //if (product == null) return;
+
         var path = Path.Combine(
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             @"..\..\..\..\..\..\MockData\products.json");
 
         var json = File.ReadAllText(path);
         var list = JsonConvert.DeserializeObject<List<Product>>(json);
-        list.RemoveAt(product);
+
+        var product = list.Single(p => p.Id == item.Id);
+        list.Remove(product);
 
         var convertedJson = JsonConvert.SerializeObject(list, Formatting.Indented);
         File.WriteAllText(path, convertedJson);
 
         // Update ViewModel Source from the updated JSON file
-        ViewModel.Source.Clear();
-        json = File.ReadAllText(path);
-        Products = System.Text.Json.JsonSerializer.Deserialize<List<Product>>(json);
-
-        foreach (var item in Products)
-        {
-            ViewModel.Source.Add(item);
-        }
+        UpdateProduct();
     }
 
 
