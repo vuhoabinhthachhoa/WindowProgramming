@@ -25,8 +25,11 @@
                         SuggestionChosen="AutoSuggestBox_SuggestionChosen" 
                         Grid.Row="0" Grid.Column="1" PlaceholderText="Tìm theo mã, tên nhân viên"  Margin="10" />
         <StackPanel Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
-			<Button Content="Thêm nhân viên"></Button>
-			<Button Content="Import"></Button>
+            <Button Content="Thêm nhân viên"
+                    Click="ShowAddEmployeeDialog_Click"></Button>
+            <Button Content="Xóa nhân viên"
+                    Click="DeleteEmployee_Click"></Button>
+            <Button Content="Import"></Button>
 			<Button Content="Xuất file"></Button>
 		</StackPanel>
 		<ScrollViewer VerticalScrollBarVisibility="Auto"  Grid.Column="0" Grid.Row="1">
@@ -66,7 +69,7 @@
 		</ScrollViewer>
 		<controls:DataGrid
 Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-AutoGenerateColumns="False"
+AutoGenerateColumns="False" Name="itemsDataGrid"
 GridLinesVisibility="Horizontal"
 ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}">
 		<!--<controls:DataGrid

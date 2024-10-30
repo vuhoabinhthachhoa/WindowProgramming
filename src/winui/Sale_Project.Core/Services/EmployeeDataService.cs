@@ -1,8 +1,12 @@
-﻿using Sale_Project.Core.Contracts.Services;
+﻿using System.IO;
+using System.Reflection;
+using Sale_Project.Core.Contracts.Services;
 using Sale_Project.Core.Models;
+using System.Text.Json;
+using System.ComponentModel;
 
 namespace Sale_Project.Core.Services;
-public class EmployeeDataService : IEmployeeDataService
+public class EmployeeDataService : IEmployeeDataService, INotifyPropertyChanged
 {
     private List<Employee> _allEmployees;
 
@@ -10,56 +14,17 @@ public class EmployeeDataService : IEmployeeDataService
     {
     }
 
-    private static IEnumerable<Employee> AllEmployees()
+    public IEnumerable<Employee> AllEmployees()
     {
-        return new List<Employee>()
-        {
-            //add sample employee data
-            new Employee()
-            {
-                Id = "1",
-                Name = "Nguyen Van A",
-                Phonenumber = "0123456789",
-                Citizen_id = "123456789",
-                Job_title = "Developer",
-                Salary = 1000,
-                Email = "nguyenvana@mail.com",
-                Date_of_birth = "01/01/1990",
-                Address = "123 Nguyen",
-                Area = "Quan 1",
-                Ward = "Phuong 1"
-            },
-            new Employee()
-            {
-                Id = "2",
-                Name = "Nguyen Van B",
-                Phonenumber = "0123456789",
-                Citizen_id = "123456789",
-                Job_title = "Developer",
-                Salary = 1000,
-                Email = "nguyenvanb@mail.com",
-                Date_of_birth = "01/01/1990",
-                Address = "123 Nguyen",
-                Area = "Quan 1",
-                Ward = "Phuong 1"
-                },
+        //string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Sale_Project.Core\MockData\Employees.json");
+        string path = Path.Combine(
+        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+        @"..\..\..\..\..\..\MockData\employees.json");
 
-            new Employee()
-            {
-                Id = "3",
-                Name = "Nguyen Van C",
-                Phonenumber = "0123456789",
-                Citizen_id = "123456789",
-                Job_title = "Developer",
-                Salary = 1000,
-                Email = "nguyenvanc@mail.com",
-                Date_of_birth = "01/01/1990",
-                Address = "123 Nguyen",
-                Area = "Quan 1",
-                Ward = "Phuong 1"
-            }
-
-        };
+        var result = new List<Employee>();
+        var json = System.IO.File.ReadAllText(path);
+        result = JsonSerializer.Deserialize<List<Employee>>(json);
+        return result;
     }
 
     public async Task<IEnumerable<Employee>> LoadDataAsync()
@@ -69,4 +34,6 @@ public class EmployeeDataService : IEmployeeDataService
         await Task.CompletedTask;
         return _allEmployees;
     }
+
+    public event PropertyChangedEventHandler PropertyChanged;
 }

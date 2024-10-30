@@ -1,0 +1,41 @@
+[
+  {
+    "Id": "1",
+    "Name": "John Doe",
+    "Phonenumber": "1234567890",
+    "Citizen_id": "1234567890",
+    "Job_title": "Software Engineer",
+    "Salary": 100000,
+    "Email": "",
+    "Date_of_birth": "1990-01-01",
+    "Address": "123 Main St",
+    "Area": "Bangkok",
+    "Ward": "Bangkok"
+  },
+  {
+    "Id": "2",
+    "Name": "Jane Doe",
+    "Phonenumber": "1234567890",
+    "Citizen_id": "1234567890",
+    "Job_title": "Software Engineer",
+    "Salary": 100000,
+    "Email": "",
+    "Date_of_birth": "1990-01-01",
+    "Address": "123 Main St",
+    "Area": "Bangkok",
+    "Ward": "Bangkok"
+  },
+  {
+    "Id": "3",
+    "Name": "John Smith",
+    "Phonenumber": "1234567890",
+    "Citizen_id": "1234567890",
+    "Job_title": "Software Engineer",
+    "Salary": 100000,
+    "Email": "",
+    "Date_of_birth": "1990-01-01",
+    "Address": "123 Main St",
+    "Area": "Bangkok",
+    "Ward": "Bangkok"
+  }
+]
