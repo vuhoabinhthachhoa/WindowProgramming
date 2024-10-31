@@ -27,13 +27,13 @@ public class Employee {
     @Column(name = "phonenumber")
     String phoneNumber;
 
-    @Column(name = "citizenId", nullable = false)
+    @Column(name = "citizenId", nullable = false, unique = true)
     String citizenId;
 
-    @Column(name = "jobTitile")
+    @Column(name = "jobTitile",  nullable = false)
     String jobTitile;
 
-    @Column(name = "salary")
+    @Column(name = "salary", nullable = false)
     BigDecimal salary;
 
     @Column(name = "email")

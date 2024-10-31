@@ -19,11 +19,9 @@ import java.time.LocalDate;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RegistrationRequest {
-    @NotNull(message = "REQUIRED_USERNAME")
     @Size(min = 5, message = "INVALID_USERNAME")
     String username;
 
-    @NotNull(message = "REQUIRED_PASSWORD")
     @Size(min = 8, message = "INVALID_PASSWORD")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*(){}\\[\\]!~`|])(?=.*\\d).*$", message = "INVALID_PASSWORD")
     String password;

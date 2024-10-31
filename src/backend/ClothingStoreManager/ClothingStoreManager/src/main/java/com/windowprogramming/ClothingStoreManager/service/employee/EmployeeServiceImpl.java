@@ -67,7 +67,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.EMPLOYEE_NOT_FOUND));
         // delete the associated user
-        userRepository.deleteByEmployee(employee);
+        userRepository.deleteAllByEmployee(employee);
 
         employeeRepository.deleteById(id);
     }

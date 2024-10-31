@@ -68,17 +68,21 @@ public enum ErrorCode {
     USER_PROFILE_NOT_FOUND(4003, HttpStatus.NOT_FOUND, "User profile not found"),
     PERMISSION_NOT_FOUND(4004, HttpStatus.NOT_FOUND, "Permission not found"),
     EMPLOYEE_NOT_FOUND(4005,HttpStatus.NOT_FOUND, "Employee not found" ),
+    BRAND_NOT_FOUND(4006, HttpStatus.NOT_FOUND, "Brand not found"),
+    CATEGORY_NOT_FOUND(4007, HttpStatus.NOT_FOUND, "Category not found"),
+    PRODUCT_NOT_FOUND(4008, HttpStatus.NOT_FOUND, "Product not found"),
+    INVOICE_NOT_FOUND(4009, HttpStatus.NOT_FOUND, "Invoice not found"),
+    CUSTOMER_NOT_FOUND(4010, HttpStatus.NOT_FOUND, "Customer not found"),
+    INVOICE_DETAIL_NOT_FOUND(4011, HttpStatus.NOT_FOUND, "Invoice detail not found"),
 
     //    Unauthorized	Client	5xxx (Unauthenticated error)
     INVALID_TOKEN(5001, HttpStatus.UNAUTHORIZED, "Invalid token"),
     INVALID_USERNAME_PASSWORD(5002, HttpStatus.UNAUTHORIZED, "Invalid username or password"),
     ACCOUNT_NOT_VERIFIED(5003, HttpStatus.UNAUTHORIZED, "Account not verified"),
     INCORRECT_PASSWORD(5004, HttpStatus.UNAUTHORIZED, "Incorrect password"),
-    UNAUTHENTICATED(5005, HttpStatus.UNAUTHORIZED, "Authentication failed"),
+    UNAUTHENTICATED(5005, HttpStatus.UNAUTHORIZED, "Authentication failed");
 
     //    Forbidden	Client	6xxx (Unauthorized error)
-    UNAUTHORIZED(6001, HttpStatus.FORBIDDEN, "Don't have permission");
-
 
 
     final Integer code;
