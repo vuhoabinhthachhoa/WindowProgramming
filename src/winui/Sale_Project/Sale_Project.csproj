@@ -17,7 +17,9 @@
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Views\AddProductDialog.xaml" />
+    <None Remove="Views\ProductAddPage.xaml" />
+    <None Remove="Views\ProductUpdatePage.xaml" />
+    <None Remove="Views\UserControl\ProductUserControl.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,7 +42,13 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Page Update="Views\AddProductDialog.xaml">
+    <Page Update="Views\ProductUpdatePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\UserControl\ProductUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\ProductAddPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

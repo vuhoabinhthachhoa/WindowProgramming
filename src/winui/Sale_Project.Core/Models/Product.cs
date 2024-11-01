@@ -9,12 +9,7 @@ using System.Threading.Tasks;
 namespace Sale_Project.Core.Models;
 public class Product : INotifyPropertyChanged 
 {
-    public string Id
-    {
-        get; set;
-    }
-
-    public string Code
+    public int ID
     {
         get; set;
     }
@@ -24,27 +19,27 @@ public class Product : INotifyPropertyChanged
         get; set;
     }
 
-    public string Category_id
+    public int CategoryID
     {
         get; set;
     }
 
-    public int Import_price
+    public int ImportPrice
     {
         get; set;
     }
 
-    public int Selling_price
+    public int SellingPrice
     {
         get; set;
     }
 
-    public string Branch_id
+    public string BranchID
     {
         get; set;
     }
 
-    public int Inventory_quantity
+    public int InventoryQuantity
     {
         get; set;
     }
@@ -54,7 +49,7 @@ public class Product : INotifyPropertyChanged
         get; set;
     } = "";
 
-    public string Business_status
+    public string BusinessStatus
     {
         get; set;
     }
@@ -64,7 +59,7 @@ public class Product : INotifyPropertyChanged
         get; set;
     }
 
-    public double Discount_percent
+    public double DiscountPercent
     {
         get; set;
     } = 0;
