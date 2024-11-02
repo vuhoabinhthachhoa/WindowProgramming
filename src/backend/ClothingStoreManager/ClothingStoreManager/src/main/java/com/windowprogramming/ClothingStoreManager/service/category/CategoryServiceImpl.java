@@ -54,6 +54,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponse createCategory(CategoryCreationRequest categoryCreationRequest) {
+        if(categoryRepository.existsById(categoryCreationRequest.getId()) || categoryRepository.existsByName(categoryCreationRequest.getName())) {
+            throw new AppException(ErrorCode.CATEGORY_EXISTED);
+        }
 
         Category category = categoryMapper.toCategory(categoryCreationRequest);
         category = categoryRepository.save(category);

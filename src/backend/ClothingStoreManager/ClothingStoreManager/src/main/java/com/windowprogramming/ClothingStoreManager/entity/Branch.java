@@ -17,9 +17,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Branch {
     @Id
-    @Column(name = "id")
-    Long id;
-
     @Column(name = "name", nullable = false)
     String name;
 }

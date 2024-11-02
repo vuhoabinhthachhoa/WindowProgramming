@@ -18,7 +18,7 @@ public interface UserMapper {
     User toUser(RegistrationRequest request);
 
     @Mapping(target = "role", ignore = true)
-    @Mapping(target = "employeeId", ignore = true)
+    @Mapping(target = "employee", ignore = true)
     UserResponse toUserResponse(User user);
 
     @Mapping(target = "role", ignore = true)

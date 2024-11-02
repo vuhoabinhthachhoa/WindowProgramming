@@ -32,15 +32,13 @@ public class ProductUpdateRequest {
     BigDecimal sellingPrice;
 
     @NotNull(message = "REQUIRED_BRANCH_ID")
-    Long branchId;
+    String branchName;
 
     @NotNull(message = "REQUIRED_INVENTORY_QUANTITY")
     Short inventoryQuantity;
 
     @NotNull(message = "REQUIRED_BUSINESS_STATUS")
     Boolean businessStatus;
-
-    Size size;
 
     BigDecimal discountPercent;
 }

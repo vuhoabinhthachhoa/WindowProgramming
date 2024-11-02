@@ -5,11 +5,12 @@ import com.windowprogramming.ClothingStoreManager.dto.request.category.CategoryU
 import com.windowprogramming.ClothingStoreManager.dto.response.CategoryResponse;
 import com.windowprogramming.ClothingStoreManager.entity.Category;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface CategoryMapper {
     Category toCategory(CategoryCreationRequest categoryCreationRequest);
     CategoryResponse toCategoryResponse(Category category);
-    void updateCategory(Category category, CategoryUpdateRequest categoryUpdateRequest);
+    void updateCategory(@MappingTarget Category category, CategoryUpdateRequest categoryUpdateRequest);
 }

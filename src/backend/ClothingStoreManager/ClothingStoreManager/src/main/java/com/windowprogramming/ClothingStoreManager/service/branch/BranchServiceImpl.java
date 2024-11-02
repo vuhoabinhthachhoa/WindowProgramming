@@ -1,6 +1,7 @@
 package com.windowprogramming.ClothingStoreManager.service.branch;
 
 import com.windowprogramming.ClothingStoreManager.dto.request.branch.BranchCreationRequest;
+import com.windowprogramming.ClothingStoreManager.dto.request.branch.BranchUpdateRequest;
 import com.windowprogramming.ClothingStoreManager.dto.response.BranchResponse;
 import com.windowprogramming.ClothingStoreManager.entity.Branch;
 import com.windowprogramming.ClothingStoreManager.exception.AppException;
@@ -35,7 +36,7 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public BranchResponse getBranchById(Long branchId) {
+    public BranchResponse getBranchByName(String branchId) {
         Branch branch = branchRepository.findById(branchId)
                 .orElseThrow(() -> new AppException(ErrorCode.BRAND_NOT_FOUND));
         return branchMapper.toBranchResponse(branch);
@@ -43,22 +44,25 @@ public class BranchServiceImpl implements BranchService {
 
     @Override
     public BranchResponse createBranch(BranchCreationRequest branchCreationRequest) {
+        if(branchRepository.existsById(branchCreationRequest.getName())) {
+            throw new AppException(ErrorCode.BRANCH_EXISTED);
+        }
         Branch branch = branchMapper.toBranch(branchCreationRequest);
         branch = branchRepository.save(branch);
         return branchMapper.toBranchResponse(branch);
     }
 
     @Override
-    public BranchResponse updateBranch(Long id, BranchCreationRequest branchCreationRequest) {
-        Branch branch = branchRepository.findById(id)
+    public BranchResponse updateBranch(BranchUpdateRequest branchUpdateRequest) {
+        Branch branch = branchRepository.findById(branchUpdateRequest.getName())
                 .orElseThrow(() -> new AppException(ErrorCode.BRAND_NOT_FOUND));
-        branchMapper.updateBranch(branch, branchCreationRequest);
+        branchMapper.updateBranch(branch, branchUpdateRequest);
         branch = branchRepository.save(branch);
         return branchMapper.toBranchResponse(branch);
     }
 
     @Override
-    public void deleteBranch(Long branchId) {
+    public void deleteBranch(String branchId) {
         Branch branch = branchRepository.findById(branchId)
                 .orElseThrow(() -> new AppException(ErrorCode.BRAND_NOT_FOUND));
         productRepository.deleteAllByBranch(branch);

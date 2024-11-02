@@ -56,11 +56,15 @@ public enum ErrorCode {
     REQUIRED_OLD_PASSWORD(2036, HttpStatus.BAD_REQUEST, "Old password is required"),
     REQUIRED_TOKEN(2037, HttpStatus.BAD_REQUEST, "Token is required"),
     REQUIRED_USER_ID(2038, HttpStatus.BAD_REQUEST, "User ID is required"),
+    REQUIRED_SIZE(2039, HttpStatus.BAD_REQUEST, "Size is required"),
 
     //    Existed Error 3xxx
     USER_EXISTED(3001, HttpStatus.BAD_REQUEST, "User existed"),
     USER_PROFILE_EXISTED(3002, HttpStatus.BAD_REQUEST, "User profile existed"),
     EMPLOYEE_EXISTED(3003, HttpStatus.BAD_REQUEST, "Employee existed"),
+    BRANCH_EXISTED(3004, HttpStatus.BAD_REQUEST, "Branch existed"),
+    CATEGORY_EXISTED(3005, HttpStatus.BAD_REQUEST, "Category existed"),
+    PRODUCT_EXISTED(3006, HttpStatus.BAD_REQUEST, "Product existed"),
 
     //    Not Found Error 4xxx
     USER_NOT_FOUND(4001, HttpStatus.NOT_FOUND, "User not found"),
@@ -74,15 +78,23 @@ public enum ErrorCode {
     INVOICE_NOT_FOUND(4009, HttpStatus.NOT_FOUND, "Invoice not found"),
     CUSTOMER_NOT_FOUND(4010, HttpStatus.NOT_FOUND, "Customer not found"),
     INVOICE_DETAIL_NOT_FOUND(4011, HttpStatus.NOT_FOUND, "Invoice detail not found"),
+    BRANCH_NOT_FOUND(4012, HttpStatus.NOT_FOUND, "Branch not found"),
 
     //    Unauthorized	Client	5xxx (Unauthenticated error)
     INVALID_TOKEN(5001, HttpStatus.UNAUTHORIZED, "Invalid token"),
     INVALID_USERNAME_PASSWORD(5002, HttpStatus.UNAUTHORIZED, "Invalid username or password"),
     ACCOUNT_NOT_VERIFIED(5003, HttpStatus.UNAUTHORIZED, "Account not verified"),
     INCORRECT_PASSWORD(5004, HttpStatus.UNAUTHORIZED, "Incorrect password"),
-    UNAUTHENTICATED(5005, HttpStatus.UNAUTHORIZED, "Authentication failed");
+    UNAUTHENTICATED(5005, HttpStatus.UNAUTHORIZED, "Authentication failed"),
 
     //    Forbidden	Client	6xxx (Unauthorized error)
+    UNAUTHORIZED(6001, HttpStatus.FORBIDDEN, "Don't have permission"),
+
+
+    //    File error 7xxx
+    FILE_SIZE_TOO_LARGE(7001, HttpStatus.BAD_REQUEST, "Max file size is 2MB"),
+    FILE_TYPE_NOT_ALLOWED(7002, HttpStatus.BAD_REQUEST, "Only jpg, png, gif, bmp files are allowed"),
+    FILE_UPLOAD_FAILED(7003, HttpStatus.INTERNAL_SERVER_ERROR, "File upload failed");
 
 
     final Integer code;

@@ -13,9 +13,6 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BranchUpdateRequest {
-    @NotNull(message = "REQUIRED_BRANCH_ID")
-    Long id;
-
     @NotBlank(message = "REQUIRED_BRANCH_NAME")
     String name;
 }

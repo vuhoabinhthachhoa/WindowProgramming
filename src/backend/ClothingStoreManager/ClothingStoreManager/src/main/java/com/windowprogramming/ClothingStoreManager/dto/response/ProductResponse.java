@@ -1,6 +1,7 @@
 package com.windowprogramming.ClothingStoreManager.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.windowprogramming.ClothingStoreManager.enums.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,6 +27,6 @@ public class ProductResponse {
     String imageUrl;
     String cloudinaryImageId;
     Boolean businessStatus;
-    String size;
+    Size size;
     BigDecimal discountPercent;
 }

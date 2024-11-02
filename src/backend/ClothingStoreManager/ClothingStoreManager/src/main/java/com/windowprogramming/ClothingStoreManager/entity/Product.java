@@ -1,5 +1,6 @@
 package com.windowprogramming.ClothingStoreManager.entity;
 
+import com.windowprogramming.ClothingStoreManager.enums.Size;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -21,7 +22,7 @@ public class Product {
     @Column(name = "id")
     Long id;
 
-    @Column(name = "code", nullable = false, unique = true)
+    @Column(name = "code", nullable = false)
     String code;
 
     @Column(name = "name", nullable = false)
@@ -53,8 +54,8 @@ public class Product {
     @Column(name = "business_status", nullable = false)
     Boolean businessStatus;
 
-    @Column(name = "size")
-    String size;
+    @Column(name = "size", nullable = false)
+    Size size;
 
     @Column(name = "discount_percent", precision = 3, scale = 2)
     BigDecimal discountPercent;
