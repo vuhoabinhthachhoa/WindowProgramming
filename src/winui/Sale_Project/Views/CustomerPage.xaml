@@ -11,6 +11,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
@@ -22,15 +24,20 @@
         x:Uid="Customer_Title"
         Style="{StaticResource PageTitleStyle}" />
         <AutoSuggestBox QueryIcon="Find" TextChanged="AutoSuggestBox_TextChanged" Name="SuggestionOutput"
-                        SuggestionChosen="AutoSuggestBox_SuggestionChosen" 
+                        Text="{x:Bind ViewModel.Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Grid.Row="0" Grid.Column="1" PlaceholderText="Theo mã, tên, điện thoại"  Margin="10" />
         <StackPanel Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Content="Thêm khách hàng"
-                    Click="ShowAddCustomerDialog_Click"></Button>
+                    Click="addCustomerButton_Click"
+                    Name="addCustomerButton"></Button>
             <Button Content="Xóa khách hàng"
-                    Click="DeleteCustomer_Click"></Button>
-            <Button Content="Import"></Button>
-            <Button Content="Xuất file"></Button>
+                    Click="deleteCustomerButton_Click"
+                    Name="deleteCustomerButton"></Button>
+            <Button Content="Sửa khách hàng"
+                    Click="updateCustomerButton_Click"
+                    Name="updateCustomerButton"></Button>
+            <!--<Button Content="Import"></Button>
+            <Button Content="Xuất file"></Button>-->
         </StackPanel>
         <ScrollViewer VerticalScrollBarVisibility="Auto"  Grid.Column="0" Grid.Row="1">
             <Grid>
@@ -189,10 +196,12 @@
             </Grid>
         </ScrollViewer>
         <controls:DataGrid
-Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-AutoGenerateColumns="False" Name="itemsDataGrid"
-GridLinesVisibility="Horizontal"
-ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}">
+            Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+            AutoGenerateColumns="False" 
+            GridLinesVisibility="Horizontal"
+            ItemsSource="{x:Bind ViewModel.Customers, Mode=OneWay}"
+            Sorting="dataGrid_Sorting"
+            x:Name="itemsDataGrid">
         <!--<controls:DataGrid
 Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
 AutoGenerateColumns="False"
@@ -202,9 +211,12 @@ GridLinesVisibility="Horizontal">-->
             </controls:DataGrid.Resources>
             <controls:DataGrid.Columns>
                 <!-- TODO: Replace column definitions to match real data. Consider adding Header values to Resources.resw. -->
-                <controls:DataGridTextColumn Binding="{Binding Id}" Header="Mã khách hàng" />
+                <controls:DataGridTextColumn Binding="{Binding ID}" Header="Mã khách hàng" />
                 <controls:DataGridTextColumn Binding="{Binding Name}" Header="Tên khách hàng" />
+                <controls:DataGridTextColumn Binding="{Binding Email}" Header="Email" />
                 <controls:DataGridTextColumn Binding="{Binding Phonenumber}" Header="Điện thoại" />
+                <controls:DataGridTextColumn Binding="{Binding Address}" Header="Địa chỉ" />
+                <controls:DataGridTextColumn Binding="{Binding IsDeleted}" Header="Bị xóa" />
 
                 <!--<controls:DataGridTemplateColumn Header="Symbol">
                     <controls:DataGridTemplateColumn.CellTemplate>
@@ -219,5 +231,23 @@ GridLinesVisibility="Horizontal">-->
                 </controls:DataGridTemplateColumn>-->
             </controls:DataGrid.Columns>
         </controls:DataGrid>
+        
+        <StackPanel Height="40" Grid.Row="2" Grid.Column="1"  Orientation="Horizontal">
+            <AppBarButton Click="previousButton_Click" >
+                <FontIcon Glyph="&#xE72B;" />
+            </AppBarButton>
+
+            <TextBlock VerticalAlignment="Center">
+                    <Run Text="{x:Bind ViewModel.CurrentPage, Mode=OneWay}"/>/<Run Text="{x:Bind ViewModel.TotalPages, Mode=OneWay}"/>
+            </TextBlock>
+
+
+            <AppBarButton Click="nextButton_Click">
+                <FontIcon Glyph="&#xE72A;" />
+            </AppBarButton>
+        </StackPanel>
+        <StackPanel Height="40" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBlock Name="infoTextBlock" Text="{x:Bind ViewModel.Info, Mode=OneWay}"/>
+        </StackPanel>
     </Grid>
 </Page>

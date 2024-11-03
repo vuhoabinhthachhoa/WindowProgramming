@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Sale_Project.Core.Models;
-public class Customer
+public class Customer : INotifyPropertyChanged
 {
-    public string Id
+    public int ID
     {
         get; set;
     }
@@ -32,4 +33,8 @@ public class Customer
     {
         get; set;
     } = "";
+
+    public bool IsDeleted { get; set; }
+
+    public event PropertyChangedEventHandler PropertyChanged;
 }

@@ -10,87 +10,55 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using Newtonsoft.Json;
 using Sale_Project.Core.Helpers;
-namespace Sale_Project.Views;
 using System.Reflection;
 using System.Reflection.Metadata;
 using Sale_Project.Core.Services;
+using Microsoft.UI.Xaml.Navigation;
+using CommunityToolkit.WinUI.UI.Controls;
 
+
+namespace Sale_Project.Views;
 public sealed partial class CustomerPage : Page
 {
     public CustomerViewModel ViewModel
     {
-        get;
+        get; set;
     }
-
-    private List<Customer> Customers = new();
-
     public CustomerPage()
     {
-        ViewModel = App.GetService<CustomerViewModel>();
-        InitializeComponent();
-        InitializeAsync();
+        this.InitializeComponent();
+        ViewModel = new CustomerViewModel();
+        // DataContext = this;
     }
 
-    private void UpdateData()
-    {
-        var path = Path.Combine(
-            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-            @"..\..\..\..\..\..\MockData\customers.json");
-
-        ViewModel.Source.Clear();
-        var json = File.ReadAllText(path);
-        Customers = System.Text.Json.JsonSerializer.Deserialize<List<Customer>>(json);
-
-        foreach (var item in Customers)
-        {
-            ViewModel.Source.Add(item);
-        }
-    }
-
-    private async void InitializeAsync()
-    {
-        await LoadCustomersAsync();
-    }
-
-    private async Task LoadCustomersAsync()
-    {
-        var productDataService = App.GetService<ICustomerDataService>();
-        Customers = (await productDataService.LoadDataAsync()).ToList();
-        ViewModel.Source.Clear();
-        foreach (var product in Customers)
-        {
-            ViewModel.Source.Add(product);
-        }
-    }
-
-    // Handle text change and present suitable items
     private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
     {
         if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
         {
             var suitableItems = new List<string>();
             var splitText = sender.Text.ToLower().Split(" ");
-            foreach (var product in Customers)
+            foreach (var customer in ViewModel.Customers)
             {
                 var found = splitText.All((key) =>
                 {
-                    return product.Name.ToLower().Contains(key) || product.Id.ToLower().Contains(key);
+                    return customer.Name.ToLower().Contains(key) || customer.ID.ToString().ToLower().Contains(key);
                 });
                 if (found)
                 {
-                    suitableItems.Add($"{product.Name} (ID: {product.Id})");
+                    //suitableItems.Add($"{customer.Name} (ID: {customer.ID})");
+                    suitableItems.Add($"{customer.Name}");
                 }
             }
 
-            if (string.IsNullOrEmpty(sender.Text))
 
-            {
-                ViewModel.Source.Clear();
-                foreach (var product in Customers)
-                {
-                    ViewModel.Source.Add(product);
-                }
-            }
+            //if (string.IsNullOrEmpty(sender.Text))
+            //{
+            //    ViewModel.Customers.Clear();
+            //    foreach (var customer in ViewModel.Customers)
+            //    {
+            //        ViewModel.Customers.Add(customer);
+            //    }
+            //}
 
             if (suitableItems.Count == 0)
             {
@@ -98,90 +66,153 @@ public sealed partial class CustomerPage : Page
             }
             sender.ItemsSource = suitableItems;
         }
+        ViewModel.Search();
 
     }
 
     // Handle user selecting an item, in our case just output the selected item.
-    private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+    //private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+    //{
+    //    SuggestionOutput.Text = args.SelectedItem.ToString();
+    //var selectedCustomer = ViewModel.Customers.FirstOrDefault(p => $"{p.Name} (ID: {p.ID})" == args.SelectedItem.ToString());
+    //if (selectedCustomer != null)
+    //{
+    //    ViewModel.Customers.Clear();
+    //    ViewModel.Customers.Add(selectedCustomer);
+    //}
+    //else
+    //{
+    //     Reset to show all customers if no specific customer is selected
+    //    ViewModel.Customers.Clear();
+    //    foreach (var customer in ViewModel.Customers)
+    //    {
+    //        ViewModel.Customers.Add(customer);
+    //    }
+    //}
+    //}
+
+    private void addCustomerButton_Click(object sender, RoutedEventArgs e)
     {
-        SuggestionOutput.Text = args.SelectedItem.ToString();
-        var selectedCustomer = Customers.FirstOrDefault(p => $"{p.Name} (ID: {p.Id})" == args.SelectedItem.ToString());
-        if (selectedCustomer != null)
+        Frame.Navigate(typeof(CustomerAddPage));
+
+    }
+
+    private async void deleteCustomerButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (itemsDataGrid.SelectedItem == null)
         {
-            ViewModel.Source.Clear();
-            ViewModel.Source.Add(selectedCustomer);
+            return;
+        }
+
+        var customer = itemsDataGrid.SelectedItem as Customer;
+        bool success = ViewModel.Remove(customer);
+
+        if (success)
+        {
+            await new ContentDialog
+            {
+                XamlRoot = this.Content.XamlRoot,
+                Title = "Delete",
+                Content = "Delete successfully",
+                CloseButtonText = "OK"
+            }.ShowAsync();
         }
         else
         {
-            // Reset to show all products if no specific product is selected
-            ViewModel.Source.Clear();
-            foreach (var product in Customers)
+            await new ContentDialog
             {
-                ViewModel.Source.Add(product);
-            }
+                XamlRoot = this.Content.XamlRoot,
+                Title = "Delete",
+                Content = "Delete failed",
+                CloseButtonText = "Cannot delete customer with id: " + customer.ID
+            }.ShowAsync();
         }
     }
 
-    private async void ShowAddCustomerDialog_Click(object sender, RoutedEventArgs e)
+    private void updateCustomerButton_Click(object sender, RoutedEventArgs e)
     {
-        var addCustomerDialog = new AddCustomerDialog(); // Declare addCustomerDialog here
-
-        ContentDialog dialog = new ContentDialog
+        if (itemsDataGrid.SelectedItem == null)
         {
-            XamlRoot = this.XamlRoot,
-            Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
-            Title = "Thêm khách hàng",
-            PrimaryButtonText = "Lưu",
-            CloseButtonText = "Bỏ qua",
-            DefaultButton = ContentDialogButton.Primary,
-            Content = addCustomerDialog
-        };
-
-        dialog.PrimaryButtonClick += (s, args) => AddCustomerDialog_PrimaryButtonClick(s, args, addCustomerDialog); // Pass addCustomerDialog to the event handler
-        var result = await dialog.ShowAsync();
-    }
-
-    private void AddCustomerDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args, AddCustomerDialog addCustomerDialog)
-    {
-        if (!addCustomerDialog.ValidateInput())
-        {
-            args.Cancel = true;
             return;
         }
-        var path = Path.Combine(
-            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-            @"..\..\..\..\..\..\MockData\customers.json");
 
-        var json = File.ReadAllText(path);
-        var list = JsonConvert.DeserializeObject<List<Customer>>(json);
-        var product = addCustomerDialog.GetCustomer(); // Use addCustomerDialog here
-        list.Add(product); // Add the product from the dialog
+        var customer = itemsDataGrid.SelectedItem as Customer;
 
-        var convertedJson = JsonConvert.SerializeObject(list, Formatting.Indented);
-        File.WriteAllText(path, convertedJson);
-
-        UpdateData();
+        Frame.Navigate(typeof(CustomerUpdatePage), customer);
     }
 
-
-    private void DeleteCustomer_Click(object sender, RoutedEventArgs e)
+    private void previousButton_Click(object sender, RoutedEventArgs e)
     {
-        var item = itemsDataGrid.SelectedItem as Customer;
+        ViewModel.GoToPreviousPage();
+    }
 
-        var path = Path.Combine(
-            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-            @"..\..\..\..\..\..\MockData\customers.json");
+    private void nextButton_Click(object sender, RoutedEventArgs e)
+    {
+        ViewModel.GoToNextPage();
+    }
 
-        var json = File.ReadAllText(path);
-        var list = JsonConvert.DeserializeObject<List<Customer>>(json);
+    private void itemsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (itemsDataGrid.SelectedItem != null)
+        {
+            deleteCustomerButton.IsEnabled = true;
+            updateCustomerButton.IsEnabled = true;
+        }
+        else
+        {
+            deleteCustomerButton.IsEnabled = false;
+            updateCustomerButton.IsEnabled = false;
+        }
+    }
 
-        var product = list.Single(p => p.Id == item.Id);
-        list.Remove(product);
+    private void dataGrid_Sorting(object sender, DataGridColumnEventArgs e)
+    {
+        if (e.Column.Tag != null)
+        {
+            string sortColumn = e.Column.Tag.ToString();
+            bool ascending = e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending;
 
-        var convertedJson = JsonConvert.SerializeObject(list, Formatting.Indented);
-        File.WriteAllText(path, convertedJson);
+            switch (sortColumn)
+            {
+                case "ID":
+                    itemsDataGrid.ItemsSource = new ObservableCollection<Customer>(ascending
+                        ? from item in ViewModel.Customers orderby item.ID ascending select item
+                        : from item in ViewModel.Customers orderby item.ID descending select item);
+                    break;
+                case "Name":
+                    itemsDataGrid.ItemsSource = new ObservableCollection<Customer>(ascending
+                        ? from item in ViewModel.Customers orderby item.Name ascending select item
+                        : from item in ViewModel.Customers orderby item.Name descending select item);
+                    break;
+                case "Address":
+                    itemsDataGrid.ItemsSource = new ObservableCollection<Customer>(ascending
+                        ? from item in ViewModel.Customers orderby item.Address ascending select item
+                        : from item in ViewModel.Customers orderby item.Address descending select item);
+                    break;
+                case "Email":
+                    itemsDataGrid.ItemsSource = new ObservableCollection<Customer>(ascending
+                        ? from item in ViewModel.Customers orderby item.Email ascending select item
+                        : from item in ViewModel.Customers orderby item.Email descending select item);
+                    break;
+                case "Phonenumber":
+                    itemsDataGrid.ItemsSource = new ObservableCollection<Customer>(ascending
+                        ? from item in ViewModel.Customers orderby item.Phonenumber ascending select item
+                        : from item in ViewModel.Customers orderby item.Phonenumber descending select item);
+                    break;
+                default:
+                    break;
+            }
 
-        // Update ViewModel Source from the updated JSON file
-        UpdateData();
+            e.Column.SortDirection = ascending ? DataGridSortDirection.Ascending : DataGridSortDirection.Descending;
+
+            // Remove sorting indicators from other columns
+            foreach (var dgColumn in itemsDataGrid.Columns)
+            {
+                if (dgColumn.Tag != null && dgColumn.Tag.ToString() != e.Column.Tag.ToString())
+                {
+                    dgColumn.SortDirection = null;
+                }
+            }
+        }
     }
 }
