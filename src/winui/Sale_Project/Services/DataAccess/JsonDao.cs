@@ -20,18 +20,18 @@ public class JsonDao : IDao
         Dictionary<string, SortType> sortOptions
     )
     {
-        string path = Path.Combine(
+        var path = Path.Combine(
 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
 @"..\..\..\..\..\..\MockData\products.json");
 
         var Products = new List<Product>();
-        string json = System.IO.File.ReadAllText(path);
+        var json = System.IO.File.ReadAllText(path);
         Products = System.Text.Json.JsonSerializer.Deserialize<List<Product>>(json);
 
 
         // Search
         var query = from e in Products
-                    where e != null && e.Name.ToLower().Contains(keyword.ToLower())
+                    where e.Name.ToLower().Contains(keyword.ToLower())
                     select e;
 
         //// Filter
@@ -67,12 +67,12 @@ Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
 
     public bool DeleteProduct(int id)
     {
-        string path = Path.Combine(
+        var path = Path.Combine(
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             @"..\..\..\..\..\..\MockData\products.json");
 
         var Products = new List<Product>();
-        string json = File.ReadAllText(path);
+        var json = File.ReadAllText(path);
         Products = System.Text.Json.JsonSerializer.Deserialize<List<Product>>(json);
 
         var item = Products.Find(e => e.ID == id);
@@ -85,12 +85,12 @@ Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
 
     public bool AddProduct(Product info)
     {
-        string path = Path.Combine(
+        var path = Path.Combine(
 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
 @"..\..\..\..\..\..\MockData\products.json");
 
         var Products = new List<Product>();
-        string json = File.ReadAllText(path);
+        var json = File.ReadAllText(path);
         Products = System.Text.Json.JsonSerializer.Deserialize<List<Product>>(json);
 
         Products.Add(info);
@@ -103,11 +103,11 @@ Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
     public bool UpdateProduct(Product info)
     {
         // write update logic here
-        string path = Path.Combine(
+        var path = Path.Combine(
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             @"..\..\..\..\..\..\MockData\products.json");
         var Products = new List<Product>();
-        string json = File.ReadAllText(path);
+        var json = File.ReadAllText(path);
         Products = System.Text.Json.JsonSerializer.Deserialize<List<Product>>(json);
 
         // update logic

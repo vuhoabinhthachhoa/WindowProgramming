@@ -84,11 +84,9 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
         RowsPerPage = 10;
         CurrentPage = 1;
         _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
-
+        
         LoadData();
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
+    }   
 
     public bool Remove(Product info)
     {
@@ -99,15 +97,6 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
             Products.Remove(info); // UI
         }
         return success;
-    }
-
-    public void GoToNextPage()
-    {
-        if (CurrentPage < TotalPages)
-        {
-            CurrentPage++;
-            LoadData();
-        }
     }
 
     public void LoadData()
@@ -138,9 +127,17 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
             }
         }
 
-        SelectedPageInfoItem = PageInfos[CurrentPage - 1];
-    }
+        if (CurrentPage > TotalPages)
+        {
+            CurrentPage = TotalPages;
+        }
 
+        if (PageInfos.Count > 0)
+        {
+
+            SelectedPageInfoItem = PageInfos[CurrentPage - 1];
+        }
+    }
     public void GoToPage(int page)
     {
         CurrentPage = page;
@@ -151,5 +148,23 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
     {
         CurrentPage = 1;
         LoadData();
+    }
+
+    public void GoToPreviousPage()
+    {
+        if (CurrentPage > 1)
+        {
+            CurrentPage--;
+            LoadData();
+        }
+    }
+
+    public void GoToNextPage()
+    {
+        if (CurrentPage < TotalPages)
+        {
+            CurrentPage++;
+            LoadData();
+        }
     }
 }

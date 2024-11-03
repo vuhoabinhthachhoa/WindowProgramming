@@ -20,7 +20,7 @@ public class MockDao : IDao
             new Product() {
                 ID = 1,
                 Name = "Product 1",
-                CategoryID = 1,
+                CategoryID = "1",
                 ImportPrice = 100,
                 SellingPrice = 200,
                 BranchID = "1",
@@ -32,7 +32,7 @@ public class MockDao : IDao
             new Product() {
                 ID = 2,
                 Name = "Product 2",
-                CategoryID = 2,
+                CategoryID = "2",
                 ImportPrice = 200,
                 SellingPrice = 300,
                 BranchID = "2",
@@ -44,7 +44,7 @@ public class MockDao : IDao
             new Product() {
                 ID = 3,
                 Name = "Product 3",
-                CategoryID = 3,
+                CategoryID = "3",
                 ImportPrice = 300,
                 SellingPrice = 400,
                 BranchID = "3",
@@ -56,7 +56,7 @@ public class MockDao : IDao
             new Product() {
                 ID = 4,
                 Name = "Product 4",
-                CategoryID = 4,
+                CategoryID = "4",
                 ImportPrice = 400,
                 SellingPrice = 500,
                 BranchID = "4",
@@ -68,7 +68,7 @@ public class MockDao : IDao
             new Product() {
                 ID = 5,
                 Name = "Product 5",
-                CategoryID = 5,
+                CategoryID = "5",
                 ImportPrice = 500,
                 SellingPrice = 600,
                 BranchID = "5",
@@ -80,7 +80,7 @@ public class MockDao : IDao
             new Product() {
                 ID = 6,
                 Name = "Product 6",
-                CategoryID = 6,
+                CategoryID = "6",
                 ImportPrice = 600,
                 SellingPrice = 700,
                 BranchID = "6",
@@ -92,7 +92,7 @@ public class MockDao : IDao
             new Product() {
                 ID = 7,
                 Name = "Product 7",
-                CategoryID = 7,
+                CategoryID = "7",
                 ImportPrice = 700,
                 SellingPrice = 800,
                 BranchID = "7",
