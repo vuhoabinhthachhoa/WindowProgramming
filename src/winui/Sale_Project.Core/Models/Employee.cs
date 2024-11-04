@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Sale_Project.Core.Models;
 public class Employee
 {
-    public string Id
+    public int ID
     {
         get; set;
     }
@@ -22,12 +22,12 @@ public class Employee
         get; set;
     }
 
-    public string Citizen_id
+    public string CitizenID
     {
         get; set;
     }
 
-    public string Job_title
+    public string JobTitle
     {
         get; set;
     }
@@ -42,7 +42,7 @@ public class Employee
         get; set;
     }
 
-    public string Date_of_birth
+    public string DateOfBirth
     {
         get; set;
     }
@@ -58,6 +58,10 @@ public class Employee
     }
 
     public string Ward
+    {
+        get; set;
+    }
+    public bool EmployeeStatus
     {
         get; set;
     }
