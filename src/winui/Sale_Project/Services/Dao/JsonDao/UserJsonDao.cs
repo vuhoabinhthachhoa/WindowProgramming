@@ -7,11 +7,11 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Sale_Project.Contracts.Services;
 
-public class JsonDao : IDao
+public class UserJsonDao : IDao
 {
     private readonly string _filePath;
 
-    public JsonDao()
+    public UserJsonDao()
     {
         _filePath = GetJsonFilePath();
     }
@@ -24,7 +24,7 @@ public class JsonDao : IDao
         if (index.HasValue && index.Value != -1)
         {
             var basePath = fullPath?.Substring(0, index.Value);
-            return Path.Combine(basePath, @"Sale_Project\Repository\UserManager.json");
+            return Path.Combine(basePath, @"Sale_Project\MockData\UserManager.json");
         }
         else
         {

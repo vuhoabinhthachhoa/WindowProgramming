@@ -145,7 +145,7 @@ public partial class ShellViewModel : ObservableRecipient
 
     public ShellViewModel(INavigationService navigationService)
     {
-        _dataAccess = new JsonDao();
+        _dataAccess = new UserJsonDao();
         NavigationService = navigationService;
         NavigationService.Navigated += OnNavigated;
 
