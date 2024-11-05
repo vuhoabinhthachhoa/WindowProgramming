@@ -28,10 +28,10 @@ public sealed partial class EmployeeAddPage : Page
     {
         public EmployeeAddPageViewModel()
         {
-            _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
+            _dao = ServiceFactory.GetChildOf(typeof(IEmployeeDao)) as IEmployeeDao;
         }
         public Employee Info { get; set; } = new Employee();
-        IDao _dao;
+        IEmployeeDao _dao;
 
         public (bool, string) AddEmployee()
         {

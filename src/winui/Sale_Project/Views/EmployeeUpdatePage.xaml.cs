@@ -27,10 +27,10 @@ public sealed partial class EmployeeUpdatePage : Page
 {
     public class EmployeeUpdatePageViewModel
     {
-        IDao _dao;
+        IEmployeeDao _dao;
         public EmployeeUpdatePageViewModel()
         {
-            _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
+            _dao = ServiceFactory.GetChildOf(typeof(IEmployeeDao)) as IEmployeeDao;
         }
         public Employee Info { get; set; } = new Employee();
 

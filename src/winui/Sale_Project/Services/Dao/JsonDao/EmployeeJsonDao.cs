@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Sale_Project.Core.Models;
-using static Sale_Project.Contracts.Services.IDao;
+using static Sale_Project.Contracts.Services.IEmployeeDao;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Sale_Project.Core.Helpers;
@@ -14,7 +14,7 @@ using Sale_Project.Contracts.Services;
 using System.Runtime.CompilerServices;
 
 namespace Sale_Project.Services.Dao.JsonDao;
-public class EmployeeJsonDao : IDao
+public class EmployeeJsonDao : IEmployeeDao
 {
 
     public (bool, string) IsValidInfo(Employee info)

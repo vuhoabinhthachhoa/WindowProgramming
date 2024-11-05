@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Services.Maps;
-using static Sale_Project.Contracts.Services.IDao;
+using static Sale_Project.Contracts.Services.IEmployeeDao;
 using Sale_Project.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Sale_Project.Contracts.ViewModels;
@@ -17,7 +17,7 @@ using Sale_Project.Services.Dao.JsonDao;
 namespace Sale_Project;
 public partial class EmployeeViewModel : ObservableRecipient, INotifyPropertyChanged
 {
-    IDao _dao;
+    IEmployeeDao _dao;
     public ObservableCollection<Employee> Employees
     {
         get; set;
@@ -76,10 +76,10 @@ public partial class EmployeeViewModel : ObservableRecipient, INotifyPropertyCha
 
     public EmployeeViewModel()
     {
-        ServiceFactory.Register(typeof(IDao), typeof(EmployeeJsonDao));
+        ServiceFactory.Register(typeof(IEmployeeDao), typeof(EmployeeJsonDao));
         RowsPerPage = 10;
         CurrentPage = 1;
-        _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
+        _dao = ServiceFactory.GetChildOf(typeof(IEmployeeDao)) as IEmployeeDao;
 
         LoadData();
     }
