@@ -7,7 +7,7 @@
     "JobTitle": "Software Engineer",
     "Salary": 100000,
     "Email": "johndoe@mail.com",
-    "DateOfBirth": "1990-01-01",
+    "DateOfBirth": "1985-05-15",
     "Address": "123 Main St",
     "Area": "Downtown",
     "Ward": "1",
@@ -165,6 +165,20 @@
     "Address": "909 Poplar St",
     "Area": "Midtown",
     "Ward": "12",
+    "EmployeeStatus": true
+  },
+  {
+    "ID": 10,
+    "Name": "a",
+    "Phonenumber": "123",
+    "CitizenID": "123",
+    "JobTitle": "Cashier",
+    "Salary": 1230,
+    "Email": "a@gmail.com",
+    "DateOfBirth": "1974-07-11",
+    "Address": "a",
+    "Area": "",
+    "Ward": "",
     "EmployeeStatus": true
   }
 ]

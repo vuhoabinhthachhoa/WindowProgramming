@@ -10,6 +10,7 @@ using Sale_Project.Helpers;
 using Sale_Project.Models;
 using Sale_Project.Notifications;
 using Sale_Project.Services;
+using Sale_Project.Services.Dao;
 using Sale_Project.ViewModels;
 using Sale_Project.Views;
 
@@ -68,7 +69,6 @@ public partial class App : Application
 
             // Core Services
             services.AddSingleton<IFileService, FileService>();
-            services.AddSingleton<IEmployeeDataService,  EmployeeDataService>();
 
             // Views and ViewModels
             services.AddTransient<EmployeeViewModel>();
@@ -108,6 +108,8 @@ public partial class App : Application
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
+        //ServiceFactory.Register(typeof(IDao), typeof(JsonDao));
+
         base.OnLaunched(args);
 
         App.GetService<IAppNotificationService>().Show(string.Format("AppNotificationSamplePayload".GetLocalized(), AppContext.BaseDirectory));

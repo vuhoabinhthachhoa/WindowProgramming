@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="Sale_Project.EmployeeAddPage"
+    x:Class="Sale_Project.EmployeeUpdatePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Sale_Project"
@@ -10,8 +10,8 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel HorizontalAlignment="Left">
-        <TextBlock Text="Add new Employee" Style="{StaticResource TitleTextBlockStyle}"/>
-        <local:EmployeeUserControl
+        <TextBlock Text="Update new Employee" Style="{StaticResource TitleTextBlockStyle}"/>
+        <local:EmployeeUserControl 
                                    Info="{x:Bind ViewModel.Info, Mode=TwoWay}" />
         <StackPanel Orientation="Horizontal">
             <Button Name="submitButton" Width="80" Height="35" Content="Submit"

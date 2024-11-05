@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sale_Project.Core.Models;
 
-namespace Sale_Project;
+namespace Sale_Project.Contracts.Services;
 
 public interface IDao
 {
@@ -21,6 +21,6 @@ public interface IDao
     );
 
     bool DeleteEmployee(int id);
-    bool AddEmployee(Employee info);
-    bool UpdateEmployee(Employee info);
+    (bool,string) AddEmployee(Employee info);
+    (bool,string) UpdateEmployee(Employee info);
 }

@@ -1,4 +1,3 @@
-using Sale_Project.Services;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -6,6 +5,8 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using Sale_Project.Services;
+using Sale_Project.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,8 +14,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Sale_Project.Core.Models;
 using Sale_Project.Contracts.Services;
+
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -22,45 +23,47 @@ namespace Sale_Project;
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class EmployeeAddPage : Page
+public sealed partial class EmployeeUpdatePage : Page
 {
-    public class EmployeeAddPageViewModel
+    public class EmployeeUpdatePageViewModel
     {
-        public EmployeeAddPageViewModel()
+        IDao _dao;
+        public EmployeeUpdatePageViewModel()
         {
             _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
         }
         public Employee Info { get; set; } = new Employee();
-        IDao _dao;
 
-        public (bool, string) AddEmployee()
+        public (bool, string) UpdateEmployee()
         {
-            return _dao.AddEmployee(Info);
-            //string message = result ? "Employee added successfully." : "Failed to add employee.";
-            //return (result, message);
+            return _dao.UpdateEmployee(Info);
         }
     }
 
-    public EmployeeAddPageViewModel ViewModel { get; set; } = new EmployeeAddPageViewModel();
+    public EmployeeUpdatePageViewModel ViewModel { get; set; } = new EmployeeUpdatePageViewModel();
 
-    public EmployeeAddPage()
+    public EmployeeUpdatePage()
     {
         this.InitializeComponent();
     }
-     
-    
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        ViewModel.Info = e.Parameter as Employee;
+
+        base.OnNavigatedTo(e);
+    }
 
     private async void submitButton_Click(object sender, RoutedEventArgs e)
     {
-        var (success, message) = ViewModel.AddEmployee();
+        var (success, message) = ViewModel.UpdateEmployee();
 
         if (success)
         {
             await new ContentDialog()
             {
                 XamlRoot = this.Content.XamlRoot,
-                Title = "Insert new employee",
-                Content = "Successfully inserted employee: " + ViewModel.Info.Name,
+                Title = "Update Employee",
+                Content = "Successfully updated Employee:" + ViewModel.Info.Name,
                 CloseButtonText = "OK"
             }.ShowAsync();
             Frame.GoBack();
@@ -70,7 +73,7 @@ public sealed partial class EmployeeAddPage : Page
             await new ContentDialog()
             {
                 XamlRoot = this.Content.XamlRoot,
-                Title = "Insert new employee",
+                Title = "Update employee",
                 Content = message,
                 CloseButtonText = "OK"
             }.ShowAsync();

@@ -1,15 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Page
-    x:Class="Sale_Project.Views.UserControl.EmployeeUserControl"
+<UserControl
+    x:Class="Sale_Project.EmployeeUserControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Sale_Project.Views.UserControl"
+    xmlns:local="using:Sale_Project"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local1="using:Sale_Project.Helpers"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <local:TimeConverter x:Key="TimeConverter"/>
+    </UserControl.Resources>
+
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Mã nhân viên" Grid.Column="0" Grid.Row="0"/>
+        <NumberBox Value="{x:Bind Info.ID, Mode=TwoWay}" PlaceholderText="Mã hàng" Grid.Column="1" Grid.Row="0"/>
+
+        <TextBlock Text="Tên nhân viên" Grid.Column="2" Grid.Row="0"/>
+        <TextBox Text="{x:Bind Info.Name,Mode=TwoWay}" Grid.Column="3" Grid.Row="0"/>
+
+        <TextBlock Text="Email" Grid.Column="0" Grid.Row="1"/>
+        <TextBox Text="{x:Bind Info.Email,Mode=TwoWay}" Grid.Column="1" Grid.Row="1"/>
+
+        <TextBlock Text="Số điện thoại" Grid.Column="2" Grid.Row="1"/>
+        <TextBox Text="{x:Bind Info.Phonenumber,Mode=TwoWay}" Grid.Column="3" Grid.Row="1"/>
+
+        <TextBlock Text="CMND/CCCD" Grid.Column="0" Grid.Row="2"/>
+        <TextBox Text="{x:Bind Info.CitizenID,Mode=TwoWay}" Grid.Column="1" Grid.Row="2"/>
+
+        <TextBlock Text="Ngày sinh" Grid.Column="2" Grid.Row="2"/>
+        <!--<TextBox Text="{x:Bind Info.DateOfBirth,Mode=TwoWay}" Grid.Column="3" Grid.Row="2"/>-->
+        <CalendarDatePicker DateFormat="{}{day.integer} {month.full} {year.full}" Date="{x:Bind Info.DateOfBirth, Mode=TwoWay, Converter={StaticResource TimeConverter}}" Grid.Column="3" Grid.Row="2" />
+
+        <TextBlock Text="Công việc" Grid.Column="0" Grid.Row="3"/>
+        <ComboBox ItemsSource="{x:Bind JobTitle, Mode=OneWay}" SelectedValue="{x:Bind Info.JobTitle,Mode=TwoWay}" Grid.Column="1" Grid.Row="3"/>
+
+        <TextBlock Text="Lương" Grid.Column="2" Grid.Row="3"/>
+        <NumberBox Text="{x:Bind Info.Salary,Mode=TwoWay}" Grid.Column="3" Grid.Row="3"/>
+
+        <TextBlock Text="Địa chỉ" Grid.Column="0" Grid.Row="4"/>
+        <TextBox Text="{x:Bind Info.Address,Mode=TwoWay}" Grid.Column="1" Grid.Row="4"/>
+
+        <TextBlock Text="Khu vực" Grid.Column="2" Grid.Row="4"/>
+        <TextBox Text="{x:Bind Info.Area,Mode=TwoWay}" Grid.Column="3" Grid.Row="4"/>
+
+        <TextBlock Text="Quận" Grid.Column="0" Grid.Row="5"/>
+        <TextBox Text="{x:Bind Info.Ward,Mode=TwoWay}" Grid.Column="1" Grid.Row="5"/>
+
+        <TextBlock Text="Trạng thái" Grid.Column="2" Grid.Row="5"/>
+        <ComboBox ItemsSource="{x:Bind EmployeeStatus, Mode=OneWay}" SelectedValue="{x:Bind Info.EmployeeStatus,Mode=TwoWay}" Grid.Column="3" Grid.Row="5"/>
+        
+        <TextBlock x:Name="Warning" Text="{x:Bind Warning_msg, Mode=OneWay}" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3"/>
 
     </Grid>
-</Page>
+
+</UserControl>
