@@ -5,8 +5,10 @@ using CommunityToolkit.Mvvm.Input;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Navigation;
-
+using Sale_Project.Core.Models;
 using Sale_Project.Contracts.Services;
+using Microsoft.UI.Xaml.Controls;
+using Sale_Project.Services;
 
 namespace Sale_Project.ViewModels;
 
@@ -14,6 +16,87 @@ public partial class ShellViewModel : ObservableRecipient
 {
     [ObservableProperty]
     private bool isBackEnabled;
+
+    private readonly IDao _dataAccess;
+    private User _currentUser = new();
+
+    public User CurrentUser
+    {
+        get => _currentUser;
+        set => SetProperty(ref _currentUser, value);
+    }
+
+    public async Task LoginAsync(string username, string password)
+    {
+        try
+        {
+            var users = await _dataAccess.GetUsersAsync();
+
+            var user = users?.FirstOrDefault(u => u.Username == username && u.Password == password);
+
+            if (user != null)
+            {
+                CurrentUser = user;
+                var uiManager = App.GetService<UIManagerService>();
+
+                if (uiManager.ShellPage != null)
+                {
+                    uiManager.ShellPage.Startup.Visibility = Visibility.Collapsed;
+                    uiManager.ShellPage.Main.Visibility = Visibility.Visible;
+                }
+
+                System.Diagnostics.Debug.WriteLine($"CurrentUser: {CurrentUser.Username} {CurrentUser.UserRole}");
+            }
+            else
+            {
+                ContentDialog dialog = new ContentDialog
+                {
+                    Title = "Login Failed",
+                    Content = "Invalid username or password.",
+                    CloseButtonText = "Ok"
+                };
+
+                if (dialog.XamlRoot == null)
+                {
+                    dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+                }
+
+                await dialog.ShowAsync();
+            }
+        }
+        catch (FileNotFoundException)
+        {
+            ContentDialog errorDialog = new ContentDialog
+            {
+                Title = "Error",
+                Content = "User data file not found.",
+                CloseButtonText = "OK"
+            };
+
+            if (errorDialog.XamlRoot == null)
+            {
+                errorDialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+            }
+
+            await errorDialog.ShowAsync();
+        }
+        catch (Exception ex)
+        {
+            ContentDialog errorDialog = new ContentDialog
+            {
+                Title = "Error",
+                Content = $"An error occurred: {ex.Message}",
+                CloseButtonText = "OK"
+            };
+
+            if (errorDialog.XamlRoot == null)
+            {
+                errorDialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+            }
+
+            await errorDialog.ShowAsync();
+        }
+    }
 
     public ICommand MenuFileExitCommand
     {
@@ -62,6 +145,7 @@ public partial class ShellViewModel : ObservableRecipient
 
     public ShellViewModel(INavigationService navigationService)
     {
+        _dataAccess = new JsonDao();
         NavigationService = navigationService;
         NavigationService.Navigated += OnNavigated;
 

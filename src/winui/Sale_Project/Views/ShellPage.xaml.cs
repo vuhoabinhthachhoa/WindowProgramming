@@ -31,6 +31,7 @@ public sealed partial class ShellPage : Page
     public ShellPage(ShellViewModel viewModel)
     {
         ViewModel = viewModel;
+        this.DataContext = ViewModel;
         InitializeComponent();
 
         var uiManager = App.GetService<UIManagerService>();
@@ -120,55 +121,7 @@ public sealed partial class ShellPage : Page
         var username = UsernameTextBox.Text;
         var password = PasswordBox.Password;
 
-        var filePath = @"C:\Users\Admin\source\repos\Sale_Project\Sale_Project\Repository\UserManager.json";
-        System.Diagnostics.Debug.WriteLine($"File path: {filePath}");
-        if (!File.Exists(filePath))
-        {
-            ContentDialog errorDialog = new ContentDialog
-            {
-                Title = "Error",
-                Content = "User data file not found.",
-                CloseButtonText = "OK"
-            };
-
-            if (errorDialog.XamlRoot == null)
-            {
-                errorDialog.XamlRoot = this.XamlRoot;
-            }
-
-            await errorDialog.ShowAsync();
-            return;
-        }
-
-        var jsonContent = await File.ReadAllTextAsync(filePath);
-        var users = JsonSerializer.Deserialize<List<Sale_Project.Core.Models.User>>(jsonContent);
-
-        var user = users?.FirstOrDefault(u => u.Username == username && u.Password == password);
-
-        if (user != null)
-        {
-            UserManager.CurrentUser = user;
-            Startup.Visibility = Visibility.Collapsed;
-            Main.Visibility = Visibility.Visible;
-            
-            System.Diagnostics.Debug.WriteLine($"CurrentUser: {UserManager.CurrentUser.Username} {UserManager.CurrentUser.UserRole}");
-        }
-        else
-        {
-            ContentDialog dialog = new ContentDialog
-            {
-                Title = "Login Failed",
-                Content = "Invalid username or password.",
-                CloseButtonText = "Ok"
-            };
-
-            if (dialog.XamlRoot == null)
-            {
-                dialog.XamlRoot = this.XamlRoot;
-            }
-
-            await dialog.ShowAsync();
-        }
+        await ViewModel.LoginAsync(username, password);
     }
 
     private async void RegisterButton_Click_Async(object sender, RoutedEventArgs e)

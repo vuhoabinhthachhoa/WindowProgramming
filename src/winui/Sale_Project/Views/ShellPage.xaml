@@ -107,15 +107,15 @@
                 <AppBarButton Grid.Column="0" Command="{x:Bind ViewModel.MenuViewsDashboardCommand}" Width="80">
                     <TextBlock Text="Dashboard" FontSize="20"/>
                 </AppBarButton>
-                <AppBarButton Visibility="{Binding UserManager.CurrentUser.UserRole, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter=Admin}"
+                <AppBarButton Visibility="{Binding CurrentUser.UserRole, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter=Admin}"
     Grid.Column="1" Command="{x:Bind ViewModel.MenuViewsProductsCommand}" Width="80">
                     <TextBlock Text="Products" FontSize="20"/>
                 </AppBarButton>
-                <AppBarButton Visibility="{x:Bind core:UserManager.CurrentUser.UserRole, Mode=OneWay, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter=Admin}"
+                <AppBarButton Visibility="{Binding CurrentUser.UserRole, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter=Admin}"
     Grid.Column="2" Command="{x:Bind ViewModel.MenuViewsCustomerCommand}" Width="80">
                     <TextBlock Text="Customers" FontSize="20"/>
                 </AppBarButton>
-                <AppBarButton Visibility="{x:Bind core:UserManager.CurrentUser.UserRole, Mode=OneWay, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter=Admin}"
+                <AppBarButton Visibility="{Binding CurrentUser.UserRole, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter=Admin}"
     Grid.Column="3" Command="{x:Bind ViewModel.MenuViewsReportCommand}" Width="80">
                     <TextBlock Text="Reports" FontSize="20"/>
                 </AppBarButton>
