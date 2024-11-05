@@ -8,8 +8,9 @@ import java.util.List;
 
 public interface BranchService {
     List<BranchResponse> getAllBranches();
-    BranchResponse getBranchByName(String branchId);
+    BranchResponse getBranchByName(String branchName);
     BranchResponse createBranch(BranchCreationRequest branchCreationRequest);
     BranchResponse updateBranch(BranchUpdateRequest branchUpdateRequest);
-    void deleteBranch(String branchId);
+    void setBusinessStatusToActive(String branchName);
+    void setBusinessStatusToInactive(String branchName);
 }

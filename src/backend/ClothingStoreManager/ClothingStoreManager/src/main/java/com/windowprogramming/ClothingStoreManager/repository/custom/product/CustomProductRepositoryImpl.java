@@ -110,6 +110,9 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
         TypedQuery<Product> query = entityManager.createQuery(jpql.toString(), Product.class);
         parameters.forEach(query::setParameter);
 
+        // print the query with real parameter for testing
+        System.out.println("Query: " + query.unwrap(org.hibernate.query.Query.class).getQueryString());
+
         query.setFirstResult((int) pageable.getOffset());
         query.setMaxResults(pageable.getPageSize());
 
@@ -121,5 +124,12 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 
         return new PageImpl<>(products, pageable, count);
 
+    }
+
+    @Override
+    public Long getTheLastProductId() {
+        final String query = "SELECT COALESCE(MAX(p.id), 0) AS id FROM products p;";
+
+        return (Long)entityManager.createNativeQuery(query, Long.class).getSingleResult();
     }
 }

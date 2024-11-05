@@ -7,8 +7,6 @@ import com.windowprogramming.ClothingStoreManager.dto.response.CategoryResponse;
 import java.util.List;
 
 public interface CategoryService {
-    public void deleteCategory(String categoryId);
-
     public CategoryResponse getCategoryById(String categoryId) ;
 
     public List<CategoryResponse> getAllCategories() ;
@@ -16,4 +14,7 @@ public interface CategoryService {
     public CategoryResponse createCategory(CategoryCreationRequest categoryCreationRequest);
 
     public CategoryResponse updateCategory(CategoryUpdateRequest categoryUpdateRequest);
+
+    public void setBusinessStatusToActive(String categoryId);
+    public void setBusinessStatusToInactive(String categoryId);
 }

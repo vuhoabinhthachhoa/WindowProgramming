@@ -1,9 +1,6 @@
 package com.windowprogramming.ClothingStoreManager.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -19,4 +16,14 @@ public class Branch {
     @Id
     @Column(name = "name", nullable = false)
     String name;
+
+    @Column(name = "business_status", nullable = false)
+    Boolean businessStatus;
+
+    @PrePersist
+    public void prePersist() {
+        if(this.businessStatus == null) {
+            this.businessStatus = true;
+        }
+    }
 }

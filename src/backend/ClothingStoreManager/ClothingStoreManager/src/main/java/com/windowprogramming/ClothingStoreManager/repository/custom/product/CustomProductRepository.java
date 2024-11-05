@@ -7,4 +7,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface CustomProductRepository {
     Page<Product> searchProducts(ProductSearchRequest request, Pageable pageable);
+    Long getTheLastProductId();
 }

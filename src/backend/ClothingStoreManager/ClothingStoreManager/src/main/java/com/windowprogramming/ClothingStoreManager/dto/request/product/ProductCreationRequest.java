@@ -17,9 +17,6 @@ import java.math.BigDecimal;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductCreationRequest {
 
-    @NotBlank(message = "REQUIRED_PRODUCT_CODE")
-    String code;
-
     @NotBlank(message = "REQUIRED_PRODUCT_NAME")
     String name;
 
@@ -32,14 +29,11 @@ public class ProductCreationRequest {
     @NotNull(message = "REQUIRED_SELLING_PRICE")
     BigDecimal sellingPrice;
 
-    @NotNull(message = "REQUIRED_BRANCH_ID")
-    String branchId;
+    @NotNull(message = "REQUIRED_BRANCH_NAME")
+    String branchName;
 
     @NotNull(message = "REQUIRED_INVENTORY_QUANTITY")
     Short inventoryQuantity;
-
-    @NotNull(message = "REQUIRED_BUSINESS_STATUS")
-    Boolean businessStatus;
 
     @NotNull(message = "REQUIRED_SIZE")
     Size size;

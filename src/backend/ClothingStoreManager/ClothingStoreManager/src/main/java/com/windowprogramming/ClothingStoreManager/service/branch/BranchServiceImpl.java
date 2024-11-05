@@ -4,6 +4,7 @@ import com.windowprogramming.ClothingStoreManager.dto.request.branch.BranchCreat
 import com.windowprogramming.ClothingStoreManager.dto.request.branch.BranchUpdateRequest;
 import com.windowprogramming.ClothingStoreManager.dto.response.BranchResponse;
 import com.windowprogramming.ClothingStoreManager.entity.Branch;
+import com.windowprogramming.ClothingStoreManager.entity.Product;
 import com.windowprogramming.ClothingStoreManager.exception.AppException;
 import com.windowprogramming.ClothingStoreManager.exception.ErrorCode;
 import com.windowprogramming.ClothingStoreManager.mapper.BranchMapper;
@@ -27,7 +28,7 @@ public class BranchServiceImpl implements BranchService {
     BranchMapper branchMapper;
     @Override
     public List<BranchResponse> getAllBranches() {
-        List<Branch> branches = branchRepository.findAll();
+        List<Branch> branches = branchRepository.findAllByBusinessStatus(true);
         List<BranchResponse> branchResponses = new ArrayList<>();
         for(Branch branch : branches) {
             branchResponses.add(branchMapper.toBranchResponse(branch));
@@ -62,10 +63,29 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public void deleteBranch(String branchId) {
+    public void setBusinessStatusToActive(String branchId) {
         Branch branch = branchRepository.findById(branchId)
                 .orElseThrow(() -> new AppException(ErrorCode.BRAND_NOT_FOUND));
-        productRepository.deleteAllByBranch(branch);
-        branchRepository.deleteById(branchId);
+        branch.setBusinessStatus(true);
+        List<Product> products = productRepository.findAllByBranch(branch);
+        for(Product product : products) {
+            product.setBusinessStatus(true);
+            productRepository.save(product);
+        }
+        branchRepository.save(branch);
     }
+
+    @Override
+    public void setBusinessStatusToInactive(String branchId) {
+        Branch branch = branchRepository.findById(branchId)
+                .orElseThrow(() -> new AppException(ErrorCode.BRAND_NOT_FOUND));
+        branch.setBusinessStatus(false);
+        List<Product> products = productRepository.findAllByBranch(branch);
+        for(Product product : products) {
+            product.setBusinessStatus(false);
+            productRepository.save(product);
+        }
+        branchRepository.save(branch);
+    }
+
 }

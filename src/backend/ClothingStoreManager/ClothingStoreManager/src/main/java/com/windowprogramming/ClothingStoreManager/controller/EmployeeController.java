@@ -8,6 +8,7 @@ import com.windowprogramming.ClothingStoreManager.service.employee.EmployeeServi
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,13 +25,16 @@ import java.util.List;
 @RequestMapping("/employee")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@Tag(name = "React Controller", description = "APIs for managing employees")
+@Tag(name = "Employee Controller", description = "APIs for managing employees")
 public class EmployeeController {
     EmployeeService employeeService;
 
     @NonFinal
-    @Value("${app.controller.employee.response.delete.success}")
-    String DELETE_SUCCESS;
+    @Value("${app.controller.employee.response.unemployment.success}")
+    String UNEMPLOYMENT_SUCCESS;
+
+
+    // search employee
 
     @PostMapping()
     @Operation(summary = "Create employee",
@@ -56,20 +60,19 @@ public class EmployeeController {
     @Operation(summary = "Get employee by id",
             description = "Get employee by id")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ApiResponse<EmployeeResponse> getEmployeeById(@RequestParam Long id) {
+    public ApiResponse<EmployeeResponse> getEmployeeById(@RequestParam @NotNull Long employeeId) {
         return ApiResponse.<EmployeeResponse>builder()
-                .data(employeeService.getEmployeeById(id))
+                .data(employeeService.getEmployeeById(employeeId))
                 .build();
     }
 
-    @DeleteMapping()
-    @Operation(summary = "Delete employee",
-            description = "Delete employee")
+    @PatchMapping("status/unemployed")
+    @Operation(summary = "Set the employee employment status to unemployed",
+            description = "Set the employee employment status to unemployed")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ApiResponse<Void> deleteEmployee( @RequestParam Long id) {
-        employeeService.deleteEmployee(id);
-        return ApiResponse.<Void>builder()
-                .message(DELETE_SUCCESS)
+    public ApiResponse<String> setEmploymentStatusToUnemployed(@RequestParam @NotNull Long employeeId) {
+        return ApiResponse.<String>builder()
+                .data(UNEMPLOYMENT_SUCCESS)
                 .build();
     }
 

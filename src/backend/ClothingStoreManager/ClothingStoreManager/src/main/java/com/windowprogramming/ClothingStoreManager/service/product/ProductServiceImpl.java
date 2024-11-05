@@ -65,16 +65,37 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse createProduct(ProductCreationRequest productCreationRequest, MultipartFile image) {
-        if(productRepository.existsByCodeAndSize(productCreationRequest.getCode(), productCreationRequest.getSize())) {
-            throw new AppException(ErrorCode.PRODUCT_EXISTED);
-        }
+
         Product product = productMapper.toProduct(productCreationRequest);
-        product.setBranch(branchRepository.findById(productCreationRequest.getBranchId())
+        product.setBranch(branchRepository.findById(productCreationRequest.getBranchName())
                 .orElseThrow(() -> new AppException(ErrorCode.BRANCH_NOT_FOUND)));
 
         product.setCategory(categoryRepository.findById(productCreationRequest.getCategoryId())
                 .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_FOUND)));
-        product = productRepository.save(product);
+
+        product.setId(productRepository.getTheLastProductId() + 1);
+
+        Product existedProduct = productRepository.findByNameAndCategoryAndBranch(product.getName(), product.getCategory(), product.getBranch(), product.getSize());
+        // products with the same name, size, branch, and category have the same code
+        if(existedProduct != null) {
+            String code = existedProduct.getCode();
+            // check if product with the same size, branch, category, and name existed
+           if(productRepository.existsByCodeAndSize(code, product.getSize())) {
+               throw new AppException(ErrorCode.PRODUCT_EXISTED);
+           }
+           else {
+               product.setCode(code);
+           }
+        }
+        else {
+            product.setCode(product.getCategory().getId() + product.getId());
+        }
+
+
+
+        if(productRepository.existsByCodeAndSize(product.getCode(), product.getSize())) {
+            throw new AppException(ErrorCode.PRODUCT_EXISTED);
+        }
 
         // upload image to cloudinary
         FileUploadUtils.assertAllowed(image, FileUploadUtils.IMAGE_PATTERN);
@@ -83,6 +104,8 @@ public class ProductServiceImpl implements ProductService {
         product.setImageUrl(response.getUrl());
         product.setCloudinaryImageId(response.getPublicId());
 
+        product = productRepository.save(product);
+
         return buildProductResponse(product);
     }
 
@@ -90,15 +113,8 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse updateProduct(ProductUpdateRequest productUpdateRequest, MultipartFile image) {
         Product product = productRepository.findById(productUpdateRequest.getId())
                 .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_FOUND));
+
         productMapper.updateProduct(product, productUpdateRequest);
-
-        Branch branch = branchRepository.findById(productUpdateRequest.getBranchName())
-                .orElseThrow(() -> new AppException(ErrorCode.BRANCH_NOT_FOUND));
-        product.setBranch(branch);
-
-        Category category = categoryRepository.findById(productUpdateRequest.getCategoryId())
-                .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
-        product.setCategory(category);
 
         if(image != null) {
             FileUploadUtils.assertAllowed(image, FileUploadUtils.IMAGE_PATTERN);
@@ -112,15 +128,6 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.toProductResponse(product);
     }
 
-    @Override
-    public void deleteProducts(List<String> productCodes) {
-
-    }
-
-    @Override
-    public void deleteProduct(String productCode) {
-
-    }
 
     @Override
     public void setBusinessStatusToActive(String productCode) {

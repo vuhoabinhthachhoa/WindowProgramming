@@ -35,7 +35,7 @@ public class FileUploadUtils {
         final String fileName = file.getOriginalFilename();
         final String extension = FilenameUtils.getExtension(fileName);
         if (!isAllowedExtension(fileName, pattern)) {
-            throw new AppException(ErrorCode.FILE_TYPE_NOT_ALLOWED);
+            throw new AppException(ErrorCode.FILE_PATTERN_NOT_ALLOWED);
         }
     }
 

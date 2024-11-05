@@ -15,10 +15,19 @@ import lombok.experimental.FieldDefaults;
 public class Category {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     String id;
 
     @Column(name = "name", nullable = false, unique = true)
     String name;
+
+    @Column(name = "business_status", nullable = false)
+    Boolean businessStatus;
+
+    @PrePersist
+    public void prePersist() {
+        if(this.businessStatus == null) {
+            this.businessStatus = true;
+        }
+    }
 }
 

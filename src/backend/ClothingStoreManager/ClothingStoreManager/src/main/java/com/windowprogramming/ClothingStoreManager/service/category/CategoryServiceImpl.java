@@ -4,6 +4,7 @@ import com.windowprogramming.ClothingStoreManager.dto.request.category.CategoryC
 import com.windowprogramming.ClothingStoreManager.dto.request.category.CategoryUpdateRequest;
 import com.windowprogramming.ClothingStoreManager.dto.response.CategoryResponse;
 import com.windowprogramming.ClothingStoreManager.entity.Category;
+import com.windowprogramming.ClothingStoreManager.entity.Product;
 import com.windowprogramming.ClothingStoreManager.exception.AppException;
 import com.windowprogramming.ClothingStoreManager.exception.ErrorCode;
 import com.windowprogramming.ClothingStoreManager.mapper.CategoryMapper;
@@ -27,14 +28,6 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryMapper categoryMapper;
 
     @Override
-    public void deleteCategory(String categoryId) {
-        Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
-        productRepository.deleteAllByCategory(category);
-        categoryRepository.delete(category);
-    }
-
-    @Override
     public CategoryResponse getCategoryById(String categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
@@ -43,7 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryResponse> getAllCategories() {
-        List<Category> categories = categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAllByBusinessStatus(true);
 
         List<CategoryResponse> categoryResponses = new ArrayList<>();
         for(Category category : categories) {
@@ -72,5 +65,31 @@ public class CategoryServiceImpl implements CategoryService {
         category = categoryRepository.save(category);
         return categoryMapper.toCategoryResponse(category);
 
+    }
+
+    @Override
+    public void setBusinessStatusToActive(String categoryId) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
+        category.setBusinessStatus(true);
+        List<Product> products = productRepository.findAllByCategory(category);
+        for(Product product : products) {
+            product.setBusinessStatus(true);
+            productRepository.save(product);
+        }
+        categoryRepository.save(category);
+    }
+
+    @Override
+    public void setBusinessStatusToInactive(String categoryId) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
+        category.setBusinessStatus(false);
+        List<Product> products = productRepository.findAllByCategory(category);
+        for(Product product : products) {
+            product.setBusinessStatus(false);
+            productRepository.save(product);
+        }
+        categoryRepository.save(category);
     }
 }

@@ -51,4 +51,14 @@ public class Employee {
     @Column(name = "ward")
     String ward;
 
+    @Column(name = "employment_status", nullable = false)
+    Boolean employmentStatus;
+
+    @PrePersist
+    public void prePersist() {
+        if(this.employmentStatus == null) {
+            this.employmentStatus = true;
+        }
+    }
+
 }

@@ -22,23 +22,14 @@ public class ProductUpdateRequest {
     @NotBlank(message = "REQUIRED_PRODUCT_NAME")
     String name;
 
-    @NotBlank(message = "REQUIRED_CATEGORY_ID")
-    String categoryId;
-
     @NotNull(message = "REQUIRED_IMPORT_PRICE")
     BigDecimal importPrice;
 
     @NotNull(message = "REQUIRED_SELLING_PRICE")
     BigDecimal sellingPrice;
 
-    @NotNull(message = "REQUIRED_BRANCH_ID")
-    String branchName;
-
     @NotNull(message = "REQUIRED_INVENTORY_QUANTITY")
     Short inventoryQuantity;
-
-    @NotNull(message = "REQUIRED_BUSINESS_STATUS")
-    Boolean businessStatus;
 
     BigDecimal discountPercent;
 }

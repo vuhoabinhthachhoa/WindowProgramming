@@ -63,12 +63,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void deleteEmployee(Long id) {
+    public void setEmploymentStatusToUnemployed(Long id) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.EMPLOYEE_NOT_FOUND));
-        // delete the associated user
-        userRepository.deleteAllByEmployee(employee);
-
-        employeeRepository.deleteById(id);
+        employee.setEmploymentStatus(false);
+        employeeRepository.save(employee);
     }
+
 }

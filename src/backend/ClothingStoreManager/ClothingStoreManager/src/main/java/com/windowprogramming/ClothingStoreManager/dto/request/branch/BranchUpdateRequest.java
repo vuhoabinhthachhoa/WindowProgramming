@@ -15,4 +15,5 @@ import lombok.experimental.FieldDefaults;
 public class BranchUpdateRequest {
     @NotBlank(message = "REQUIRED_BRANCH_NAME")
     String name;
+
 }

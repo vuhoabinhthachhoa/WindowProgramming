@@ -57,6 +57,11 @@ public enum ErrorCode {
     REQUIRED_TOKEN(2037, HttpStatus.BAD_REQUEST, "Token is required"),
     REQUIRED_USER_ID(2038, HttpStatus.BAD_REQUEST, "User ID is required"),
     REQUIRED_SIZE(2039, HttpStatus.BAD_REQUEST, "Size is required"),
+    REQUIRED_EMPLOYMENT_STATUS(2040, HttpStatus.BAD_REQUEST, "Employment status is required"),
+    REQUIRED_PAGE(2041, HttpStatus.BAD_REQUEST, "Page is required"),
+    REQUIRED_SORT_FIELD(2042, HttpStatus.BAD_REQUEST, "Sort field is required"),
+    REQUIRED_SORT_TYPE(2043, HttpStatus.BAD_REQUEST, "Sort type is required"),
+    REQUIRED_DISCOUNT_PERCENT(2044, HttpStatus.BAD_REQUEST, "Discount percent is required"),
 
     //    Existed Error 3xxx
     USER_EXISTED(3001, HttpStatus.BAD_REQUEST, "User existed"),
@@ -93,8 +98,8 @@ public enum ErrorCode {
 
     //    File error 7xxx
     FILE_SIZE_TOO_LARGE(7001, HttpStatus.BAD_REQUEST, "Max file size is 2MB"),
-    FILE_TYPE_NOT_ALLOWED(7002, HttpStatus.BAD_REQUEST, "Only jpg, png, gif, bmp files are allowed"),
-    FILE_UPLOAD_FAILED(7003, HttpStatus.INTERNAL_SERVER_ERROR, "File upload failed");
+    FILE_PATTERN_NOT_ALLOWED(7002, HttpStatus.BAD_REQUEST, "Only jpg, png, gif, bmp files are allowed"),
+    FILE_UPLOAD_FAILED(7003, HttpStatus.INTERNAL_SERVER_ERROR, "The file name should not contain any whitespace, must end with one of the following extensions: .jpg, .png, .gif, or .bmp, No additional characters should appear after the extension");
 
 
     final Integer code;

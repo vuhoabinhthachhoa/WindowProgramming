@@ -18,4 +18,5 @@ public class CategoryCreationRequest {
 
     @NotBlank(message = "REQUIRED_CATEGORY_NAME")
     String name;
+
 }

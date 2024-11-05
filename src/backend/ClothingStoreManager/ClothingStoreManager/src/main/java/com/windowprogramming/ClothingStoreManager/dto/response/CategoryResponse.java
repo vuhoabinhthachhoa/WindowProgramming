@@ -14,4 +14,5 @@ import lombok.experimental.FieldDefaults;
 public class CategoryResponse {
     String id;
     String name;
+    Boolean businessStatus;
 }

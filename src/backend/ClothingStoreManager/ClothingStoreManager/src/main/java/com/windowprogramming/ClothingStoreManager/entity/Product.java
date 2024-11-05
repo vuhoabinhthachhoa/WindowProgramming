@@ -18,7 +18,6 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     Long id;
 
@@ -59,4 +58,11 @@ public class Product {
 
     @Column(name = "discount_percent", precision = 3, scale = 2)
     BigDecimal discountPercent;
+
+    @PrePersist
+    public void prePersist() {
+        if(this.businessStatus == null) {
+            this.businessStatus = true;
+        }
+    }
 }
