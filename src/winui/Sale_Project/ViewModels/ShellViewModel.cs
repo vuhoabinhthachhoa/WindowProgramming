@@ -17,7 +17,7 @@ public partial class ShellViewModel : ObservableRecipient
     [ObservableProperty]
     private bool isBackEnabled;
 
-    private readonly IDao _dataAccess;
+    private readonly IUserDao _dataAccess;
     private User _currentUser = new();
 
     public User CurrentUser

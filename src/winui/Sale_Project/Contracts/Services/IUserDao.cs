@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Sale_Project.Contracts.Services;
 
 // IDao.cs
-public interface IDao
+public interface IUserDao
 {
     Task<List<Sale_Project.Core.Models.User>> GetUsersAsync();
 }

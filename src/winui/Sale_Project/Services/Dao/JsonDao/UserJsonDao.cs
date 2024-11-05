@@ -7,7 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Sale_Project.Contracts.Services;
 
-public class UserJsonDao : IDao
+public class UserJsonDao : IUserDao
 {
     private readonly string _filePath;
 
