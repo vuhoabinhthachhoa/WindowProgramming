@@ -1,0 +1,23 @@
+[
+  {
+    "Username": "111",
+    "Password": "9uCh4qxBlFqap/\u002BKiqoM68EqO8yYGpKa1c\u002BBCgkOEa4=",
+    "Email": "111@gmail.com",
+    "UserRole": "User",
+    "StoreName": "Admin Store"
+  },
+  {
+    "Username": "admin",
+    "Password": "JAvlGPq9JyTdtvBO6x2llnRI1\u002BgxwIyPqCKAn3THIKk=",
+    "Email": "admin@gmail.com",
+    "UserRole": "Admin",
+    "StoreName": "Super"
+  },
+  {
+    "Username": "222",
+    "Password": "m4cVEjJ8Cc6R3WSbP5amO3QI7yZ8jMVxARTmKXMMth8=",
+    "Email": "222@gmail.com",
+    "UserRole": "Admin",
+    "StoreName": "zzz"
+  }
+]
