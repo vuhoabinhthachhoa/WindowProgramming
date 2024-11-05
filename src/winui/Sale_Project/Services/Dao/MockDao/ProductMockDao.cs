@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sale_Project.Contracts.Services;
 using Sale_Project.Core.Models;
-using static Sale_Project.IDao;
+using static Sale_Project.Contracts.Services.IProductDao;
 
-namespace Sale_Project;
-public class MockDao : IDao
+namespace Sale_Project.Services.Dao.MockDao;
+public class ProductMockDao : IProductDao
 {
     public Tuple<List<Product>, int> GetProducts(
         int page, int rowsPerPage,
@@ -16,7 +17,6 @@ public class MockDao : IDao
     )
     {
         var Products = new List<Product>() {
-            // create new Product
             new Product() {
                 ID = 1,
                 Name = "Product 1",
@@ -26,7 +26,7 @@ public class MockDao : IDao
                 BranchID = "1",
                 InventoryQuantity = 10,
                 Images = "image1.jpg",
-                BusinessStatus = "Active",
+                BusinessStatus = true,
                 Size = "M"
             },
             new Product() {
@@ -38,7 +38,7 @@ public class MockDao : IDao
                 BranchID = "2",
                 InventoryQuantity = 20,
                 Images = "image2.jpg",
-                BusinessStatus = "Active",
+                BusinessStatus = true,
                 Size = "L"
             },
             new Product() {
@@ -50,7 +50,7 @@ public class MockDao : IDao
                 BranchID = "3",
                 InventoryQuantity = 30,
                 Images = "image3.jpg",
-                BusinessStatus = "Active",
+                BusinessStatus = true,
                 Size = "S"
             },
             new Product() {
@@ -62,7 +62,7 @@ public class MockDao : IDao
                 BranchID = "4",
                 InventoryQuantity = 40,
                 Images = "image4.jpg",
-                BusinessStatus = "Active",
+                BusinessStatus = true,
                 Size = "XL"
             },
             new Product() {
@@ -74,7 +74,7 @@ public class MockDao : IDao
                 BranchID = "5",
                 InventoryQuantity = 50,
                 Images = "image5.jpg",
-                BusinessStatus = "Active",
+                BusinessStatus = true,
                 Size = "XXL"
             },
             new Product() {
@@ -86,7 +86,7 @@ public class MockDao : IDao
                 BranchID = "6",
                 InventoryQuantity = 60,
                 Images = "image6.jpg",
-                BusinessStatus = "Active",
+                BusinessStatus = true,
                 Size = "M"
             },
             new Product() {
@@ -98,7 +98,7 @@ public class MockDao : IDao
                 BranchID = "7",
                 InventoryQuantity = 70,
                 Images = "image7.jpg",
-                BusinessStatus = "Active",
+                BusinessStatus = true,
                 Size = "L"
             },
         };
@@ -143,14 +143,14 @@ public class MockDao : IDao
         return true;
     }
 
-    public bool AddProduct(Product info)
+    public (bool, string) AddProduct(Product info)
     {
-        return true;
+        return (true, "");
     }
 
-    public bool UpdateProduct(Product info)
+    public (bool, string) UpdateProduct(Product info)
     {
-        return true;
+        return (true, "");
     }
 }
 

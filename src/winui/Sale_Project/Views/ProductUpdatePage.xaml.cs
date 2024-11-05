@@ -14,6 +14,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Sale_Project.Contracts.Services;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,14 +27,14 @@ public sealed partial class ProductUpdatePage : Page
 {
     public class ProductUpdatePageViewModel
     {
-        IDao _dao;
+        IProductDao _dao;
         public ProductUpdatePageViewModel()
         {
-            _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
+            _dao = ServiceFactory.GetChildOf(typeof(IProductDao)) as IProductDao;
         }
         public Product Info { get; set; } = new Product();
 
-        public bool Update()
+        public (bool, string) UpdateProduct()
         {
             return _dao.UpdateProduct(Info);
         }
@@ -54,18 +55,28 @@ public sealed partial class ProductUpdatePage : Page
 
     private async void submitButton_Click(object sender, RoutedEventArgs e)
     {
-        bool success = ViewModel.Update();
+        var (success, message) = ViewModel.UpdateProduct();
 
         if (success)
         {
             await new ContentDialog()
             {
                 XamlRoot = this.Content.XamlRoot,
-                Title = "Update  Product",
+                Title = "Update Product",
                 Content = "Successfully updated Product:" + ViewModel.Info.Name,
                 CloseButtonText = "OK"
             }.ShowAsync();
             Frame.GoBack();
+        }
+        else
+        {
+            await new ContentDialog()
+            {
+                XamlRoot = this.Content.XamlRoot,
+                Title = "Update Product",
+                Content = message,
+                CloseButtonText = "OK"
+            }.ShowAsync();
         }
     }
 

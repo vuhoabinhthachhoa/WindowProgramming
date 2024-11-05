@@ -68,7 +68,6 @@ public partial class App : Application
 
             // Core Services
             services.AddSingleton<IFileService, FileService>();
-            services.AddSingleton<IProductDataService, ProductDataService>();
 
             // Views and ViewModels
             services.AddTransient<SettingsViewModel>();
@@ -106,8 +105,6 @@ public partial class App : Application
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        ServiceFactory.Register(typeof(IDao), typeof(JsonDao));
-
         base.OnLaunched(args);
 
         App.GetService<IAppNotificationService>().Show(string.Format("AppNotificationSamplePayload".GetLocalized(), AppContext.BaseDirectory));

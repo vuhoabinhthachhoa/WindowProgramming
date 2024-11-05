@@ -14,7 +14,10 @@ public class ServiceFactory
 
     public static void Register(Type parent, Type child)
     {
-        _choices.Add(parent.Name, child);
+        if (!_choices.ContainsKey(parent.Name))
+        {
+            _choices.Add(parent.Name, child);
+        }
     }
     public static object GetChildOf(Type parent)
     {

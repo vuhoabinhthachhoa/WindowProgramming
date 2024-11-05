@@ -6,7 +6,6 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using Sale_Project;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,6 +14,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Sale_Project.Core.Models;
+using Sale_Project.Contracts.Services;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -28,15 +28,16 @@ public sealed partial class ProductAddPage : Page
     {
         public ProductAddPageViewModel()
         {
-            _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
+            _dao = ServiceFactory.GetChildOf(typeof(IProductDao)) as IProductDao;
         }
         public Product Info { get; set; } = new Product();
-        IDao _dao;
+        IProductDao _dao;
 
-        public bool AddProduct()
+        public (bool, string) AddProduct()
         {
-            Info.Images = "/Assets/avatar07.jpg";
             return _dao.AddProduct(Info);
+            //string message = result ? "Product added successfully." : "Failed to add employee.";
+            //return (result, message);
         }
     }
 
@@ -47,21 +48,32 @@ public sealed partial class ProductAddPage : Page
         this.InitializeComponent();
     }
 
+
+
     private async void submitButton_Click(object sender, RoutedEventArgs e)
     {
-        bool success = ViewModel.AddProduct();
+        var (success, message) = ViewModel.AddProduct();
 
         if (success)
         {
-
             await new ContentDialog()
             {
                 XamlRoot = this.Content.XamlRoot,
-                Title = "Insert new employee",
-                Content = "Successfully inserted employee:" + ViewModel.Info.Name,
+                Title = "Insert new product",
+                Content = "Successfully inserted product: " + ViewModel.Info.Name,
                 CloseButtonText = "OK"
             }.ShowAsync();
             Frame.GoBack();
+        }
+        else
+        {
+            await new ContentDialog()
+            {
+                XamlRoot = this.Content.XamlRoot,
+                Title = "Insert new product",
+                Content = message,
+                CloseButtonText = "OK"
+            }.ShowAsync();
         }
     }
 
@@ -70,4 +82,3 @@ public sealed partial class ProductAddPage : Page
         Frame.GoBack();
     }
 }
-

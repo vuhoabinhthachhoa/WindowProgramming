@@ -166,12 +166,12 @@ GridLinesVisibility="Horizontal">-->
                 <!-- TODO: Replace column definitions to match real data. Consider adding Header values to Resources.resw. -->
                 <controls:DataGridTextColumn Binding="{Binding ID}" Header="Mã hàng" Tag="ID" />
                 <controls:DataGridTextColumn Binding="{Binding Name}" Header="Tên hàng" Tag="Name"/>
-                <controls:DataGridTextColumn Binding="{Binding Category}" Header="Loại hàng" Tag="Category"/>
+                <controls:DataGridTextColumn Binding="{Binding CategoryID}" Header="Mã danh mục" Tag="Category"/>
                 <controls:DataGridTextColumn Binding="{Binding ImportPrice}" Header="Giá vốn" Tag="ImportPrice"/>
-                <controls:DataGridTextColumn Binding="{Binding SellingPrice}" Header="Gía bán" Tag="SellingPrice" />
+                <controls:DataGridTextColumn Binding="{Binding SellingPrice}" Header="Giá bán" Tag="SellingPrice" />
                 <controls:DataGridTextColumn Binding="{Binding BranchID}" Header="Mã nhánh" Tag="BranchID" />
                 <controls:DataGridTextColumn Binding="{Binding InventoryQuantity}" Header="Tồn kho" Tag="InventoryQuantity" />
-                <controls:DataGridTextColumn Binding="{Binding Images}" Header="Mã nhà cung cấp" Tag="Images" />
+                <controls:DataGridTextColumn Binding="{Binding Images}" Header="Ảnh" Tag="Images" />
                 <controls:DataGridTextColumn Binding="{Binding BusinessStatus}" Header="Trạng thái" Tag="BusinessStatus" />
                 <controls:DataGridTextColumn Binding="{Binding Size}" Header="Size" Tag="Size" />
                 <controls:DataGridTextColumn Binding="{Binding DiscountPercent}" Header="Giảm giá" Tag="DiscountPercent" />

@@ -12,57 +12,57 @@ public class Product : INotifyPropertyChanged
     public int ID
     {
         get; set;
-    } 
+    } = 0;
 
     public string Name
     {
         get; set;
-    } 
-
+    } = "";
+     
     public string CategoryID
     {
         get; set;
-    } 
+    } = "";
 
     public int ImportPrice
     {
         get; set;
-    }
+    } = 0;
 
     public int SellingPrice
     {
         get; set;
-    } 
+    } = 0;
 
     public string BranchID
     {
         get; set;
-    } 
+    } = "";
 
     public int InventoryQuantity
     {
         get; set;
-    } 
+    } = 0;
 
     public string Images
     {
         get; set;
-    } 
+    } = "";
 
-    public string BusinessStatus
+    public bool BusinessStatus
     {
         get; set;
-    }
+    } = false;
 
     public string Size
     {
         get; set;
-    } 
+    } = "";
 
     public double DiscountPercent
     {
         get; set;
-    } 
+    } = 0;
 
     public event PropertyChangedEventHandler PropertyChanged;
 }

@@ -10,7 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel HorizontalAlignment="Left">
-        <TextBlock Text="Update new Product" Style="{StaticResource TitleTextBlockStyle}"/>
+        <TextBlock Text="Update Product" Style="{StaticResource TitleTextBlockStyle}"/>
         <local:ProductUserControl Width="350" 
                                    Info="{x:Bind ViewModel.Info, Mode=TwoWay}" />
         <StackPanel Orientation="Horizontal">

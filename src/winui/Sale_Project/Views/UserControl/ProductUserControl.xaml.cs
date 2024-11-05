@@ -20,6 +20,9 @@ using Sale_Project.Core.Models;
 namespace Sale_Project;
 public sealed partial class ProductUserControl : UserControl
 {
+    private readonly string[] Size = new string[] { "S", "M", "L", "XL" };
+    private readonly bool[] BusinessStatus = new bool[] { true, false };
+
     public static readonly DependencyProperty InfoProperty
         = DependencyProperty.Register(
             "Info", typeof(Product),

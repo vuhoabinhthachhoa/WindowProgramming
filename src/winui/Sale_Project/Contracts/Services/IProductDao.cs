@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Sale_Project.Core.Models;
 
-namespace Sale_Project;
+namespace Sale_Project.Contracts.Services;
 
-public interface IDao
+public interface IProductDao
 {
     public enum SortType
     {
@@ -21,7 +21,6 @@ public interface IDao
     );
 
     bool DeleteProduct(int id);
-    bool AddProduct(Product info);
-    bool UpdateProduct(Product info);
+    (bool, string) AddProduct(Product info);
+    (bool, string) UpdateProduct(Product info);
 }
-

@@ -1,5 +1,4 @@
 ﻿using Sale_Project.Services;
-using Sale_Project;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,15 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Services.Maps;
-using static Sale_Project.IDao;
+using static Sale_Project.Contracts.Services.IProductDao;
 using Sale_Project.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Sale_Project.Contracts.ViewModels;
+using Sale_Project.Contracts.Services;
+using Sale_Project.Services.Dao.JsonDao;
 
 namespace Sale_Project;
 public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChanged
 {
-    IDao _dao;
+    IProductDao _dao;
     public ObservableCollection<Product> Products
     {
         get; set;
@@ -26,7 +27,7 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
     {
         get
         {
-            return $"Displaying {Products.Count}/{RowsPerPage} of total {TotalItems} item(s)";
+            return $"Displaying {Products.Count}/{RowsPerPage} of total {TotalProducts} item(s)";
         }
     }
 
@@ -34,7 +35,7 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
     {
         get; set;
     }
-    public PageInfo SelectedPageInfoItem
+    public PageInfo SelectedPageInfoProduct
     {
         get; set;
     }
@@ -48,7 +49,7 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
     {
         get; set;
     }
-    public int TotalItems { get; set; } = 0;
+    public int TotalProducts { get; set; } = 0;
     public int RowsPerPage
     {
         get; set;
@@ -81,9 +82,10 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
 
     public ProductViewModel()
     {
+        ServiceFactory.Register(typeof(IProductDao), typeof(ProductJsonDao));
         RowsPerPage = 10;
         CurrentPage = 1;
-        _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
+        _dao = ServiceFactory.GetChildOf(typeof(IProductDao)) as IProductDao;
         
         LoadData();
     }   
@@ -110,11 +112,11 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
             items
         );
 
-        if (count != TotalItems)
+        if (count != TotalProducts)
         { // Recreate PageInfos list
-            TotalItems = count;
-            TotalPages = (TotalItems / RowsPerPage) +
-                (((TotalItems % RowsPerPage) == 0) ? 0 : 1);
+            TotalProducts = count;
+            TotalPages = (TotalProducts / RowsPerPage) +
+                (((TotalProducts % RowsPerPage) == 0) ? 0 : 1);
 
             PageInfos = new();
             for (int i = 1; i <= TotalPages; i++)
@@ -135,7 +137,7 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
         if (PageInfos.Count > 0)
         {
 
-            SelectedPageInfoItem = PageInfos[CurrentPage - 1];
+            SelectedPageInfoProduct = PageInfos[CurrentPage - 1];
         }
     }
     public void GoToPage(int page)

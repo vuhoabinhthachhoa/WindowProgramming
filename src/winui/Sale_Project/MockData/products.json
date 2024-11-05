@@ -8,7 +8,7 @@
     "BranchID": "1",
     "InventoryQuantity": 0,
     "Images": "Image 1",
-    "BusinessStatus": "Đang kinh doanh",
+    "BusinessStatus": true,
     "Size": "M",
     "DiscountPercent": 0.0
   },
@@ -21,7 +21,7 @@
     "BranchID": "2",
     "InventoryQuantity": 0,
     "Images": "Image 2",
-    "BusinessStatus": "Ngừng kinh doanh",
+    "BusinessStatus": false,
     "Size": "M",
     "DiscountPercent": 0.0
   },
@@ -34,7 +34,7 @@
     "BranchID": "3",
     "InventoryQuantity": 0,
     "Images": "Image 3",
-    "BusinessStatus": "Đang kinh doanh",
+    "BusinessStatus": true,
     "Size": "M",
     "DiscountPercent": 0.0
   },
@@ -47,7 +47,7 @@
     "BranchID": "4",
     "InventoryQuantity": 0,
     "Images": "Image 4",
-    "BusinessStatus": "Ngừng kinh doanh",
+    "BusinessStatus": false,
     "Size": "M",
     "DiscountPercent": 0.0
   },
@@ -60,7 +60,7 @@
     "BranchID": "5",
     "InventoryQuantity": 0,
     "Images": "Image 5",
-    "BusinessStatus": "Đang kinh doanh",
+    "BusinessStatus": true,
     "Size": "M",
     "DiscountPercent": 0.0
   },
@@ -73,7 +73,7 @@
     "BranchID": "6",
     "InventoryQuantity": 0,
     "Images": "Image 6",
-    "BusinessStatus": "Ngừng kinh doanh",
+    "BusinessStatus": false,
     "Size": "M",
     "DiscountPercent": 0.0
   },
@@ -86,7 +86,7 @@
     "BranchID": "7",
     "InventoryQuantity": 0,
     "Images": "Image 7",
-    "BusinessStatus": "Đang kinh doanh",
+    "BusinessStatus": true,
     "Size": "M",
     "DiscountPercent": 0.0
   },
@@ -99,7 +99,7 @@
     "BranchID": "8",
     "InventoryQuantity": 0,
     "Images": "Image 8",
-    "BusinessStatus": "Ngừng kinh doanh",
+    "BusinessStatus": false,
     "Size": "M",
     "DiscountPercent": 0.0
   },
@@ -112,7 +112,7 @@
     "BranchID": "9",
     "InventoryQuantity": 0,
     "Images": "Image 9",
-    "BusinessStatus": "Đang kinh doanh",
+    "BusinessStatus": true,
     "Size": "M",
     "DiscountPercent": 0.0
   },
@@ -125,7 +125,7 @@
     "BranchID": "10",
     "InventoryQuantity": 0,
     "Images": "Image 11",
-    "BusinessStatus": "Ngừng kinh doanh",
+    "BusinessStatus": false,
     "Size": "M",
     "DiscountPercent": 0.0
   },
@@ -138,7 +138,7 @@
     "BranchID": "11",
     "InventoryQuantity": 0,
     "Images": "Image 12",
-    "BusinessStatus": "Đang kinh doanh",
+    "BusinessStatus": true,
     "Size": "M",
     "DiscountPercent": 0.0
   },
@@ -151,7 +151,7 @@
     "BranchID": "12",
     "InventoryQuantity": 0,
     "Images": "Image 13",
-    "BusinessStatus": "Ngừng kinh doanh",
+    "BusinessStatus": false,
     "Size": "M",
     "DiscountPercent": 0.0
   },
@@ -164,7 +164,7 @@
     "BranchID": "13",
     "InventoryQuantity": 0,
     "Images": "Image 14",
-    "BusinessStatus": "Đang kinh doanh",
+    "BusinessStatus": true,
     "Size": "M",
     "DiscountPercent": 0.0
   },
@@ -177,7 +177,7 @@
     "BranchID": "14",
     "InventoryQuantity": 0,
     "Images": "Image 15",
-    "BusinessStatus": "Ngừng kinh doanh",
+    "BusinessStatus": false,
     "Size": "M",
     "DiscountPercent": 0.0
   }
