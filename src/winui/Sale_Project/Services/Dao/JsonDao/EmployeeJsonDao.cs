@@ -128,6 +128,7 @@ public class EmployeeJsonDao : IEmployeeDao
         Employees = System.Text.Json.JsonSerializer.Deserialize<List<Employee>>(json);
 
         var item = Employees.Find(e => e.ID == id);
+        if (item == null) return false;
         Employees.Remove(item);
 
         var convertedJson = JsonConvert.SerializeObject(Employees, Formatting.Indented);
@@ -164,6 +165,8 @@ public class EmployeeJsonDao : IEmployeeDao
         Employees = System.Text.Json.JsonSerializer.Deserialize<List<Employee>>(json);
 
         var item = Employees.Find(e => e.ID == info.ID);
+        if (item == null) return (false, "Employee not found");
+        item.ID = info.ID;
         item.Name = info.Name;
         item.Phonenumber = info.Phonenumber;
         item.CitizenID = info.CitizenID;
