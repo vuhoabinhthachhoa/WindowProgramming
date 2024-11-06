@@ -1,37 +1,16 @@
 [
   {
-    "Username": "admin",
-    "Password": "admin123",
-    "Email": "admin@example.com",
-    "UserRole": "Admin",
-    "StoreName": "Admin Store"
-  },
-  {
     "Username": "user",
     "Password": "user123",
-    "Email": "user@example.com",
-    "UserRole": "User",
-    "StoreName": "Admin Store"
+    "Email": "user@gmail.com",
+    "UserRole": null,
+    "StoreName": null
   },
   {
-    "Username": "user1",
-    "Password": "user123",
-    "Email": "user1@gmail.com",
-    "UserRole": "User",
-    "StoreName": "Admin Store"
-  },
-  {
-    "Username": "admin",
-    "Password": "admin123",
-    "Email": "123",
-    "UserRole": "Admin",
-    "StoreName": "store1"
-  },
-  {
-    "Username": "tuanvu",
-    "Password": "tuanvu123",
-    "Email": "tuanvu@gmail.com",
-    "UserRole": "Admin",
-    "StoreName": "store2"
+    "Username": "newUser",
+    "Password": "newUser123",
+    "Email": "newuser@gmail.com",
+    "UserRole": null,
+    "StoreName": null
   }
 ]
