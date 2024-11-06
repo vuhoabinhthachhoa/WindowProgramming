@@ -23,9 +23,7 @@
         Grid.Row="0"
         x:Uid="Employee_Title"
         Style="{StaticResource PageTitleStyle}" />
-        <AutoSuggestBox QueryIcon="Find" TextChanged="AutoSuggestBox_TextChanged" Name="SuggestionOutput"
-                        Text="{x:Bind ViewModel.Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                        Grid.Row="0" Grid.Column="1" PlaceholderText="Tìm theo mã, tên nhân viên"  Margin="10" />
+       
         <StackPanel Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Content="Thêm nhân viên"
                     Click="addEmployeeButton_Click"
@@ -42,7 +40,7 @@
 		<ScrollViewer VerticalScrollBarVisibility="Auto"  Grid.Column="0" Grid.Row="1">
 			<Grid>
 				<StackPanel>
-					<StackPanel Width="200" Orientation="Vertical" Background="White">
+					<!--<StackPanel Width="200" Orientation="Vertical" Background="White">
 						<TextBlock Text="Chi nhánh làm việc" />
 						<ComboBox IsEditable="True" Width="200" PlaceholderText="Chọn chi nhánh"/>
 					</StackPanel>
@@ -50,28 +48,82 @@
 					<StackPanel Width="200" Orientation="Vertical" Background="White">
 						<TextBlock Text="Chi nhánh trả lương" />
 						<ComboBox IsEditable="True" Width="200" PlaceholderText="Chọn chi nhánh"/>
-					</StackPanel>
+					</StackPanel>-->
 
-					<Expander x:Name="Expander1" VerticalAlignment="Top" Width="200">
+                    <Expander x:Name="Name_Expander" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Tên nhân viên" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <AutoSuggestBox QueryIcon="Find" TextChanged="AutoSuggestBox_TextChanged" Name="SuggestionOutput"
+                 Text="{x:Bind ViewModel.Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                 Grid.Row="0" Grid.Column="1" PlaceholderText="Tìm theo tên nhân viên"  Margin="10" />
+                        </Expander.Content>
+                    </Expander>
+
+                    <Expander x:Name="ID_Expander" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Mã nhân viên" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <ComboBox IsEditable="True" Width="200" PlaceholderText="" />
+                        </Expander.Content>
+                    </Expander>
+
+                    <Expander x:Name="Phonenumber_Expander" VerticalAlignment="Top" Width="200">
 						<Expander.Header>
-							<TextBlock Text="Phòng ban" />
+							<TextBlock Text="Số điện thoại" />
 						</Expander.Header>
 						<Expander.Content>
-							<ComboBox IsEditable="True" Width="200" PlaceholderText="Chọn phòng ban"/>
+							<ComboBox IsEditable="True" Width="200" PlaceholderText=""/>
 						</Expander.Content>
 					</Expander>
 
-					<Expander x:Name="Expander2" VerticalAlignment="Top" Width="200">
-						<Expander.Header>
-							<TextBlock Text="Chức danh" />
-						</Expander.Header>
-						<Expander.Content>
-							<ComboBox IsEditable="True" Width="200" PlaceholderText="Chọn chức danh"/>
-						</Expander.Content>
-					</Expander>
+                    <Expander x:Name="CitizenID_Expander" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="CMND/CCCD" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <ComboBox IsEditable="True" Width="200" PlaceholderText=""/>
+                        </Expander.Content>
+                    </Expander>
 
+                    <Expander x:Name="JobTitle_Expander" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Chức vụ" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <ComboBox IsEditable="True" Width="200" PlaceholderText=""/>
+                        </Expander.Content>
+                    </Expander>
 
-				</StackPanel>
+                    <Expander x:Name="Salary_Expander" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Lương" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <StackPanel Orientation="Vertical">
+                                <NumberBox Header="Từ" Width="200" Value="0" Minimum="0"/>
+                                <NumberBox Header="Đến" Width="200" Value="0" Minimum="0"/>
+                            </StackPanel>
+                        </Expander.Content>
+                    </Expander>
+
+                    <Expander x:Name="EmployeeStatus_Expander" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Trạng thái làm việc" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <Grid>
+                            <ComboBox Width="200" PlaceholderText="">
+                                <x:String>Đang làm việc</x:String>
+                                <x:String>Đã nghỉ việc</x:String>
+                            </ComboBox>
+                            </Grid>
+                        </Expander.Content>
+                    </Expander>
+
+                </StackPanel>
 			</Grid>
 		</ScrollViewer>
 		<controls:DataGrid
@@ -80,7 +132,9 @@
 			GridLinesVisibility="Horizontal"
 			ItemsSource="{x:Bind ViewModel.Employees, Mode=OneWay}"
             Sorting="dataGrid_Sorting"
-            x:Name="itemsDataGrid">
+            x:Name="itemsDataGrid"
+            >
+            
 		<!--<controls:DataGrid
 Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
 AutoGenerateColumns="False"

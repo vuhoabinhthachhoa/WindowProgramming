@@ -1,4 +1,4 @@
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -22,7 +22,7 @@ using Sale_Project.Helpers;
 namespace Sale_Project;
 public sealed partial class EmployeeUserControl : UserControl, INotifyPropertyChanged
 {
-    private readonly bool[] EmployeeStatus = new bool[] { true, false };
+    private readonly string[] EmployeeStatus = new string[] { "Đang làm việc", "Đã nghỉ việc" };
     private readonly string[] JobTitle = new string[] { "Manager", "Salesperson", "Cashier", "Stock Clerk", "Customer Service Representative" };
 
     private string _warning;

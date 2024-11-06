@@ -25,25 +25,12 @@ namespace Sale_Project;
 /// </summary>
 public sealed partial class EmployeeUpdatePage : Page
 {
-    public class EmployeeUpdatePageViewModel
-    {
-        IEmployeeDao _dao;
-        public EmployeeUpdatePageViewModel()
-        {
-            _dao = ServiceFactory.GetChildOf(typeof(IEmployeeDao)) as IEmployeeDao;
-        }
-        public Employee Info { get; set; } = new Employee();
 
-        public (bool, string) UpdateEmployee()
-        {
-            return _dao.UpdateEmployee(Info);
-        }
-    }
-
-    public EmployeeUpdatePageViewModel ViewModel { get; set; } = new EmployeeUpdatePageViewModel();
+    public EmployeeUpdatePageViewModel ViewModel { get; set; }
 
     public EmployeeUpdatePage()
     {
+        ViewModel = new EmployeeUpdatePageViewModel();
         this.InitializeComponent();
     }
     protected override void OnNavigatedTo(NavigationEventArgs e)

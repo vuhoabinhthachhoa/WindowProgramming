@@ -27,7 +27,7 @@ public class EmployeeJsonDao : IEmployeeDao
         if (string.IsNullOrWhiteSpace(info.JobTitle)) return (false, "JobTitle is required");
         if (info.Salary <= 0) return (false, "Salary must be greater than 0");
         if (string.IsNullOrWhiteSpace(info.Email) || !IsValidEmail(info.Email)) return (false, "Invalid Email");
-        if (info.DateOfBirth==DateTime.MinValue) return (false, "DateOfBirth is required");
+        if (info.DateOfBirth==DateOnly.MinValue) return (false, "DateOfBirth is required");
         if (string.IsNullOrWhiteSpace(info.Address)) return (false, "Address is required");
         //if (string.IsNullOrWhiteSpace(info.Area)) return (false, "Area is required");
         //if (string.IsNullOrWhiteSpace(info.Ward)) return (false, "Ward is required");
