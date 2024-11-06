@@ -81,3 +81,10 @@
    - Các thành viên sẽ commit code lên một repository chung.
    - Sau khi các feature hoàn thành sẽ được chạy thử với test. Sau khi pass tests, thành viên sẽ tạo pull request để các thành viên khác vào review. Sau khi thống nhất, mã nguồn được merge vào branch main.
    - Link repository: [vuhoabinhthachhoa/WindowProgramming](https://github.com/vuhoabinhthachhoa/WindowProgramming)
+## Điểm tự đánh giá
+
+| STT | MSSV     | Họ tên             | Điểm tự đánh giá |
+|-----|----------|--------------------|--------------------|
+| 1   | 22120303 | Mai Xuân Quý       | 9                  |
+| 2   | 22120417 | Đỗ Thị Ánh Tuyết   | 9                  |
+| 3   | 22120436 | Lê Cao Tuấn Vũ     | 9                  |
