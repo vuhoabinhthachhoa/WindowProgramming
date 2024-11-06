@@ -1,6 +1,8 @@
-﻿namespace Sale_Project.Core.Models;
+﻿using System.ComponentModel;
 
-public class TopSale
+namespace Sale_Project.Core.Models;
+
+public class TopSale : INotifyPropertyChanged
 {
     public string Name
     {
@@ -10,4 +12,8 @@ public class TopSale
     {
         get; set;
     }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+
 }

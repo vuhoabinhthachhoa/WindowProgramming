@@ -33,5 +33,12 @@
     "Email": "tuanvu@gmail.com",
     "UserRole": "Admin",
     "StoreName": "store2"
+  },
+  {
+    "Username": "minh",
+    "Password": "minh123",
+    "Email": "minh@gmail.com",
+    "UserRole": "User",
+    "StoreName": "store2"
   }
 ]

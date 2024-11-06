@@ -152,5 +152,19 @@
     "Area": "Midtown",
     "Ward": "12",
     "EmployeeStatus": "Đang làm việc"
+  },
+  {
+    "ID": 4,
+    "Name": "Nguyễn Minh",
+    "Phonenumber": "0386040733",
+    "CitizenID": "1234567654",
+    "JobTitle": "Quản Lý",
+    "Salary": 1200,
+    "Email": "vu@gmail.com",
+    "DateOfBirth": "1924-01-10",
+    "Address": "Tp HCM",
+    "Area": "Thủ Đức",
+    "Ward": "2",
+    "EmployeeStatus": "Đang làm việc"
   }
 ]

@@ -101,7 +101,7 @@ public partial class ShellViewModel : ObservableRecipient
 
     public async Task RegisterAsync(string username, string password, string email, string storeName)
     {
-      
+
 
         var users = await _iUserDao.GetUsersAsync();
 
@@ -164,6 +164,11 @@ public partial class ShellViewModel : ObservableRecipient
         get;
     }
 
+    public ICommand MenuViewsEmployeeCommand
+    {
+        get;
+    }
+
     public ShellViewModel(INavigationService navigationService)
     {
         _iUserDao = new UserJsonDao();
@@ -178,6 +183,8 @@ public partial class ShellViewModel : ObservableRecipient
         MenuViewsCustomerCommand = new RelayCommand(OnMenuViewsCustomer);
         MenuViewsProductsCommand = new RelayCommand(OnMenuViewsProducts);
         MenuViewsDashboardCommand = new RelayCommand(OnMenuViewsDashboard);
+        MenuViewsEmployeeCommand = new RelayCommand(OnMenuViewsEmployee);
+
     }
 
     private void OnNavigated(object sender, NavigationEventArgs e) => IsBackEnabled = NavigationService.CanGoBack;
@@ -199,4 +206,7 @@ public partial class ShellViewModel : ObservableRecipient
     private void OnMenuViewsDashboard() => NavigationService.NavigateTo(typeof(DashboardViewModel).FullName!);
 
     private void OnMenuViewsMain() => NavigationService.NavigateTo(typeof(DashboardViewModel).FullName!);
+
+    private void OnMenuViewsEmployee() => NavigationService.NavigateTo(typeof(EmployeeViewModel).FullName!);
+
 }
