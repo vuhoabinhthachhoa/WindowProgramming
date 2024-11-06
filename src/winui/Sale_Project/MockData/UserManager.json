@@ -1,0 +1,44 @@
+[
+  {
+    "Username": "admin",
+    "Password": "admin123",
+    "Email": "admin@example.com",
+    "UserRole": "Admin",
+    "StoreName": "Admin Store"
+  },
+  {
+    "Username": "user",
+    "Password": "user123",
+    "Email": "user@example.com",
+    "UserRole": "User",
+    "StoreName": "Admin Store"
+  },
+  {
+    "Username": "user1",
+    "Password": "user123",
+    "Email": "user1@gmail.com",
+    "UserRole": "User",
+    "StoreName": "Admin Store"
+  },
+  {
+    "Username": "admin",
+    "Password": "admin123",
+    "Email": "123",
+    "UserRole": "Admin",
+    "StoreName": "store1"
+  },
+  {
+    "Username": "tuanvu",
+    "Password": "tuanvu123",
+    "Email": "tuanvu@gmail.com",
+    "UserRole": "Admin",
+    "StoreName": "store2"
+  },
+  {
+    "Username": "minh",
+    "Password": "minh123",
+    "Email": "minh@gmail.com",
+    "UserRole": "User",
+    "StoreName": "store2"
+  }
+]

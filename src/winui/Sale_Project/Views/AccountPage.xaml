@@ -6,19 +6,120 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-	<Grid x:Name="ContentArea">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="48" />
-			<RowDefinition Height="*" />
-		</Grid.RowDefinitions>
+    <Grid x:Name="ContentArea">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock
+        Grid.Row="0"
+        x:Uid="Account_Title"
+        Style="{StaticResource PageTitleStyle}" FontSize="40" FontWeight="Bold" Margin="20 0 0 20"/>
 
-		<TextBlock
-            Grid.Row="0"
-            x:Uid="Product_Title"
-            Style="{StaticResource PageTitleStyle}" />
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <TextBlock Text="Tên người dùng: " Width="100" Margin="0 0 5 0"/>
+                <TextBox Width="300"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <TextBlock Text="Tên đăng nhập: " Width="100" Margin="0 0 5 0"/>
+                <TextBox Width="300"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <TextBlock Text="Vai trò: " Width="100" Margin="0 0 5 0"/>
+                <TextBox Width="300"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <TextBlock Text="Điện thoại: " Width="100" Margin="0 0 5 0"/>
+                <AutoSuggestBox PlaceholderText="Việt Nam +84" QueryIcon="Find"
+                TextChanged="AutoSuggestBox_TextChangedPhoneNumber"
+                SuggestionChosen="AutoSuggestBox_SuggestionChosenPhoneNumber"
+                Width="145" AutomationProperties.Name="Basic AutoSuggestBox"/>
+                <NumberBox Margin="5 0 0 0" Width="150" Value="NaN"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <TextBlock Text="Ngày sinh: " Width="100" Margin="0 0 5 0"/>
+                <TextBox Width="300"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <TextBlock Text="Email: " Width="100" Margin="0 0 5 0"/>
+                <TextBox Width="300"/>
+            </StackPanel>
+        </StackPanel>
 
-		<Grid Grid.Row="1">
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10 10 10 10" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <TextBlock Text="Địa chỉ: " Width="100" Margin="0 0 5 0"/>
+                <TextBox Width="300"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <TextBlock Text="Khu vực: " Width="100" Margin="0 0 5 0"/>
+                <AutoSuggestBox TextChanged="AutoSuggestBox_TextChangedProvince" QueryIcon="Find"
+                    SuggestionChosen="AutoSuggestBox_SuggestionChosenProvince"
+                    Width="300" AutomationProperties.Name="Basic AutoSuggestBox"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <TextBlock Text="Phường xã: " Width="100" Margin="0 0 5 0"/>
+                <AutoSuggestBox TextChanged="AutoSuggestBox_TextChangedDistrict" QueryIcon="Find"
+                    SuggestionChosen="AutoSuggestBox_SuggestionChosenDistrict"
+                    Width="300" AutomationProperties.Name="Basic AutoSuggestBox"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <TextBlock Text="Ghi chú: " Width="100" Margin="0 0 5 0"/>
+                <TextBox Width="300"/>
+            </StackPanel>
+        </StackPanel>
 
-		</Grid>
+        <StackPanel Grid.Row="2" Grid.Column="0" Margin="10">
+            <TextBlock Text="Đăng nhập và bảo mật" FontWeight="Bold" FontSize="16" Margin="0 0 0 10"/>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <TextBlock Text="Đổi mật khẩu: " Width="115" Margin="0 0 5 0"/>
+                <Button Content="Chỉnh sửa" Width="100" Click="ChangePasswordButton_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <TextBlock Text="Bật xác thực 2 lớp: " Width="Auto" Margin="0 0 5 0"/>
+                <Button Content="Bật tính năng" Width="Auto" Click="TwoLayerVerification"/>
+            </StackPanel>
+        </StackPanel>
+
+        <ContentDialog x:Name="VerificationDialog"
+           Title="Xác thực số điện thoại"
+           PrimaryButtonText="Lưu"
+           CloseButtonText="Đóng"
+           PrimaryButtonClick="TwoLayerVerificationDialog_PrimaryButtonClick">
+            <StackPanel>
+                <TextBlock Text="Nhập số điện thoại gốc:"/>
+                <TextBox x:Name="OriginalPhoneNumberTextBox" Width="200" Margin="0 5 0 10"/>
+                <TextBlock Text="Nhập số điện thoại xác thực:" />
+                <TextBox x:Name="VerifyPhoneNumberTextBox" Width="200" Margin="0 5 0 10" />
+            </StackPanel>
+        </ContentDialog>
+
+        <ContentDialog x:Name="ChangePasswordDialog"
+           Title="Đổi mật khẩu"
+           PrimaryButtonText="Lưu"
+           SecondaryButtonText="Hủy"
+           CloseButtonText="Đóng"
+           PrimaryButtonClick="ChangePasswordDialog_PrimaryButtonClick">
+            <StackPanel>
+                <TextBlock Text="Mật khẩu hiện tại:"/>
+                <PasswordBox x:Name="CurrentPasswordBox" Margin="0 0 0 10"/>
+
+                <TextBlock Text="Mật khẩu mới:">
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="- Dài tối thiểu 8 ký tự. /n - Chứa chữ hoa, chữ thường và số. /n - Không trùng với 3 mật khẩu gần nhất." VerticalOffset="-80"/>
+                </ToolTipService.ToolTip>
+                </TextBlock>
+                <PasswordBox x:Name="NewPasswordBox" Margin="0 0 0 10"/>
+
+                <TextBlock Text="Xác nhận mật khẩu mới:"/>
+                <PasswordBox x:Name="ConfirmPasswordBox" Margin="0 0 0 10"/>
+            </StackPanel>
+        </ContentDialog>
     </Grid>
 </Page>

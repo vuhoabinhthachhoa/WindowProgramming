@@ -1,14 +1,15 @@
-﻿using Sale_Project.Helpers;
-
+﻿using Microsoft.UI.Xaml.Controls;
+using Sale_Project.Helpers;
+using Sale_Project.Views;
 using Windows.UI.ViewManagement;
 
 namespace Sale_Project;
 
 public sealed partial class MainWindow : WindowEx
 {
-    private Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue;
+    private readonly Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue;
 
-    private UISettings settings;
+    private readonly UISettings settings;
 
     public MainWindow()
     {

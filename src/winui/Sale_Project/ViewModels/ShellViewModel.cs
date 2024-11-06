@@ -5,8 +5,11 @@ using CommunityToolkit.Mvvm.Input;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Navigation;
-
+using Sale_Project.Core.Models;
 using Sale_Project.Contracts.Services;
+using Microsoft.UI.Xaml.Controls;
+using Sale_Project.Services;
+using System.Text.Json;
 
 namespace Sale_Project.ViewModels;
 
@@ -15,12 +18,108 @@ public partial class ShellViewModel : ObservableRecipient
     [ObservableProperty]
     private bool isBackEnabled;
 
-    public ICommand MenuFileExitCommand
+    private readonly IUserDao _iUserDao;
+    private User _currentUser = new();
+
+    public User CurrentUser
     {
-        get;
+        get => _currentUser;
+        set => SetProperty(ref _currentUser, value);
     }
 
-    public ICommand MenuViewsEmployeeCommand
+    public async Task LoginAsync(string username, string password)
+    {
+        try
+        {
+            var users = await _iUserDao.GetUsersAsync();
+
+            var user = users?.FirstOrDefault(u => u.Username == username && u.Password == password);
+
+            if (user != null)
+            {
+                CurrentUser = user;
+                var uiManager = App.GetService<UIManagerService>();
+
+                if (uiManager.ShellPage != null)
+                {
+                    uiManager.ShellPage.Startup.Visibility = Visibility.Collapsed;
+                    uiManager.ShellPage.Main.Visibility = Visibility.Visible;
+                }
+
+                System.Diagnostics.Debug.WriteLine($"CurrentUser: {CurrentUser.Username} {CurrentUser.UserRole}");
+            }
+            else
+            {
+                ContentDialog dialog = new ContentDialog
+                {
+                    Title = "Login Failed",
+                    Content = "Invalid username or password.",
+                    CloseButtonText = "Ok"
+                };
+
+                if (dialog.XamlRoot == null)
+                {
+                    dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+                }
+
+                await dialog.ShowAsync();
+            }
+        }
+        catch (FileNotFoundException)
+        {
+            ContentDialog errorDialog = new ContentDialog
+            {
+                Title = "Error",
+                Content = "User data file not found.",
+                CloseButtonText = "OK"
+            };
+
+            if (errorDialog.XamlRoot == null)
+            {
+                errorDialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+            }
+
+            await errorDialog.ShowAsync();
+        }
+        catch (Exception ex)
+        {
+            ContentDialog errorDialog = new ContentDialog
+            {
+                Title = "Error",
+                Content = $"An error occurred: {ex.Message}",
+                CloseButtonText = "OK"
+            };
+
+            if (errorDialog.XamlRoot == null)
+            {
+                errorDialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+            }
+
+            await errorDialog.ShowAsync();
+        }
+    }
+
+    public async Task RegisterAsync(string username, string password, string email, string storeName)
+    {
+
+
+        var users = await _iUserDao.GetUsersAsync();
+
+        var isStoreNameNew = !users.Exists(user => user.StoreName == storeName);
+
+        var newUser = new Sale_Project.Core.Models.User
+        {
+            Username = username,
+            Password = password,
+            Email = email,
+            StoreName = storeName,
+            UserRole = isStoreNameNew ? "Admin" : "User"
+        };
+
+        await _iUserDao.AddUserAsync(newUser);
+    }
+
+    public ICommand MenuFileExitCommand
     {
         get;
     }
@@ -65,13 +164,18 @@ public partial class ShellViewModel : ObservableRecipient
         get;
     }
 
+    public ICommand MenuViewsEmployeeCommand
+    {
+        get;
+    }
+
     public ShellViewModel(INavigationService navigationService)
     {
+        _iUserDao = new UserJsonDao();
         NavigationService = navigationService;
         NavigationService.Navigated += OnNavigated;
 
         MenuFileExitCommand = new RelayCommand(OnMenuFileExit);
-        MenuViewsEmployeeCommand = new RelayCommand(OnMenuViewsEmployee);
         MenuSettingsCommand = new RelayCommand(OnMenuSettings);
         MenuViewsAccountCommand = new RelayCommand(OnMenuViewsAccount);
         MenuViewsSaleCommand = new RelayCommand(OnMenuViewsSale);
@@ -79,13 +183,13 @@ public partial class ShellViewModel : ObservableRecipient
         MenuViewsCustomerCommand = new RelayCommand(OnMenuViewsCustomer);
         MenuViewsProductsCommand = new RelayCommand(OnMenuViewsProducts);
         MenuViewsDashboardCommand = new RelayCommand(OnMenuViewsDashboard);
+        MenuViewsEmployeeCommand = new RelayCommand(OnMenuViewsEmployee);
+
     }
 
     private void OnNavigated(object sender, NavigationEventArgs e) => IsBackEnabled = NavigationService.CanGoBack;
 
     private void OnMenuFileExit() => Application.Current.Exit();
-
-    private void OnMenuViewsEmployee() => NavigationService.NavigateTo(typeof(EmployeeViewModel).FullName!);
 
     private void OnMenuSettings() => NavigationService.NavigateTo(typeof(SettingsViewModel).FullName!);
 
@@ -102,4 +206,7 @@ public partial class ShellViewModel : ObservableRecipient
     private void OnMenuViewsDashboard() => NavigationService.NavigateTo(typeof(DashboardViewModel).FullName!);
 
     private void OnMenuViewsMain() => NavigationService.NavigateTo(typeof(DashboardViewModel).FullName!);
+
+    private void OnMenuViewsEmployee() => NavigationService.NavigateTo(typeof(EmployeeViewModel).FullName!);
+
 }

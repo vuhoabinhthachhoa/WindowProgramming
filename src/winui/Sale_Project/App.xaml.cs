@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
-
+using Microsoft.UI.Xaml.Controls;
 using Sale_Project.Activation;
 using Sale_Project.Contracts.Services;
 using Sale_Project.Core.Contracts.Services;
@@ -16,14 +16,8 @@ using Sale_Project.Views;
 
 namespace Sale_Project;
 
-// To learn more about WinUI 3, see https://docs.microsoft.com/windows/apps/winui/winui3/.
 public partial class App : Application
 {
-    // The .NET Generic Host provides dependency injection, configuration, logging, and other services.
-    // https://docs.microsoft.com/dotnet/core/extensions/generic-host
-    // https://docs.microsoft.com/dotnet/core/extensions/dependency-injection
-    // https://docs.microsoft.com/dotnet/core/extensions/configuration
-    // https://docs.microsoft.com/dotnet/core/extensions/logging
     public IHost Host
     {
         get;
@@ -42,7 +36,10 @@ public partial class App : Application
 
     public static WindowEx MainWindow { get; } = new MainWindow();
 
-    public static UIElement? AppTitlebar { get; set; }
+    public static UIElement? AppTitlebar
+    {
+        get; set;
+    }
 
     public App()
     {
@@ -66,19 +63,20 @@ public partial class App : Application
             services.AddSingleton<IActivationService, ActivationService>();
             services.AddSingleton<IPageService, PageService>();
             services.AddSingleton<INavigationService, NavigationService>();
+            services.AddSingleton<UIManagerService>();
 
             // Core Services
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
-            services.AddTransient<EmployeeViewModel>();
-            services.AddTransient<EmployeePage>();
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
             services.AddTransient<AccountViewModel>();
             services.AddTransient<AccountPage>();
             services.AddTransient<SaleViewModel>();
             services.AddTransient<SalePage>();
+            services.AddTransient<CustomerDetailPage>();
+            services.AddTransient<CustomerDetailViewModel>();
             services.AddTransient<ReportViewModel>();
             services.AddTransient<ReportPage>();
             services.AddTransient<CustomerViewModel>();
@@ -108,12 +106,11 @@ public partial class App : Application
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        //ServiceFactory.Register(typeof(IDao), typeof(JsonDao));
 
         base.OnLaunched(args);
-
-        App.GetService<IAppNotificationService>().Show(string.Format("AppNotificationSamplePayload".GetLocalized(), AppContext.BaseDirectory));
-
+        App.GetService<IAppNotificationService>().Show(
+            string.Format("AppNotificationSamplePayload".GetLocalized(), AppContext.BaseDirectory)
+        );
         await App.GetService<IActivationService>().ActivateAsync(args);
     }
 }
