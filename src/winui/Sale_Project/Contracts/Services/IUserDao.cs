@@ -10,4 +10,5 @@ namespace Sale_Project.Contracts.Services;
 public interface IUserDao
 {
     Task<List<Sale_Project.Core.Models.User>> GetUsersAsync();
+    Task AddUserAsync(Sale_Project.Core.Models.User newUser);
 }

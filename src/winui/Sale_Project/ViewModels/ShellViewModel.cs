@@ -9,6 +9,7 @@ using Sale_Project.Core.Models;
 using Sale_Project.Contracts.Services;
 using Microsoft.UI.Xaml.Controls;
 using Sale_Project.Services;
+using System.Text.Json;
 
 namespace Sale_Project.ViewModels;
 
@@ -17,7 +18,7 @@ public partial class ShellViewModel : ObservableRecipient
     [ObservableProperty]
     private bool isBackEnabled;
 
-    private readonly IUserDao _dataAccess;
+    private readonly IUserDao _iUserDao;
     private User _currentUser = new();
 
     public User CurrentUser
@@ -30,7 +31,7 @@ public partial class ShellViewModel : ObservableRecipient
     {
         try
         {
-            var users = await _dataAccess.GetUsersAsync();
+            var users = await _iUserDao.GetUsersAsync();
 
             var user = users?.FirstOrDefault(u => u.Username == username && u.Password == password);
 
@@ -98,6 +99,26 @@ public partial class ShellViewModel : ObservableRecipient
         }
     }
 
+    public async Task RegisterAsync(string username, string password, string email, string storeName)
+    {
+      
+
+        var users = await _iUserDao.GetUsersAsync();
+
+        var isStoreNameNew = !users.Exists(user => user.StoreName == storeName);
+
+        var newUser = new Sale_Project.Core.Models.User
+        {
+            Username = username,
+            Password = password,
+            Email = email,
+            StoreName = storeName,
+            UserRole = isStoreNameNew ? "Admin" : "User"
+        };
+
+        await _iUserDao.AddUserAsync(newUser);
+    }
+
     public ICommand MenuFileExitCommand
     {
         get;
@@ -145,7 +166,7 @@ public partial class ShellViewModel : ObservableRecipient
 
     public ShellViewModel(INavigationService navigationService)
     {
-        _dataAccess = new UserJsonDao();
+        _iUserDao = new UserJsonDao();
         NavigationService = navigationService;
         NavigationService.Navigated += OnNavigated;
 

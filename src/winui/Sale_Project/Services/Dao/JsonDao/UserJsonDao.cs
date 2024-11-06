@@ -49,4 +49,16 @@ public class UserJsonDao : IUserDao
 
         return users;
     }
+
+    public async Task AddUserAsync(Sale_Project.Core.Models.User newUser)
+    {
+        var users = await GetUsersAsync();
+
+        // Add the new user to the list
+        users.Add(newUser);
+
+        // Serialize and write the updated list back to the file
+        var jsonContent = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
+        await File.WriteAllTextAsync(_filePath, jsonContent);
+    }
 }

@@ -131,35 +131,7 @@ public sealed partial class ShellPage : Page
         var email = NewEmailTextBox.Text;
         var storeName = NewStoreNameTextBox.Text;
 
-        var filePath = @"C:\Users\Admin\source\repos\Sale_Project\Sale_Project\Repository\UserManager.json";
-
-        var users = new List<Sale_Project.Core.Models.User>();
-
-        if (File.Exists(filePath))
-        {
-            var jsonContent = await File.ReadAllTextAsync(filePath);
-            var existingUsers = JsonSerializer.Deserialize<List<Sale_Project.Core.Models.User>>(jsonContent);
-            if (existingUsers != null)
-            {
-                users = existingUsers;
-            }
-        }
-
-        var isStoreNameNew = !users.Exists(user => user.StoreName == storeName);
-
-        var newUser = new Sale_Project.Core.Models.User
-        {
-            Username = username,
-            Password = password,
-            Email = email,
-            StoreName = storeName,
-            UserRole = isStoreNameNew ? "Admin" : "User" 
-        };
-
-        users.Add(newUser);
-
-        var updatedJsonContent = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
-        await File.WriteAllTextAsync(filePath, updatedJsonContent);
+        await ViewModel.RegisterAsync(username, password, email, storeName);
 
         RegisterFeature.Visibility = Visibility.Collapsed;
         LoginFeature.Visibility = Visibility.Visible;
