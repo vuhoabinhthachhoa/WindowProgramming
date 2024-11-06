@@ -7,7 +7,7 @@ using Sale_Project.Core.Models;
 
 namespace Sale_Project.Contracts.Services;
 
-public interface IDao
+public interface IEmployeeDao
 {
     public enum SortType
     {

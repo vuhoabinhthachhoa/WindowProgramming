@@ -49,19 +49,25 @@ public class Employee : INotifyPropertyChanged
     //    get; set;
     //} = DateOnly.MinValue;
 
-    private DateTime dateOfBirth;
-    public DateTime DateOfBirth
+    //private DateTime dateOfBirth;
+    //public DateTime DateOfBirth
+    //{
+    //    get => dateOfBirth.Date;
+    //    set
+    //    {
+    //        if (dateOfBirth.Date != value.Date)
+    //        {
+    //            dateOfBirth = value.Date;
+    //            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DateOfBirth)));
+    //        }
+    //    }
+    //}
+
+    public DateOnly DateOfBirth
     {
-        get => dateOfBirth.Date;
-        set
-        {
-            if (dateOfBirth.Date != value.Date)
-            {
-                dateOfBirth = value.Date;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DateOfBirth)));
-            }
-        }
-    }
+        get;
+        set;
+    } = DateOnly.MinValue;
 
     public string Address
     {
@@ -77,10 +83,10 @@ public class Employee : INotifyPropertyChanged
     {
         get; set;
     } = "";
-    public bool EmployeeStatus
+    public string EmployeeStatus
     {
         get; set;
-    } = true;
+    } = "";
 
     public event PropertyChangedEventHandler PropertyChanged;
 }

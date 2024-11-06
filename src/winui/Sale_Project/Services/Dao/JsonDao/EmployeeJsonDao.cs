@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Sale_Project.Core.Models;
-using static Sale_Project.Contracts.Services.IDao;
+using static Sale_Project.Contracts.Services.IEmployeeDao;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Sale_Project.Core.Helpers;
@@ -14,7 +14,7 @@ using Sale_Project.Contracts.Services;
 using System.Runtime.CompilerServices;
 
 namespace Sale_Project.Services.Dao.JsonDao;
-public class EmployeeJsonDao : IDao
+public class EmployeeJsonDao : IEmployeeDao
 {
 
     public (bool, string) IsValidInfo(Employee info)
@@ -27,7 +27,7 @@ public class EmployeeJsonDao : IDao
         if (string.IsNullOrWhiteSpace(info.JobTitle)) return (false, "JobTitle is required");
         if (info.Salary <= 0) return (false, "Salary must be greater than 0");
         if (string.IsNullOrWhiteSpace(info.Email) || !IsValidEmail(info.Email)) return (false, "Invalid Email");
-        if (info.DateOfBirth==DateTime.MinValue) return (false, "DateOfBirth is required");
+        if (info.DateOfBirth==DateOnly.MinValue) return (false, "DateOfBirth is required");
         if (string.IsNullOrWhiteSpace(info.Address)) return (false, "Address is required");
         //if (string.IsNullOrWhiteSpace(info.Area)) return (false, "Area is required");
         //if (string.IsNullOrWhiteSpace(info.Ward)) return (false, "Ward is required");

@@ -50,7 +50,8 @@
         <CalendarDatePicker DateFormat="{}{day.integer} {month.full} {year.full}" Date="{x:Bind Info.DateOfBirth, Mode=TwoWay, Converter={StaticResource TimeConverter}}" Grid.Column="3" Grid.Row="2" />
 
         <TextBlock Text="Công việc" Grid.Column="0" Grid.Row="3"/>
-        <ComboBox ItemsSource="{x:Bind JobTitle, Mode=OneWay}" SelectedValue="{x:Bind Info.JobTitle,Mode=TwoWay}" Grid.Column="1" Grid.Row="3"/>
+        <!--<ComboBox ItemsSource="{x:Bind JobTitle, Mode=OneWay}" SelectedValue="{x:Bind Info.JobTitle,Mode=TwoWay}" Grid.Column="1" Grid.Row="3"/>-->
+        <TextBox Text="{x:Bind Info.JobTitle,Mode=TwoWay}" Grid.Column="1" Grid.Row="3"/>
 
         <TextBlock Text="Lương" Grid.Column="2" Grid.Row="3"/>
         <NumberBox Text="{x:Bind Info.Salary,Mode=TwoWay}" Grid.Column="3" Grid.Row="3"/>
@@ -65,7 +66,7 @@
         <TextBox Text="{x:Bind Info.Ward,Mode=TwoWay}" Grid.Column="1" Grid.Row="5"/>
 
         <TextBlock Text="Trạng thái" Grid.Column="2" Grid.Row="5"/>
-        <ComboBox ItemsSource="{x:Bind EmployeeStatus, Mode=OneWay}" SelectedValue="{x:Bind Info.EmployeeStatus,Mode=TwoWay}" Grid.Column="3" Grid.Row="5"/>
+        <ComboBox ItemsSource="{x:Bind EmployeeStatus, Mode=OneWay}" Text="{x:Bind Info.EmployeeStatus,Mode=TwoWay}" SelectedValue="{x:Bind Info.EmployeeStatus,Mode=TwoWay}" Grid.Column="3" Grid.Row="5"/>
         
         <TextBlock x:Name="Warning" Text="{x:Bind Warning_msg, Mode=OneWay}" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3"/>
 

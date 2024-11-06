@@ -10,13 +10,12 @@ public class TimeConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, string language)
     {
-        return new DateTimeOffset(((DateTime)value).ToUniversalTime());
-
+        return new DateTimeOffset(((DateOnly)value).ToDateTime(TimeOnly.MinValue).ToUniversalTime());
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)
     {
-        return ((DateTimeOffset)value).Date;
+        return DateOnly.FromDateTime(((DateTimeOffset)value).DateTime);
     }
 }
 

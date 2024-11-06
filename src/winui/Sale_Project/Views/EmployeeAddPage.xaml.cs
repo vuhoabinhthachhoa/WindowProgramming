@@ -24,27 +24,11 @@ namespace Sale_Project;
 /// </summary>
 public sealed partial class EmployeeAddPage : Page
 {
-    public class EmployeeAddPageViewModel
-    {
-        public EmployeeAddPageViewModel()
-        {
-            _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
-        }
-        public Employee Info { get; set; } = new Employee();
-        IDao _dao;
-
-        public (bool, string) AddEmployee()
-        {
-            return _dao.AddEmployee(Info);
-            //string message = result ? "Employee added successfully." : "Failed to add employee.";
-            //return (result, message);
-        }
-    }
-
-    public EmployeeAddPageViewModel ViewModel { get; set; } = new EmployeeAddPageViewModel();
+    public EmployeeAddPageViewModel ViewModel { get; set; }
 
     public EmployeeAddPage()
     {
+        ViewModel = new EmployeeAddPageViewModel();
         this.InitializeComponent();
     }
      
