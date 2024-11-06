@@ -86,7 +86,7 @@ public class Employee : INotifyPropertyChanged
     public string EmployeeStatus
     {
         get; set;
-    } = "";
+    } = "Đang làm việc";
 
     public event PropertyChangedEventHandler PropertyChanged;
 }
