@@ -27,13 +27,13 @@ public class Employee {
     @Column(name = "phonenumber")
     String phoneNumber;
 
-    @Column(name = "citizenId", nullable = false)
+    @Column(name = "citizenId", nullable = false, unique = true)
     String citizenId;
 
-    @Column(name = "jobTitile")
-    String jobTitile;
+    @Column(name = "jobTitle",  nullable = false)
+    String jobTitle;
 
-    @Column(name = "salary")
+    @Column(name = "salary", nullable = false)
     BigDecimal salary;
 
     @Column(name = "email")
@@ -50,5 +50,15 @@ public class Employee {
 
     @Column(name = "ward")
     String ward;
+
+    @Column(name = "employment_status", nullable = false)
+    Boolean employmentStatus;
+
+    @PrePersist
+    public void prePersist() {
+        if(this.employmentStatus == null) {
+            this.employmentStatus = true;
+        }
+    }
 
 }

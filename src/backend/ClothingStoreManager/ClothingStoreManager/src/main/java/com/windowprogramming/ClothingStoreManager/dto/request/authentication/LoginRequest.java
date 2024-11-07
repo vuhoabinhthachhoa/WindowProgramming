@@ -1,5 +1,6 @@
 package com.windowprogramming.ClothingStoreManager.dto.request.authentication;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -11,10 +12,10 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LoginRequest {
-    @NotNull(message = "REQUIRED_USERNAME")
+    @NotBlank(message = "REQUIRED_USERNAME")
     String username;
 
-    @NotNull(message = "REQUIRED_PASSWORD")
+    @NotBlank(message = "REQUIRED_PASSWORD")
     String password;
 }
 

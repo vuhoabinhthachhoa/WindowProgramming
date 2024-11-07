@@ -56,11 +56,22 @@ public enum ErrorCode {
     REQUIRED_OLD_PASSWORD(2036, HttpStatus.BAD_REQUEST, "Old password is required"),
     REQUIRED_TOKEN(2037, HttpStatus.BAD_REQUEST, "Token is required"),
     REQUIRED_USER_ID(2038, HttpStatus.BAD_REQUEST, "User ID is required"),
+    REQUIRED_SIZE(2039, HttpStatus.BAD_REQUEST, "Size is required"),
+    REQUIRED_EMPLOYMENT_STATUS(2040, HttpStatus.BAD_REQUEST, "Employment status is required"),
+    REQUIRED_PAGE(2041, HttpStatus.BAD_REQUEST, "Page is required"),
+    REQUIRED_SORT_FIELD(2042, HttpStatus.BAD_REQUEST, "Sort field is required"),
+    REQUIRED_SORT_TYPE(2043, HttpStatus.BAD_REQUEST, "Sort type is required"),
+    REQUIRED_DISCOUNT_PERCENT(2044, HttpStatus.BAD_REQUEST, "Discount percent is required"),
+    VALID_DISCOUNT_PERCENT(2045, HttpStatus.BAD_REQUEST, "Discount percent must be at least 0.00 and at most 1.00"),
+    REQUIRED_BRANCH_NEW_NAME(2046, HttpStatus.BAD_REQUEST, "New branch name is required"),
 
     //    Existed Error 3xxx
     USER_EXISTED(3001, HttpStatus.BAD_REQUEST, "User existed"),
     USER_PROFILE_EXISTED(3002, HttpStatus.BAD_REQUEST, "User profile existed"),
     EMPLOYEE_EXISTED(3003, HttpStatus.BAD_REQUEST, "Employee existed"),
+    BRANCH_EXISTED(3004, HttpStatus.BAD_REQUEST, "Branch existed"),
+    CATEGORY_EXISTED(3005, HttpStatus.BAD_REQUEST, "Category existed"),
+    PRODUCT_EXISTED(3006, HttpStatus.BAD_REQUEST, "Product existed"),
 
     //    Not Found Error 4xxx
     USER_NOT_FOUND(4001, HttpStatus.NOT_FOUND, "User not found"),
@@ -68,6 +79,13 @@ public enum ErrorCode {
     USER_PROFILE_NOT_FOUND(4003, HttpStatus.NOT_FOUND, "User profile not found"),
     PERMISSION_NOT_FOUND(4004, HttpStatus.NOT_FOUND, "Permission not found"),
     EMPLOYEE_NOT_FOUND(4005,HttpStatus.NOT_FOUND, "Employee not found" ),
+    BRAND_NOT_FOUND(4006, HttpStatus.NOT_FOUND, "Brand not found"),
+    CATEGORY_NOT_FOUND(4007, HttpStatus.NOT_FOUND, "Category not found"),
+    PRODUCT_NOT_FOUND(4008, HttpStatus.NOT_FOUND, "Product not found"),
+    INVOICE_NOT_FOUND(4009, HttpStatus.NOT_FOUND, "Invoice not found"),
+    CUSTOMER_NOT_FOUND(4010, HttpStatus.NOT_FOUND, "Customer not found"),
+    INVOICE_DETAIL_NOT_FOUND(4011, HttpStatus.NOT_FOUND, "Invoice detail not found"),
+    BRANCH_NOT_FOUND(4012, HttpStatus.NOT_FOUND, "Branch not found"),
 
     //    Unauthorized	Client	5xxx (Unauthenticated error)
     INVALID_TOKEN(5001, HttpStatus.UNAUTHORIZED, "Invalid token"),
@@ -77,8 +95,13 @@ public enum ErrorCode {
     UNAUTHENTICATED(5005, HttpStatus.UNAUTHORIZED, "Authentication failed"),
 
     //    Forbidden	Client	6xxx (Unauthorized error)
-    UNAUTHORIZED(6001, HttpStatus.FORBIDDEN, "Don't have permission");
+    UNAUTHORIZED(6001, HttpStatus.FORBIDDEN, "Don't have permission"),
 
+
+    //    File error 7xxx
+    FILE_SIZE_TOO_LARGE(7001, HttpStatus.BAD_REQUEST, "Max file size is 2MB"),
+    FILE_PATTERN_NOT_ALLOWED(7002, HttpStatus.BAD_REQUEST, "Only jpg, png, gif, bmp files are allowed"),
+    FILE_UPLOAD_FAILED(7003, HttpStatus.INTERNAL_SERVER_ERROR, "The file name should not contain any whitespace, must end with one of the following extensions: .jpg, .png, .gif, or .bmp, No additional characters should appear after the extension");
 
 
     final Integer code;

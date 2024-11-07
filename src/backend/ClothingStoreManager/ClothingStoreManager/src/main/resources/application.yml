@@ -16,7 +16,7 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 
 # MYSQL CONNECTION
 server:
@@ -42,7 +42,7 @@ app:
           success: "Role has been deleted"
     employee:
       response:
-        delete:
+        unemployment:
           success: "Employee and its associated account has been deleted"
     authentication:
       response:
@@ -50,3 +50,23 @@ app:
           success: "Logout successfully"
         change-password:
           success: "Password has been changed"
+    branch:
+      response:
+        stop_business:
+          success: "Branch has been stopped business"
+    category:
+      response:
+        stop_business:
+          success: "Category has been stopped business"
+    product:
+      response:
+        stop_business:
+          success: "Products has been stopped business"
+        continue_business:
+          success: "Products has been continued business"
+        set_discount:
+          success: "Discount has been set"
+  cloudinary:
+    cloud_name: ${CLOUDINARY_CLOUD_NAME}
+    api_key: ${CLOUDINARY_API_KEY}
+    api_secret: ${CLOUDINARY_API_SECRET}

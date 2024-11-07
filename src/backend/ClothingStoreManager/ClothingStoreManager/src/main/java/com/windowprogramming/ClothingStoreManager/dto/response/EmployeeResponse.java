@@ -27,4 +27,5 @@ public class EmployeeResponse {
     String address;
     String area;
     String ward;
+    Boolean employmentStatus;
 }
