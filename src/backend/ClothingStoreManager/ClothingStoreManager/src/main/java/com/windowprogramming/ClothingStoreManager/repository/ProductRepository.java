@@ -29,5 +29,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, CustomP
 
     Product findByNameAndCategoryAndBranchAndSize(String name, Category category, Branch branch, Size size);
 
-    Product findByNameAndCategoryAndBranch(String name, Category category, Branch branch, Size size);
+    List<Product> findAllByNameAndCategoryAndBranch(String name, Category category, Branch branch);
+
+    List<Product> findAllByCode(String productCode);
 }

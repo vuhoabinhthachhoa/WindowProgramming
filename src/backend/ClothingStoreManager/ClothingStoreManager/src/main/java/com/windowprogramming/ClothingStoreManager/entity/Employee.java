@@ -30,8 +30,8 @@ public class Employee {
     @Column(name = "citizenId", nullable = false, unique = true)
     String citizenId;
 
-    @Column(name = "jobTitile",  nullable = false)
-    String jobTitile;
+    @Column(name = "jobTitle",  nullable = false)
+    String jobTitle;
 
     @Column(name = "salary", nullable = false)
     BigDecimal salary;

@@ -41,12 +41,12 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
         }
 
         if (IsExistingParamUtils.isExistingParam(request.getCategoryName())) {
-            jpql.append(" AND p.category.name = :categoryName");
+            jpql.append(" AND p.category.name LIKE :categoryName");
             parameters.put("categoryName", "%" + request.getCategoryName() + "%");
         }
 
         if (IsExistingParamUtils.isExistingParam(request.getBranchName())) {
-            jpql.append(" AND p.branch.name = :branchName");
+            jpql.append(" AND p.branch.name LIKE :branchName");
             parameters.put("branchName", "%" + request.getBranchName() + "%");
         }
 

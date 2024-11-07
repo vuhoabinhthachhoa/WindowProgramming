@@ -33,7 +33,7 @@ public class CustomEmployeeRepositoryImpl implements CustomEmployeeRepository {
 
         if (IsExistingParamUtils.isExistingParam(request.getId())) {
             jpql.append(" AND e.id = :id");
-            parameters.put("id", "%" + request.getId() + "%");
+            parameters.put("id",   request.getId());
         }
 
         if (IsExistingParamUtils.isExistingParam(request.getName())) {
@@ -52,17 +52,17 @@ public class CustomEmployeeRepositoryImpl implements CustomEmployeeRepository {
         }
 
         if (IsExistingParamUtils.isExistingParam(request.getSalaryFrom())) {
-            jpql.append(" AND p.salary >= :salaryFrom");
+            jpql.append(" AND e.salary >= :salaryFrom");
             parameters.put("salaryFrom", request.getSalaryFrom());
         }
 
         if (IsExistingParamUtils.isExistingParam(request.getSalaryTo())) {
-            jpql.append(" AND p.salary <= :salaryTo");
+            jpql.append(" AND e.salary <= :salaryTo");
             parameters.put("salaryTo", request.getSalaryTo());
         }
 
         if (IsExistingParamUtils.isExistingParam(request.getEmploymentStatus())) {
-            jpql.append(" AND p.employmentStatus = :employmentStatus");
+            jpql.append(" AND e.employmentStatus = :employmentStatus");
             parameters.put("employmentStatus", request.getEmploymentStatus());
         }
 
@@ -71,7 +71,7 @@ public class CustomEmployeeRepositoryImpl implements CustomEmployeeRepository {
         if (pageable.getSort().isSorted()) {
             jpql.append(" ORDER BY ");
             for (Sort.Order order : pageable.getSort()) {
-                jpql.append("p.").append(order.getProperty()).append(" ").append(order.getDirection()).append(", ");
+                jpql.append("e.").append(order.getProperty()).append(" ").append(order.getDirection()).append(", ");
             }
             jpql.setLength(jpql.length() - 2); // Remove the trailing comma and space
         }

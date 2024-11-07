@@ -82,8 +82,8 @@ public class ProductController {
     @PatchMapping("/status/active")
     @Operation(summary = "Set product status to active", description = "Set the business status of a product to active")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ApiResponse<String> setBusinessStatusToActive(@RequestParam @NotNull String productCode) {
-        productService.setBusinessStatusToActive(productCode);
+    public ApiResponse<String> setBusinessStatusToActive(@RequestParam @NotNull Long productId) {
+        productService.setBusinessStatusToActive(productId);
         return ApiResponse.<String>builder()
                 .data(CONTINUE_BUSINESS_SUCCESS)
                 .build();
@@ -92,8 +92,8 @@ public class ProductController {
     @PatchMapping("/status/active/bulk")
     @Operation(summary = "Set products status to active", description = "Set the business status of multiple products to active")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ApiResponse<String> setBusinessStatusesToActive(@RequestBody List<String> productCodes) {
-        productService.setBusinessStatusToActive(productCodes);
+    public ApiResponse<String> setBusinessStatusesToActive(@RequestBody List<Long> productIds) {
+        productService.setBusinessStatusToActive(productIds);
         return ApiResponse.<String>builder()
                 .data(CONTINUE_BUSINESS_SUCCESS)
                 .build();
@@ -102,8 +102,8 @@ public class ProductController {
     @PatchMapping("/status/inactive")
     @Operation(summary = "Set product status to inactive", description = "Set the business status of a product to inactive")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ApiResponse<String> setBusinessStatusToInactive(@RequestParam @NotNull String productCode) {
-        productService.setBusinessStatusToInactive(productCode);
+    public ApiResponse<String> setBusinessStatusToInactive(@RequestParam @NotNull Long productId) {
+        productService.setBusinessStatusToInactive(productId);
         return ApiResponse.<String>builder()
                 .data(STOP_BUSINESS_SUCCESS)
                 .build();
@@ -112,8 +112,8 @@ public class ProductController {
     @PatchMapping("/status/inactive/bulk")
     @Operation(summary = "Set products status to inactive", description = "Set the business status of multiple products to inactive")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ApiResponse<String> setBusinessStatusToInactive(@RequestBody List<String> productCodes) {
-        productService.setBusinessStatusToInactive(productCodes);
+    public ApiResponse<String> setBusinessStatusToInactive(@RequestBody List<Long> productIds) {
+        productService.setBusinessStatusToInactive(productIds);
         return ApiResponse.<String>builder()
                 .data(STOP_BUSINESS_SUCCESS)
                 .build();

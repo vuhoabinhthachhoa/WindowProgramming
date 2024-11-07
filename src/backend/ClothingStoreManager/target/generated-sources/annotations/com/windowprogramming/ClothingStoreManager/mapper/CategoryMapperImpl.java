@@ -38,6 +38,7 @@ public class CategoryMapperImpl implements CategoryMapper {
 
         categoryResponse.id( category.getId() );
         categoryResponse.name( category.getName() );
+        categoryResponse.businessStatus( category.getBusinessStatus() );
 
         return categoryResponse.build();
     }

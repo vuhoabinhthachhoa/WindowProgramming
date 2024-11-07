@@ -75,10 +75,10 @@ public class ProductServiceImpl implements ProductService {
 
         product.setId(productRepository.getTheLastProductId() + 1);
 
-        Product existedProduct = productRepository.findByNameAndCategoryAndBranch(product.getName(), product.getCategory(), product.getBranch(), product.getSize());
+        List<Product> existedProduct = productRepository.findAllByNameAndCategoryAndBranch(product.getName(), product.getCategory(), product.getBranch());
         // products with the same name, size, branch, and category have the same code
         if(existedProduct != null) {
-            String code = existedProduct.getCode();
+            String code = existedProduct.getFirst().getCode();
             // check if product with the same size, branch, category, and name existed
            if(productRepository.existsByCodeAndSize(code, product.getSize())) {
                throw new AppException(ErrorCode.PRODUCT_EXISTED);
@@ -98,11 +98,13 @@ public class ProductServiceImpl implements ProductService {
         }
 
         // upload image to cloudinary
-        FileUploadUtils.assertAllowed(image, FileUploadUtils.IMAGE_PATTERN);
-        final String fileName = FileUploadUtils.getFileName(image.getOriginalFilename());
-        final CloudinaryResponse response = this.cloudinaryService.uploadFile(image, fileName);
-        product.setImageUrl(response.getUrl());
-        product.setCloudinaryImageId(response.getPublicId());
+        if(image != null && !image.isEmpty()) {
+            FileUploadUtils.assertAllowed(image, FileUploadUtils.IMAGE_PATTERN);
+            final String fileName = FileUploadUtils.getFileName(image.getOriginalFilename());
+            final CloudinaryResponse response = this.cloudinaryService.uploadFile(image, fileName);
+            product.setImageUrl(response.getUrl());
+            product.setCloudinaryImageId(response.getPublicId());
+        }
 
         product = productRepository.save(product);
 
@@ -116,7 +118,7 @@ public class ProductServiceImpl implements ProductService {
 
         productMapper.updateProduct(product, productUpdateRequest);
 
-        if(image != null) {
+        if(image != null && !image.isEmpty()) {
             FileUploadUtils.assertAllowed(image, FileUploadUtils.IMAGE_PATTERN);
             final String fileName = FileUploadUtils.getFileName(image.getOriginalFilename());
             final CloudinaryResponse response = this.cloudinaryService.uploadFile(image, fileName);
@@ -130,32 +132,32 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public void setBusinessStatusToActive(String productCode) {
-        Product product = productRepository.findByCode(productCode)
+    public void setBusinessStatusToActive(Long productId) {
+        Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_FOUND));
         product.setBusinessStatus(true);
         productRepository.save(product);
     }
 
     @Override
-    public void setBusinessStatusToActive(List<String> productCodes) {
-        for(String productCode : productCodes) {
-            setBusinessStatusToActive(productCode);
+    public void setBusinessStatusToActive(List<Long> productIds) {
+        for(Long productId : productIds) {
+            setBusinessStatusToActive(productId);
         }
     }
 
     @Override
-    public void setBusinessStatusToInactive(String productCode) {
-        Product product = productRepository.findByCode(productCode)
+    public void setBusinessStatusToInactive(Long productId) {
+        Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_FOUND));
         product.setBusinessStatus(false);
         productRepository.save(product);
     }
 
     @Override
-    public void setBusinessStatusToInactive(List<String> productCodes) {
-        for(String productCode : productCodes) {
-            setBusinessStatusToInactive(productCode);
+    public void setBusinessStatusToInactive(List<Long> productIds) {
+        for(Long productId : productIds) {
+            setBusinessStatusToInactive(productId);
         }
     }
 

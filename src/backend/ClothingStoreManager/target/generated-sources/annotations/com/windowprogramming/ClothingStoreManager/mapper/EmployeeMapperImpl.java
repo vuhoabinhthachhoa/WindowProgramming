@@ -53,6 +53,7 @@ public class EmployeeMapperImpl implements EmployeeMapper {
         employeeResponse.address( employee.getAddress() );
         employeeResponse.area( employee.getArea() );
         employeeResponse.ward( employee.getWard() );
+        employeeResponse.employmentStatus( employee.getEmploymentStatus() );
 
         return employeeResponse.build();
     }

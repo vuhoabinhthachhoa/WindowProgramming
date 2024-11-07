@@ -26,7 +26,6 @@ public class ProductMapperImpl implements ProductMapper {
         product.importPrice( productCreationRequest.getImportPrice() );
         product.sellingPrice( productCreationRequest.getSellingPrice() );
         product.inventoryQuantity( productCreationRequest.getInventoryQuantity() );
-        product.businessStatus( productCreationRequest.getBusinessStatus() );
         product.size( productCreationRequest.getSize() );
         product.discountPercent( productCreationRequest.getDiscountPercent() );
 
@@ -76,9 +75,6 @@ public class ProductMapperImpl implements ProductMapper {
         }
         if ( productUpdateRequest.getInventoryQuantity() != null ) {
             product.setInventoryQuantity( productUpdateRequest.getInventoryQuantity() );
-        }
-        if ( productUpdateRequest.getBusinessStatus() != null ) {
-            product.setBusinessStatus( productUpdateRequest.getBusinessStatus() );
         }
         if ( productUpdateRequest.getDiscountPercent() != null ) {
             product.setDiscountPercent( productUpdateRequest.getDiscountPercent() );

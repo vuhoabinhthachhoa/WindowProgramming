@@ -37,7 +37,7 @@ public class BranchController {
     @Operation(summary = "Create branch",
             description = "Create branch")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ApiResponse<BranchResponse> createBranch(@Valid @RequestBody BranchCreationRequest branchCreationRequest) {
+    public ApiResponse<BranchResponse> createBranch( @RequestBody BranchCreationRequest branchCreationRequest) {
         return ApiResponse.<BranchResponse>builder()
                 .data(branchService.createBranch(branchCreationRequest))
                 .build();

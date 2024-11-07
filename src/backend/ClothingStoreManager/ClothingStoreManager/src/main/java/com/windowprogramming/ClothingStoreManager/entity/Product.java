@@ -2,6 +2,8 @@ package com.windowprogramming.ClothingStoreManager.entity;
 
 import com.windowprogramming.ClothingStoreManager.enums.Size;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -57,6 +59,8 @@ public class Product {
     Size size;
 
     @Column(name = "discount_percent", precision = 3, scale = 2)
+    @DecimalMin(value = "0.00", message = "Discount percent must be at least 0.00")
+    @DecimalMax(value = "1.00", message = "Discount percent must be at most 1.00")
     BigDecimal discountPercent;
 
     @PrePersist

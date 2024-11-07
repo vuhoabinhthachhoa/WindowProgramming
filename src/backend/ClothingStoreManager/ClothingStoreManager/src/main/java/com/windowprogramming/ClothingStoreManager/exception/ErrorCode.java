@@ -62,6 +62,7 @@ public enum ErrorCode {
     REQUIRED_SORT_FIELD(2042, HttpStatus.BAD_REQUEST, "Sort field is required"),
     REQUIRED_SORT_TYPE(2043, HttpStatus.BAD_REQUEST, "Sort type is required"),
     REQUIRED_DISCOUNT_PERCENT(2044, HttpStatus.BAD_REQUEST, "Discount percent is required"),
+    VALID_DISCOUNT_PERCENT(2045, HttpStatus.BAD_REQUEST, "Discount percent must be at least 0.00 and at most 1.00"),
 
     //    Existed Error 3xxx
     USER_EXISTED(3001, HttpStatus.BAD_REQUEST, "User existed"),

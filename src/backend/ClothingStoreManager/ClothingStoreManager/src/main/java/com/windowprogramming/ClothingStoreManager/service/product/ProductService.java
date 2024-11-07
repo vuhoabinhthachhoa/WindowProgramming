@@ -15,10 +15,10 @@ public interface ProductService {
     PageResponse<ProductResponse> searchProducts(ProductSearchRequest productSearchRequest, Integer page, Integer size, String sortField, SortType sortType);
     ProductResponse createProduct(ProductCreationRequest productCreationRequest, MultipartFile image);
     ProductResponse updateProduct(ProductUpdateRequest productUpdateRequest, MultipartFile image);
-    void setBusinessStatusToActive(String productCode);
-    void setBusinessStatusToActive(List<String> productCodes);
-    void setBusinessStatusToInactive(String productCode);
-    void setBusinessStatusToInactive(List<String> productCodes);
+    void setBusinessStatusToActive(Long productId);
+    void setBusinessStatusToActive(List<Long> productIds);
+    void setBusinessStatusToInactive(Long productId);
+    void setBusinessStatusToInactive(List<Long> productIds);
     void setDiscountPercent(String productCode, BigDecimal discountPercent);
     void setDiscountPercent(List<String> productCodes, BigDecimal discountPercent);
 

@@ -36,6 +36,7 @@ public class BranchMapperImpl implements BranchMapper {
         BranchResponse.BranchResponseBuilder branchResponse = BranchResponse.builder();
 
         branchResponse.name( branch.getName() );
+        branchResponse.businessStatus( branch.getBusinessStatus() );
 
         return branchResponse.build();
     }
