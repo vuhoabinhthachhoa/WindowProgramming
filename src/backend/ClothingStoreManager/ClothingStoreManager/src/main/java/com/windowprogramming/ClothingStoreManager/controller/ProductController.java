@@ -92,7 +92,7 @@ public class ProductController {
     @PatchMapping("/status/active/bulk")
     @Operation(summary = "Set products status to active", description = "Set the business status of multiple products to active")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ApiResponse<String> setBusinessStatusToActive(@RequestBody List<String> productCodes) {
+    public ApiResponse<String> setBusinessStatusesToActive(@RequestBody List<String> productCodes) {
         productService.setBusinessStatusToActive(productCodes);
         return ApiResponse.<String>builder()
                 .data(CONTINUE_BUSINESS_SUCCESS)

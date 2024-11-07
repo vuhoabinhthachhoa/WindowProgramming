@@ -90,10 +90,22 @@ public class EmployeeController {
             description = "Set the employee employment status to unemployed")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ApiResponse<String> setEmploymentStatusToUnemployed(@RequestParam @NotNull Long employeeId) {
+        employeeService.setEmploymentStatusToUnemployed(employeeId);
         return ApiResponse.<String>builder()
                 .data(UNEMPLOYMENT_SUCCESS)
                 .build();
     }
+
+    @PatchMapping("/status/unemployed/bulk")
+    @Operation(summary = "Set employment status to unemployed", description = "Set the employment status of multiple products to unemployed")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ApiResponse<String> setEmploymentStatusesToUnemployed(@RequestBody List<Long> employeeIds) {
+        employeeService.setEmploymentStatusesToUnemployed(employeeIds);
+        return ApiResponse.<String>builder()
+                .data(UNEMPLOYMENT_SUCCESS)
+                .build();
+    }
+
 
     @PutMapping()
     @Operation(summary = "Update employee",
