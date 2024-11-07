@@ -63,6 +63,7 @@ public enum ErrorCode {
     REQUIRED_SORT_TYPE(2043, HttpStatus.BAD_REQUEST, "Sort type is required"),
     REQUIRED_DISCOUNT_PERCENT(2044, HttpStatus.BAD_REQUEST, "Discount percent is required"),
     VALID_DISCOUNT_PERCENT(2045, HttpStatus.BAD_REQUEST, "Discount percent must be at least 0.00 and at most 1.00"),
+    REQUIRED_BRANCH_NEW_NAME(2046, HttpStatus.BAD_REQUEST, "New branch name is required"),
 
     //    Existed Error 3xxx
     USER_EXISTED(3001, HttpStatus.BAD_REQUEST, "User existed"),

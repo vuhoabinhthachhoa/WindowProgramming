@@ -10,4 +10,8 @@ import java.util.List;
 @Repository
 public interface BranchRepository extends JpaRepository<Branch, String> {
     List<Branch> findAllByBusinessStatus(boolean b);
+
+    boolean existsByName(String name);
+
+    Branch findByName(String name);
 }

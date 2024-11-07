@@ -37,15 +37,15 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public BranchResponse getBranchByName(String branchId) {
-        Branch branch = branchRepository.findById(branchId)
+    public BranchResponse getBranchByName(String branchName) {
+        Branch branch = branchRepository.findById(branchName)
                 .orElseThrow(() -> new AppException(ErrorCode.BRAND_NOT_FOUND));
         return branchMapper.toBranchResponse(branch);
     }
 
     @Override
     public BranchResponse createBranch(BranchCreationRequest branchCreationRequest) {
-        if(branchRepository.existsById(branchCreationRequest.getName())) {
+        if(branchRepository.existsByName(branchCreationRequest.getName())) {
             throw new AppException(ErrorCode.BRANCH_EXISTED);
         }
         Branch branch = branchMapper.toBranch(branchCreationRequest);
@@ -55,9 +55,11 @@ public class BranchServiceImpl implements BranchService {
 
     @Override
     public BranchResponse updateBranch(BranchUpdateRequest branchUpdateRequest) {
-        Branch branch = branchRepository.findById(branchUpdateRequest.getName())
-                .orElseThrow(() -> new AppException(ErrorCode.BRAND_NOT_FOUND));
-        branchMapper.updateBranch(branch, branchUpdateRequest);
+        Branch branch = branchRepository.findByName(branchUpdateRequest.getName());
+        if(branch == null) {
+            throw new AppException(ErrorCode.BRAND_NOT_FOUND);
+        }
+        branch.setName(branchUpdateRequest.getNewName());
         branch = branchRepository.save(branch);
         return branchMapper.toBranchResponse(branch);
     }

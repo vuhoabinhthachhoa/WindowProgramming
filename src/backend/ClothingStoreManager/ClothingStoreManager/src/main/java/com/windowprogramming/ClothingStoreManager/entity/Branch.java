@@ -13,8 +13,15 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Branch {
+
+    // actually, the name is unique, but if we set name as the primary key,
+    // we can't update the name of the branch
     @Id
-    @Column(name = "name", nullable = false)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+
+    @Column(name = "name", nullable = false, unique = true)
     String name;
 
     @Column(name = "business_status", nullable = false)

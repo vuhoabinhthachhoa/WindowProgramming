@@ -16,4 +16,6 @@ public class BranchUpdateRequest {
     @NotBlank(message = "REQUIRED_BRANCH_NAME")
     String name;
 
+    @NotBlank(message = "REQUIRED_BRANCH_NEW_NAME")
+    String newName;
 }
