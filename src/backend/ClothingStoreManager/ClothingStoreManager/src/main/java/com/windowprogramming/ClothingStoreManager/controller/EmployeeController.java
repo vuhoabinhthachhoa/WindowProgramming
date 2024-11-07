@@ -1,9 +1,14 @@
 package com.windowprogramming.ClothingStoreManager.controller;
 
 import com.windowprogramming.ClothingStoreManager.dto.request.employee.EmployeeCreationRequest;
+import com.windowprogramming.ClothingStoreManager.dto.request.employee.EmployeeSearchRequest;
 import com.windowprogramming.ClothingStoreManager.dto.request.employee.EmployeeUpdateRequest;
+import com.windowprogramming.ClothingStoreManager.dto.request.product.ProductSearchRequest;
 import com.windowprogramming.ClothingStoreManager.dto.response.ApiResponse;
 import com.windowprogramming.ClothingStoreManager.dto.response.EmployeeResponse;
+import com.windowprogramming.ClothingStoreManager.dto.response.PageResponse;
+import com.windowprogramming.ClothingStoreManager.dto.response.ProductResponse;
+import com.windowprogramming.ClothingStoreManager.enums.SortType;
 import com.windowprogramming.ClothingStoreManager.service.employee.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -45,6 +50,20 @@ public class EmployeeController {
                 .data(employeeService.createEmployee(employeeCreationRequest))
                 .build();
     }
+
+    @GetMapping("/search")
+    @Operation(summary = "Search employees", description = "Search for employees with pagination and sorting")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ApiResponse<PageResponse<EmployeeResponse>> searchEmployees(@Valid @RequestBody EmployeeSearchRequest employeeSearchRequest,
+                                                                     @RequestParam @NotNull Integer page,
+                                                                     @RequestParam @NotNull Integer size,
+                                                                     @RequestParam @NotNull String sortField,
+                                                                     @RequestParam @NotNull SortType sortType) {
+        return ApiResponse.<PageResponse<EmployeeResponse>>builder()
+                .data(employeeService.searchEmployees(employeeSearchRequest, page, size, sortField, sortType))
+                .build();
+    }
+
 
     @GetMapping("/all")
     @Operation(summary = "Get all employees",
