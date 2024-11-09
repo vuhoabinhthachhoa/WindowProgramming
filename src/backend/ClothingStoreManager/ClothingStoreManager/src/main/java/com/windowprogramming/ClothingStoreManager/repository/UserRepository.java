@@ -16,4 +16,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     void deleteAllByEmployee(Employee employee);
 
     void deleteByEmployee(Employee employee);
+
+    User findByEmployee(Employee employee);
+
+    boolean existsByEmployee(Employee employee);
 }

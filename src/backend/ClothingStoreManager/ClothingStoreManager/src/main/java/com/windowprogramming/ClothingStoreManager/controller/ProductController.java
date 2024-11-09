@@ -51,7 +51,7 @@ public class ProductController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Create product", description = "Create a new product")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ApiResponse<ProductResponse> createProduct(@Valid  @RequestPart("data") ProductCreationRequest productCreationRequest, @RequestPart("file") MultipartFile image) {
+    public ApiResponse<ProductResponse> createProduct(@Valid @RequestPart("data") ProductCreationRequest productCreationRequest, @RequestPart("file") MultipartFile image) {
         return ApiResponse.<ProductResponse>builder()
                 .data(productService.createProduct(productCreationRequest, image))
                 .build();

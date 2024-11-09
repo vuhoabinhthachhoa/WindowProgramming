@@ -24,9 +24,6 @@ public class Employee {
     @Column(name = "name", nullable = false)
     String name;
 
-    @Column(name = "phonenumber")
-    String phoneNumber;
-
     @Column(name = "citizenId", nullable = false, unique = true)
     String citizenId;
 
@@ -35,6 +32,9 @@ public class Employee {
 
     @Column(name = "salary", nullable = false)
     BigDecimal salary;
+
+    @Column(name = "phonenumber")
+    String phoneNumber;
 
     @Column(name = "email")
     String email;

@@ -88,9 +88,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             else {
                 employee = employeeRepository.findById(registrationRequest.getEmployeeId())
                         .orElseThrow(() -> new AppException(ErrorCode.EMPLOYEE_NOT_FOUND));
+                if(userRepository.existsByEmployee(employee)) {
+                    throw new AppException(ErrorCode.EMPLOYEE_ALREADY_HAS_USER);
+                }
             }
         }
         user.setEmployee(employee);
+        updateUserBasedOnEmployee(user, employee);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -143,6 +147,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = userRepository.findById(userUpdateRequest.getId())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
         userMapper.updateUser(user, userUpdateRequest);
+
+        Employee employee = user.getEmployee();
+        if(employee != null) {
+            updateEmployeeBasedOnUser(employee, user);
+            employeeRepository.save(employee);
+        }
+
         userRepository.save(user);
         return buildUserResponse(user);
     }
@@ -155,5 +166,23 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             userResponses.add(buildUserResponse(user));
         }
         return userResponses;
+    }
+
+    private void updateUserBasedOnEmployee(User user, Employee employee) {
+        user.setPhoneNumber(employee.getPhoneNumber());
+        user.setEmail(employee.getEmail());
+        user.setDateOfBirth(employee.getDateOfBirth());
+        user.setAddress(employee.getAddress());
+        user.setArea(employee.getArea());
+        user.setWard(employee.getWard());
+    }
+
+    private void updateEmployeeBasedOnUser(Employee employee, User user) {
+        employee.setPhoneNumber(user.getPhoneNumber());
+        employee.setEmail(user.getEmail());
+        employee.setDateOfBirth(user.getDateOfBirth());
+        employee.setAddress(user.getAddress());
+        employee.setArea(user.getArea());
+        employee.setWard(user.getWard());
     }
 }

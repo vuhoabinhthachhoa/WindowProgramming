@@ -55,10 +55,9 @@ public class BranchServiceImpl implements BranchService {
 
     @Override
     public BranchResponse updateBranch(BranchUpdateRequest branchUpdateRequest) {
-        Branch branch = branchRepository.findByName(branchUpdateRequest.getName());
-        if(branch == null) {
-            throw new AppException(ErrorCode.BRAND_NOT_FOUND);
-        }
+        Branch branch = branchRepository.findByName(branchUpdateRequest.getName())
+                        .orElseThrow(() -> new AppException(ErrorCode.BRAND_NOT_FOUND));
+
         branch.setName(branchUpdateRequest.getNewName());
         branch = branchRepository.save(branch);
         return branchMapper.toBranchResponse(branch);

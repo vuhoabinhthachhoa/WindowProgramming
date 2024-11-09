@@ -64,9 +64,6 @@ public class ProductMapperImpl implements ProductMapper {
         if ( productUpdateRequest.getId() != null ) {
             product.setId( productUpdateRequest.getId() );
         }
-        if ( productUpdateRequest.getName() != null ) {
-            product.setName( productUpdateRequest.getName() );
-        }
         if ( productUpdateRequest.getImportPrice() != null ) {
             product.setImportPrice( productUpdateRequest.getImportPrice() );
         }

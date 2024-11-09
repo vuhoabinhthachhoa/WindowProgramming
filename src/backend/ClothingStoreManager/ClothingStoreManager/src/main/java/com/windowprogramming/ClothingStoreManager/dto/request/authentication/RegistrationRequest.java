@@ -28,17 +28,17 @@ public class RegistrationRequest {
 
     Long employeeId;
 
-    String phoneNumber;
-
-    String email;
-
-    LocalDate dateOfBirth;
-
-    String address;
-
-    String area;
-
-    String ward;
+//    String phoneNumber;
+//
+//    String email;
+//
+//    LocalDate dateOfBirth;
+//
+//    String address;
+//
+//    String area;
+//
+//    String ward;
 
     String notes;
 

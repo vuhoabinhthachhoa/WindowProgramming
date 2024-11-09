@@ -5,6 +5,7 @@ import com.windowprogramming.ClothingStoreManager.dto.request.product.ProductSea
 import com.windowprogramming.ClothingStoreManager.dto.request.product.ProductUpdateRequest;
 import com.windowprogramming.ClothingStoreManager.dto.response.PageResponse;
 import com.windowprogramming.ClothingStoreManager.dto.response.ProductResponse;
+import com.windowprogramming.ClothingStoreManager.entity.Product;
 import com.windowprogramming.ClothingStoreManager.enums.SortType;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,5 +22,7 @@ public interface ProductService {
     void setBusinessStatusToInactive(List<Long> productIds);
     void setDiscountPercent(String productCode, BigDecimal discountPercent);
     void setDiscountPercent(List<String> productCodes, BigDecimal discountPercent);
+
+    ProductResponse buildProductResponse(Product product);
 
 }

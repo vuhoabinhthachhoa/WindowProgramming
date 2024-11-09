@@ -67,7 +67,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse createProduct(ProductCreationRequest productCreationRequest, MultipartFile image) {
 
         Product product = productMapper.toProduct(productCreationRequest);
-        product.setBranch(branchRepository.findById(productCreationRequest.getBranchName())
+        product.setBranch(branchRepository.findByName(productCreationRequest.getBranchName())
                 .orElseThrow(() -> new AppException(ErrorCode.BRANCH_NOT_FOUND)));
 
         product.setCategory(categoryRepository.findById(productCreationRequest.getCategoryId())
@@ -77,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
 
         List<Product> existedProduct = productRepository.findAllByNameAndCategoryAndBranch(product.getName(), product.getCategory(), product.getBranch());
         // products with the same name, size, branch, and category have the same code
-        if(existedProduct != null) {
+        if(existedProduct!= null && !existedProduct.isEmpty()) {
             String code = existedProduct.getFirst().getCode();
             // check if product with the same size, branch, category, and name existed
            if(productRepository.existsByCodeAndSize(code, product.getSize())) {
@@ -177,7 +177,8 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    private ProductResponse buildProductResponse(Product product) {
+    @Override
+    public ProductResponse buildProductResponse(Product product) {
         ProductResponse productResponse = productMapper.toProductResponse(product);
         productResponse.setBranch(branchMapper.toBranchResponse(product.getBranch()));
         productResponse.setCategory(categoryMapper.toCategoryResponse(product.getCategory()));

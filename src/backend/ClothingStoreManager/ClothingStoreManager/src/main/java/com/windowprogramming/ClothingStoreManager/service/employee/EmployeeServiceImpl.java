@@ -8,6 +8,7 @@ import com.windowprogramming.ClothingStoreManager.dto.response.PageResponse;
 import com.windowprogramming.ClothingStoreManager.dto.response.ProductResponse;
 import com.windowprogramming.ClothingStoreManager.entity.Employee;
 import com.windowprogramming.ClothingStoreManager.entity.Product;
+import com.windowprogramming.ClothingStoreManager.entity.User;
 import com.windowprogramming.ClothingStoreManager.enums.SortType;
 import com.windowprogramming.ClothingStoreManager.exception.AppException;
 import com.windowprogramming.ClothingStoreManager.exception.ErrorCode;
@@ -83,6 +84,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = employeeRepository.findById(employeeUpdateRequest.getId())
                 .orElseThrow(() -> new AppException(ErrorCode.EMPLOYEE_NOT_FOUND));
         employeeMapper.updateEmployee(employee, employeeUpdateRequest);
+
+        User user = userRepository.findByEmployee(employee);
+        if(user != null) {
+            updateUserBasedOnEmployee(user, employee);
+            userRepository.save(user);
+        }
+
         employee = employeeRepository.save(employee);
         return employeeMapper.toEmployeeResponse(employee);
     }
@@ -93,6 +101,12 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new AppException(ErrorCode.EMPLOYEE_NOT_FOUND));
         employee.setEmploymentStatus(false);
         // delete associated user
+        User user = userRepository.findByEmployee(employee);
+
+        if(user != null) {
+            userRepository.delete(user);
+        }
+
         userRepository.deleteByEmployee(employee);
         employeeRepository.save(employee);
     }
@@ -110,6 +124,15 @@ public class EmployeeServiceImpl implements EmployeeService {
             employeeResponses.add(employeeMapper.toEmployeeResponse(employee));
         }
         return employeeResponses;
+    }
+
+    private void updateUserBasedOnEmployee(User user, Employee employee) {
+        user.setPhoneNumber(employee.getPhoneNumber());
+        user.setEmail(employee.getEmail());
+        user.setDateOfBirth(employee.getDateOfBirth());
+        user.setAddress(employee.getAddress());
+        user.setArea(employee.getArea());
+        user.setWard(employee.getWard());
     }
 
 }

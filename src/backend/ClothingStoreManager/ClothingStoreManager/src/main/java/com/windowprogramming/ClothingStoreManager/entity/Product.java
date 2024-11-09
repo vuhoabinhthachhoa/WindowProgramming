@@ -68,5 +68,8 @@ public class Product {
         if(this.businessStatus == null) {
             this.businessStatus = true;
         }
+        if(this.discountPercent == null) {
+            this.discountPercent = BigDecimal.ZERO;
+        }
     }
 }
