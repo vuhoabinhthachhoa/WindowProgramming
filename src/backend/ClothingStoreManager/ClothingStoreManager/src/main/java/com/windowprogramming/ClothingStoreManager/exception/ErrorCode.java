@@ -68,6 +68,7 @@ public enum ErrorCode {
     PRODUCT_OUT_OF_STOCK(2048, HttpStatus.BAD_REQUEST, "Product out of stock"),
     EMPLOYEE_ALREADY_HAS_USER(2049, HttpStatus.BAD_REQUEST, "Employee already has user"),
     REQUIRED_PRODUCT_QUANTITY(2050, HttpStatus.BAD_REQUEST, "Product quantity is required"),
+    CANNOT_DELETE_ROOT_ADMIN(2051, HttpStatus.BAD_REQUEST, "Cannot delete root admin"),
 
     //    Existed Error 3xxx
     USER_EXISTED(3001, HttpStatus.BAD_REQUEST, "User existed"),

@@ -128,6 +128,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public void deleteUser(Long id) {
+        if(id == 1) {
+            throw new AppException(ErrorCode.CANNOT_DELETE_ROOT_ADMIN);
+        }
         if(userRepository.findById(id).isEmpty()) {
             throw new AppException(ErrorCode.USER_NOT_FOUND);
         }

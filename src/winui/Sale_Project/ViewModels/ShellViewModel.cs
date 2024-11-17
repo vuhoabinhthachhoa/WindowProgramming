@@ -158,20 +158,20 @@ public partial class ShellViewModel : ObservableRecipient
     {
         get;
     }
+    public ICommand MenuViewsEmployeeCommand
+    {
+        get;
+    }
 
     public INavigationService NavigationService
     {
         get;
     }
 
-    public ICommand MenuViewsEmployeeCommand
-    {
-        get;
-    }
 
     public ShellViewModel(INavigationService navigationService)
     {
-        _iUserDao = new UserJsonDao();
+        // _iUserDao = new UserJsonDao();
         NavigationService = navigationService;
         NavigationService.Navigated += OnNavigated;
 
