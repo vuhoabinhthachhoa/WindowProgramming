@@ -12,7 +12,7 @@ namespace Sale_Project;
 public sealed class ObservableCollection<T> : System.Collections.ObjectModel.ObservableCollection<T>
     where T : INotifyPropertyChanged
 {
-    public ObservableCollection()   
+    public ObservableCollection()
     {
         CollectionChanged += FullObservableCollectionCollectionChanged;
     }
@@ -49,4 +49,3 @@ public sealed class ObservableCollection<T> : System.Collections.ObjectModel.Obs
         OnCollectionChanged(args);
     }
 }
-

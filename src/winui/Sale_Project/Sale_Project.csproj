@@ -17,6 +17,16 @@
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Services\Dao\MockDao\**" />
+    <EmbeddedResource Remove="Services\Dao\MockDao\**" />
+    <None Remove="Services\Dao\MockDao\**" />
+    <Page Remove="Services\Dao\MockDao\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Views\CustomerDetailPage.xaml" />
+	<None Remove="Views\EmployeeAddPage.xaml" />
+	<None Remove="Views\EmployeeUpdatePage.xaml" />
+	<None Remove="Views\UserControl\EmployeeUserControl.xaml" />
     <None Remove="Views\ProductAddPage.xaml" />
     <None Remove="Views\ProductUpdatePage.xaml" />
     <None Remove="Views\UserControl\ProductUserControl.xaml" />
@@ -28,6 +38,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.RichSuggestBox" Version="8.1.240916" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231008000" />
@@ -43,6 +54,18 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\EmployeeUpdatePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\UserControl\EmployeeUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\EmployeeAddPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+	<Page Update="Views\CustomerDetailPage.xaml">
+		<Generator>MSBuild:Compile</Generator>
+	</Page>
     <Page Update="Views\ProductUpdatePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -61,4 +84,8 @@
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <PRIResource Remove="Services\Dao\MockDao\**" />
+  </ItemGroup>
 </Project>

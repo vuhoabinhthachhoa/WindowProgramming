@@ -1,9 +1,7 @@
 package com.windowprogramming.ClothingStoreManager.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.windowprogramming.ClothingStoreManager.enums.RoleName;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,9 +15,9 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Role {
     @Id
-    @Column(name = "name")
-    String name;
-
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role_name")
+    RoleName name;
     @Column(name = "description")
     String description;
 

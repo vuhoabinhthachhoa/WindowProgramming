@@ -18,7 +18,7 @@ public class ServiceFactory
         {
             _choices.Add(parent.Name, child);
         }
-    }
+    }   
     public static object GetChildOf(Type parent)
     {
         Type type = _choices[parent.Name];

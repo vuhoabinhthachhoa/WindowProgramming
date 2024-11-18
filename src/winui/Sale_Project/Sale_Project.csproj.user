@@ -2,16 +2,24 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Page Update="Views\EmployeeUpdatePage.xaml">
     <Page Update="Views\ProductUpdatePage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Views\UserControl\EmployeeUserControl.xaml">
     <Page Update="Views\UserControl\ProductUserControl.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Views\EmployeeAddPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\CustomerDetailPage.xaml">
     <Page Update="Views\ProductAddPage.xaml">
       <SubType>Designer</SubType>
     </Page>

@@ -16,7 +16,7 @@ import java.util.function.Function;
 public class JWTUtils {
 
 
-    private static final long EXPIRATION_TIME = 1000 * 60 * 24 * 7; //for 7 days
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 20; //for 20 days
 
     private final SecretKey Key;
 
@@ -33,6 +33,7 @@ public class JWTUtils {
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(Key)
+                .claim("scope", buildScope(userDetails))
                 .compact();
     }
 
@@ -52,5 +53,10 @@ public class JWTUtils {
 
     private boolean isTokenExpired(String token) {
         return extractClaims(token, Claims::getExpiration).before(new Date());
+    }
+
+    private String buildScope(UserDetails userDetails) {
+        String roleName =  userDetails.getAuthorities().stream().findFirst().get().getAuthority();
+        return roleName;
     }
 }

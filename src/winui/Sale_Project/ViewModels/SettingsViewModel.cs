@@ -5,10 +5,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using Microsoft.UI.Xaml;
-
 using Sale_Project.Contracts.Services;
 using Sale_Project.Helpers;
-
 using Windows.ApplicationModel;
 
 namespace Sale_Project.ViewModels;

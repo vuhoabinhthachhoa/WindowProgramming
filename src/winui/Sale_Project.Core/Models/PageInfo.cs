@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Sale_Project;
+namespace Sale_Project.Core.Models;
 
 public class PageInfo : INotifyPropertyChanged
 {
@@ -15,4 +15,3 @@ public class PageInfo : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler PropertyChanged;
 }
-
