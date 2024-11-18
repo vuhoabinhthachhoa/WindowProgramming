@@ -3,7 +3,6 @@
   <PropertyGroup />
   <ItemGroup>
     <Page Update="Views\EmployeeUpdatePage.xaml">
-    <Page Update="Views\ProductUpdatePage.xaml">
       <SubType>Designer</SubType>
     </Page>
 	</ItemGroup>
@@ -30,7 +29,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\CustomerDetailPage.xaml">
-    <Page Update="Views\ProductAddPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
