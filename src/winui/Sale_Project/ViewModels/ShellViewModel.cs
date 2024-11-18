@@ -18,68 +18,66 @@ public partial class ShellViewModel : ObservableRecipient
     [ObservableProperty]
     private bool isBackEnabled;
 
-    private readonly IUserDao _iUserDao;
-    private User _currentUser = new();
+    private readonly IAuthService _authService;
+    private readonly IDialogService _dialogService;
 
-    public User CurrentUser
+    public ShellViewModel(INavigationService navigationService, IAuthService authService, IDialogService dialogService)
     {
-        get => _currentUser;
-        set => SetProperty(ref _currentUser, value);
+        //_iUserDao = new UserJsonDao();
+        _authService = authService;
+        _dialogService = dialogService;
+        NavigationService = navigationService;
+        NavigationService.Navigated += OnNavigated;
+
+        MenuFileExitCommand = new RelayCommand(OnMenuFileExit);
+        MenuSettingsCommand = new RelayCommand(OnMenuSettings);
+        MenuViewsAccountCommand = new RelayCommand(OnMenuViewsAccount);
+        MenuViewsSaleCommand = new RelayCommand(OnMenuViewsSale);
+        MenuViewsReportCommand = new RelayCommand(OnMenuViewsReport);
+        MenuViewsCustomerCommand = new RelayCommand(OnMenuViewsCustomer);
+        MenuViewsProductsCommand = new RelayCommand(OnMenuViewsProducts);
+        MenuViewsDashboardCommand = new RelayCommand(OnMenuViewsDashboard);
+        MenuViewsEmployeeCommand = new RelayCommand(OnMenuViewsEmployee);
+
     }
+
 
     public async Task LoginAsync(string username, string password)
     {
         try
         {
-            var users = await _iUserDao.GetUsersAsync();
-
-            var user = users?.FirstOrDefault(u => u.Username == username && u.Password == password);
-
-            if (user != null)
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
-                CurrentUser = user;
+                await _dialogService.ShowErrorAsync(
+                    "Login Failed",
+                    "Username and password cannot be empty.");
+                return;
+            }
+
+            var loginSuccessful = await _authService.LoginAsync(username, password);
+            if (loginSuccessful)
+            {
+                
                 var uiManager = App.GetService<UIManagerService>();
 
                 if (uiManager.ShellPage != null)
                 {
                     uiManager.ShellPage.Startup.Visibility = Visibility.Collapsed;
                     uiManager.ShellPage.Main.Visibility = Visibility.Visible;
+                    OnMenuViewsDashboard();
                 }
-
-                System.Diagnostics.Debug.WriteLine($"CurrentUser: {CurrentUser.Username} {CurrentUser.UserRole}");
+                // System.Diagnostics.Debug.WriteLine($"CurrentUser: {CurrentUser.Username} {CurrentUser.UserRole}");
+                await _dialogService.ShowSuccessAsync(
+                   "Success",
+                   "Login successful!");
             }
+        
             else
             {
-                ContentDialog dialog = new ContentDialog
-                {
-                    Title = "Login Failed",
-                    Content = "Invalid username or password.",
-                    CloseButtonText = "Ok"
-                };
-
-                if (dialog.XamlRoot == null)
-                {
-                    dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
-                }
-
-                await dialog.ShowAsync();
+                await _dialogService.ShowErrorAsync(
+                   "Login Failed",
+                   "Invalid username or password.");
             }
-        }
-        catch (FileNotFoundException)
-        {
-            ContentDialog errorDialog = new ContentDialog
-            {
-                Title = "Error",
-                Content = "User data file not found.",
-                CloseButtonText = "OK"
-            };
-
-            if (errorDialog.XamlRoot == null)
-            {
-                errorDialog.XamlRoot = App.MainWindow.Content.XamlRoot;
-            }
-
-            await errorDialog.ShowAsync();
         }
         catch (Exception ex)
         {
@@ -97,26 +95,28 @@ public partial class ShellViewModel : ObservableRecipient
 
             await errorDialog.ShowAsync();
         }
+        
+        
     }
 
     public async Task RegisterAsync(string username, string password, string email, string storeName)
     {
 
 
-        var users = await _iUserDao.GetUsersAsync();
+        // var users = await _iUserDao.GetUsersAsync();
 
-        var isStoreNameNew = !users.Exists(user => user.StoreName == storeName);
+        //var isStoreNameNew = !users.Exists(user => user.StoreName == storeName);
 
-        var newUser = new Sale_Project.Core.Models.User
-        {
-            Username = username,
-            Password = password,
-            Email = email,
-            StoreName = storeName,
-            UserRole = isStoreNameNew ? "Admin" : "User"
-        };
+        //var newUser = new Sale_Project.Core.Models.User
+        //{
+        //    Username = username,
+        //    Password = password,
+        //    Email = email,
+        //    StoreName = storeName,
+        //    UserRole = isStoreNameNew ? "Admin" : "User"
+        //};
 
-        await _iUserDao.AddUserAsync(newUser);
+        // await _iUserDao.AddUserAsync(newUser);
     }
 
     public ICommand MenuFileExitCommand
@@ -158,6 +158,7 @@ public partial class ShellViewModel : ObservableRecipient
     {
         get;
     }
+
     public ICommand MenuViewsEmployeeCommand
     {
         get;
@@ -169,23 +170,6 @@ public partial class ShellViewModel : ObservableRecipient
     }
 
 
-    public ShellViewModel(INavigationService navigationService)
-    {
-        // _iUserDao = new UserJsonDao();
-        NavigationService = navigationService;
-        NavigationService.Navigated += OnNavigated;
-
-        MenuFileExitCommand = new RelayCommand(OnMenuFileExit);
-        MenuSettingsCommand = new RelayCommand(OnMenuSettings);
-        MenuViewsAccountCommand = new RelayCommand(OnMenuViewsAccount);
-        MenuViewsSaleCommand = new RelayCommand(OnMenuViewsSale);
-        MenuViewsReportCommand = new RelayCommand(OnMenuViewsReport);
-        MenuViewsCustomerCommand = new RelayCommand(OnMenuViewsCustomer);
-        MenuViewsProductsCommand = new RelayCommand(OnMenuViewsProducts);
-        MenuViewsDashboardCommand = new RelayCommand(OnMenuViewsDashboard);
-        MenuViewsEmployeeCommand = new RelayCommand(OnMenuViewsEmployee);
-
-    }
 
     private void OnNavigated(object sender, NavigationEventArgs e) => IsBackEnabled = NavigationService.CanGoBack;
 
@@ -207,6 +191,15 @@ public partial class ShellViewModel : ObservableRecipient
 
     private void OnMenuViewsMain() => NavigationService.NavigateTo(typeof(DashboardViewModel).FullName!);
 
-    private void OnMenuViewsEmployee() => NavigationService.NavigateTo(typeof(EmployeeViewModel).FullName!);
+    private void OnMenuViewsEmployee()
+    {
+        UserRole userRole = _authService.GetUserRole();
+        if (userRole != UserRole.ADMIN)
+        {
+            _dialogService.ShowErrorAsync("Access Denied", "You do not have permission to access this page.");
+            return;
+        }
+        NavigationService.NavigateTo(typeof(EmployeeViewModel).FullName!);
+    }
 
 }
