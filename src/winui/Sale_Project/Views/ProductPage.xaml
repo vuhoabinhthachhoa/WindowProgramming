@@ -28,10 +28,7 @@
         <!--<TextBox Name="keyword" Grid.Row="0" Grid.Column="1" PlaceholderText="Tìm kiếm hàng hóa" Margin="10"
                  Text="{x:Bind ViewModel.Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>-->
         <!--SuggestionChosen="AutoSuggestBox_SuggestionChosen"-->
-        <AutoSuggestBox QueryIcon="Find" TextChanged="AutoSuggestBox_TextChanged" Name="SuggestionOutput"
-                        
-                        Text="{x:Bind ViewModel.Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        Grid.Row="0" Grid.Column="1" PlaceholderText="Search"  Margin="10" />
+        
         <!--<AutoSuggestBox QueryIcon="Find" Name="SuggestionOutput"
                         QuerySubmitted="searchButton_Click"
                         Text="{x:Bind ViewModel.Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -52,99 +49,114 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1">
             <Grid>
                 <StackPanel>
-                    <Expander x:Name="Expander1" VerticalAlignment="Top" Width="200">
+                    <Expander x:Name="Name_Expander" VerticalAlignment="Top" Width="200">
                         <Expander.Header>
-                            <TextBlock Text="Loại hàng" />
+                            <TextBlock Text="Tên hàng hóa" />
                         </Expander.Header>
                         <Expander.Content>
-                            <Grid >
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
+                            <AutoSuggestBox QueryIcon="Find" TextChanged="AutoSuggestBox_TextChanged" Name="SuggestionOutput"
+                Text="{x:Bind ViewModel.Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Grid.Row="0" Grid.Column="1" PlaceholderText="Tìm theo tên hàng hóa"  Margin="10" />
+                        </Expander.Content>
+                    </Expander>
 
-                                <CheckBox Grid.Row="0" Content="Hàng hóa" />
-                                <CheckBox Grid.Row="1" Content="Dịch vụ" />
-                                <CheckBox Grid.Row="2" Content="Combo - Đóng gói" />
+                    <Expander x:Name="ID_Expander" Header="Mã hàng hóa" VerticalAlignment="Top" Width="200">
+                        <Expander.Content>
+                            <TextBox Text="Mã hàng hóa" />
+                        </Expander.Content>
+                    </Expander>
+
+                    <Expander x:Name="Category_Expander" Header="Mã danh mục" VerticalAlignment="Top" Width="200">
+                        <Expander.Content>
+                            <TextBox Text="Mã danh mục" />
+                        </Expander.Content>
+                    </Expander>
+
+                    <Expander x:Name="Branch_Expander" Header="Mã nhánh" VerticalAlignment="Top" Width="200">
+                        <Expander.Content>
+                            <TextBox Text="Mã nhánh" />
+                        </Expander.Content>
+                    </Expander>
+
+                    <Expander x:Name="Import_Price_Expander" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Giá vốn" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <StackPanel Orientation="Vertical">
+                                <NumberBox Header="Từ" Width="200" Value="0" Minimum="0"/>
+                                <NumberBox Header="Đến" Width="200" Value="0" Minimum="0"/>
+                            </StackPanel>
+                        </Expander.Content>
+                    </Expander>
+
+                    <Expander x:Name="Selling_Price_Expander" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Giá bán" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <StackPanel Orientation="Vertical">
+                                <NumberBox Header="Từ" Width="200" Value="0" Minimum="0"/>
+                                <NumberBox Header="Đến" Width="200" Value="0" Minimum="0"/>
+                            </StackPanel>
+                        </Expander.Content>
+                    </Expander>
+
+                    <Expander x:Name="Inventory_Quantity_Expander" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Tồn kho" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <StackPanel Orientation="Vertical">
+                                <NumberBox Header="Từ" Width="200" Value="0" Minimum="0"/>
+                                <NumberBox Header="Đến" Width="200" Value="0" Minimum="0"/>
+                            </StackPanel>
+                        </Expander.Content>
+                    </Expander>
+
+                    <Expander x:Name="BusinessStatus_Expander" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Trạng thái" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <Grid>
+                                <ComboBox Width="200" PlaceholderText="">
+                                    <x:String>Đang kinh doanh</x:String>
+                                    <x:String>Ngừng kinh doanh</x:String>
+                                </ComboBox>
                             </Grid>
                         </Expander.Content>
                     </Expander>
 
-                    <Expander x:Name="Expander2" Header="Nhóm hàng" VerticalAlignment="Top" Width="200">
+                    <Expander x:Name="Size_Expander" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Size" />
+                        </Expander.Header>
                         <Expander.Content>
-                            <Grid >
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-
-                                </Grid.RowDefinitions>
-                                <TextBox Grid.Row="0" PlaceholderText="Tìm kiếm nhóm hàng"/>
-                                <ListBox Grid.Row="1">
-                                    <x:String>Tất cả</x:String>
-                                    <x:String>Thời trang Nam</x:String>
-                                    <x:String>Thời trang Nữ</x:String>
-                                    <x:String>Phụ kiện Nam</x:String>
-                                    <x:String>Phụ kiện Nữ</x:String>
-                                </ListBox>
+                            <Grid>
+                                <ComboBox Width="200" PlaceholderText="">
+                                    <x:String>S</x:String>
+                                    <x:String>M</x:String>
+                                    <x:String>L</x:String>
+                                    <x:String>XL</x:String>
+                                </ComboBox>
                             </Grid>
                         </Expander.Content>
                     </Expander>
 
-                    <Expander x:Name="Expander3" Header="Tồn kho" VerticalAlignment="Top" Width="200">
+                    <Expander x:Name="Discount_Expander" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Giảm giá" />
+                        </Expander.Header>
                         <Expander.Content>
-                            <RadioButtons>
-                                <RadioButton Content="Tất cả" />
-                                <RadioButton Content="Dưới định mức tồn" />
-                                <RadioButton Content="Vượt định mức tồn" />
-                                <RadioButton Content="Còn hàng trong kho" />
-                                <RadioButton Content="Hết hàng trong kho" />
-                                <RadioButton Content="Lựa chọn khác" />
-                            </RadioButtons>
+                            <StackPanel Orientation="Vertical">
+                                <NumberBox Header="Từ" Width="200" Value="0" Minimum="0" Maximum="1"/>
+                                <NumberBox Header="Đến" Width="200" Value="0" Minimum="0" Maximum="1"/>
+                            </StackPanel>
                         </Expander.Content>
                     </Expander>
 
-                    <Expander x:Name="Expander4" Header="Bán trực tiếp" VerticalAlignment="Top" Width="200">
-                        <Expander.Content>
-                            <RadioButtons>
-                                <RadioButton Content="Tất cả" />
-                                <RadioButton Content="Được bán trực tiếp" />
-                                <RadioButton Content="Không được bán trực tiếp" />
-                            </RadioButtons>
-                        </Expander.Content>
-                    </Expander>
-
-                    <Expander x:Name="Expander5" Header="Nhà cung cấp" VerticalAlignment="Top" Width="200">
-                        <Expander.Content>
-                            <TextBox PlaceholderText="Chọn nhà cung cấp" Width="190"/>
-                        </Expander.Content>
-                    </Expander>
-
-                    <Expander x:Name="Expander6" Header="Vị trí" VerticalAlignment="Top" Width="200">
-                        <Expander.Content>
-                            <TextBox PlaceholderText="Chọn vị trí" Width="190"/>
-                        </Expander.Content>
-                    </Expander>
-
-                    <Expander x:Name="Expander7" Header="Liên kết kênh bán" VerticalAlignment="Top" Width="200">
-                        <Expander.Content>
-                            <RadioButtons>
-                                <RadioButton Content="Tất cả" />
-                                <RadioButton Content="Có liên kết kênh bán" />
-                                <RadioButton Content="Không liên kết kênh bán" />
-                            </RadioButtons>
-                        </Expander.Content>
-                    </Expander>
-
-                    <Expander x:Name="Expander8" Header="Lựa chọn hiển thị " VerticalAlignment="Top" Width="200">
-                        <Expander.Content>
-                            <RadioButtons>
-                                <RadioButton Content="Hàng đang kinh doanh" />
-                                <RadioButton Content="Hàng ngưng kinh doanh" />
-                                <RadioButton Content="Tất cả" />
-                            </RadioButtons>
-                        </Expander.Content>
-                    </Expander>
+                   
                 </StackPanel>
             </Grid>
         </ScrollViewer>

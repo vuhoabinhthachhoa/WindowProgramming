@@ -40,5 +40,12 @@
     "Email": "minh@gmail.com",
     "UserRole": "User",
     "StoreName": "store2"
+  },
+  {
+    "Username": "1",
+    "Password": "1",
+    "Email": "1@mail.com",
+    "UserRole": "Admin",
+    "StoreName": "a"
   }
 ]

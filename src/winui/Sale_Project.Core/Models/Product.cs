@@ -49,10 +49,10 @@ public class Product : INotifyPropertyChanged
         get; set;
     } = "";
 
-    public bool BusinessStatus
+    public string BusinessStatus
     {
         get; set;
-    } = false;
+    } = "Đang kinh doanh";
 
     public string Size
     {

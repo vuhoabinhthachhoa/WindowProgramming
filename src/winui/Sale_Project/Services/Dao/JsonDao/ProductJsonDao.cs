@@ -24,6 +24,7 @@ public class ProductJsonDao : IProductDao
         if (string.IsNullOrWhiteSpace(info.CategoryID)) return (false, "Invalid CategoryID");
         if (info.ImportPrice <= 0) return (false, "Import Price must be greater than 0");
         if (info.SellingPrice <= 0) return (false, "Selling Price must be greater than 0");
+        if (info.SellingPrice < info.ImportPrice) return (false, "Selling Price must be greater than Import Price");
         if (string.IsNullOrWhiteSpace(info.BranchID)) return (false, "Invalid BranchID");
         if (info.InventoryQuantity < 0) return (false, "Inventory Quantity cannot be negative");
         //if (string.IsNullOrWhiteSpace(info.Images)) return (false, "Images are required");

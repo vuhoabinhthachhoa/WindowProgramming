@@ -25,25 +25,11 @@ namespace Sale_Project;
 /// </summary>
 public sealed partial class ProductUpdatePage : Page
 {
-    public class ProductUpdatePageViewModel
-    {
-        IProductDao _dao;
-        public ProductUpdatePageViewModel()
-        {
-            _dao = ServiceFactory.GetChildOf(typeof(IProductDao)) as IProductDao;
-        }
-        public Product Info { get; set; } = new Product();
-
-        public (bool, string) UpdateProduct()
-        {
-            return _dao.UpdateProduct(Info);
-        }
-    }
-
-    public ProductUpdatePageViewModel ViewModel { get; set; } = new ProductUpdatePageViewModel();
+    public ProductUpdatePageViewModel ViewModel { get; set; } 
 
     public ProductUpdatePage()
     {
+        ViewModel = new ProductUpdatePageViewModel();
         this.InitializeComponent();
     }
     protected override void OnNavigatedTo(NavigationEventArgs e)

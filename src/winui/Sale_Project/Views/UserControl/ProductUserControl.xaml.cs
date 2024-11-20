@@ -1,4 +1,4 @@
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -21,7 +21,7 @@ namespace Sale_Project;
 public sealed partial class ProductUserControl : UserControl
 {
     private readonly string[] Size = new string[] { "S", "M", "L", "XL" };
-    private readonly bool[] BusinessStatus = new bool[] { true, false };
+    private readonly string[] BusinessStatus = new string[] { "Đang kinh doanh", "Ngừng kinh doanh" };
 
     public static readonly DependencyProperty InfoProperty
         = DependencyProperty.Register(
