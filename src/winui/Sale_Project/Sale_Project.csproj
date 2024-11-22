@@ -26,6 +26,7 @@
     <None Remove="Views\CustomerDetailPage.xaml" />
 	<None Remove="Views\EmployeeAddPage.xaml" />
 	<None Remove="Views\EmployeeUpdatePage.xaml" />
+	<None Remove="Views\LoginPage.xaml" />
 	<None Remove="Views\UserControl\EmployeeUserControl.xaml" />
   </ItemGroup>
 
@@ -42,6 +43,7 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="9.0.0" />
     <PackageReference Include="WinUIEx" Version="2.3.2" />
   </ItemGroup>
 
@@ -52,6 +54,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\LoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\EmployeeUpdatePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

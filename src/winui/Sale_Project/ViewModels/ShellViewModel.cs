@@ -41,84 +41,6 @@ public partial class ShellViewModel : ObservableRecipient
 
     }
 
-
-    public async Task LoginAsync(string username, string password)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
-            {
-                await _dialogService.ShowErrorAsync(
-                    "Login Failed",
-                    "Username and password cannot be empty.");
-                return;
-            }
-
-            var loginSuccessful = await _authService.LoginAsync(username, password);
-            if (loginSuccessful)
-            {
-                
-                var uiManager = App.GetService<UIManagerService>();
-
-                if (uiManager.ShellPage != null)
-                {
-                    uiManager.ShellPage.Startup.Visibility = Visibility.Collapsed;
-                    uiManager.ShellPage.Main.Visibility = Visibility.Visible;
-                    OnMenuViewsDashboard();
-                }
-                // System.Diagnostics.Debug.WriteLine($"CurrentUser: {CurrentUser.Username} {CurrentUser.UserRole}");
-                await _dialogService.ShowSuccessAsync(
-                   "Success",
-                   "Login successful!");
-            }
-        
-            else
-            {
-                await _dialogService.ShowErrorAsync(
-                   "Login Failed",
-                   "Invalid username or password.");
-            }
-        }
-        catch (Exception ex)
-        {
-            ContentDialog errorDialog = new ContentDialog
-            {
-                Title = "Error",
-                Content = $"An error occurred: {ex.Message}",
-                CloseButtonText = "OK"
-            };
-
-            if (errorDialog.XamlRoot == null)
-            {
-                errorDialog.XamlRoot = App.MainWindow.Content.XamlRoot;
-            }
-
-            await errorDialog.ShowAsync();
-        }
-        
-        
-    }
-
-    public async Task RegisterAsync(string username, string password, string email, string storeName)
-    {
-
-
-        // var users = await _iUserDao.GetUsersAsync();
-
-        //var isStoreNameNew = !users.Exists(user => user.StoreName == storeName);
-
-        //var newUser = new Sale_Project.Core.Models.User
-        //{
-        //    Username = username,
-        //    Password = password,
-        //    Email = email,
-        //    StoreName = storeName,
-        //    UserRole = isStoreNameNew ? "Admin" : "User"
-        //};
-
-        // await _iUserDao.AddUserAsync(newUser);
-    }
-
     public ICommand MenuFileExitCommand
     {
         get;
@@ -169,8 +91,6 @@ public partial class ShellViewModel : ObservableRecipient
         get;
     }
 
-
-
     private void OnNavigated(object sender, NavigationEventArgs e) => IsBackEnabled = NavigationService.CanGoBack;
 
     private void OnMenuFileExit() => Application.Current.Exit();
@@ -181,12 +101,37 @@ public partial class ShellViewModel : ObservableRecipient
 
     private void OnMenuViewsSale() => NavigationService.NavigateTo(typeof(SaleViewModel).FullName!);
 
-    private void OnMenuViewsReport() => NavigationService.NavigateTo(typeof(ReportViewModel).FullName!);
+    private void OnMenuViewsReport()
+    {
+        UserRole userRole = _authService.GetUserRole();
+        if (userRole != UserRole.ADMIN)
+        {
+            _dialogService.ShowErrorAsync("Access Denied", "You do not have permission to access this page.");
+            return;
+        }
+        NavigationService.NavigateTo(typeof(ReportViewModel).FullName!);
+    }
 
-    private void OnMenuViewsCustomer() => NavigationService.NavigateTo(typeof(CustomerViewModel).FullName!);
-
-    private void OnMenuViewsProducts() => NavigationService.NavigateTo(typeof(ProductViewModel).FullName!);
-
+    private void OnMenuViewsCustomer()
+    {
+        UserRole userRole = _authService.GetUserRole();
+        if (userRole != UserRole.ADMIN)
+        {
+            _dialogService.ShowErrorAsync("Access Denied", "You do not have permission to access this page.");
+            return;
+        }
+        NavigationService.NavigateTo(typeof(CustomerViewModel).FullName!);
+    }
+    private void OnMenuViewsProducts()
+    {
+        UserRole userRole = _authService.GetUserRole();
+        if (userRole != UserRole.ADMIN)
+        {
+            _dialogService.ShowErrorAsync("Access Denied", "You do not have permission to access this page.");
+            return;
+        }
+        NavigationService.NavigateTo(typeof(ProductViewModel).FullName!);
+    }
     private void OnMenuViewsDashboard() => NavigationService.NavigateTo(typeof(DashboardViewModel).FullName!);
 
     private void OnMenuViewsMain() => NavigationService.NavigateTo(typeof(DashboardViewModel).FullName!);

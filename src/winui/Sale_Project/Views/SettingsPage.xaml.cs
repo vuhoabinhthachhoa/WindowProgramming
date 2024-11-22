@@ -8,6 +8,8 @@ namespace Sale_Project.Views;
 // TODO: Set the URL for your privacy policy by updating SettingsPage_PrivacyTermsLink.NavigateUri in Resources.resw.
 public sealed partial class SettingsPage : Page
 {
+    private UIElement? _shell = null;
+
     public SettingsViewModel ViewModel
     {
         get;
@@ -22,12 +24,7 @@ public sealed partial class SettingsPage : Page
 
     private void LogoutButton_Click(object sender, RoutedEventArgs e)
     {
-        var uiManager = App.GetService<UIManagerService>();
+        ViewModel.LogoutAsync();
 
-        if (uiManager.ShellPage != null)
-        {
-            uiManager.ShellPage.Startup.Visibility = Visibility.Visible;
-            uiManager.ShellPage.Main.Visibility = Visibility.Collapsed;
-        }
     }
 }

@@ -93,6 +93,10 @@ public partial class App : Application
             services.AddTransient<DashboardPage>();
             services.AddTransient<ShellPage>();
             services.AddTransient<ShellViewModel>();
+            services.AddTransient<LoginPage>();
+            services.AddTransient<LoginViewModel>();
+            services.AddTransient<EmployeePage>();
+            services.AddTransient<EmployeeViewModel>();
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));

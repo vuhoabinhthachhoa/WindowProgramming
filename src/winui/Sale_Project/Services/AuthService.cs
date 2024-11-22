@@ -17,7 +17,7 @@ namespace Sale_Project.Services;
 public class AuthService : IAuthService
 {
     private readonly HttpClient _httpClient;
-    private bool _isAuthenticated;
+    //private bool _isAuthenticated;
 
     public AuthService(HttpClient httpClient)
     {
@@ -25,7 +25,7 @@ public class AuthService : IAuthService
         _httpClient = new HttpClient { BaseAddress = new Uri(AppConstants.BaseUrl + "/auth") };
     }
 
-    public bool IsAuthenticated => _isAuthenticated;
+    // public bool IsAuthenticated => _isAuthenticated;
 
     public async Task<bool> LoginAsync(string username, string password)
     {
@@ -80,61 +80,17 @@ public class AuthService : IAuthService
 
     public void Logout()
     {
-        _isAuthenticated = false;
+        //_isAuthenticated = false;
+        // Access LocalSettings
+        var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+        // Remove the AccessToken and UserRole
+        localSettings.Values.Remove("AccessToken");
+        localSettings.Values.Remove("UserRole");
+
+        // Optionally, you can log this action for debugging
+        System.Diagnostics.Debug.WriteLine("AccessToken and UserRole removed from LocalSettings.");
     }
-
-    public async Task FetchUserIdAsync()
-    {
-        try
-        {
-            // Get the access token from local storage
-            var localSettings = ApplicationData.Current.LocalSettings;
-            var accessToken = localSettings.Values["AccessToken"] as string;
-
-            // Prepare the request message with authorization header if token is available
-            var requestMessage = new HttpRequestMessage(HttpMethod.Get, "/users/me");
-
-            if (!string.IsNullOrWhiteSpace(accessToken))
-            {
-                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            }
-
-            var response = await _httpClient.SendAsync(requestMessage);
-
-            if (response.IsSuccessStatusCode)
-            {
-                // Retrieve user data from the response
-                var userData = await response.Content.ReadFromJsonAsync<Dictionary<string, object>>();
-
-                if (userData != null && userData.TryGetValue("id", out var userId))
-                {
-                    // Check if userId is of type int and cast it safely
-                    if (userId is JsonElement jsonElement && jsonElement.ValueKind == JsonValueKind.Number)
-                    {
-                        int id = jsonElement.GetInt32(); // Get the integer value
-                        localSettings.Values["UserId"] = id; // Store the integer userId
-                    }
-                    else if (userId is double doubleId) // In case the ID is a double
-                    {
-                        localSettings.Values["UserId"] = (int)doubleId; // Cast to int and store
-                    }
-                    else
-                    {
-                        Console.WriteLine("User ID is not in the expected format.");
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error fetching user ID: {ex.Message}");
-        }
-    }
-
 
     public string GetAccessToken()
     {
