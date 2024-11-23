@@ -41,7 +41,7 @@ public sealed partial class ProductPage : Page
             {
                 var found = splitText.All((key) =>
                 {
-                    return product.Name.ToLower().Contains(key) || product.ID.ToString().ToLower().Contains(key);
+                    return product.Name.ToLower().Contains(key);
                 });
                 if (found)
                 {
@@ -70,27 +70,6 @@ public sealed partial class ProductPage : Page
         ViewModel.Search();
 
     }
-
-    // Handle user selecting an item, in our case just output the selected item.
-    //private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-    //{
-    //    SuggestionOutput.Text = args.SelectedItem.ToString();
-        //var selectedProduct = ViewModel.Products.FirstOrDefault(p => $"{p.Name} (ID: {p.ID})" == args.SelectedItem.ToString());
-        //if (selectedProduct != null)
-        //{
-        //    ViewModel.Products.Clear();
-        //    ViewModel.Products.Add(selectedProduct);
-        //}
-        //else
-        //{
-        //     Reset to show all products if no specific product is selected
-        //    ViewModel.Products.Clear();
-        //    foreach (var product in ViewModel.Products)
-        //    {
-        //        ViewModel.Products.Add(product);
-        //    }
-        //}
-    //}
 
     private void addProductButton_Click(object sender, RoutedEventArgs e)
     {

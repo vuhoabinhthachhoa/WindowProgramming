@@ -25,7 +25,7 @@
         Grid.Row="0"
         x:Uid="Product_Title"
         Style="{StaticResource PageTitleStyle}" />
-        <!--<TextBox Name="keyword" Grid.Row="0" Grid.Column="1" PlaceholderText="Tìm kiếm hàng hóa" Margin="10"
+        <!--<TextBox PlaceholderText Name="keyword" Grid.Row="0" Grid.Column="1" PlaceholderText="Tìm kiếm hàng hóa" Margin="10"
                  Text="{x:Bind ViewModel.Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>-->
         <!--SuggestionChosen="AutoSuggestBox_SuggestionChosen"-->
         
@@ -62,19 +62,19 @@
 
                     <Expander x:Name="ID_Expander" Header="Mã hàng hóa" VerticalAlignment="Top" Width="200">
                         <Expander.Content>
-                            <TextBox Text="Mã hàng hóa" />
+                            <TextBox PlaceholderText="Mã hàng hóa" />
                         </Expander.Content>
                     </Expander>
 
                     <Expander x:Name="Category_Expander" Header="Mã danh mục" VerticalAlignment="Top" Width="200">
                         <Expander.Content>
-                            <TextBox Text="Mã danh mục" />
+                            <TextBox PlaceholderText="Mã danh mục" />
                         </Expander.Content>
                     </Expander>
 
                     <Expander x:Name="Branch_Expander" Header="Mã nhánh" VerticalAlignment="Top" Width="200">
                         <Expander.Content>
-                            <TextBox Text="Mã nhánh" />
+                            <TextBox PlaceholderText="Mã nhánh" />
                         </Expander.Content>
                     </Expander>
 
