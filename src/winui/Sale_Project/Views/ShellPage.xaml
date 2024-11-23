@@ -15,72 +15,12 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/DensityStyles/Compact.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <local:RoleToVisibilityConverter x:Key="RoleToVisibilityConverter" />
+            <!--<local:RoleToVisibilityConverter x:Key="RoleToVisibilityConverter" />-->
         </ResourceDictionary>
     </Page.Resources>
 
     <Grid>
-        <Grid Background="#272a37" x:Name="StartupFeature">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            
-            <!-- Login features -->
-            <StackPanel x:Name="LoginFeature" Visibility="Visible" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="Sign in to Cloth Store" Foreground="WhiteSmoke" FontSize="36" Margin="4" TextAlignment="Center" FontWeight="ExtraBold"/>
-                <TextBlock x:Name="ErrorMessage_Login" Text="" FontSize="20" Margin="4" Foreground="Red" TextAlignment="Center"/>
-                <TextBlock Text="Welcome back!" Margin="0,0,0,20"
-               TextWrapping="Wrap" Width="300"
-               TextAlignment="Center" VerticalAlignment="Center" Foreground="WhiteSmoke" FontSize="20" FontWeight="Bold"/>
-                <TextBox x:Name="UsernameTextBox" PlaceholderText="Username" Margin="4 20" Width="400" Height="50"/>
-                <PasswordBox x:Name="PasswordBox" PlaceholderText="Password" Margin="4" Width="400" Height="50"/>
-                <Button  Content="Login" Background="DodgerBlue" Foreground="White" Click="LoginButton_Click" Width="200" Height="50" CornerRadius="30" HorizontalAlignment="Center" Margin="0,20"/>
-                <TextBlock Text="Don't have an account?" Foreground="WhiteSmoke"
-               TextAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
-                <TextBlock Text="Register now"
-               PointerPressed="RegisterButtonTextBlock_OnPointerPressed"
-               Foreground="DodgerBlue"
-               TextAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
-            </StackPanel>
-            <!--Register Feature-->
-            <StackPanel x:Name="RegisterFeature" Visibility="Collapsed" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="Start for free" Foreground="WhiteSmoke" FontSize="30" FontWeight="Bold" Margin="4" TextAlignment="Center"/>
-
-                <TextBlock x:Name="Title" Text="Create new account" Foreground="WhiteSmoke" FontSize="40" FontWeight="ExtraBold" Margin="4" TextAlignment="Center"/>
-
-                <TextBlock x:Name="ErrorMessage_Register" Text="" FontSize="20" Margin="4" Foreground="Red" TextAlignment="Center"/>
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Text="Already a member?" Foreground="WhiteSmoke" Margin="0,0,5,20"
-                   TextWrapping="Wrap"
-                   TextAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
-                    <TextBlock x:Name="RegisterButtonTextBlock" Text="Sign in now" 
-                   PointerPressed="LoginButtonTextBlock_OnPointerPressed"
-                   Foreground="DodgerBlue" Margin="0,0,0,20"
-                   TextAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBox PlaceholderText="Username" x:Name="NewUsernameTextBox" Margin="4 10 4 20" Width="200" Height="50"/>
-                    <PasswordBox PlaceholderText="Password" x:Name="NewPasswordBox" Margin="4 10 4 20" Width="200"/>
-                    <TextBox PlaceholderText="Store Name" x:Name="NewStoreNameTextBox" Margin="4 10 4 20" Width="200" Height="50"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBox x:Name="NewEmailTextBox" PlaceholderText="Email" Margin="4" Width="408" Height="50"/>
-                </StackPanel>
-                <Button x:Name="RegisterButton" Content="Create Account" Background="DodgerBlue" Foreground="White"
-                Click="RegisterButton_Click_Async" Width="200" Height="50" HorizontalAlignment="Center" Margin="0,20" CornerRadius="30"/>
-            </StackPanel>
-            <StackPanel CornerRadius="30" Grid.Column="1" Margin="40">
-                <StackPanel.Background>
-                    <ImageBrush ImageSource="ms-appx:///Assets/supportimg.jpg"/>
-                </StackPanel.Background>
-            </StackPanel>
-        </Grid>
-
-        <!--Main Feature-->
-        <Grid x:Name="MainFeature" Visibility="Collapsed">
+        <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="32"/>
                 <RowDefinition Height="48" />
@@ -92,7 +32,7 @@
                 <TextBlock x:Name="AppTitleBarText" VerticalAlignment="Center" TextWrapping="NoWrap" Style="{StaticResource CaptionTextBlockStyle}" Margin="32, 0, 0, 0"/>
             </Grid>
 
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" x:Name="Header">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />

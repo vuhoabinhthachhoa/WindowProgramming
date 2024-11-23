@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 
 using Sale_Project.Activation;
 using Sale_Project.Contracts.Services;
+using Sale_Project.ViewModels;
 using Sale_Project.Views;
 
 namespace Sale_Project.Services;
@@ -12,13 +13,15 @@ public class ActivationService : IActivationService
     private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
     private readonly IEnumerable<IActivationHandler> _activationHandlers;
     private readonly IThemeSelectorService _themeSelectorService;
+    private readonly INavigationService _navigationService;
     private UIElement? _shell = null;
 
-    public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IThemeSelectorService themeSelectorService)
+    public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IThemeSelectorService themeSelectorService, INavigationService navigationService)
     {
         _defaultHandler = defaultHandler;
         _activationHandlers = activationHandlers;
         _themeSelectorService = themeSelectorService;
+        _navigationService = navigationService;
     }
 
     public async Task ActivateAsync(object activationArgs)
@@ -29,8 +32,11 @@ public class ActivationService : IActivationService
         // Set the MainWindow Content.
         if (App.MainWindow.Content == null)
         {
-            _shell = App.GetService<ShellPage>();
-            App.MainWindow.Content = _shell ?? new Frame();
+            //var frame = new Frame();
+            //frame.Navigate(typeof(LoginPage));
+            //App.MainWindow.Content = frame;
+
+            App.MainWindow.Content = App.GetService<LoginPage>();
         }
 
         // Handle activation via ActivationHandlers.

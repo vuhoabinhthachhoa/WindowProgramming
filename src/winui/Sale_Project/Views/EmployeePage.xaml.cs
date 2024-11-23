@@ -30,7 +30,8 @@ public sealed partial class EmployeePage : Page
     public EmployeePage()
     {
         this.InitializeComponent();
-        ViewModel = new EmployeeViewModel();
+        //ViewModel = new EmployeeViewModel();
+        ViewModel = App.GetService<EmployeeViewModel>();
         // DataContext = this;
     }
 
