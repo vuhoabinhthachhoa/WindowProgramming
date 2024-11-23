@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -89,6 +90,18 @@ public class NavigationService : INavigationService
         {
             _frame.Tag = clearNavigation;
             var vmBeforeNavigation = _frame.GetPageViewModel();
+            // debug
+            if (_frame == null)
+            {
+                throw new ArgumentNullException(nameof(_frame), "_frame is null");
+            }
+
+            if (pageType == null)
+            {
+                throw new ArgumentNullException(nameof(pageType), "pageType is null");
+            }
+
+
             var navigated = _frame.Navigate(pageType, parameter);
             if (navigated)
             {

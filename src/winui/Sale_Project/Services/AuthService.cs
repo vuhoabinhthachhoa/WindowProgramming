@@ -17,15 +17,12 @@ namespace Sale_Project.Services;
 public class AuthService : IAuthService
 {
     private readonly HttpClient _httpClient;
-    //private bool _isAuthenticated;
 
     public AuthService(HttpClient httpClient)
     {
         _httpClient = httpClient;
         _httpClient = new HttpClient { BaseAddress = new Uri(AppConstants.BaseUrl + "/auth") };
     }
-
-    // public bool IsAuthenticated => _isAuthenticated;
 
     public async Task<bool> LoginAsync(string username, string password)
     {
@@ -41,13 +38,14 @@ public class AuthService : IAuthService
         {
             return false;
         }
-        
+
         // Read the response content as a string
         var responseContent = await apiResponse.Content.ReadAsStringAsync();
 
         // Deserialize the response content to the appropriate type
         var responseData = JsonSerializer.Deserialize<ApiResponse<Token>>(responseContent);
-        if(responseData!= null)
+
+        if (responseData!= null)
         {
             var token = responseData.Data;
             var localSettings = ApplicationData.Current.LocalSettings;

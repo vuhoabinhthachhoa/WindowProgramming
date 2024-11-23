@@ -17,17 +17,20 @@
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Services\Dao\MockDao\**" />
-    <EmbeddedResource Remove="Services\Dao\MockDao\**" />
-    <None Remove="Services\Dao\MockDao\**" />
-    <Page Remove="Services\Dao\MockDao\**" />
+    <Compile Remove="Services\Dao\**" />
+    <Compile Remove="Views\UserControl\**" />
+    <EmbeddedResource Remove="Services\Dao\**" />
+    <EmbeddedResource Remove="Views\UserControl\**" />
+    <None Remove="Services\Dao\**" />
+    <None Remove="Views\UserControl\**" />
+    <Page Remove="Services\Dao\**" />
+    <Page Remove="Views\UserControl\**" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\CustomerDetailPage.xaml" />
 	<None Remove="Views\EmployeeAddPage.xaml" />
 	<None Remove="Views\EmployeeUpdatePage.xaml" />
 	<None Remove="Views\LoginPage.xaml" />
-	<None Remove="Views\UserControl\EmployeeUserControl.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +47,7 @@
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="9.0.0" />
+    <PackageReference Include="System.Windows.Extensions" Version="7.0.0" />
     <PackageReference Include="WinUIEx" Version="2.3.2" />
   </ItemGroup>
 
@@ -58,9 +62,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\EmployeeUpdatePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\UserControl\EmployeeUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\EmployeeAddPage.xaml">
@@ -80,6 +81,10 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PRIResource Remove="Services\Dao\MockDao\**" />
+    <PRIResource Remove="Services\Dao\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PRIResource Remove="Views\UserControl\**" />
   </ItemGroup>
 </Project>

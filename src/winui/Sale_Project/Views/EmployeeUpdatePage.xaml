@@ -11,8 +11,8 @@
 
     <StackPanel HorizontalAlignment="Left">
         <TextBlock Text="Update new Employee" Style="{StaticResource TitleTextBlockStyle}"/>
-        <local:EmployeeUserControl 
-                                   Info="{x:Bind ViewModel.Info, Mode=TwoWay}" />
+        <!--<local:EmployeeUserControl 
+                                   Info="{x:Bind ViewModel.Info, Mode=TwoWay}" />-->
         <StackPanel Orientation="Horizontal">
             <Button Name="submitButton" Width="80" Height="35" Content="Submit"
                     Click="submitButton_Click"/>

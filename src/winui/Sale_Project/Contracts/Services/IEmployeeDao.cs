@@ -9,11 +9,11 @@ namespace Sale_Project.Contracts.Services;
 
 public interface IEmployeeDao
 {
-    public enum SortType
-    {
-        Ascending,
-        Descending
-    }
+    //public enum SortType
+    //{
+    //    Ascending,
+    //    Descending
+    //}
     Tuple<List<Employee>, int> GetEmployees(
         int page, int rowsPerPage,
         string keyword,

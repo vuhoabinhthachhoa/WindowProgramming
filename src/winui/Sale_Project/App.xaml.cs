@@ -10,7 +10,6 @@ using Sale_Project.Helpers;
 using Sale_Project.Models;
 using Sale_Project.Notifications;
 using Sale_Project.Services;
-using Sale_Project.Services.Dao;
 using Sale_Project.ViewModels;
 using Sale_Project.Views;
 
@@ -66,6 +65,9 @@ public partial class App : Application
             services.AddSingleton<UIManagerService>();
             services.AddSingleton<IAuthService, AuthService>();
             services.AddSingleton<IDialogService, DialogService>();
+            services.AddSingleton<IEmployeeService, EmployeeService>();
+            services.AddSingleton<IHttpService, HttpService>();
+
 
             // HTTP
             services.AddSingleton<HttpClient>();

@@ -31,9 +31,6 @@ public sealed partial class EmployeeAddPage : Page
         ViewModel = new EmployeeAddPageViewModel();
         this.InitializeComponent();
     }
-
-
-
     private async void submitButton_Click(object sender, RoutedEventArgs e)
     {
         var (success, message) = ViewModel.AddEmployee();

@@ -12,16 +12,28 @@ using Sale_Project.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Sale_Project.Contracts.ViewModels;
 using Sale_Project.Contracts.Services;
-using Sale_Project.Services.Dao.JsonDao;
+
+using Sale_Project.ViewModels;
+using Sale_Project.Core.Models.Employee;
 
 namespace Sale_Project;
-public partial class EmployeeViewModel : ObservableRecipient, INotifyPropertyChanged
+public partial class EmployeeViewModel : ObservableRecipient
 {
-    IEmployeeDao _dao;
+    //IEmployeeDao _dao;
+
+    //[ObservableProperty]
+    //private ObservableCollection<Employee> _employees;
+    private readonly IEmployeeService _employeeService;
+    private readonly INavigationService _navigationService;
+    private const int _defaultRowsPerPage = 10;
+
     public ObservableCollection<Employee> Employees
     {
         get; set;
     }
+
+    [ObservableProperty]
+    private EmployeeSearchRequest employeeSearchRequest;
 
     public string Info => $"Displaying {Employees.Count}/{RowsPerPage} of total {TotalItems} item(s)";
 
@@ -34,11 +46,10 @@ public partial class EmployeeViewModel : ObservableRecipient, INotifyPropertyCha
         get; set;
     }
     public string Keyword { get; set; } = "";
-
     public int CurrentPage
     {
         get; set;
-    }
+    } = 1;
     public int TotalPages
     {
         get; set;
@@ -49,90 +60,95 @@ public partial class EmployeeViewModel : ObservableRecipient, INotifyPropertyCha
         get; set;
     }
 
-    private bool _sortById = false;
-    public bool SortById
+    public string SortField
     {
-        get => _sortById;
-        set
-        {
-            _sortById = value;
-            if (value == true)
-            {
-                _sortOptions.Add("Name", SortType.Ascending);
-            }
-            else
-            {
-                if (_sortOptions.ContainsKey("Name"))
-                {
-                    _sortOptions.Remove("Name");
-                }
-            }
+        get; set;
+    } = "id";
+    public SortType SortType
+    {
+        get; set;
+    } = SortType.ASC;
 
-            LoadData();
-        }
+    public EmployeeViewModel(IEmployeeService employeeService, INavigationService navigationService)
+    {
+        //ServiceFactory.Register(typeof(IEmployeeDao), typeof(EmployeeJsonDao));
+        // _dao = ServiceFactory.GetChildOf(typeof(IEmployeeDao)) as IEmployeeDao;
+
+        _employeeService = employeeService;
+        _navigationService = navigationService;
+        RowsPerPage = _defaultRowsPerPage;
+        EmployeeSearchRequest = new EmployeeSearchRequest();
+        LoadData();
+        
     }
 
-    private Dictionary<string, SortType> _sortOptions = new();
-
-    public EmployeeViewModel()
+    public void AddEmployee()
     {
-        ServiceFactory.Register(typeof(IEmployeeDao), typeof(EmployeeJsonDao));
-        RowsPerPage = 10;
-        CurrentPage = 1;
-        _dao = ServiceFactory.GetChildOf(typeof(IEmployeeDao)) as IEmployeeDao;
-
+        _navigationService.NavigateTo(typeof(EmployeeAddPageViewModel).FullName!);
         LoadData();
     }
 
-    public bool Remove(Employee info)
+    public bool UnemployedEmployee(Employee info)
     {
-        bool success = _dao.DeleteEmployee(info.ID); // DB
+        //bool success = _dao.DeleteEmployee(info.ID); // DB
 
-        if (success)
-        {
-            Employees.Remove(info); // UI
-        }
-        return success;
+        //if (success)
+        //{
+        //    Employees.Remove(info); // UI
+        //}
+        //return success;
+        return true;
     }
 
-    public void LoadData()
+    public void UpdateEmployee(Employee employee)
     {
+        _navigationService.NavigateTo(typeof(EmployeeUpdatePageViewModel).FullName!, employee);
+        LoadData();
+    }
 
-        var (items, count) = _dao.GetEmployees(
-            CurrentPage, RowsPerPage, Keyword,
-            _sortOptions
-        );
-        Employees = new ObservableCollection<Employee>(
-            items
-        );
+    public async void LoadData()
+    {
+        // Fetch data asynchronously
+        var employeeList = await _employeeService.SearchEmployees(CurrentPage, RowsPerPage, SortField, SortType, EmployeeSearchRequest);
 
-        if (count != TotalItems)
-        { // Recreate PageInfos list
-            TotalItems = count;
-            TotalPages = (TotalItems / RowsPerPage) +
-                (((TotalItems % RowsPerPage) == 0) ? 0 : 1);
+        // Convert the result to ObservableCollection
+        Employees = new ObservableCollection<Employee>(employeeList);
 
-            PageInfos = new();
-            for (int i = 1; i <= TotalPages; i++)
-            {
-                PageInfos.Add(new PageInfo
-                {
-                    Page = i,
-                    Total = TotalPages
-                });
-            }
-        }
+        //var (items, count) = _dao.GetEmployees(
+        //    CurrentPage, RowsPerPage, Keyword,
+        //    _sortOptions
+        //);
+        //Employees = new ObservableCollection<Employee>(
+        //    items
+        //);
 
-        if (CurrentPage > TotalPages)
-        {
-            CurrentPage = TotalPages;
-        }
+        //if (count != TotalItems)
+        //{ // Recreate PageInfos list
+        //    TotalItems = count;
+        //    TotalPages = (TotalItems / RowsPerPage) +
+        //        (((TotalItems % RowsPerPage) == 0) ? 0 : 1);
 
-        if (PageInfos.Count > 0)
-        {
+        //    PageInfos = new();
+        //    for (int i = 1; i <= TotalPages; i++)
+        //    {
+        //        PageInfos.Add(new PageInfo
+        //        {
+        //            Page = i,
+        //            Total = TotalPages
+        //        });
+        //    }
+        //}
 
-            SelectedPageInfoItem = PageInfos[CurrentPage - 1];
-        }
+        //if (CurrentPage > TotalPages)
+        //{
+        //    CurrentPage = TotalPages;
+        //}
+
+        //if (PageInfos.Count > 0)
+        //{
+
+        //    SelectedPageInfoItem = PageInfos[CurrentPage - 1];
+        //}
     }
     public void GoToPage(int page)
     {
@@ -163,4 +179,29 @@ public partial class EmployeeViewModel : ObservableRecipient, INotifyPropertyCha
             LoadData();
         }
     }
+
+    //private bool _sortById = false;
+    //public bool SortById
+    //{
+    //    get => _sortById;
+    //    set
+    //    {
+    //        _sortById = value;
+    //        if (value == true)
+    //        {
+    //            _sortOptions.Add("Name", SortType.Ascending);
+    //        }
+    //        else
+    //        {
+    //            if (_sortOptions.ContainsKey("Name"))
+    //            {
+    //                _sortOptions.Remove("Name");
+    //            }
+    //        }
+
+    //        LoadData();
+    //    }
+    //}
+
+    // private Dictionary<string, SortType> _sortOptions = new();
 }

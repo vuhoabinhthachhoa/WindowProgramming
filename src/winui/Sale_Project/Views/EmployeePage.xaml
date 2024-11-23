@@ -5,173 +5,182 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:local="using:Sale_Project.Helpers"
     mc:Ignorable="d">
+    <Page.Resources>
+        <local:EmploymentStatusConverter x:Key="EmploymentStatusConverter" />
+    </Page.Resources>
 
-	<Grid x:Name="ContentArea">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="48" />
-			<RowDefinition Height="*" />
+    <Grid x:Name="ContentArea">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="200" />
-			<ColumnDefinition Width="400" />
-			<ColumnDefinition Width="*" />
-		</Grid.ColumnDefinitions>
-		<TextBlock
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="400" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--Title-->
+        <TextBlock
         Grid.Row="0"
         x:Uid="Employee_Title"
         Style="{StaticResource PageTitleStyle}" />
-       
+
+        <!--Button-->
         <StackPanel Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Content="Thêm nhân viên"
-                    Click="addEmployeeButton_Click"
-                    Name="addEmployeeButton"></Button>
-            <Button Content="Xóa nhân viên"
-                    Click="deleteEmployeeButton_Click"
-                    Name="deleteEmployeeButton"></Button>
-            <Button Content="Sửa nhân viên"
-                    Click="updateEmployeeButton_Click"
-                    Name="updateEmployeeButton"></Button>
-            <!--<Button Content="Import"></Button>
-			<Button Content="Xuất file"></Button>-->
-		</StackPanel>
-		<ScrollViewer VerticalScrollBarVisibility="Auto"  Grid.Column="0" Grid.Row="1">
-			<Grid>
-				<StackPanel>
-					<!--<StackPanel Width="200" Orientation="Vertical" Background="White">
-						<TextBlock Text="Chi nhánh làm việc" />
-						<ComboBox IsEditable="True" Width="200" PlaceholderText="Chọn chi nhánh"/>
-					</StackPanel>
+            <Button Content="Add Employee"
+                    Click="AddEmployeeButton_Click"
+                    Name="AddEmployeeButton"></Button>
+            <Button Content="Unemployed Employee"
+                    Click="UnemployedEmployeeButton_Click"
+                    Name="UnemployedEmployeeButton"></Button>
+            <Button Content="Update Employee"
+                    Click="UpdateEmployeeButton_Click"
+                    Name="UpdateEmployeeButton"></Button>
+        </StackPanel>
 
-					<StackPanel Width="200" Orientation="Vertical" Background="White">
-						<TextBlock Text="Chi nhánh trả lương" />
-						<ComboBox IsEditable="True" Width="200" PlaceholderText="Chọn chi nhánh"/>
-					</StackPanel>-->
-
-                    <Expander x:Name="Name_Expander" VerticalAlignment="Top" Width="200">
-                        <Expander.Header>
-                            <TextBlock Text="Tên nhân viên" />
-                        </Expander.Header>
-                        <Expander.Content>
-                            <AutoSuggestBox QueryIcon="Find" TextChanged="AutoSuggestBox_TextChanged" Name="SuggestionOutput"
-                 Text="{x:Bind ViewModel.Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                 Grid.Row="0" Grid.Column="1" PlaceholderText="Tìm theo tên nhân viên"  Margin="10" />
-                        </Expander.Content>
-                    </Expander>
-
+        <!--Search Fields-->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1">
+            <Grid>
+                <StackPanel>
+                    <!-- Employee ID Expander -->
                     <Expander x:Name="ID_Expander" VerticalAlignment="Top" Width="200">
                         <Expander.Header>
-                            <TextBlock Text="Mã nhân viên" />
+                            <TextBlock Text="Employee ID" />
                         </Expander.Header>
                         <Expander.Content>
-                            <ComboBox IsEditable="True" Width="200" PlaceholderText="" />
+                            <ComboBox IsEditable="True" Width="200" 
+                              Text="{Binding EmployeeSearchRequest.Id, Mode=TwoWay}" PlaceholderText=""/>
                         </Expander.Content>
                     </Expander>
 
-                    <Expander x:Name="Phonenumber_Expander" VerticalAlignment="Top" Width="200">
-						<Expander.Header>
-							<TextBlock Text="Số điện thoại" />
-						</Expander.Header>
-						<Expander.Content>
-							<ComboBox IsEditable="True" Width="200" PlaceholderText=""/>
-						</Expander.Content>
-					</Expander>
+                    <!-- Employee Name Expander -->
+                    <Expander x:Name="Name_Expander" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Employee Name" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <TextBox 
+                                Text="{Binding EmployeeSearchRequest.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                Name="SuggestionOutput"
+                                Grid.Row="0" Grid.Column="1" 
+                                PlaceholderText="Search by employee name" 
+                                Margin="10" />
+                        </Expander.Content>
+                    </Expander>
 
+                    <!-- Phone Number Expander -->
+                    <Expander x:Name="PhoneNumber_Expander" VerticalAlignment="Top" Width="200">
+                        <Expander.Header>
+                            <TextBlock Text="Phone Number" />
+                        </Expander.Header>
+                        <Expander.Content>
+                            <ComboBox IsEditable="True" Width="200" 
+                              Text="{Binding EmployeeSearchRequest.PhoneNumber, Mode=TwoWay}" PlaceholderText=""/>
+                        </Expander.Content>
+                    </Expander>
+
+                    <!-- Citizen ID Expander -->
                     <Expander x:Name="CitizenID_Expander" VerticalAlignment="Top" Width="200">
                         <Expander.Header>
-                            <TextBlock Text="CMND/CCCD" />
+                            <TextBlock Text="Citizen ID" />
                         </Expander.Header>
                         <Expander.Content>
-                            <ComboBox IsEditable="True" Width="200" PlaceholderText=""/>
+                            <ComboBox IsEditable="True" Width="200" 
+                              Text="{Binding EmployeeSearchRequest.CitizenId, Mode=TwoWay}" PlaceholderText=""/>
                         </Expander.Content>
                     </Expander>
 
+                    <!-- Job Title Expander -->
                     <Expander x:Name="JobTitle_Expander" VerticalAlignment="Top" Width="200">
                         <Expander.Header>
-                            <TextBlock Text="Chức vụ" />
+                            <TextBlock Text="Job Title" />
                         </Expander.Header>
                         <Expander.Content>
-                            <ComboBox IsEditable="True" Width="200" PlaceholderText=""/>
+                            <ComboBox IsEditable="True" Width="200" 
+                              Text="{Binding EmployeeSearchRequest.JobTitle, Mode=TwoWay}" PlaceholderText=""/>
                         </Expander.Content>
                     </Expander>
 
+                    <!-- Salary Expander -->
                     <Expander x:Name="Salary_Expander" VerticalAlignment="Top" Width="200">
                         <Expander.Header>
-                            <TextBlock Text="Lương" />
+                            <TextBlock Text="Salary" />
                         </Expander.Header>
                         <Expander.Content>
                             <StackPanel Orientation="Vertical">
-                                <NumberBox Header="Từ" Width="200" Value="0" Minimum="0"/>
-                                <NumberBox Header="Đến" Width="200" Value="0" Minimum="0"/>
+                                <NumberBox Header="From" Width="200" 
+                                   Value="{Binding EmployeeSearchRequest.SalaryFrom, Mode=TwoWay}" Minimum="0"/>
+                                <NumberBox Header="To" Width="200" 
+                                   Value="{Binding EmployeeSearchRequest.SalaryTo, Mode=TwoWay}" Minimum="0"/>
                             </StackPanel>
                         </Expander.Content>
                     </Expander>
 
+                    <!-- Employment Status Expander -->
                     <Expander x:Name="EmployeeStatus_Expander" VerticalAlignment="Top" Width="200">
                         <Expander.Header>
-                            <TextBlock Text="Trạng thái làm việc" />
+                            <TextBlock Text="Employment Status" />
                         </Expander.Header>
                         <Expander.Content>
-                            <Grid>
-                            <ComboBox Width="200" PlaceholderText="">
-                                <x:String>Đang làm việc</x:String>
-                                <x:String>Đã nghỉ việc</x:String>
+                            <ComboBox Width="200"
+                                    SelectedItem="{Binding EmployeeSearchRequest.EmploymentStatus, Mode=TwoWay, Converter={StaticResource EmploymentStatusConverter}}">
+                                <ComboBox.Items>
+                                    <x:String>Employed</x:String>
+                                    <x:String>Resigned</x:String>
+                                </ComboBox.Items>
                             </ComboBox>
-                            </Grid>
                         </Expander.Content>
                     </Expander>
 
                 </StackPanel>
-			</Grid>
-		</ScrollViewer>
-		<controls:DataGrid
-			Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-			AutoGenerateColumns="False"
-			GridLinesVisibility="Horizontal"
-			ItemsSource="{x:Bind ViewModel.Employees, Mode=OneWay}"
-            Sorting="dataGrid_Sorting"
-            x:Name="itemsDataGrid"
-            >
-            
-		<!--<controls:DataGrid
-Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-AutoGenerateColumns="False"
-GridLinesVisibility="Horizontal">-->
-			<controls:DataGrid.Resources>
-				<SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
-			</controls:DataGrid.Resources>
-			<controls:DataGrid.Columns>
-				<!-- TODO: Replace column definitions to match real data. Consider adding Header values to Resources.resw. -->
-                <controls:DataGridTextColumn Binding="{Binding ID}" Header="Mã nhân viên" />
-                <controls:DataGridTextColumn Binding="{Binding Name}" Header="Tên nhân viên" />
-				<controls:DataGridTextColumn Binding="{Binding Phonenumber}" Header="Số điện thoại" />
-                <controls:DataGridTextColumn Binding="{Binding Email}" Header="Email" />
-                <controls:DataGridTextColumn Binding="{Binding DateOfBirth}" Header="Ngày sinh" />
-                <controls:DataGridTextColumn Binding="{Binding CitizenID}" Header="Số CMND/CCCD" />
-                <controls:DataGridTextColumn Binding="{Binding JobTitle}" Header="Công việc" />
-                <controls:DataGridTextColumn Binding="{Binding Salary}" Header="Lương" />
-                <controls:DataGridTextColumn Binding="{Binding Address}" Header="Địa chỉ" />
-                <controls:DataGridTextColumn Binding="{Binding Area}" Header="Khu vực" />
-                <controls:DataGridTextColumn Binding="{Binding Ward}" Header="Quận" />
-                <controls:DataGridTextColumn Binding="{Binding EmployeeStatus}" Header="Trạng thái" />
-                <!--<controls:DataGridTemplateColumn Header="Symbol">
-					<controls:DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<FontIcon
-                    HorizontalAlignment="Left"
-                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                    Glyph="{Binding Symbol}"
-                    AutomationProperties.Name="{Binding SymbolName}" />
-						</DataTemplate>
-					</controls:DataGridTemplateColumn.CellTemplate>
-				</controls:DataGridTemplateColumn>-->
-			</controls:DataGrid.Columns>
-		</controls:DataGrid>
+            </Grid>
+        </ScrollViewer>
 
+
+        <!--DataGrid-->
+        <controls:DataGrid
+            Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+            AutoGenerateColumns="False"
+            GridLinesVisibility="Horizontal"
+            ItemsSource="{x:Bind ViewModel.Employees, Mode=OneWay}"
+            Sorting="DataGrid_Sorting"
+            x:Name="itemsDataGrid">
+
+            <controls:DataGrid.Resources>
+                <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
+            </controls:DataGrid.Resources>
+
+            <controls:DataGrid.Columns>
+                <controls:DataGridTextColumn Binding="{Binding ID}" Header="Employee ID" Tag="ID" />
+                <controls:DataGridTextColumn Binding="{Binding Name}" Header="Employee Name" Tag="Name" />
+                <controls:DataGridTextColumn Binding="{Binding PhoneNumber}" Header="Phone Number" Tag="PhoneNumber" />
+                <controls:DataGridTextColumn Binding="{Binding Email}" Header="Email" Tag="Email" />
+                <controls:DataGridTextColumn Binding="{Binding DateOfBirth}" Header="Date of Birth" Tag="DateOfBirth" />
+                <controls:DataGridTextColumn Binding="{Binding CitizenId}" Header="Citizen ID" Tag="CitizenId" />
+                <controls:DataGridTextColumn Binding="{Binding JobTitle}" Header="Job Title" Tag="JobTitle" />
+                <controls:DataGridTextColumn Binding="{Binding Salary}" Header="Salary" Tag="Salary" />
+                <controls:DataGridTextColumn Binding="{Binding Address}" Header="Address" Tag="Address" />
+                <controls:DataGridTextColumn Binding="{Binding Area}" Header="Area" Tag="Area" />
+                <controls:DataGridTextColumn Binding="{Binding Ward}" Header="Ward" Tag="Ward" />
+                <controls:DataGridTemplateColumn Header="Employment Status" Tag="EmploymentStatus">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding EmploymentStatus, Converter={StaticResource EmploymentStatusConverter}}" />
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+            </controls:DataGrid.Columns>
+        </controls:DataGrid>
+
+
+        <!--Pagination-->
         <StackPanel Height="40" Grid.Row="2" Grid.Column="1"  Orientation="Horizontal">
-            <AppBarButton Click="previousButton_Click" >
+            <AppBarButton Click="PreviousButton_Click" >
                 <FontIcon Glyph="&#xE72B;" />
             </AppBarButton>
 
@@ -180,12 +189,13 @@ GridLinesVisibility="Horizontal">-->
             </TextBlock>
 
 
-            <AppBarButton Click="nextButton_Click">
+            <AppBarButton Click="NextButton_Click">
                 <FontIcon Glyph="&#xE72A;" />
             </AppBarButton>
         </StackPanel>
         <StackPanel Height="40" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
             <TextBlock Name="infoTextBlock" Text="{x:Bind ViewModel.Info, Mode=OneWay}"/>
         </StackPanel>
+
     </Grid>
 </Page>

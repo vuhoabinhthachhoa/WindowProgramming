@@ -1,92 +1,84 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
+using Sale_Project.Core.Models;
 
-namespace Sale_Project.Core.Models;
-
-public class User : INotifyPropertyChanged
+public class User
 {
-    private string username;
-    private string password;
-    private string email;
-    private string userRole;
-    private string storeName;
+    [JsonPropertyName("id")]
+    public long Id
+    {
+        get; set;
+    }
 
+    [JsonPropertyName("username")]
     public string Username
     {
-        get => username;
-        set
-        {
-            if (username != value)
-            {
-                username = value;
-                OnPropertyChanged(nameof(Username));
-            }
-        }
+        get; set;
     }
 
+    [JsonPropertyName("password")]
     public string Password
     {
-        get => password;
-        set
-        {
-            if (password != value)
-            {
-                password = value;
-                OnPropertyChanged(nameof(Password));
-            }
-        }
+        get; set;
     }
 
+    [JsonPropertyName("role_name")]
+    public string RoleName
+    {
+        get; set;
+    }
+
+    [JsonPropertyName("employee")]
+    public Employee Employee
+    {
+        get; set;
+    }
+
+    [JsonPropertyName("phonenumber")]
+    public string PhoneNumber
+    {
+        get; set;
+    }
+
+    [JsonPropertyName("email")]
     public string Email
     {
-        get => email;
-        set
-        {
-            if (email != value)
-            {
-                email = value;
-                OnPropertyChanged(nameof(Email));
-            }
-        }
+        get; set;
     }
 
-    public string UserRole
+    [JsonPropertyName("date_of_birth")]
+    public DateTime DateOfBirth
     {
-        get => userRole;
-        set
-        {
-            if (userRole != value)
-            {
-                userRole = value;
-                OnPropertyChanged(nameof(UserRole));
-            }
-        }
+        get; set;
     }
 
-    public string StoreName
+    [JsonPropertyName("address")]
+    public string Address
     {
-        get => storeName;
-        set
-        {
-            if (storeName != value)
-            {
-                storeName = value;
-                OnPropertyChanged(nameof(StoreName));
-            }
-        }
+        get; set;
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected void OnPropertyChanged(string propertyName)
+    [JsonPropertyName("area")]
+    public string Area
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        get; set;
+    }
+
+    [JsonPropertyName("ward")]
+    public string Ward
+    {
+        get; set;
+    }
+
+    [JsonPropertyName("role")]
+    public UserRole Role
+    {
+        get; set;
+    }
+
+    [JsonPropertyName("notes")]
+    public string Notes
+    {
+        get; set;
     }
 }
-
-

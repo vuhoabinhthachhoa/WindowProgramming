@@ -10,6 +10,7 @@ using Sale_Project.Contracts.Services;
 using Microsoft.UI.Xaml.Controls;
 using Sale_Project.Services;
 using System.Text.Json;
+using Sale_Project.Views;
 
 namespace Sale_Project.ViewModels;
 

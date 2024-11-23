@@ -11,14 +11,14 @@
 
     <StackPanel HorizontalAlignment="Left">
         <TextBlock Text="Add new Employee" Style="{StaticResource TitleTextBlockStyle}"/>
-        <local:EmployeeUserControl
+        <!--<local:EmployeeUserControl
                                    Info="{x:Bind ViewModel.Info, Mode=TwoWay}" />
         <StackPanel Orientation="Horizontal">
             <Button Name="submitButton" Width="80" Height="35" Content="Submit"
                     Click="submitButton_Click"/>
             <Button Name="cancelButton" Width="80" Height="35" Content="Cancel"
         Click="cancelButton_Click"/>
-        </StackPanel>
+        </StackPanel>-->
     </StackPanel>
 </Page>
  
