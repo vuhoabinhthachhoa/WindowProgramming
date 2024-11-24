@@ -145,7 +145,7 @@ public partial class ShellViewModel : ObservableRecipient
             _dialogService.ShowErrorAsync("Access Denied", "You do not have permission to access this page.");
             return;
         }
-        //NavigationService.NavigateTo(typeof(EmployeeViewModel).FullName!);
+        NavigationService.NavigateTo(typeof(EmployeeViewModel).FullName!);
     }
 
 }

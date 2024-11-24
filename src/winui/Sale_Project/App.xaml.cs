@@ -68,6 +68,8 @@ public partial class App : Application
             services.AddSingleton<UIManagerService>();
             services.AddSingleton<IAuthService, AuthService>();
             services.AddSingleton<IDialogService, DialogService>();
+            services.AddSingleton<IEmployeeService, EmployeeService>();
+            services.AddSingleton<IHttpService, HttpService>();
 
             // HTTP
             services.AddSingleton<HttpClient>();
@@ -99,8 +101,7 @@ public partial class App : Application
             services.AddTransient<ShellViewModel>();
             services.AddTransient<LoginPage>();
             services.AddTransient<LoginViewModel>();
-            //services.AddTransient<EmployeePage>();
-            //services.AddTransient<EmployeeViewModel>();
+
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
