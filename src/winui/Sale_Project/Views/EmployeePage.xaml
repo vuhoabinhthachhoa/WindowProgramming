@@ -20,9 +20,9 @@
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="200" />
-			<ColumnDefinition Width="400" />
+			<ColumnDefinition Width="250" />
 			<ColumnDefinition Width="*" />
+			
 		</Grid.ColumnDefinitions>
 
 		<!--Title of the page-->
@@ -32,7 +32,7 @@
             Style="{StaticResource PageTitleStyle}" />
 
 		<!--Button-->
-		<StackPanel Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+		<StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
 			<Button Content="Add Employee"
                     Click="AddEmployeeButton_Click"
                     Name="AddEmployeeButton"></Button>
@@ -45,7 +45,7 @@
 		</StackPanel>
 
 		<!--Search Fields-->
-		<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1" Margin="0,0,5,0">
 			<Grid>
 				<StackPanel>
 					<!-- Employee ID Expander -->
@@ -144,7 +144,7 @@
 		
 		<!--Data Grid-->
         <controls:DataGrid
-            Grid.Row="1"
+            Grid.Row="1" Grid.Column="1"
             AutoGenerateColumns="False"
             GridLinesVisibility="Horizontal"
             ItemsSource="{x:Bind ViewModel.Employees, Mode=OneWay}">
@@ -153,7 +153,7 @@
             </controls:DataGrid.Resources>
             <controls:DataGrid.Columns>
                 <!-- TODO: Replace column definitions to match real data. Consider adding Header values to Resources.resw. -->
-				<controls:DataGridTextColumn Binding="{Binding ID}" Header="Employee ID" Tag="ID" />
+				<controls:DataGridTextColumn Binding="{Binding Id}" Header="Employee ID" Tag="ID" />
 				<controls:DataGridTextColumn Binding="{Binding Name}" Header="Employee Name" Tag="Name" />
 				<controls:DataGridTextColumn Binding="{Binding PhoneNumber}" Header="Phone Number" Tag="PhoneNumber" />
 				<controls:DataGridTextColumn Binding="{Binding Email}" Header="Email" Tag="Email" />
@@ -171,5 +171,26 @@
                
             </controls:DataGrid.Columns>
         </controls:DataGrid>
-    </Grid>
+    
+		 <!--Pagination-->
+        <StackPanel Height="40" Grid.Row="2" Grid.Column="1"  Orientation="Horizontal">
+            <AppBarButton Click="PreviousButton_Click" >
+                <FontIcon Glyph="&#xE72B;" />
+            </AppBarButton>
+
+            <TextBlock VerticalAlignment="Center">
+                    <Run Text="{x:Bind ViewModel.CurrentPage, Mode=OneWay}"/>/<Run Text="{x:Bind ViewModel.TotalPages, Mode=OneWay}"/>
+            </TextBlock>
+
+
+            <AppBarButton Click="NextButton_Click">
+                <FontIcon Glyph="&#xE72A;" />
+            </AppBarButton>
+        </StackPanel>
+        <StackPanel Height="40" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBlock Name="infoTextBlock" Text="{x:Bind ViewModel.Info, Mode=OneWay}"/>
+        </StackPanel>
+
+
+	</Grid>
 </Page>

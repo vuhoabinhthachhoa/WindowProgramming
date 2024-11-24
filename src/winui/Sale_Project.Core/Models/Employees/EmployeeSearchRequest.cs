@@ -123,7 +123,7 @@ public class EmployeeSearchRequest : INotifyPropertyChanged
         }
     }
 
-    private bool _employmentStatus;
+    private bool _employmentStatus = true;
     [JsonPropertyName("employmentStatus")]
     public bool EmploymentStatus
     {

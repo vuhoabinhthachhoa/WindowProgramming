@@ -95,7 +95,7 @@ public class EmployeeService : IEmployeeService
         return responseData?.Data;
     }
 
-    public async Task<IEnumerable<Employee>> SearchEmployees(int page, int size, string sortField, SortType sortType, EmployeeSearchRequest employeeSearchRequest)
+    public async Task<PageData<Employee>> SearchEmployees(int page, int size, string sortField, SortType sortType, EmployeeSearchRequest employeeSearchRequest)
     {
         var token = _authService.GetAccessToken();
         _httpService.AddTokenToHeader(token, _httpClient);
@@ -135,7 +135,7 @@ public class EmployeeService : IEmployeeService
 
         // Read and deserialize the response content
         var responseContent = await apiResponse.Content.ReadAsStringAsync();
-        var responseData = JsonSerializer.Deserialize<ApiResponse<List<Employee>>>(responseContent);
+        var responseData = JsonSerializer.Deserialize<ApiResponse<PageData<Employee>>>(responseContent);
 
         return responseData?.Data;
     }

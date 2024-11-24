@@ -6,6 +6,8 @@ using Sale_Project.Contracts.ViewModels;
 using Sale_Project.Core.Contracts.Services;
 using Sale_Project.Core.Models;
 using Sale_Project.Core.Models.Employee;
+using Sale_Project.Contracts.Services;
+
 
 namespace Sale_Project.ViewModels;
 
@@ -13,9 +15,11 @@ public partial class EmployeeViewModel : ObservableRecipient, INavigationAware
 {
     //private readonly ISampleDataService _sampleDataService;
     private const int _defaultRowsPerPage = 10;
+    private readonly IEmployeeService _employeeService;
+    private readonly INavigationService _navigationService;
 
 
-    public ObservableCollection<Employee> Employees { get; } = new ObservableCollection<Employee>();
+    public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
 
     [ObservableProperty]
     private EmployeeSearchRequest employeeSearchRequest;
@@ -55,15 +59,18 @@ public partial class EmployeeViewModel : ObservableRecipient, INavigationAware
     } = SortType.ASC;
 
 
-    public EmployeeViewModel(/*ISampleDataService sampleDataService*/)
+    public EmployeeViewModel(INavigationService navigationService, IEmployeeService employeeService)
     {
+    
         RowsPerPage = _defaultRowsPerPage;
         EmployeeSearchRequest = new EmployeeSearchRequest();
+        _employeeService = employeeService;
+        _navigationService = navigationService;
     }
 
     public async void OnNavigatedTo(object parameter)
     {
-        Employees.Clear();
+        LoadData();
 
         // TODO: Replace with real data.
         //var data = await _sampleDataService.GetGridDataAsync();
@@ -76,5 +83,20 @@ public partial class EmployeeViewModel : ObservableRecipient, INavigationAware
 
     public void OnNavigatedFrom()
     {
+        Employees.Clear();
     }
+
+    public async void LoadData()
+    {
+        // Fetch data asynchronously
+        var pageData = await _employeeService.SearchEmployees(CurrentPage, RowsPerPage, SortField, SortType, EmployeeSearchRequest);
+
+
+        // Convert the result to ObservableCollection
+        Employees = new ObservableCollection<Employee>(pageData.Data);
+        TotalItems = pageData.TotalElements;
+        TotalPages = pageData.TotalPages;
+        CurrentPage = pageData.Page;
+    }
+
 }

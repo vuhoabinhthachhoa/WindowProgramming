@@ -24,6 +24,6 @@ public interface IEmployeeService
     // Optionally, add a method to list all employees
     Task<IEnumerable<Employee>> GetAllEmployees();
 
-    Task<IEnumerable<Employee>> SearchEmployees(int page, int size, string sortField, SortType sortType, EmployeeSearchRequest employeeSearchRequest);
+    Task<PageData<Employee>> SearchEmployees(int page, int size, string sortField, SortType sortType, EmployeeSearchRequest employeeSearchRequest);
 
 }
