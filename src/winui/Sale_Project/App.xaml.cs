@@ -10,7 +10,7 @@ using Sale_Project.Helpers;
 using Sale_Project.Models;
 using Sale_Project.Notifications;
 using Sale_Project.Services;
-using Sale_Project.Services.Dao;
+//using Sale_Project.Services.Dao;
 using Sale_Project.ViewModels;
 using Sale_Project.Views;
 
@@ -95,8 +95,8 @@ public partial class App : Application
             services.AddTransient<ShellViewModel>();
             services.AddTransient<LoginPage>();
             services.AddTransient<LoginViewModel>();
-            services.AddTransient<EmployeePage>();
-            services.AddTransient<EmployeeViewModel>();
+            //services.AddTransient<EmployeePage>();
+            //services.AddTransient<EmployeeViewModel>();
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));

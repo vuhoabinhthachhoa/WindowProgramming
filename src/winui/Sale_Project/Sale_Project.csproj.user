@@ -6,21 +6,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\EmployeeUpdatePage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\UserControl\EmployeeUserControl.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\EmployeeAddPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Update="Views\CustomerDetailPage.xaml">
       <SubType>Designer</SubType>

@@ -21,7 +21,7 @@ public class PageService : IPageService
         Configure<SaleViewModel, SalePage>();
         Configure<AccountViewModel, AccountPage>();
         Configure<SettingsViewModel, SettingsPage>();
-        Configure<EmployeeViewModel, EmployeePage>();
+//        Configure<EmployeeViewModel, EmployeePage>();
         Configure<LoginViewModel, LoginPage>();
     }
 

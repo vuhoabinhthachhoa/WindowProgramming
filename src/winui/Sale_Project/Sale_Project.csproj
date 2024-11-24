@@ -17,17 +17,8 @@
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Services\Dao\MockDao\**" />
-    <EmbeddedResource Remove="Services\Dao\MockDao\**" />
-    <None Remove="Services\Dao\MockDao\**" />
-    <Page Remove="Services\Dao\MockDao\**" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="Views\CustomerDetailPage.xaml" />
-	<None Remove="Views\EmployeeAddPage.xaml" />
-	<None Remove="Views\EmployeeUpdatePage.xaml" />
 	<None Remove="Views\LoginPage.xaml" />
-	<None Remove="Views\UserControl\EmployeeUserControl.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,15 +48,6 @@
     <Page Update="Views\LoginPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\EmployeeUpdatePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\UserControl\EmployeeUserControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\EmployeeAddPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
 	<Page Update="Views\CustomerDetailPage.xaml">
 		<Generator>MSBuild:Compile</Generator>
 	</Page>
@@ -78,8 +60,4 @@
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <PRIResource Remove="Services\Dao\MockDao\**" />
-  </ItemGroup>
 </Project>
