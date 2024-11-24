@@ -5,23 +5,149 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+	xmlns:local="using:Sale_Project.Helpers"
+
     mc:Ignorable="d">
+	<Page.Resources>
+		<local:EmploymentStatusConverter x:Key="EmploymentStatusConverter" />
+	</Page.Resources>
 
     <Grid x:Name="ContentArea">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="48" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="48" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="200" />
+			<ColumnDefinition Width="400" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
 
+		<!--Title of the page-->
         <TextBlock
             Grid.Row="0"
             x:Uid="Employee_Title"
             Style="{StaticResource PageTitleStyle}" />
+
+		<!--Button-->
+		<StackPanel Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+			<Button Content="Add Employee"
+                    Click="AddEmployeeButton_Click"
+                    Name="AddEmployeeButton"></Button>
+			<Button Content="Unemployed Employee"
+                    Click="UnemployedEmployeeButton_Click"
+                    Name="UnemployedEmployeeButton"></Button>
+			<Button Content="Update Employee"
+                    Click="UpdateEmployeeButton_Click"
+                    Name="UpdateEmployeeButton"></Button>
+		</StackPanel>
+
+		<!--Search Fields-->
+		<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1">
+			<Grid>
+				<StackPanel>
+					<!-- Employee ID Expander -->
+					<Expander x:Name="ID_Expander" VerticalAlignment="Top" Width="200">
+						<Expander.Header>
+							<TextBlock Text="Employee ID" />
+						</Expander.Header>
+						<Expander.Content>
+							<ComboBox IsEditable="True" Width="200"
+                              Text="{Binding EmployeeSearchRequest.Id, Mode=TwoWay}" PlaceholderText=""/>
+						</Expander.Content>
+					</Expander>
+
+					<!-- Employee Name Expander -->
+					<Expander x:Name="Name_Expander" VerticalAlignment="Top" Width="200">
+						<Expander.Header>
+							<TextBlock Text="Employee Name" />
+						</Expander.Header>
+						<Expander.Content>
+							<TextBox
+                                Text="{Binding EmployeeSearchRequest.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Name="SuggestionOutput"
+                                Grid.Row="0" Grid.Column="1"
+                                PlaceholderText="Search by employee name"
+                                Margin="10" />
+						</Expander.Content>
+					</Expander>
+
+					<!-- Phone Number Expander -->
+					<Expander x:Name="PhoneNumber_Expander" VerticalAlignment="Top" Width="200">
+						<Expander.Header>
+							<TextBlock Text="Phone Number" />
+						</Expander.Header>
+						<Expander.Content>
+							<ComboBox IsEditable="True" Width="200"
+                              Text="{Binding EmployeeSearchRequest.PhoneNumber, Mode=TwoWay}" PlaceholderText=""/>
+						</Expander.Content>
+					</Expander>
+
+					<!-- Citizen ID Expander -->
+					<Expander x:Name="CitizenID_Expander" VerticalAlignment="Top" Width="200">
+						<Expander.Header>
+							<TextBlock Text="Citizen ID" />
+						</Expander.Header>
+						<Expander.Content>
+							<ComboBox IsEditable="True" Width="200"
+                              Text="{Binding EmployeeSearchRequest.CitizenId, Mode=TwoWay}" PlaceholderText=""/>
+						</Expander.Content>
+					</Expander>
+
+					<!-- Job Title Expander -->
+					<Expander x:Name="JobTitle_Expander" VerticalAlignment="Top" Width="200">
+						<Expander.Header>
+							<TextBlock Text="Job Title" />
+						</Expander.Header>
+						<Expander.Content>
+							<ComboBox IsEditable="True" Width="200"
+                              Text="{Binding EmployeeSearchRequest.JobTitle, Mode=TwoWay}" PlaceholderText=""/>
+						</Expander.Content>
+					</Expander>
+
+					<!-- Salary Expander -->
+					<Expander x:Name="Salary_Expander" VerticalAlignment="Top" Width="200">
+						<Expander.Header>
+							<TextBlock Text="Salary" />
+						</Expander.Header>
+						<Expander.Content>
+							<StackPanel Orientation="Vertical">
+								<NumberBox Header="From" Width="200"
+                                   Value="{Binding EmployeeSearchRequest.SalaryFrom, Mode=TwoWay}" Minimum="0"/>
+								<NumberBox Header="To" Width="200"
+                                   Value="{Binding EmployeeSearchRequest.SalaryTo, Mode=TwoWay}" Minimum="0"/>
+							</StackPanel>
+						</Expander.Content>
+					</Expander>
+
+					<!-- Employment Status Expander -->
+					<Expander x:Name="EmployeeStatus_Expander" VerticalAlignment="Top" Width="200">
+						<Expander.Header>
+							<TextBlock Text="Employment Status" />
+						</Expander.Header>
+						<Expander.Content>
+							<ComboBox Width="200"
+                                    SelectedItem="{Binding EmployeeSearchRequest.EmploymentStatus, Mode=TwoWay, Converter={StaticResource EmploymentStatusConverter}}">
+								<ComboBox.Items>
+									<x:String>Employed</x:String>
+									<x:String>Resigned</x:String>
+								</ComboBox.Items>
+							</ComboBox>
+						</Expander.Content>
+					</Expander>
+
+				</StackPanel>
+			</Grid>
+		</ScrollViewer>
+		
+		<!--Data Grid-->
         <controls:DataGrid
             Grid.Row="1"
             AutoGenerateColumns="False"
             GridLinesVisibility="Horizontal"
-            ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}">
+            ItemsSource="{x:Bind ViewModel.Employees, Mode=OneWay}">
             <controls:DataGrid.Resources>
                 <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
             </controls:DataGrid.Resources>
@@ -31,25 +157,18 @@
 				<controls:DataGridTextColumn Binding="{Binding Name}" Header="Employee Name" Tag="Name" />
 				<controls:DataGridTextColumn Binding="{Binding PhoneNumber}" Header="Phone Number" Tag="PhoneNumber" />
 				<controls:DataGridTextColumn Binding="{Binding Email}" Header="Email" Tag="Email" />
-				<controls:DataGridTextColumn Binding="{Binding DateOfBirth}" Header="Date of Birth" Tag="DateOfBirth" />
 				<controls:DataGridTextColumn Binding="{Binding CitizenId}" Header="Citizen ID" Tag="CitizenId" />
 				<controls:DataGridTextColumn Binding="{Binding JobTitle}" Header="Job Title" Tag="JobTitle" />
 				<controls:DataGridTextColumn Binding="{Binding Salary}" Header="Salary" Tag="Salary" />
-				<controls:DataGridTextColumn Binding="{Binding Address}" Header="Address" Tag="Address" />
-				<controls:DataGridTextColumn Binding="{Binding Area}" Header="Area" Tag="Area" />
-				<controls:DataGridTextColumn Binding="{Binding Ward}" Header="Ward" Tag="Ward" />
-				<!--<controls:DataGridTemplateColumn Header="Employment Status" Tag="EmploymentStatus">-->
-                <controls:DataGridTemplateColumn Header="Symbol">
-                    <controls:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <FontIcon
-                                HorizontalAlignment="Left"
-                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                Glyph="{Binding Symbol}"
-                                AutomationProperties.Name="{Binding SymbolName}" />
-                        </DataTemplate>
-                    </controls:DataGridTemplateColumn.CellTemplate>
-                </controls:DataGridTemplateColumn>
+				
+				<controls:DataGridTemplateColumn Header="Employment Status" Tag="EmploymentStatus">
+					<controls:DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding EmploymentStatus, Converter={StaticResource EmploymentStatusConverter}}" />
+						</DataTemplate>
+					</controls:DataGridTemplateColumn.CellTemplate>
+				</controls:DataGridTemplateColumn>
+               
             </controls:DataGrid.Columns>
         </controls:DataGrid>
     </Grid>
