@@ -23,6 +23,7 @@ public class PageService : IPageService
         Configure<SettingsViewModel, SettingsPage>();
 //        Configure<EmployeeViewModel, EmployeePage>();
         Configure<LoginViewModel, LoginPage>();
+        Configure<EmployeeViewModel, EmployeePage>();
     }
 
     public Type GetPageType(string key)

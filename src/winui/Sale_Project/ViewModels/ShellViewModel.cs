@@ -1,15 +1,16 @@
-﻿using System.Windows.Input;
+﻿using System.Text.Json;
+using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Navigation;
-using Sale_Project.Core.Models;
-using Sale_Project.Contracts.Services;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
+
+using Sale_Project.Contracts.Services;
+using Sale_Project.Core.Models;
 using Sale_Project.Services;
-using System.Text.Json;
 
 namespace Sale_Project.ViewModels;
 

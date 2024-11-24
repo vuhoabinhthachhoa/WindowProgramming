@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+
 using Sale_Project.Activation;
 using Sale_Project.Contracts.Services;
 using Sale_Project.Core.Contracts.Services;
@@ -10,6 +11,7 @@ using Sale_Project.Helpers;
 using Sale_Project.Models;
 using Sale_Project.Notifications;
 using Sale_Project.Services;
+
 //using Sale_Project.Services.Dao;
 using Sale_Project.ViewModels;
 using Sale_Project.Views;
@@ -75,6 +77,8 @@ public partial class App : Application
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
+            services.AddTransient<EmployeeViewModel>();
+            services.AddTransient<EmployeePage>();
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
             services.AddTransient<AccountViewModel>();
