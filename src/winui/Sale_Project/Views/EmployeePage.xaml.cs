@@ -21,7 +21,7 @@ public sealed partial class EmployeePage : Page
         DataContext = ViewModel;
     }
 
-    private void AddEmployeeButton_Click(object sender, RoutedEventArgs e)
+    private async void AddEmployeeButton_Click(object sender, RoutedEventArgs e)
     {
         //ViewModel.AddEmployee();
     }
@@ -60,32 +60,28 @@ public sealed partial class EmployeePage : Page
         //ViewModel.UpdateEmployee(employee);
     }
 
-    private void SearchEmployeeButton_Click(object sender, RoutedEventArgs e)
+    private async void SearchEmployeeButton_Click(object sender, RoutedEventArgs e)
     {
-        ViewModel.SearchEmployee();
+        await ViewModel.SearchEmployee();
     }
 
-    private void PreviousButton_Click(object sender, RoutedEventArgs e)
+    private async void PreviousButton_Click(object sender, RoutedEventArgs e)
     {
-        ViewModel.GoToPreviousPage();
+         await ViewModel.GoToPreviousPage();
     }
 
-    private void NextButton_Click(object sender, RoutedEventArgs e)
+    private async void NextButton_Click(object sender, RoutedEventArgs e)
     {
-        ViewModel.GoToNextPage();
+        await ViewModel.GoToNextPage();
     }
 
-    private void SortBySalaryAscButton_Click(object sender, RoutedEventArgs e)
+    private async void SortBySalaryAscButton_Click(object sender, RoutedEventArgs e)
     {
-        ViewModel.SortField = "salary";
-        ViewModel.SortType = SortType.ASC;
-        ViewModel.LoadData();
+        await ViewModel.SortBySalaryAsc();
     }
 
-    private void SortBySalaryDescButton_Click(object sender, RoutedEventArgs e)
+    private async void SortBySalaryDescButton_Click(object sender, RoutedEventArgs e)
     {
-        ViewModel.SortField = "salary";
-        ViewModel.SortType = SortType.DESC;
-        ViewModel.LoadData();
+        await ViewModel.SortBySalaryDesc();
     }
 }

@@ -70,8 +70,7 @@ public partial class EmployeeViewModel : ObservableRecipient, INavigationAware
 
     public async void OnNavigatedTo(object parameter)
     {
-        LoadData();
-
+        await LoadData();
         // TODO: Replace with real data.
         //var data = await _sampleDataService.GetGridDataAsync();
 
@@ -86,7 +85,7 @@ public partial class EmployeeViewModel : ObservableRecipient, INavigationAware
         Employees.Clear();
     }
 
-    public async void LoadData()
+    public async Task LoadData()
     {
         // Fetch data asynchronously
         var pageData = await _employeeService.SearchEmployees(CurrentPage, RowsPerPage, SortField, SortType, EmployeeSearchRequest);
@@ -99,37 +98,37 @@ public partial class EmployeeViewModel : ObservableRecipient, INavigationAware
         CurrentPage = pageData.Page;
     }
 
-    public void GoToPage(int page)
+    public async Task GoToPage(int page)
     {
         CurrentPage = page;
-        LoadData();
+        await LoadData();
     }
 
-    public void SearchEmployee()
+    public async Task SearchEmployee()
     {
         CurrentPage = 1;
-        LoadData();
+        await LoadData();
     }
 
-    public void GoToPreviousPage()
+    public async Task GoToPreviousPage()
     {
         if (CurrentPage > 1)
         {
             CurrentPage--;
-            LoadData();
+            await LoadData();
         }
     }
 
-    public void GoToNextPage()
+    public async Task GoToNextPage()
     {
         if (CurrentPage < TotalPages)
         {
             CurrentPage++;
-            LoadData();
+            await LoadData();
         }
     }
 
-    public void SortBySalaryAsc()
+    public async Task SortBySalaryAsc()
     {
         if(SortField == "salary" && SortType == SortType.ASC)
         {
@@ -141,10 +140,10 @@ public partial class EmployeeViewModel : ObservableRecipient, INavigationAware
             SortType = SortType.ASC;
             CurrentPage = 1;
         }
-        LoadData();
+        await LoadData();
     }
 
-    public void SortBySalaryDesc()
+    public async Task SortBySalaryDesc()
     {
         if (SortField == "salary" && SortType == SortType.DESC)
         {
@@ -156,7 +155,7 @@ public partial class EmployeeViewModel : ObservableRecipient, INavigationAware
             SortType = SortType.DESC;
             CurrentPage = 1;
         }
-        LoadData();
+        await LoadData();
     }
 
     public void SetDefaultValue()
