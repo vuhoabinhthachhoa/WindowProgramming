@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json.Serialization;
+using System.Diagnostics;
 
 namespace Sale_Project.Core.Models.Employee;
 
@@ -18,17 +19,26 @@ public class EmployeeSearchRequest : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    private long? _id;
+    // if we use long, int, or decimal, the numberbox cannot bind value
+    private double? _id;
     [JsonPropertyName("id")]
-    public long? Id
+    public double? Id
     {
         get => _id;
         set
         {
             if (_id != value)
             {
-                _id = value;
+                if (value.HasValue && double.IsNaN(value.Value))
+                {
+                    _id = null;
+                }
+                else
+                {
+                    _id = value;
+                }
                 OnPropertyChanged(nameof(Id));
+                Debug.WriteLine($"Id set to: {_id}");
             }
         }
     }
@@ -79,8 +89,8 @@ public class EmployeeSearchRequest : INotifyPropertyChanged
     }
 
     private string _jobTitle = string.Empty;
-    [JsonPropertyName("jobTitle")]
-    public string JobTitle
+    [JsonPropertyName("jobTitile")] // set as jobTitile to match the server
+    public string JobTitle 
     {
         get => _jobTitle;
         set
@@ -93,31 +103,46 @@ public class EmployeeSearchRequest : INotifyPropertyChanged
         }
     }
 
-    private decimal? _salaryFrom;
+    private double? _salaryFrom;
     [JsonPropertyName("salaryFrom")]
-    public decimal? SalaryFrom
+    public double? SalaryFrom
     {
         get => _salaryFrom;
         set
         {
             if (_salaryFrom != value)
             {
-                _salaryFrom = value;
+                if (value.HasValue && double.IsNaN(value.Value))
+                {
+                    _salaryFrom = null;
+                }
+                else
+                {
+                    _salaryFrom = value;
+                }
                 OnPropertyChanged(nameof(SalaryFrom));
+                Debug.WriteLine($"SalaryFrom set to: {_salaryFrom}");
             }
         }
     }
 
-    private decimal? _salaryTo;
+    private double? _salaryTo;
     [JsonPropertyName("salaryTo")]
-    public decimal? SalaryTo
+    public double? SalaryTo
     {
         get => _salaryTo;
         set
         {
             if (_salaryTo != value)
             {
-                _salaryTo = value;
+                if (value.HasValue && double.IsNaN(value.Value))
+                {
+                    _salaryTo = null;
+                }
+                else
+                {
+                    _salaryTo = value;
+                }
                 OnPropertyChanged(nameof(SalaryTo));
             }
         }

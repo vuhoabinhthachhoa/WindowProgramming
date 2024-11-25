@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-
+using Sale_Project.Core.Models;
 using Sale_Project.ViewModels;
 
 namespace Sale_Project.Views;
@@ -18,6 +18,7 @@ public sealed partial class EmployeePage : Page
     {
         ViewModel = App.GetService<EmployeeViewModel>();
         InitializeComponent();
+        DataContext = ViewModel;
     }
 
     private void AddEmployeeButton_Click(object sender, RoutedEventArgs e)
@@ -59,13 +60,32 @@ public sealed partial class EmployeePage : Page
         //ViewModel.UpdateEmployee(employee);
     }
 
+    private void SearchEmployeeButton_Click(object sender, RoutedEventArgs e)
+    {
+        ViewModel.SearchEmployee();
+    }
+
     private void PreviousButton_Click(object sender, RoutedEventArgs e)
     {
-        //ViewModel.GoToPreviousPage();
+        ViewModel.GoToPreviousPage();
     }
 
     private void NextButton_Click(object sender, RoutedEventArgs e)
     {
-        //ViewModel.GoToNextPage();
+        ViewModel.GoToNextPage();
+    }
+
+    private void SortBySalaryAscButton_Click(object sender, RoutedEventArgs e)
+    {
+        ViewModel.SortField = "salary";
+        ViewModel.SortType = SortType.ASC;
+        ViewModel.LoadData();
+    }
+
+    private void SortBySalaryDescButton_Click(object sender, RoutedEventArgs e)
+    {
+        ViewModel.SortField = "salary";
+        ViewModel.SortType = SortType.DESC;
+        ViewModel.LoadData();
     }
 }

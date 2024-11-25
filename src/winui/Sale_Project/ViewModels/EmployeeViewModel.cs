@@ -14,7 +14,7 @@ namespace Sale_Project.ViewModels;
 public partial class EmployeeViewModel : ObservableRecipient, INavigationAware
 {
     //private readonly ISampleDataService _sampleDataService;
-    private const int _defaultRowsPerPage = 10;
+    private const int _defaultRowsPerPage = 5;
     private readonly IEmployeeService _employeeService;
     private readonly INavigationService _navigationService;
 
@@ -97,6 +97,73 @@ public partial class EmployeeViewModel : ObservableRecipient, INavigationAware
         TotalItems = pageData.TotalElements;
         TotalPages = pageData.TotalPages;
         CurrentPage = pageData.Page;
+    }
+
+    public void GoToPage(int page)
+    {
+        CurrentPage = page;
+        LoadData();
+    }
+
+    public void SearchEmployee()
+    {
+        CurrentPage = 1;
+        LoadData();
+    }
+
+    public void GoToPreviousPage()
+    {
+        if (CurrentPage > 1)
+        {
+            CurrentPage--;
+            LoadData();
+        }
+    }
+
+    public void GoToNextPage()
+    {
+        if (CurrentPage < TotalPages)
+        {
+            CurrentPage++;
+            LoadData();
+        }
+    }
+
+    public void SortBySalaryAsc()
+    {
+        if(SortField == "salary" && SortType == SortType.ASC)
+        {
+            SetDefaultValue();
+        }
+        else
+        {
+            SortField = "salary";
+            SortType = SortType.ASC;
+            CurrentPage = 1;
+        }
+        LoadData();
+    }
+
+    public void SortBySalaryDesc()
+    {
+        if (SortField == "salary" && SortType == SortType.DESC)
+        {
+            SetDefaultValue();
+        }
+        else
+        {
+            SortField = "salary";
+            SortType = SortType.DESC;
+            CurrentPage = 1;
+        }
+        LoadData();
+    }
+
+    public void SetDefaultValue()
+    {
+        CurrentPage = 1;
+        SortType = SortType.ASC;
+        SortField = "id";
     }
 
 }
