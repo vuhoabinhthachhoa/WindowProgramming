@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+
 using Sale_Project.Activation;
 using Sale_Project.Contracts.Services;
 using Sale_Project.Core.Contracts.Services;
@@ -10,7 +11,8 @@ using Sale_Project.Helpers;
 using Sale_Project.Models;
 using Sale_Project.Notifications;
 using Sale_Project.Services;
-using Sale_Project.Services.Dao;
+
+//using Sale_Project.Services.Dao;
 using Sale_Project.ViewModels;
 using Sale_Project.Views;
 
@@ -66,15 +68,20 @@ public partial class App : Application
             services.AddSingleton<UIManagerService>();
             services.AddSingleton<IAuthService, AuthService>();
             services.AddSingleton<IDialogService, DialogService>();
+            services.AddSingleton<IEmployeeService, EmployeeService>();
+            services.AddSingleton<IHttpService, HttpService>();
 
             // HTTP
             services.AddSingleton<HttpClient>();
 
 
             // Core Services
+            services.AddSingleton<ISampleDataService, SampleDataService>();
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
+            services.AddTransient<EmployeeViewModel>();
+            services.AddTransient<EmployeePage>();
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
             services.AddTransient<AccountViewModel>();
@@ -95,8 +102,7 @@ public partial class App : Application
             services.AddTransient<ShellViewModel>();
             services.AddTransient<LoginPage>();
             services.AddTransient<LoginViewModel>();
-            services.AddTransient<EmployeePage>();
-            services.AddTransient<EmployeeViewModel>();
+
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
