@@ -25,10 +25,11 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
 
     public string Info
     {
-        get
-        {
-            return $"Displaying {Products.Count}/{RowsPerPage} of total {TotalProducts} item(s)";
-        }
+        get; set;
+        //get
+        //{
+        //    return $"Displaying {Products.Count}/{RowsPerPage} of total {TotalProducts} item(s)";
+        //}
     }
 
     public ObservableCollection<PageInfo> PageInfos
@@ -61,33 +62,33 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
         get => _sortById;
         set
         {
-            _sortById = value;
-            if (value == true)
-            {
-                _sortOptions.Add("Name", SortType.Ascending);
-            }
-            else
-            {
-                if (_sortOptions.ContainsKey("Name"))
-                {
-                    _sortOptions.Remove("Name");
-                }
-            }
+            //_sortById = value;
+            //if (value == true)
+            //{
+            //    _sortOptions.Add("Name", SortType.Ascending);
+            //}
+            //else
+            //{
+            //    if (_sortOptions.ContainsKey("Name"))
+            //    {
+            //        _sortOptions.Remove("Name");
+            //    }
+            //}
 
             LoadData();
         }
     }
 
-    private Dictionary<string, SortType> _sortOptions = new();
+   //  private Dictionary<string, SortType> _sortOptions = new();
 
     public ProductViewModel()
     {
-        ServiceFactory.Register(typeof(IProductDao), typeof(ProductJsonDao));
-        RowsPerPage = 10;
-        CurrentPage = 1;
-        _dao = ServiceFactory.GetChildOf(typeof(IProductDao)) as IProductDao;
+        //ServiceFactory.Register(typeof(IProductDao), typeof(ProductJsonDao));
+        //RowsPerPage = 10;
+        //CurrentPage = 1;
+        //_dao = ServiceFactory.GetChildOf(typeof(IProductDao)) as IProductDao;
         
-        LoadData();
+        //LoadData();
     }   
 
     public bool Remove(Product info)
@@ -104,41 +105,41 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
     public void LoadData()
     {
 
-        var (items, count) = _dao.GetProducts(
-            CurrentPage, RowsPerPage, Keyword,
-            _sortOptions
-        );
-        Products = new ObservableCollection<Product>(
-            items
-        );
+        //var (items, count) = _dao.GetProducts(
+        //    CurrentPage, RowsPerPage, Keyword,
+        //    _sortOptions
+        //);
+        //Products = new ObservableCollection<Product>(
+        //    items
+        //);
 
-        if (count != TotalProducts)
-        { // Recreate PageInfos list
-            TotalProducts = count;
-            TotalPages = (TotalProducts / RowsPerPage) +
-                (((TotalProducts % RowsPerPage) == 0) ? 0 : 1);
+        //if (count != TotalProducts)
+        //{ // Recreate PageInfos list
+        //    TotalProducts = count;
+        //    TotalPages = (TotalProducts / RowsPerPage) +
+        //        (((TotalProducts % RowsPerPage) == 0) ? 0 : 1);
 
-            PageInfos = new();
-            for (int i = 1; i <= TotalPages; i++)
-            {
-                PageInfos.Add(new PageInfo
-                {
-                    Page = i,
-                    Total = TotalPages
-                });
-            }
-        }
+        //    PageInfos = new();
+        //    for (int i = 1; i <= TotalPages; i++)
+        //    {
+        //        PageInfos.Add(new PageInfo
+        //        {
+        //            Page = i,
+        //            Total = TotalPages
+        //        });
+        //    }
+        //}
 
-        if (CurrentPage > TotalPages)
-        {
-            CurrentPage = TotalPages;
-        }
+        //if (CurrentPage > TotalPages)
+        //{
+        //    CurrentPage = TotalPages;
+        //}
 
-        if (PageInfos.Count > 0)
-        {
+        //if (PageInfos.Count > 0)
+        //{
 
-            SelectedPageInfoProduct = PageInfos[CurrentPage - 1];
-        }
+        //    SelectedPageInfoProduct = PageInfos[CurrentPage - 1];
+        //}
     }
     public void GoToPage(int page)
     {
