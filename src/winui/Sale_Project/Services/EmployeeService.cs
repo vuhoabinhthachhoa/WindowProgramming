@@ -165,7 +165,7 @@ public class EmployeeService : IEmployeeService
         {
             var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
-            var apiResponse = await _httpClient.GetAsync(_httpClient.BaseAddress);
+            var apiResponse = await _httpClient.GetAsync(_httpClient.BaseAddress + "/all");
 
             if (!apiResponse.IsSuccessStatusCode)
             {
