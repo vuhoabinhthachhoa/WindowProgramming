@@ -19,131 +19,192 @@ public class EmployeeService : IEmployeeService
     private readonly HttpClient _httpClient;
     private readonly IHttpService _httpService;
     private readonly IAuthService _authService;
+    private readonly IDialogService _dialogService;
 
-    public EmployeeService(HttpClient httpClient, IHttpService httpService, IAuthService authService)
+    public EmployeeService(HttpClient httpClient, IHttpService httpService, IAuthService authService, IDialogService dialogService)
     {
         _httpClient = httpClient;
         _httpClient = new HttpClient { BaseAddress = new Uri(AppConstants.BaseUrl + "/employee") };
         _httpService = httpService;
         _authService = authService;
+        _dialogService = dialogService;
     }
     // Add a new employee to the system
     public async Task<Employee> AddEmployee(EmployeeCreationRequest employeeCreationRequest)
     {
-        var json = JsonSerializer.Serialize(employeeCreationRequest);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        var token = _authService.GetAccessToken();
-        _httpService.AddTokenToHeader(token, _httpClient);
-
-        // Send login request as JSON and get response
-        var apiResponse = await _httpClient.PostAsync(_httpClient.BaseAddress, content);
-
-        if (!apiResponse.IsSuccessStatusCode)
+        try
         {
-            await _httpService.HandleErrorResponse(apiResponse);
+            var json = JsonSerializer.Serialize(employeeCreationRequest);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var token = _authService.GetAccessToken();
+            _httpService.AddTokenToHeader(token, _httpClient);
+
+            // Send login request as JSON and get response
+            var apiResponse = await _httpClient.PostAsync(_httpClient.BaseAddress, content);
+
+            if (!apiResponse.IsSuccessStatusCode)
+            {
+                await _httpService.HandleErrorResponse(apiResponse);
+                return null;
+            }
+
+            // Read the response content as a string
+            var responseContent = await apiResponse.Content.ReadAsStringAsync();
+
+            // Deserialize the response content to the appropriate type
+            var responseData = JsonSerializer.Deserialize<ApiResponse<Employee>>(responseContent);
+
+            return responseData.Data;
+        }
+        catch (HttpRequestException ex)
+        {
+            // Handle or log the exception as needed
+            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null;
         }
-
-        // Read the response content as a string
-        var responseContent = await apiResponse.Content.ReadAsStringAsync();
-
-        // Deserialize the response content to the appropriate type
-        var responseData = JsonSerializer.Deserialize<ApiResponse<Employee>>(responseContent);
-
-        return responseData.Data;
+        catch (Exception ex)
+        {
+            // Handle or log other exceptions as needed
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            return null;
+        }
+        
     }
 
     // Mark an employee as unemployed (inactive)
     public async Task<bool> UnemployedEmployee(long employeeId)
     {
-        var token = _authService.GetAccessToken();
-        _httpService.AddTokenToHeader(token, _httpClient);
-
-        // Prepare the request URL
-        var requestUrl = $"{_httpClient.BaseAddress}/status/unemployed?employeeId={employeeId}";
-
-        // Send the PATCH request
-        var apiResponse = await _httpClient.PatchAsync(requestUrl, null);
-
-        if (!apiResponse.IsSuccessStatusCode)
+        try
         {
-            await _httpService.HandleErrorResponse(apiResponse);
+            var token = _authService.GetAccessToken();
+            _httpService.AddTokenToHeader(token, _httpClient);
+
+            // Prepare the request URL
+            var requestUrl = $"{_httpClient.BaseAddress}/status/unemployed?employeeId={employeeId}";
+
+            // Send the PATCH request
+            var apiResponse = await _httpClient.PatchAsync(requestUrl, null);
+
+            if (!apiResponse.IsSuccessStatusCode)
+            {
+                await _httpService.HandleErrorResponse(apiResponse);
+                return false;
+            }
+            return true;
+        }
+        catch (HttpRequestException ex)
+        {
+            // Handle or log the exception as needed
+            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return false;
         }
-        return true;
+        catch (Exception ex)
+        {
+            // Handle or log other exceptions as needed
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            return false;
+        }
+        
     }
 
     // Update an existing employee's details
     public async Task<Employee> UpdateEmployee(Employee employee)
     {
-        // remove the time and timezone from the dateOfBirth
-        var options = new JsonSerializerOptions
+        try
         {
-            Converters = { new DateTimeConverter() }
-        };
-        var json = JsonSerializer.Serialize(employee, options);
+            // remove the time and timezone from the dateOfBirth
+            var options = new JsonSerializerOptions
+            {
+                Converters = { new DateTimeConverter() }
+            };
+            var json = JsonSerializer.Serialize(employee, options);
 
-        
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        var token = _authService.GetAccessToken();
-        _httpService.AddTokenToHeader(token, _httpClient);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        // Send login request as JSON and get response
-        var apiResponse = await _httpClient.PutAsync(_httpClient.BaseAddress, content);
+            var token = _authService.GetAccessToken();
+            _httpService.AddTokenToHeader(token, _httpClient);
 
-        if (!apiResponse.IsSuccessStatusCode)
+            // Send login request as JSON and get response
+            var apiResponse = await _httpClient.PutAsync(_httpClient.BaseAddress, content);
+
+            if (!apiResponse.IsSuccessStatusCode)
+            {
+                await _httpService.HandleErrorResponse(apiResponse);
+                return null;
+            }
+
+            // Read the response content as a string
+            var responseContent = await apiResponse.Content.ReadAsStringAsync();
+
+            // Deserialize the response content to the appropriate type
+            var responseData = JsonSerializer.Deserialize<ApiResponse<Employee>>(responseContent);
+
+            return responseData.Data;
+        }
+        catch (HttpRequestException ex)
         {
-            await _httpService.HandleErrorResponse(apiResponse);
+            // Handle or log the exception as needed
+            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
+            return null;
+        }
+        catch (Exception ex)
+        {
+            // Handle or log other exceptions as needed
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
 
-        // Read the response content as a string
-        var responseContent = await apiResponse.Content.ReadAsStringAsync();
-
-        // Deserialize the response content to the appropriate type
-        var responseData = JsonSerializer.Deserialize<ApiResponse<Employee>>(responseContent);
-
-        return responseData.Data;
-        // Implementation logic here
+       
     }
 
-    // Optionally, add a method to retrieve employees
-    // public Task<Employee> GetEmployeeById(long employeeId)
-    // {
-    //     // Implementation logic here
-    // }
-
-    // Optionally, add a method to list all employees
     public async Task<IEnumerable<Employee>> GetAllEmployees()
     {
-        var token = _authService.GetAccessToken();
-        _httpService.AddTokenToHeader(token, _httpClient);
-        var apiResponse = await _httpClient.GetAsync(_httpClient.BaseAddress);
-
-        if (!apiResponse.IsSuccessStatusCode)
+        try
         {
-            await _httpService.HandleErrorResponse(apiResponse);
+            var token = _authService.GetAccessToken();
+            _httpService.AddTokenToHeader(token, _httpClient);
+            var apiResponse = await _httpClient.GetAsync(_httpClient.BaseAddress);
+
+            if (!apiResponse.IsSuccessStatusCode)
+            {
+                await _httpService.HandleErrorResponse(apiResponse);
+                return null;
+            }
+
+            // Read the response content as a string
+            var responseContent = await apiResponse.Content.ReadAsStringAsync();
+
+            // Deserialize the response content to the appropriate type
+            var responseData = JsonSerializer.Deserialize<ApiResponse<List<Employee>>>(responseContent);
+
+            return responseData?.Data;
+        }
+        catch (HttpRequestException ex)
+        {
+            // Handle or log the exception as needed
+            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null;
         }
-
-        // Read the response content as a string
-        var responseContent = await apiResponse.Content.ReadAsStringAsync();
-
-        // Deserialize the response content to the appropriate type
-        var responseData = JsonSerializer.Deserialize<ApiResponse<List<Employee>>>(responseContent);
-
-        return responseData?.Data;
+        catch (Exception ex)
+        {
+            // Handle or log other exceptions as needed
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            return null;
+        }
+        
     }
 
     public async Task<PageData<Employee>> SearchEmployees(int page, int size, string sortField, SortType sortType, EmployeeSearchRequest employeeSearchRequest)
     {
-        var token = _authService.GetAccessToken();
-        _httpService.AddTokenToHeader(token, _httpClient);
+        try
+        {
+            var token = _authService.GetAccessToken();
+            _httpService.AddTokenToHeader(token, _httpClient);
 
-        // Construct query parameters for pagination and sorting
-        var queryParams = new Dictionary<string, string>
+            // Construct query parameters for pagination and sorting
+            var queryParams = new Dictionary<string, string>
         {
             { "page", page.ToString() },
             { "size", size.ToString() },
@@ -151,60 +212,91 @@ public class EmployeeService : IEmployeeService
             { "sortType", sortType.ToString() }
         };
 
-        // Build the query string
-        var queryString = string.Join("&", queryParams.Select(kvp => $"{kvp.Key}={Uri.EscapeDataString(kvp.Value)}"));
+            // Build the query string
+            var queryString = string.Join("&", queryParams.Select(kvp => $"{kvp.Key}={Uri.EscapeDataString(kvp.Value)}"));
 
-        // Prepare the HTTP request URL
-        var requestUrl = $"{_httpClient.BaseAddress}/search?{queryString}";
+            // Prepare the HTTP request URL
+            var requestUrl = $"{_httpClient.BaseAddress}/search?{queryString}";
 
-        // Serialize the EmployeeSearchRequest object into JSON
-        var requestBody = JsonSerializer.Serialize(employeeSearchRequest);
+            // Serialize the EmployeeSearchRequest object into JSON
+            var requestBody = JsonSerializer.Serialize(employeeSearchRequest);
 
-        // Manually create the GET request with a body
-        var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUrl)
+            // Manually create the GET request with a body
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUrl)
+            {
+                Content = new StringContent(requestBody, Encoding.UTF8, "application/json")
+            };
+
+            // Send the GET request
+            var apiResponse = await _httpClient.SendAsync(httpRequestMessage);
+
+            if (!apiResponse.IsSuccessStatusCode)
+            {
+                await _httpService.HandleErrorResponse(apiResponse);
+                return null;
+            }
+
+            // Read and deserialize the response content
+            var responseContent = await apiResponse.Content.ReadAsStringAsync();
+            var responseData = JsonSerializer.Deserialize<ApiResponse<PageData<Employee>>>(responseContent);
+
+            return responseData?.Data;
+        }
+        catch (HttpRequestException ex)
         {
-            Content = new StringContent(requestBody, Encoding.UTF8, "application/json")
-        };
-
-        // Send the GET request
-        var apiResponse = await _httpClient.SendAsync(httpRequestMessage);
-
-        if (!apiResponse.IsSuccessStatusCode)
+            // Handle or log the exception as needed
+           await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
+            return null;
+        }
+        catch (Exception ex)
         {
-            await _httpService.HandleErrorResponse(apiResponse);
+            // Handle or log other exceptions as needed
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
 
-        // Read and deserialize the response content
-        var responseContent = await apiResponse.Content.ReadAsStringAsync();
-        var responseData = JsonSerializer.Deserialize<ApiResponse<PageData<Employee>>>(responseContent);
-
-        return responseData?.Data;
+       
     }
 
     public async Task<Employee> GetEmployeeById(long employeeId)
     {
-        var token = _authService.GetAccessToken();
-        _httpService.AddTokenToHeader(token, _httpClient);
-
-        // Append the employeeId to the request URL
-        var requestUrl = $"{_httpClient.BaseAddress}?employeeId={employeeId}";
-
-        var apiResponse = await _httpClient.GetAsync(requestUrl);
-
-        if (!apiResponse.IsSuccessStatusCode)
+        try
         {
-            await _httpService.HandleErrorResponse(apiResponse);
+            var token = _authService.GetAccessToken();
+            _httpService.AddTokenToHeader(token, _httpClient);
+
+            // Append the employeeId to the request URL
+            var requestUrl = $"{_httpClient.BaseAddress}?employeeId={employeeId}";
+
+            var apiResponse = await _httpClient.GetAsync(requestUrl);
+
+            if (!apiResponse.IsSuccessStatusCode)
+            {
+                await _httpService.HandleErrorResponse(apiResponse);
+                return null;
+            }
+
+            // Read the response content as a string
+            var responseContent = await apiResponse.Content.ReadAsStringAsync();
+
+            // Deserialize the response content to the appropriate type
+            var responseData = JsonSerializer.Deserialize<ApiResponse<Employee>>(responseContent);
+
+            return responseData?.Data;
+        }
+        catch (HttpRequestException ex)
+        {
+            // Handle or log the exception as needed
+            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null;
         }
-
-        // Read the response content as a string
-        var responseContent = await apiResponse.Content.ReadAsStringAsync();
-
-        // Deserialize the response content to the appropriate type
-        var responseData = JsonSerializer.Deserialize<ApiResponse<Employee>>(responseContent);
-
-        return responseData?.Data;
+        catch (Exception ex)
+        {
+            // Handle or log other exceptions as needed
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            return null;
+        }
+        
     }
 
 

@@ -115,13 +115,14 @@ public partial class App : Application
 
         App.GetService<IAppNotificationService>().Initialize();
 
+        // Handle UI thread exceptions
         UnhandledException += App_UnhandledException;
-    }
 
-    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
-    {
-        // TODO: Log and handle exceptions as appropriate.
-        // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
+        // Handle task-related exceptions
+        TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+        
+        // Handle non-UI thread exceptions
+        AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
     }
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
@@ -132,5 +133,34 @@ public partial class App : Application
             string.Format("AppNotificationSamplePayload".GetLocalized(), AppContext.BaseDirectory)
         );
         await App.GetService<IActivationService>().ActivateAsync(args);
+    }
+
+    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+    {
+        e.Handled = true;
+        ShowExceptionMessage(e.Exception);
+    }
+
+    private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+    {
+        e.SetObserved();
+        ShowExceptionMessage(e.Exception);
+    }
+
+    private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)
+    {
+        ShowExceptionMessage(e.ExceptionObject as Exception);
+    }
+
+    private async void ShowExceptionMessage(Exception ex)
+    {
+        var dialog = new ContentDialog
+        {
+            Title = "An error occurred",
+            Content = ex.Message,
+            CloseButtonText = "OK"
+        };
+
+        await dialog.ShowAsync();
     }
 }

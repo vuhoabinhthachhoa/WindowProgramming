@@ -47,7 +47,9 @@
             <Setter Property="Orientation" Value="Vertical"/>
         </Style>
 
-        <local:EmploymentStatusConverter x:Key="EmploymentStatusConverter" />
+        <local:EmploymentStatusConverter x:Key="EmploymentStatusConverter"/>
+        <local:DoubleToCurrencyConverter x:Key="DoubleToCurrencyConverter"/>
+
     </Page.Resources>
 
     <Grid x:Name="ContentArea">
@@ -167,7 +169,8 @@
                 <controls:DataGridTextColumn Binding="{Binding Email}" Header="Email" Tag="Email" IsReadOnly="True" />
                 <controls:DataGridTextColumn Binding="{Binding CitizenId}" Header="Citizen ID" Tag="CitizenId" IsReadOnly="True" />
                 <controls:DataGridTextColumn Binding="{Binding JobTitle}" Header="Job Title" Tag="JobTitle" IsReadOnly="True" />
-                <controls:DataGridTextColumn Binding="{Binding Salary}" Header="Salary" Tag="Salary" IsReadOnly="True" />
+                <!--<controls:DataGridTextColumn Binding="{Binding Salary}" Header="Salary" Tag="Salary" IsReadOnly="True" />-->
+                <controls:DataGridTextColumn Binding="{Binding Salary, Converter={StaticResource DoubleToCurrencyConverter}}" Header="Salary" Tag="Salary" IsReadOnly="True" />
                 <controls:DataGridTemplateColumn Header="Employment Status" Tag="EmploymentStatus">
                     <controls:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
