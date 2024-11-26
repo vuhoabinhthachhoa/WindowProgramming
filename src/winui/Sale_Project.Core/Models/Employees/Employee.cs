@@ -15,15 +15,15 @@ public class Employee : INotifyPropertyChanged
 
     private long _id;
     private string _name;
-    private string _phoneNumber;
+    private string? _phoneNumber;
     private string _citizenId;
     private string _jobTitle;
-    private decimal _salary;
-    private string _email;
-    private DateTime _dateOfBirth;
-    private string _address;
-    private string _area;
-    private string _ward;
+    private double _salary;
+    private string? _email;
+    private DateTimeOffset? _dateOfBirth;
+    private string? _address;
+    private string? _area;
+    private string? _ward;
     private bool _employmentStatus;
 
     [JsonPropertyName("id")]
@@ -55,7 +55,7 @@ public class Employee : INotifyPropertyChanged
     }
 
     [JsonPropertyName("phoneNumber")]
-    public string PhoneNumber
+    public string? PhoneNumber
     {
         get => _phoneNumber;
         set
@@ -83,7 +83,7 @@ public class Employee : INotifyPropertyChanged
     }
 
     [JsonPropertyName("jobTitle")]
-    public string JobTitle
+    public string? JobTitle
     {
         get => _jobTitle;
         set
@@ -97,7 +97,7 @@ public class Employee : INotifyPropertyChanged
     }
 
     [JsonPropertyName("salary")]
-    public decimal Salary
+    public double Salary
     {
         get => _salary;
         set
@@ -111,21 +111,24 @@ public class Employee : INotifyPropertyChanged
     }
 
     [JsonPropertyName("email")]
-    public string Email
+    public string? Email
     {
         get => _email;
         set
         {
-            if (_email != value)
+            var newValue = string.IsNullOrEmpty(value) ? null : value;
+            if (_email != newValue)
             {
-                _email = value;
+                _email = newValue;
                 OnPropertyChanged();
             }
         }
     }
 
+// Thinh Dep Trai
+
     [JsonPropertyName("dateOfBirth")]
-    public DateTime DateOfBirth
+    public DateTimeOffset? DateOfBirth
     {
         get => _dateOfBirth;
         set
@@ -139,21 +142,21 @@ public class Employee : INotifyPropertyChanged
     }
 
     [JsonPropertyName("address")]
-    public string Address
+    public string? Address
     {
         get => _address;
         set
         {
             if (_address != value)
             {
-                _address = value;
+                _address = value ;
                 OnPropertyChanged();
             }
         }
     }
 
     [JsonPropertyName("area")]
-    public string Area
+    public string? Area
     {
         get => _area;
         set
@@ -167,7 +170,7 @@ public class Employee : INotifyPropertyChanged
     }
 
     [JsonPropertyName("ward")]
-    public string Ward
+    public string? Ward
     {
         get => _ward;
         set

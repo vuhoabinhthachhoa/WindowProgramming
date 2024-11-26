@@ -70,19 +70,13 @@
             Style="{StaticResource HeaderTextStyle}" />
 
         <!-- Buttons -->
-        <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
             <Button Content="Search Employee"
                     Style="{StaticResource PrimaryButtonStyle}"
                     Click="SearchEmployeeButton_Click" />
             <Button Content="Add Employee"
                     Style="{StaticResource PrimaryButtonStyle}"
                     Click="AddEmployeeButton_Click" />
-            <Button Content="Unemployed Employee"
-                    Style="{StaticResource PrimaryButtonStyle}"
-                    Click="UnemployedEmployeeButton_Click" />
-            <Button Content="Update Employee"
-                    Style="{StaticResource PrimaryButtonStyle}"
-                    Click="UpdateEmployeeButton_Click" />
         </StackPanel>
 
         <!-- Sort Buttons -->
@@ -159,7 +153,8 @@
             GridLinesVisibility="Horizontal"
             AlternatingRowBackground="#F7F9F9"
             RowBackground="White"
-            ItemsSource="{x:Bind ViewModel.Employees, Mode=OneWay}">
+            ItemsSource="{x:Bind ViewModel.Employees, Mode=OneWay}"
+            SelectedItem="{x:Bind ViewModel.SelectedEmployee, Mode=TwoWay}">
             <controls:DataGrid.Resources>
                 <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="#3498DB" />
             </controls:DataGrid.Resources>

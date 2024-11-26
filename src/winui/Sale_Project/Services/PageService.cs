@@ -24,6 +24,7 @@ public class PageService : IPageService
 //        Configure<EmployeeViewModel, EmployeePage>();
         Configure<LoginViewModel, LoginPage>();
         Configure<EmployeeViewModel, EmployeePage>();
+        Configure<EmployeeUpdateViewModel, EmployeeUpdatePage>();
     }
 
     public Type GetPageType(string key)

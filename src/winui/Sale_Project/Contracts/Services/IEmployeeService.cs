@@ -26,4 +26,5 @@ public interface IEmployeeService
 
     Task<PageData<Employee>> SearchEmployees(int page, int size, string sortField, SortType sortType, EmployeeSearchRequest employeeSearchRequest);
 
+    Task<Employee> GetEmployeeById(long employeeId);
 }

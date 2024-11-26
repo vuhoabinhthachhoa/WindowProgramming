@@ -38,7 +38,6 @@ public class EmployeeSearchRequest : INotifyPropertyChanged
                     _id = value;
                 }
                 OnPropertyChanged(nameof(Id));
-                Debug.WriteLine($"Id set to: {_id}");
             }
         }
     }

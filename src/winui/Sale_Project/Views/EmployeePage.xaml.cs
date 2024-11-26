@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using System.Diagnostics;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Sale_Project.Core.Models;
 using Sale_Project.ViewModels;
@@ -21,9 +22,9 @@ public sealed partial class EmployeePage : Page
         DataContext = ViewModel;
     }
 
-    private async void AddEmployeeButton_Click(object sender, RoutedEventArgs e)
+    private void AddEmployeeButton_Click(object sender, RoutedEventArgs e)
     {
-        //ViewModel.AddEmployee();
+        ViewModel.AddEmployee();
     }
 
     private async void UnemployedEmployeeButton_Click(object sender, RoutedEventArgs e)
@@ -84,4 +85,7 @@ public sealed partial class EmployeePage : Page
     {
         await ViewModel.SortBySalaryDesc();
     }
+
+
+
 }

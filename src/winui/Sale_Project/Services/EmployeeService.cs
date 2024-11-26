@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sale_Project.Core.Models;
 using Sale_Project.Core.Models.Employee;
+using Sale_Project.Helpers;
 
 public class EmployeeService : IEmployeeService
 {
@@ -29,7 +30,7 @@ public class EmployeeService : IEmployeeService
     // Add a new employee to the system
     public async Task<Employee> AddEmployee(EmployeeCreationRequest employeeCreationRequest)
     {
-        var json = Newtonsoft.Json.JsonConvert.SerializeObject(employeeCreationRequest);
+        var json = JsonSerializer.Serialize(employeeCreationRequest);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
         var token = _authService.GetAccessToken();
@@ -56,14 +57,55 @@ public class EmployeeService : IEmployeeService
     // Mark an employee as unemployed (inactive)
     public async Task<bool> UnemployedEmployee(long employeeId)
     {
-        return false;
-        // Implementation logic here
+        var token = _authService.GetAccessToken();
+        _httpService.AddTokenToHeader(token, _httpClient);
+
+        // Prepare the request URL
+        var requestUrl = $"{_httpClient.BaseAddress}/status/unemployed?employeeId={employeeId}";
+
+        // Send the PATCH request
+        var apiResponse = await _httpClient.PatchAsync(requestUrl, null);
+
+        if (!apiResponse.IsSuccessStatusCode)
+        {
+            await _httpService.HandleErrorResponse(apiResponse);
+            return false;
+        }
+        return true;
     }
 
     // Update an existing employee's details
     public async Task<Employee> UpdateEmployee(Employee employee)
     {
-        return new Employee();
+        // remove the time and timezone from the dateOfBirth
+        var options = new JsonSerializerOptions
+        {
+            Converters = { new DateTimeConverter() }
+        };
+        var json = JsonSerializer.Serialize(employee, options);
+
+        
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var token = _authService.GetAccessToken();
+        _httpService.AddTokenToHeader(token, _httpClient);
+
+        // Send login request as JSON and get response
+        var apiResponse = await _httpClient.PutAsync(_httpClient.BaseAddress, content);
+
+        if (!apiResponse.IsSuccessStatusCode)
+        {
+            await _httpService.HandleErrorResponse(apiResponse);
+            return null;
+        }
+
+        // Read the response content as a string
+        var responseContent = await apiResponse.Content.ReadAsStringAsync();
+
+        // Deserialize the response content to the appropriate type
+        var responseData = JsonSerializer.Deserialize<ApiResponse<Employee>>(responseContent);
+
+        return responseData.Data;
         // Implementation logic here
     }
 
@@ -136,6 +178,31 @@ public class EmployeeService : IEmployeeService
         // Read and deserialize the response content
         var responseContent = await apiResponse.Content.ReadAsStringAsync();
         var responseData = JsonSerializer.Deserialize<ApiResponse<PageData<Employee>>>(responseContent);
+
+        return responseData?.Data;
+    }
+
+    public async Task<Employee> GetEmployeeById(long employeeId)
+    {
+        var token = _authService.GetAccessToken();
+        _httpService.AddTokenToHeader(token, _httpClient);
+
+        // Append the employeeId to the request URL
+        var requestUrl = $"{_httpClient.BaseAddress}?employeeId={employeeId}";
+
+        var apiResponse = await _httpClient.GetAsync(requestUrl);
+
+        if (!apiResponse.IsSuccessStatusCode)
+        {
+            await _httpService.HandleErrorResponse(apiResponse);
+            return null;
+        }
+
+        // Read the response content as a string
+        var responseContent = await apiResponse.Content.ReadAsStringAsync();
+
+        // Deserialize the response content to the appropriate type
+        var responseData = JsonSerializer.Deserialize<ApiResponse<Employee>>(responseContent);
 
         return responseData?.Data;
     }

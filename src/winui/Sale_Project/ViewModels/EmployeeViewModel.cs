@@ -7,6 +7,7 @@ using Sale_Project.Core.Contracts.Services;
 using Sale_Project.Core.Models;
 using Sale_Project.Core.Models.Employee;
 using Sale_Project.Contracts.Services;
+using System.Diagnostics;
 
 
 namespace Sale_Project.ViewModels;
@@ -23,6 +24,9 @@ public partial class EmployeeViewModel : ObservableRecipient, INavigationAware
 
     [ObservableProperty]
     private EmployeeSearchRequest employeeSearchRequest;
+
+    [ObservableProperty]
+    private Employee selectedEmployee;
 
     public string Info => $"Displaying {Employees.Count}/{RowsPerPage} of total {TotalItems} item(s)";
 
@@ -90,6 +94,10 @@ public partial class EmployeeViewModel : ObservableRecipient, INavigationAware
         // Fetch data asynchronously
         var pageData = await _employeeService.SearchEmployees(CurrentPage, RowsPerPage, SortField, SortType, EmployeeSearchRequest);
 
+        if (pageData == null)
+        {
+            return; // Do nothing if pageData is null
+        }
 
         // Convert the result to ObservableCollection
         Employees = new ObservableCollection<Employee>(pageData.Data);
@@ -108,6 +116,10 @@ public partial class EmployeeViewModel : ObservableRecipient, INavigationAware
     {
         CurrentPage = 1;
         await LoadData();
+    }
+
+    public void AddEmployee()
+    {
     }
 
     public async Task GoToPreviousPage()
@@ -163,6 +175,14 @@ public partial class EmployeeViewModel : ObservableRecipient, INavigationAware
         CurrentPage = 1;
         SortType = SortType.ASC;
         SortField = "id";
+    }
+
+    partial void OnSelectedEmployeeChanged(Employee value)
+    {
+        if (value != null)
+        {
+            _navigationService.NavigateTo(typeof(EmployeeUpdateViewModel).FullName!, value.Id);
+        }
     }
 
 }
