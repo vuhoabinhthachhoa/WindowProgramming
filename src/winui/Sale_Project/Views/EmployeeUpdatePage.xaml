@@ -79,13 +79,14 @@
 
         <!-- Action Buttons -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
-            <Button Content="Go Back" Margin="10" Width="Auto" Height="35" Click="GoBackButton_Click" />
-            <Button Content="Update" Margin="10" Width="Auto" Height="35" Click="UpdateButton_Click" />
+            <Button Content="Go Back" Margin="10" Width="Auto" Height="35" Click="GoBackButton_Click" Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" />
+            <Button Content="Update" Margin="10" Width="Auto" Height="35" Click="UpdateButton_Click" Background="#4BAC4D" FontWeight="SemiBold" Foreground="White"  />
             <Button Content="Unemployed" 
                     Margin="10" 
                     Width="Auto" 
                     Height="35" 
                     Click="MarkUnemployedButton_Click"
+                    Background="#4BAC4D" FontWeight="SemiBold" Foreground="White"
                     Visibility="{Binding CurrentEmployee.EmploymentStatus, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </StackPanel>
 

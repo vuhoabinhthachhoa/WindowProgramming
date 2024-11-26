@@ -73,7 +73,7 @@
 
 		<!-- AddEmployee Buttons -->
 		<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
-			<Button Content="Add Employee" Margin="10" Width="Auto" Height="35" Click="AddButton_Click" />
+			<Button Content="Add Employee" Margin="10" Width="Auto" Height="35" Click="AddButton_Click" Foreground="White" Background="#4BAC4D" FontWeight="SemiBold"/>
 		</StackPanel>
 
 		<!-- User Fields -->
@@ -96,8 +96,8 @@
  
 		<!-- AddUser Buttons -->
 		<StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
-			<Button Content="Go Back" Margin="10" Width="Auto" Height="35" Click="GoBackButton_Click" />
-			<Button Content="Register Account" Margin="10" Width="Auto" Height="35" Click="RegisterButton_Click" />
+			<Button Content="Go Back" Margin="10" Width="Auto" Height="35" Click="GoBackButton_Click" Foreground="White" Background="#4BAC4D" FontWeight="SemiBold"/>
+            <Button Content="Register Account" Margin="10" Width="Auto" Height="35" Click="RegisterButton_Click" Foreground="White" Background="#4BAC4D" FontWeight="SemiBold" />
 		</StackPanel>
     </Grid>
 </Page>

@@ -9,19 +9,16 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <!-- Background layer -->
-        <Grid.Background>
-            <ImageBrush ImageSource="ms-appx:///Assets/supportimg.jpg" Stretch="UniformToFill" />
-        </Grid.Background>
-
-        <!-- Semi-transparent overlay for content -->
-        <Rectangle Fill="Black" Opacity="0.5" />
+    <Grid Background="#B3000000">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
         <!-- Login Panel -->
-        <StackPanel x:Name="LoginFeature" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
+        <StackPanel Grid.Column="0" x:Name="LoginFeature" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
             <!-- Title -->
-            <TextBlock Text="Sign in to Cloth Store" Foreground="WhiteSmoke" FontSize="36" Margin="4" TextAlignment="Center" FontWeight="ExtraBold"/>
+            <TextBlock Text="Sign in to Clothing Store Manager" Foreground="WhiteSmoke" FontSize="36" Margin="4" TextAlignment="Center" FontWeight="ExtraBold"/>
 
             <!-- Error Message -->
             <TextBlock x:Name="ErrorMessage_Login" Text="" FontSize="20" Margin="4" Foreground="Red" TextAlignment="Center"/>
@@ -36,10 +33,17 @@
             <PasswordBox x:Name="PasswordBox" PlaceholderText="Password" Margin="4" Width="400" Height="50" Background="White" />
 
             <!-- Remember Me Checkbox -->
-            <CheckBox x:Name="RememberMeCheckBox" Content="Remember Me" Foreground="WhiteSmoke" FontSize="16" Margin="0,10,0,0" HorizontalAlignment="Left" />
+            <CheckBox x:Name="RememberMeCheckBox" Content="Remember Me" Foreground="White" FontSize="16" Margin="100,10,0,0" HorizontalAlignment="Left" />
 
             <!-- Login Button -->
             <Button Content="Login" Background="DodgerBlue" Foreground="White" Click="LoginButton_Click" Width="200" Height="50" CornerRadius="30" HorizontalAlignment="Center" Margin="0,20" />
+        </StackPanel>
+
+        <!--Image-->
+        <StackPanel Grid.Column="1" CornerRadius="30" Margin="40">
+            <StackPanel.Background>
+                <ImageBrush ImageSource="ms-appx:///Assets/supportimg.jpg"/>
+            </StackPanel.Background>
         </StackPanel>
     </Grid>
 </Page>
