@@ -8,7 +8,6 @@
     mc:Ignorable="d">
 	<Page.Resources>
 		<local:EmploymentStatusConverter x:Key="EmploymentStatusConverter" />
-		<local:DoubleToCurrencyConverter x:Key="DoubleToCurrencyConverter"/>
 	</Page.Resources>
 
 
@@ -63,7 +62,7 @@
 				<TextBox Text="{Binding EmployeeCreationRequest.CitizenId, Mode=TwoWay}" />
 
 				<TextBlock Text="Salary:" FontWeight="Bold" Margin="0,10,0,0" />
-				<NumberBox Value="{Binding EmployeeCreationRequest.Salary, Mode=TwoWay, Converter={StaticResource DoubleToCurrencyConverter}}" Minimum="0" />
+				<NumberBox Value="{Binding EmployeeCreationRequest.Salary, Mode=TwoWay}" Minimum="0" />
 				<TextBlock Text="Date of Birth:" FontWeight="Bold" Margin="0,10,0,0" />
 				<DatePicker SelectedDate="{Binding EmployeeCreationRequest.DateOfBirth, Mode=TwoWay}" />
 
