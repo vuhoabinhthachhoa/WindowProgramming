@@ -15,7 +15,7 @@ public class EmployeeCreationRequest
     }
 
     [JsonPropertyName("phoneNumber")]
-    public string PhoneNumber
+    public string? PhoneNumber
     {
         get; set;
     }
@@ -33,37 +33,37 @@ public class EmployeeCreationRequest
     }
 
     [JsonPropertyName("salary")]
-    public decimal Salary
+    public double Salary
     {
         get; set;
     }
 
     [JsonPropertyName("email")]
-    public string Email
+    public string? Email
     {
         get; set;
     }
 
     [JsonPropertyName("dateOfBirth")]
-    public DateTime DateOfBirth
+    public DateTime? DateOfBirth
     {
         get; set;
     }
 
     [JsonPropertyName("address")]
-    public string Address
+    public string? Address
     {
         get; set;
     }
 
     [JsonPropertyName("area")]
-    public string Area
+    public string? Area
     {
         get; set;
     }
 
     [JsonPropertyName("ward")]
-    public string Ward
+    public string? Ward
     {
         get; set;
     }

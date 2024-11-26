@@ -73,20 +73,22 @@
         <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
             <Button Content="Search Employee"
                     Style="{StaticResource PrimaryButtonStyle}"
+                    Width="Auto"
                     Click="SearchEmployeeButton_Click" />
             <Button Content="Add Employee"
                     Style="{StaticResource PrimaryButtonStyle}"
+                    Width="Auto"
                     Click="AddEmployeeButton_Click" />
         </StackPanel>
 
         <!-- Sort Buttons -->
         <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button x:Name="SortBySalaryAscButton" Click="SortBySalaryAscButton_Click" Style="{StaticResource PrimaryButtonStyle}">
+            <Button x:Name="SortBySalaryAscButton" Click="SortBySalaryAscButton_Click" Width="Auto" Style="{StaticResource PrimaryButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Sort by Salary Asc" />
                 </StackPanel>
             </Button>
-            <Button x:Name="SortBySalaryDescButton" Click="SortBySalaryDescButton_Click" Style="{StaticResource PrimaryButtonStyle}">
+            <Button x:Name="SortBySalaryDescButton" Click="SortBySalaryDescButton_Click" Width="Auto" Style="{StaticResource PrimaryButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Sort by Salary Desc" />
                 </StackPanel>
@@ -178,13 +180,13 @@
 
         <!-- Pagination -->
         <StackPanel Height="40" Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
-            <AppBarButton Click="PreviousButton_Click" Style="{StaticResource PrimaryButtonStyle}">
+            <AppBarButton Click="PreviousButton_Click" Width="Auto" Style="{StaticResource PrimaryButtonStyle}">
                 <FontIcon Glyph="&#xE72B;" />
             </AppBarButton>
             <TextBlock VerticalAlignment="Center" Margin="10,0" FontSize="14" Foreground="#2C3E50">
                 <Run Text="{x:Bind ViewModel.CurrentPage, Mode=OneWay}" />/<Run Text="{x:Bind ViewModel.TotalPages, Mode=OneWay}" />
             </TextBlock>
-            <AppBarButton Click="NextButton_Click" Style="{StaticResource PrimaryButtonStyle}">
+            <AppBarButton Click="NextButton_Click" Width="Auto" Style="{StaticResource PrimaryButtonStyle}">
                 <FontIcon Glyph="&#xE72A;" />
             </AppBarButton>
         </StackPanel>

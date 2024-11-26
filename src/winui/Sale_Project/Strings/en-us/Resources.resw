@@ -184,4 +184,11 @@
     <value>EmployeeUpdate</value>
     <comment>Page title for EmployeeUpdatePage</comment>
   </data>
+  <data name="ShellMenuItem_Views_EmployeeAdd.Text" xml:space="preserve">
+    <value>EmployeeAdd</value>
+  </data>
+  <data name="EmployeeAdd_Title.Text" xml:space="preserve">
+    <value>EmployeeAdd</value>
+    <comment>Page title for EmployeeAddPage</comment>
+  </data>
 </root>

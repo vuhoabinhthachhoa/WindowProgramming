@@ -17,12 +17,14 @@ namespace Sale_Project.Services;
 public class AuthService : IAuthService
 {
     private readonly HttpClient _httpClient;
+    private readonly IHttpService _httpService;
     //private bool _isAuthenticated;
 
-    public AuthService(HttpClient httpClient)
+    public AuthService(HttpClient httpClient, IHttpService httpService)
     {
         _httpClient = httpClient;
         _httpClient = new HttpClient { BaseAddress = new Uri(AppConstants.BaseUrl + "/auth") };
+        _httpService = httpService;
     }
 
     // public bool IsAuthenticated => _isAuthenticated;
@@ -114,6 +116,26 @@ public class AuthService : IAuthService
         }
 
         return UserRole.USER;
+    }
+
+    public async Task<bool> Register(RegistrationRequest registrationRequest)
+    {
+        var json = JsonSerializer.Serialize(registrationRequest);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var token = GetAccessToken();
+        _httpService.AddTokenToHeader(token, _httpClient);
+
+        // Send login request as JSON and get response
+        var apiResponse = await _httpClient.PostAsync(_httpClient.BaseAddress + "/register", content);
+
+        if (!apiResponse.IsSuccessStatusCode)
+        {
+            await _httpService.HandleErrorResponse(apiResponse);
+            return false;
+        }
+
+        return true;
     }
 
 }

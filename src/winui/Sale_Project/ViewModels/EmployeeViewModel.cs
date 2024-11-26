@@ -8,6 +8,7 @@ using Sale_Project.Core.Models;
 using Sale_Project.Core.Models.Employee;
 using Sale_Project.Contracts.Services;
 using System.Diagnostics;
+using Newtonsoft.Json.Linq;
 
 
 namespace Sale_Project.ViewModels;
@@ -120,6 +121,7 @@ public partial class EmployeeViewModel : ObservableRecipient, INavigationAware
 
     public void AddEmployee()
     {
+        _navigationService.NavigateTo(typeof(EmployeeAddViewModel).FullName!);
     }
 
     public async Task GoToPreviousPage()
