@@ -14,13 +14,13 @@ public interface IProductDao
         Ascending,
         Descending
     }
-    Tuple<List<Product>, int> GetProducts(
+    Task<Tuple<List<Product>, int>> GetProducts(
         int page, int rowsPerPage,
         string keyword,
         Dictionary<string, SortType> sortOptions
     );
 
     bool DeleteProduct(int id);
-    (bool, string) AddProduct(Product info);
+    Task<(bool, string)> AddProduct(Product info, Stream fileStream);
     (bool, string) UpdateProduct(Product info);
 }

@@ -34,9 +34,12 @@ public sealed partial class ProductAddPage : Page
 
 
 
+    // ...
+
     private async void submitButton_Click(object sender, RoutedEventArgs e)
     {
-        var (success, message) = ViewModel.AddProduct();
+        var result = await ViewModel.AddProduct();
+        var (success, message) = result;
 
         if (success)
         {

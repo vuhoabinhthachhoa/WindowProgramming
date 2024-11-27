@@ -16,7 +16,10 @@ public partial class ProductUpdatePageViewModel
         _dao = ServiceFactory.GetChildOf(typeof(IProductDao)) as IProductDao;
     }
     public Product Info { get; set; } = new Product();
-
+    public Stream FileStream
+    {
+        get; set;
+    }
     public (bool, string) UpdateProduct()
     {
         return _dao.UpdateProduct(Info);

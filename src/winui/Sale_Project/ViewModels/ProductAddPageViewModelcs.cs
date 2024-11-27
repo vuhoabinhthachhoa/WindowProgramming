@@ -16,11 +16,16 @@ public partial class ProductAddPageViewModel
     }
 
     public Product Info { get; set; } = new Product();
+    public Stream FileStream
+    {
+        get; set;
+    } 
+
     IProductDao _dao;
 
-    public (bool, string) AddProduct()
+    public Task<(bool, string)> AddProduct()
     {
-        return _dao.AddProduct(Info);
+        return _dao.AddProduct(Info, FileStream);
         //string message = result ? "Product added successfully." : "Failed to add Product.";
         //return (result, message);
     }

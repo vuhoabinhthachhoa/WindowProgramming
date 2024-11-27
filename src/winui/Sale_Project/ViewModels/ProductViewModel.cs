@@ -27,7 +27,8 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
     {
         get
         {
-            return $"Displaying {Products.Count}/{RowsPerPage} of total {TotalProducts} item(s)";
+            //return $"Displaying {Products.Count}/{RowsPerPage} of total {TotalProducts} item(s)";
+            return "";
         }
     }
 
@@ -74,7 +75,7 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
                 }
             }
 
-            LoadData();
+            LoadDataAsync();
         }
     }
 
@@ -87,7 +88,7 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
         CurrentPage = 1;
         _dao = ServiceFactory.GetChildOf(typeof(IProductDao)) as IProductDao;
         
-        LoadData();
+        LoadDataAsync();
     }   
 
     public bool Remove(Product info)
@@ -101,10 +102,10 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
         return success;
     }
 
-    public void LoadData()
+    public async Task LoadDataAsync()
     {
 
-        var (items, count) = _dao.GetProducts(
+        var (items, count) = await _dao.GetProducts(
             CurrentPage, RowsPerPage, Keyword,
             _sortOptions
         );
@@ -143,13 +144,13 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
     public void GoToPage(int page)
     {
         CurrentPage = page;
-        LoadData();
+        LoadDataAsync();
     }
 
     public void Search()
     {
         CurrentPage = 1;
-        LoadData();
+        LoadDataAsync();
     }
 
     public void GoToPreviousPage()
@@ -157,7 +158,7 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
         if (CurrentPage > 1)
         {
             CurrentPage--;
-            LoadData();
+            LoadDataAsync();
         }
     }
 
@@ -166,7 +167,7 @@ public partial class ProductViewModel : ObservableRecipient, INotifyPropertyChan
         if (CurrentPage < TotalPages)
         {
             CurrentPage++;
-            LoadData();
+            LoadDataAsync();
         }
     }
 }

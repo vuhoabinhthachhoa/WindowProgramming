@@ -11,8 +11,11 @@
 
     <StackPanel HorizontalAlignment="Left">
         <TextBlock Text="Add new Product" Style="{StaticResource TitleTextBlockStyle}"/>
-        <local:ProductUserControl Width="350" 
-                                   Info="{x:Bind ViewModel.Info, Mode=TwoWay}" />
+        <local:ProductUserControl 
+                                   Info="{x:Bind ViewModel.Info, Mode=TwoWay}" 
+                                  FileStream="{x:Bind ViewModel.FileStream, Mode=TwoWay}"
+                                  IsBranchNameReadOnly="False"
+                                  IsCategoryIDReadOnly="False"/>
         <StackPanel Orientation="Horizontal">
             <Button Name="submitButton" Width="80" Height="35" Content="Submit"
                     Click="submitButton_Click"/>

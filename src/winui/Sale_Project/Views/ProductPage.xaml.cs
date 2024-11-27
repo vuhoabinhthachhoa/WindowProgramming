@@ -166,8 +166,8 @@ public sealed partial class ProductPage : Page
                     break;
                 case "CategoryID":
                     itemsDataGrid.ItemsSource = new ObservableCollection<Product>(ascending
-                        ? from item in ViewModel.Products orderby item.CategoryID ascending select item
-                        : from item in ViewModel.Products orderby item.CategoryID descending select item);
+                        ? from item in ViewModel.Products orderby item.Category.ID ascending select item
+                        : from item in ViewModel.Products orderby item.Category.ID descending select item);
                     break;
                 case "ImportPrice":
                     itemsDataGrid.ItemsSource = new ObservableCollection<Product>(ascending
@@ -181,8 +181,8 @@ public sealed partial class ProductPage : Page
                     break;
                 case "BranchID":
                     itemsDataGrid.ItemsSource = new ObservableCollection<Product>(ascending
-                        ? from item in ViewModel.Products orderby item.BranchID ascending select item
-                        : from item in ViewModel.Products orderby item.BranchID descending select item);
+                        ? from item in ViewModel.Products orderby item.Branch.ID ascending select item
+                        : from item in ViewModel.Products orderby item.Branch.ID descending select item);
                     break;
                 case "InventoryQuantity":
                     itemsDataGrid.ItemsSource = new ObservableCollection<Product>(ascending
