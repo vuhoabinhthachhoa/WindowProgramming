@@ -16,4 +16,7 @@ public interface IAuthService
 
     public UserRole GetUserRole();
 
+    Task<bool> Register(RegistrationRequest registrationRequest);
+
+
 }

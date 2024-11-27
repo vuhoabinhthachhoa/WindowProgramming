@@ -1,24 +1,103 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Page
-    x:Class="Sale_Project.EmployeeAddPage"
+﻿<Page
+    x:Class="Sale_Project.Views.EmployeeAddPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Sale_Project"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	xmlns:local="using:Sale_Project.Helpers"
+    mc:Ignorable="d">
+	<Page.Resources>
+		<local:EmploymentStatusConverter x:Key="EmploymentStatusConverter" />
+	</Page.Resources>
 
-    <StackPanel HorizontalAlignment="Left">
-        <TextBlock Text="Add new Employee" Style="{StaticResource TitleTextBlockStyle}"/>
-        <local:EmployeeUserControl
-                                   Info="{x:Bind ViewModel.Info, Mode=TwoWay}" />
-        <StackPanel Orientation="Horizontal">
-            <Button Name="submitButton" Width="80" Height="35" Content="Submit"
-                    Click="submitButton_Click"/>
-            <Button Name="cancelButton" Width="80" Height="35" Content="Cancel"
-        Click="cancelButton_Click"/>
-        </StackPanel>
-    </StackPanel>
-</Page>
+
+	<Grid x:Name="ContentArea">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48" />
+            <RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
+		<!-- Title -->
+		<TextBlock
+            Grid.Row="0"
+            Text="Add Employee"
+            Style="{StaticResource PageTitleStyle}"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            FontSize="20"
+            FontWeight="Bold" />
+
+		<!-- Employee Fields -->
+		<Grid Grid.Row="1" Margin="0,20,0,20">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+
+			<StackPanel Grid.Column="0" Margin="10">
+				<TextBlock Text="Name:" FontWeight="Bold" Margin="0,10,0,0" />
+				<TextBox Text="{Binding EmployeeCreationRequest.Name, Mode=TwoWay}" />
+
+				<TextBlock Text="Job Title:" FontWeight="Bold" Margin="0,10,0,0" />
+				<TextBox Text="{Binding EmployeeCreationRequest.JobTitle, Mode=TwoWay}" />
+
+				<TextBlock Text="Email:" FontWeight="Bold" Margin="0,10,0,0" />
+				<TextBox Text="{Binding EmployeeCreationRequest.Email, Mode=TwoWay}" />
+
+				<TextBlock Text="Area:" FontWeight="Bold" Margin="0,10,0,0" />
+				<TextBox Text="{Binding EmployeeCreationRequest.Area, Mode=TwoWay}" />
+
+				<TextBlock Text="Ward:" FontWeight="Bold" Margin="0,10,0,0" />
+				<TextBox Text="{Binding EmployeeCreationRequest.Ward, Mode=TwoWay}" />
+			</StackPanel>
+
+			<StackPanel Grid.Column="1" Margin="10">
+				<TextBlock Text="Phone:" FontWeight="Bold" Margin="0,10,0,0" />
+				<TextBox Text="{Binding EmployeeCreationRequest.PhoneNumber, Mode=TwoWay}" />
+
+				<TextBlock Text="Citizen ID:" FontWeight="Bold" Margin="0,10,0,0" />
+				<TextBox Text="{Binding EmployeeCreationRequest.CitizenId, Mode=TwoWay}" />
+
+				<TextBlock Text="Salary:" FontWeight="Bold" Margin="0,10,0,0" />
+				<NumberBox Value="{Binding EmployeeCreationRequest.Salary, Mode=TwoWay}" Minimum="0" />
+				<TextBlock Text="Date of Birth:" FontWeight="Bold" Margin="0,10,0,0" />
+				<DatePicker SelectedDate="{Binding EmployeeCreationRequest.DateOfBirth, Mode=TwoWay}" />
+
+				<TextBlock Text="Address:" FontWeight="Bold" Margin="0,10,0,0" />
+				<TextBox Text="{Binding EmployeeCreationRequest.Address, Mode=TwoWay}" />
+			</StackPanel>
+		</Grid>
+
+		<!-- AddEmployee Buttons -->
+		<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
+			<Button Content="Add Employee" Margin="10" Width="Auto" Height="35" Click="AddButton_Click" Foreground="White" Background="#4BAC4D" FontWeight="SemiBold"/>
+		</StackPanel>
+
+		<!-- User Fields -->
+		<Grid Grid.Row="3" Margin="0,20,0,20">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+
+			<StackPanel Grid.Column="0" Margin="10">
+				<TextBlock Text="Username:" FontWeight="Bold" Margin="0,10,0,0" />
+				<TextBox Text="{Binding RegistrationRequest.Username, Mode=TwoWay}" />
+			</StackPanel>
+
+			<StackPanel Grid.Column="1" Margin="10">
+				<TextBlock Text="Password:" FontWeight="Bold" Margin="0,10,0,0" />
+				<TextBox Text="{Binding RegistrationRequest.Password, Mode=TwoWay}" />
+			</StackPanel>
+		</Grid>
  
+		<!-- AddUser Buttons -->
+		<StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
+			<Button Content="Go Back" Margin="10" Width="Auto" Height="35" Click="GoBackButton_Click" Foreground="White" Background="#4BAC4D" FontWeight="SemiBold"/>
+            <Button Content="Register Account" Margin="10" Width="Auto" Height="35" Click="RegisterButton_Click" Foreground="White" Background="#4BAC4D" FontWeight="SemiBold" />
+		</StackPanel>
+    </Grid>
+</Page>

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+
 using Sale_Project.Activation;
 using Sale_Project.Contracts.Services;
 using Sale_Project.Core.Contracts.Services;
@@ -10,7 +11,8 @@ using Sale_Project.Helpers;
 using Sale_Project.Models;
 using Sale_Project.Notifications;
 using Sale_Project.Services;
-using Sale_Project.Services.Dao;
+
+//using Sale_Project.Services.Dao;
 using Sale_Project.ViewModels;
 using Sale_Project.Views;
 
@@ -66,15 +68,24 @@ public partial class App : Application
             services.AddSingleton<UIManagerService>();
             services.AddSingleton<IAuthService, AuthService>();
             services.AddSingleton<IDialogService, DialogService>();
+            services.AddSingleton<IEmployeeService, EmployeeService>();
+            services.AddSingleton<IHttpService, HttpService>();
 
             // HTTP
             services.AddSingleton<HttpClient>();
 
 
             // Core Services
+            services.AddSingleton<ISampleDataService, SampleDataService>();
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
+            services.AddTransient<EmployeeAddViewModel>();
+            services.AddTransient<EmployeeAddPage>();
+            services.AddTransient<EmployeeUpdateViewModel>();
+            services.AddTransient<EmployeeUpdatePage>();
+            services.AddTransient<EmployeeViewModel>();
+            services.AddTransient<EmployeePage>();
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
             services.AddTransient<AccountViewModel>();
@@ -95,8 +106,7 @@ public partial class App : Application
             services.AddTransient<ShellViewModel>();
             services.AddTransient<LoginPage>();
             services.AddTransient<LoginViewModel>();
-            services.AddTransient<EmployeePage>();
-            services.AddTransient<EmployeeViewModel>();
+
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
@@ -105,13 +115,14 @@ public partial class App : Application
 
         App.GetService<IAppNotificationService>().Initialize();
 
+        // Handle UI thread exceptions
         UnhandledException += App_UnhandledException;
-    }
 
-    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
-    {
-        // TODO: Log and handle exceptions as appropriate.
-        // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
+        // Handle task-related exceptions
+        TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+        
+        // Handle non-UI thread exceptions
+        AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
     }
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
@@ -122,5 +133,34 @@ public partial class App : Application
             string.Format("AppNotificationSamplePayload".GetLocalized(), AppContext.BaseDirectory)
         );
         await App.GetService<IActivationService>().ActivateAsync(args);
+    }
+
+    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+    {
+        e.Handled = true;
+        ShowExceptionMessage(e.Exception);
+    }
+
+    private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+    {
+        e.SetObserved();
+        ShowExceptionMessage(e.Exception);
+    }
+
+    private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)
+    {
+        ShowExceptionMessage(e.ExceptionObject as Exception);
+    }
+
+    private async void ShowExceptionMessage(Exception ex)
+    {
+        var dialog = new ContentDialog
+        {
+            Title = "An error occurred",
+            Content = ex.Message,
+            CloseButtonText = "OK"
+        };
+
+        await dialog.ShowAsync();
     }
 }

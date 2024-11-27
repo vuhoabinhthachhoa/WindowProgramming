@@ -170,4 +170,25 @@
   &lt;/actions&gt;
 &lt;/toast&gt;</value>
   </data>
+  <data name="ShellMenuItem_Views_Employee.Text" xml:space="preserve">
+    <value>Employee</value>
+  </data>
+  <data name="Employee_Title.Text" xml:space="preserve">
+    <value>Employee</value>
+    <comment>Page title for EmployeePage</comment>
+  </data>
+  <data name="ShellMenuItem_Views_EmployeeUpdate.Text" xml:space="preserve">
+    <value>EmployeeUpdate</value>
+  </data>
+  <data name="EmployeeUpdate_Title.Text" xml:space="preserve">
+    <value>EmployeeUpdate</value>
+    <comment>Page title for EmployeeUpdatePage</comment>
+  </data>
+  <data name="ShellMenuItem_Views_EmployeeAdd.Text" xml:space="preserve">
+    <value>EmployeeAdd</value>
+  </data>
+  <data name="EmployeeAdd_Title.Text" xml:space="preserve">
+    <value>EmployeeAdd</value>
+    <comment>Page title for EmployeeAddPage</comment>
+  </data>
 </root>

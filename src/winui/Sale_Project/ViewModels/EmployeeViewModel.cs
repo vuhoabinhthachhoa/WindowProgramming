@@ -1,27 +1,33 @@
-﻿using Sale_Project.Services;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Services.Maps;
-using static Sale_Project.Contracts.Services.IEmployeeDao;
-using Sale_Project.Core.Models;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Sale_Project.Contracts.ViewModels;
-using Sale_Project.Contracts.Services;
-using Sale_Project.Services.Dao.JsonDao;
+﻿using System.Collections.ObjectModel;
 
-namespace Sale_Project;
-public partial class EmployeeViewModel : ObservableRecipient, INotifyPropertyChanged
+using CommunityToolkit.Mvvm.ComponentModel;
+
+using Sale_Project.Contracts.ViewModels;
+using Sale_Project.Core.Contracts.Services;
+using Sale_Project.Core.Models;
+using Sale_Project.Core.Models.Employee;
+using Sale_Project.Contracts.Services;
+using System.Diagnostics;
+using Newtonsoft.Json.Linq;
+
+
+namespace Sale_Project.ViewModels;
+
+public partial class EmployeeViewModel : ObservableRecipient, INavigationAware
 {
-    IEmployeeDao _dao;
-    public ObservableCollection<Employee> Employees
-    {
-        get; set;
-    }
+    //private readonly ISampleDataService _sampleDataService;
+    private const int _defaultRowsPerPage = 5;
+    private readonly IEmployeeService _employeeService;
+    private readonly INavigationService _navigationService;
+
+
+    public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
+
+    [ObservableProperty]
+    private EmployeeSearchRequest employeeSearchRequest;
+
+    [ObservableProperty]
+    private Employee selectedEmployee;
 
     public string Info => $"Displaying {Employees.Count}/{RowsPerPage} of total {TotalItems} item(s)";
 
@@ -33,12 +39,11 @@ public partial class EmployeeViewModel : ObservableRecipient, INotifyPropertyCha
     {
         get; set;
     }
-    public string Keyword { get; set; } = "";
-
+    //public string Keyword { get; set; } = "";
     public int CurrentPage
     {
         get; set;
-    }
+    } = 1;
     public int TotalPages
     {
         get; set;
@@ -49,118 +54,137 @@ public partial class EmployeeViewModel : ObservableRecipient, INotifyPropertyCha
         get; set;
     }
 
-    private bool _sortById = false;
-    public bool SortById
+    public string SortField
     {
-        get => _sortById;
-        set
-        {
-            _sortById = value;
-            if (value == true)
-            {
-                _sortOptions.Add("Name", SortType.Ascending);
-            }
-            else
-            {
-                if (_sortOptions.ContainsKey("Name"))
-                {
-                    _sortOptions.Remove("Name");
-                }
-            }
+        get; set;
+    } = "id";
+    public SortType SortType
+    {
+        get; set;
+    } = SortType.ASC;
 
-            LoadData();
-        }
+
+    public EmployeeViewModel(INavigationService navigationService, IEmployeeService employeeService)
+    {
+    
+        RowsPerPage = _defaultRowsPerPage;
+        EmployeeSearchRequest = new EmployeeSearchRequest();
+        _employeeService = employeeService;
+        _navigationService = navigationService;
     }
 
-    private Dictionary<string, SortType> _sortOptions = new();
-
-    public EmployeeViewModel()
+    public async void OnNavigatedTo(object parameter)
     {
-        ServiceFactory.Register(typeof(IEmployeeDao), typeof(EmployeeJsonDao));
-        RowsPerPage = 10;
-        CurrentPage = 1;
-        _dao = ServiceFactory.GetChildOf(typeof(IEmployeeDao)) as IEmployeeDao;
+        await LoadData();
+        // TODO: Replace with real data.
+        //var data = await _sampleDataService.GetGridDataAsync();
 
-        LoadData();
+        //foreach (var item in data)
+        //{
+        //    Employees.Add(item);
+        //}
     }
 
-    public bool Remove(Employee info)
+    public void OnNavigatedFrom()
     {
-        bool success = _dao.DeleteEmployee(info.ID); // DB
-
-        if (success)
-        {
-            Employees.Remove(info); // UI
-        }
-        return success;
+        Employees.Clear();
     }
 
-    public void LoadData()
+    public async Task LoadData()
     {
+        // Fetch data asynchronously
+        var pageData = await _employeeService.SearchEmployees(CurrentPage, RowsPerPage, SortField, SortType, EmployeeSearchRequest);
 
-        var (items, count) = _dao.GetEmployees(
-            CurrentPage, RowsPerPage, Keyword,
-            _sortOptions
-        );
-        Employees = new ObservableCollection<Employee>(
-            items
-        );
-
-        if (count != TotalItems)
-        { // Recreate PageInfos list
-            TotalItems = count;
-            TotalPages = (TotalItems / RowsPerPage) +
-                (((TotalItems % RowsPerPage) == 0) ? 0 : 1);
-
-            PageInfos = new();
-            for (int i = 1; i <= TotalPages; i++)
-            {
-                PageInfos.Add(new PageInfo
-                {
-                    Page = i,
-                    Total = TotalPages
-                });
-            }
-        }
-
-        if (CurrentPage > TotalPages)
+        if (pageData == null)
         {
-            CurrentPage = TotalPages;
+            return; // Do nothing if pageData is null
         }
 
-        if (PageInfos.Count > 0)
-        {
-
-            SelectedPageInfoItem = PageInfos[CurrentPage - 1];
-        }
+        // Convert the result to ObservableCollection
+        Employees = new ObservableCollection<Employee>(pageData.Data);
+        TotalItems = pageData.TotalElements;
+        TotalPages = pageData.TotalPages;
+        CurrentPage = pageData.Page;
     }
-    public void GoToPage(int page)
+
+    public async Task GoToPage(int page)
     {
         CurrentPage = page;
-        LoadData();
+        await LoadData();
     }
 
-    public void Search()
+    public async Task SearchEmployee()
     {
         CurrentPage = 1;
-        LoadData();
+        await LoadData();
     }
 
-    public void GoToPreviousPage()
+    public void AddEmployee()
+    {
+        _navigationService.NavigateTo(typeof(EmployeeAddViewModel).FullName!);
+    }
+
+    public async Task GoToPreviousPage()
     {
         if (CurrentPage > 1)
         {
             CurrentPage--;
-            LoadData();
+            await LoadData();
         }
     }
 
-    public void GoToNextPage()
+    public async Task GoToNextPage()
     {
         if (CurrentPage < TotalPages)
         {
             CurrentPage++;
-            LoadData();
+            await LoadData();
         }
     }
+
+    public async Task SortBySalaryAsc()
+    {
+        if(SortField == "salary" && SortType == SortType.ASC)
+        {
+            SetDefaultValue();
+        }
+        else
+        {
+            SortField = "salary";
+            SortType = SortType.ASC;
+            CurrentPage = 1;
+        }
+        await LoadData();
+    }
+
+    public async Task SortBySalaryDesc()
+    {
+        if (SortField == "salary" && SortType == SortType.DESC)
+        {
+            SetDefaultValue();
+        }
+        else
+        {
+            SortField = "salary";
+            SortType = SortType.DESC;
+            CurrentPage = 1;
+        }
+        await LoadData();
+    }
+
+    public void SetDefaultValue()
+    {
+        CurrentPage = 1;
+        SortType = SortType.ASC;
+        SortField = "id";
+    }
+
+    partial void OnSelectedEmployeeChanged(Employee value)
+    {
+        if (value != null)
+        {
+            _navigationService.NavigateTo(typeof(EmployeeUpdateViewModel).FullName!, value.Id);
+        }
+    }
+
 }
