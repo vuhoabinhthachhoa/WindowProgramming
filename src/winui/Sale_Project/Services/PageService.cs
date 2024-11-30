@@ -15,7 +15,6 @@ public class PageService : IPageService
     public PageService()
     {
         Configure<DashboardViewModel, DashboardPage>();
-        Configure<ProductViewModel, ProductPage>();
         Configure<CustomerViewModel, CustomerPage>();
         Configure<ReportViewModel, ReportPage>();
         Configure<SaleViewModel, SalePage>();
@@ -26,6 +25,9 @@ public class PageService : IPageService
         Configure<EmployeeViewModel, EmployeePage>();
         Configure<EmployeeUpdateViewModel, EmployeeUpdatePage>();
         Configure<EmployeeAddViewModel, EmployeeAddPage>();
+        Configure<ProductViewModel, ProductPage>();
+        Configure<ProductUpdateViewModel, ProductUpdatePage>();
+        Configure<ProductAddViewModel, ProductAddPage>();
     }
 
     public Type GetPageType(string key)

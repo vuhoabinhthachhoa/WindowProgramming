@@ -22,10 +22,10 @@ using System.Threading.Tasks;
 using Microsoft.VisualBasic;
 using Sale_Project.Contracts.Services;
 using Windows.Storage;
-using Sale_Project.Core.Models;
 using System.IdentityModel.Tokens.Jwt;
 using Newtonsoft.Json.Linq;
 using static Sale_Project.Services.AuthService;
+using Sale_Project.Core.Models.Product;
 
 namespace Sale_Project.Services.Dao.JsonDao;
 public class ProductJsonDao : IProductDao
@@ -122,9 +122,9 @@ public class ProductJsonDao : IProductDao
         {
             using (var httpClient = new HttpClient() { BaseAddress = new Uri(AppConstants.BaseUrl + "/product/search?") })
             {
-
+           
                 var sortField = sortOptions.Keys.FirstOrDefault() ?? "name";
-                var sortType = sortOptions.Values.FirstOrDefault() == SortType.Ascending ? "ASC" : "DESC";
+                var sortType = sortOptions.Values.FirstOrDefault() == SortType.ASC ? "ASC" : "DESC";
 
                 var queryParams = new Dictionary<string, string>
                 {
@@ -161,9 +161,9 @@ public class ProductJsonDao : IProductDao
                     Content = jsonContent
                 };
 
-                var authService = new AuthService(httpClient);
-                var token = authService.GetAccessToken();
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                //var authService = new AuthService(httpClient);
+                //var token = authService.GetAccessToken();
+                //httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var apiResponse = await httpClient.SendAsync(request);
 
@@ -197,7 +197,7 @@ public class ProductJsonDao : IProductDao
         var json = File.ReadAllText(path);
         Products = System.Text.Json.JsonSerializer.Deserialize<List<Product>>(json);
 
-        var item = Products.Find(e => e.ID == id);
+        var item = Products.Find(e => e.Id == id);
         Products.Remove(item);
 
         var convertedJson = Newtonsoft.Json.JsonConvert.SerializeObject(Products);
@@ -253,9 +253,9 @@ public class ProductJsonDao : IProductDao
                 formData.Add(new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(productCreationRequest.data), Encoding.UTF8, "application/json"), "data");
                 formData.Add(productCreationRequest.file, "file", "product_image.jpg");
 
-                var authService = new AuthService(httpClient);
-                var token = authService.GetAccessToken();   
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                //var authService = new AuthService(httpClient);
+                //var token = authService.GetAccessToken();   
+                //httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var apiResponse = await httpClient.PostAsync("/product", formData);
                 var responseContent = await apiResponse.Content.ReadAsStringAsync();
@@ -285,7 +285,7 @@ public class ProductJsonDao : IProductDao
         var json = File.ReadAllText(path);
         Products = System.Text.Json.JsonSerializer.Deserialize<List<Product>>(json);
 
-        var item = Products.Find(e => e.ID == info.ID);
+        var item = Products.Find(e => e.Id == info.Id);
         item.Name = info.Name;
         item.Category.ID = info.Category.ID;
         item.ImportPrice = info.ImportPrice;

@@ -4,16 +4,25 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Sale_Project.Core.Models;
 
 public class Category : INotifyPropertyChanged
 {
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
     private string id = "";
     private string name = "";
     private bool businessStatus = true;
 
+    [JsonPropertyName("id")]
     public string ID
     {
         get => id;
@@ -27,6 +36,7 @@ public class Category : INotifyPropertyChanged
         }
     }
 
+    [JsonPropertyName("name")]
     public string Name
     {
         get => name;
@@ -40,6 +50,7 @@ public class Category : INotifyPropertyChanged
         }
     }
 
+    [JsonPropertyName("businessStatus")]
     public bool BusinessStatus
     {
         get => businessStatus;
@@ -51,13 +62,6 @@ public class Category : INotifyPropertyChanged
                 OnPropertyChanged(nameof(BusinessStatus));
             }
         }
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
 

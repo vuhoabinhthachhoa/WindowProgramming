@@ -1,14 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
+using Sale_Project.Core.Models;
 
-namespace Sale_Project.Core.Models;
 public class Product : INotifyPropertyChanged
 {
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    // Helper method to raise the PropertyChanged event
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
     private int id = 0;
     private string code = string.Empty;
     private string name = string.Empty;
@@ -23,7 +28,8 @@ public class Product : INotifyPropertyChanged
     private string size = string.Empty;
     private double discountPercent = 0.0;
 
-    public int ID
+    [JsonPropertyName("id")]
+    public int Id
     {
         get => id;
         set
@@ -31,11 +37,12 @@ public class Product : INotifyPropertyChanged
             if (id != value)
             {
                 id = value;
-                OnPropertyChanged(nameof(ID));
+                OnPropertyChanged();
             }
         }
     }
 
+    [JsonPropertyName("code")]
     public string Code
     {
         get => code;
@@ -44,11 +51,12 @@ public class Product : INotifyPropertyChanged
             if (code != value)
             {
                 code = value;
-                OnPropertyChanged(nameof(Code));
+                OnPropertyChanged();
             }
         }
     }
 
+    [JsonPropertyName("name")]
     public string Name
     {
         get => name;
@@ -57,11 +65,12 @@ public class Product : INotifyPropertyChanged
             if (name != value)
             {
                 name = value;
-                OnPropertyChanged(nameof(Name));
+                OnPropertyChanged();
             }
         }
     }
 
+    [JsonPropertyName("category")]
     public Category Category
     {
         get => category;
@@ -70,11 +79,12 @@ public class Product : INotifyPropertyChanged
             if (category != value)
             {
                 category = value;
-                OnPropertyChanged(nameof(Category));
+                OnPropertyChanged();
             }
         }
     }
 
+    [JsonPropertyName("importPrice")]
     public float ImportPrice
     {
         get => importPrice;
@@ -83,11 +93,12 @@ public class Product : INotifyPropertyChanged
             if (importPrice != value)
             {
                 importPrice = value;
-                OnPropertyChanged(nameof(ImportPrice));
+                OnPropertyChanged();
             }
         }
     }
 
+    [JsonPropertyName("sellingPrice")]
     public float SellingPrice
     {
         get => sellingPrice;
@@ -96,11 +107,12 @@ public class Product : INotifyPropertyChanged
             if (sellingPrice != value)
             {
                 sellingPrice = value;
-                OnPropertyChanged(nameof(SellingPrice));
+                OnPropertyChanged();
             }
         }
     }
 
+    [JsonPropertyName("branch")]
     public Branch Branch
     {
         get => branch;
@@ -109,11 +121,12 @@ public class Product : INotifyPropertyChanged
             if (branch != value)
             {
                 branch = value;
-                OnPropertyChanged(nameof(Branch));
+                OnPropertyChanged();
             }
         }
     }
 
+    [JsonPropertyName("inventoryQuantity")]
     public int InventoryQuantity
     {
         get => inventoryQuantity;
@@ -122,11 +135,12 @@ public class Product : INotifyPropertyChanged
             if (inventoryQuantity != value)
             {
                 inventoryQuantity = value;
-                OnPropertyChanged(nameof(InventoryQuantity));
+                OnPropertyChanged();
             }
         }
     }
 
+    [JsonPropertyName("imageUrl")]
     public string ImageUrl
     {
         get => imageUrl;
@@ -135,11 +149,12 @@ public class Product : INotifyPropertyChanged
             if (imageUrl != value)
             {
                 imageUrl = value;
-                OnPropertyChanged(nameof(ImageUrl));
+                OnPropertyChanged();
             }
         }
     }
 
+    [JsonPropertyName("cloudinaryImageId")]
     public string CloudinaryImageId
     {
         get => cloudinaryImageId;
@@ -148,25 +163,26 @@ public class Product : INotifyPropertyChanged
             if (cloudinaryImageId != value)
             {
                 cloudinaryImageId = value;
-                OnPropertyChanged(nameof(CloudinaryImageId));
+                OnPropertyChanged();
             }
         }
     }
 
+    [JsonPropertyName("businessStatus")]
     public bool BusinessStatus
     {
         get => businessStatus;
         set
         {
-
             if (businessStatus != value)
             {
                 businessStatus = value;
-                OnPropertyChanged(nameof(BusinessStatus));
+                OnPropertyChanged();
             }
         }
     }
 
+    [JsonPropertyName("size")]
     public string Size
     {
         get => size;
@@ -175,11 +191,12 @@ public class Product : INotifyPropertyChanged
             if (size != value)
             {
                 size = value;
-                OnPropertyChanged(nameof(Size));
+                OnPropertyChanged();
             }
         }
     }
 
+    [JsonPropertyName("discountPercent")]
     public double DiscountPercent
     {
         get => discountPercent;
@@ -188,15 +205,8 @@ public class Product : INotifyPropertyChanged
             if (discountPercent != value)
             {
                 discountPercent = value;
-                OnPropertyChanged(nameof(DiscountPercent));
+                OnPropertyChanged();
             }
         }
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

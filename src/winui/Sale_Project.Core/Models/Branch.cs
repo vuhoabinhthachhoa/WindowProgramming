@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Sale_Project.Core.Models;
@@ -14,6 +15,7 @@ public class Branch : INotifyPropertyChanged
     private string name = "";
     private bool businessStatus = true;
 
+    [JsonPropertyName("id")]
     public int ID
     {
         get => id;
@@ -27,6 +29,7 @@ public class Branch : INotifyPropertyChanged
         }
     }
 
+    [JsonPropertyName("name")]
     public string Name
     {
         get => name;
@@ -40,6 +43,7 @@ public class Branch : INotifyPropertyChanged
         }
     }
 
+    [JsonPropertyName("businessStatus")]
     public bool BusinessStatus
     {
         get => businessStatus;
