@@ -1,32 +1,4 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using Sale_Project.Contracts.Services;
-//using Sale_Project.Core.Models.Product;
-//using Sale_Project.Services;
-
-//namespace Sale_Project;
-//public partial class ProductUpdatePageViewModel
-//{
-//    IProductDao _dao;
-//    public ProductUpdatePageViewModel()
-//    {
-//        _dao = ServiceFactory.GetChildOf(typeof(IProductDao)) as IProductDao;
-//    }
-//    public Product Info { get; set; } = new Product();
-//    public Stream FileStream
-//    {
-//        get; set;
-//    }
-//    public (bool, string) UpdateProduct()
-//    {
-//        return _dao.UpdateProduct(Info);
-//    }
-//}
-
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
@@ -79,17 +51,6 @@ public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
         UpdateAPhotoOutputTextBlock = "No photo selected";
     }
 
-    //public async void OnNavigatedTo(NavigationEventArgs e)
-    //{
-    //    //ViewModel.Info = e.Parameter as Product;
-
-    //    //base.OnNavigatedTo(e);
-        
-    //    var product = e.Parameter as Product;
-
-    //    CurrentProduct = await _productService.GetProductById(product.Id);
-    //}
-
     public void OnNavigatedFrom()
     {
         CurrentProduct = null;
@@ -102,6 +63,7 @@ public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
 
     public async Task UpdateProduct()
     {
+        // TODO: Allow not updating the file (updating file is required for now)
         if (!productValidator.Validate(CurrentProduct))
         {
             return;
