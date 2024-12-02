@@ -11,8 +11,9 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -25,8 +26,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Mã hàng" Grid.Column="0" Grid.Row="0"/>
-        <NumberBox Text="{x:Bind Info.ID, Mode=TwoWay}" PlaceholderText="Mã hàng" Grid.Column="1" Grid.Row="0"/>
+        <!--<TextBlock Text="Mã hàng" Grid.Column="0" Grid.Row="0"/>
+        <NumberBox Text="{x:Bind Info.ID, Mode=TwoWay}" PlaceholderText="Mã hàng" Grid.Column="1" Grid.Row="0"/>-->
 
         <TextBlock Text="Giá vốn" Grid.Column="2" Grid.Row="0"/>
         <NumberBox Text="{x:Bind Info.ImportPrice,Mode=TwoWay}" Grid.Column="3" Grid.Row="0"/>
@@ -41,10 +42,10 @@
         <NumberBox Text="{x:Bind Info.InventoryQuantity,Mode=TwoWay}" Grid.Column="1" Grid.Row="2"/>
 
         <TextBlock Text="Nhóm hàng" Grid.Column="2" Grid.Row="2"/>
-        <TextBox Text="{x:Bind Info.CategoryID,Mode=TwoWay}" Grid.Column="3" Grid.Row="2"/>
+        <TextBox Text="{x:Bind Info.Category.ID,Mode=TwoWay}" Grid.Column="3" Grid.Row="2"/>
 
-        <TextBlock Text="Branch id" Grid.Column="0" Grid.Row="3"/>
-        <TextBox Text="{x:Bind Info.BranchID,Mode=TwoWay}" Grid.Column="1" Grid.Row="3"/>
+        <TextBlock Text="Branch Name" Grid.Column="0" Grid.Row="3"/>
+        <TextBox Text="{x:Bind Info.Branch.Name,Mode=TwoWay}" Grid.Column="1" Grid.Row="3" IsReadOnly="{x:Bind IsBranchNameReadOnly, Mode=OneWay}"/>
 
         <TextBlock Text="Business status" Grid.Column="2" Grid.Row="3"/>
         <ComboBox ItemsSource="{x:Bind BusinessStatus, Mode=OneWay}" Text="{x:Bind Info.BusinessStatus,Mode=TwoWay}" SelectedValue="{x:Bind Info.BusinessStatus,Mode=TwoWay}" Grid.Column="3" Grid.Row="3"/>
@@ -53,13 +54,21 @@
         <ComboBox ItemsSource="{x:Bind Size, Mode=OneWay}" Text="{x:Bind Info.Size,Mode=TwoWay}" SelectedValue="{x:Bind Info.Size,Mode=TwoWay}" Grid.Column="1" Grid.Row="4"/>
 
         <TextBlock Text="Image" Grid.Column="2" Grid.Row="4"/>
-        <TextBox Text="{x:Bind Info.Images,Mode=TwoWay}" Grid.Column="3" Grid.Row="4"/>
+        <StackPanel Grid.Column="3" Grid.Row="4" Orientation="Horizontal">
+            <Button x:Name="PickAPhotoButton" Content="Open a picture"
+    Click="PickAPhotoButton_Click"/>
+            <!--<TextBlock x:Name="PickAPhotoOutputTextBlock"/>-->
+        </StackPanel>
+        <Image Source="{x:Bind Info.ImageUrl, Mode=OneWay}" Width="50" Height="50" Grid.Column="4" Grid.Row="4"/>
+
+        <!--<TextBox Text="{x:Bind Info.Images,Mode=TwoWay}" Grid.Column="3" Grid.Row="4"/>-->
 
         <TextBlock Text="Discount Percent" Grid.Column="0" Grid.Row="5"/>
         <NumberBox Text="{x:Bind Info.DiscountPercent,Mode=TwoWay}" Grid.Column="1" Grid.Row="5"/>
 
-        <TextBlock x:Name="Warning" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3"/>
-        
+        <TextBlock x:Name="PickAPhotoOutputTextBlock" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3"/>
+        <!--<TextBlock Text="{x:Bind FileStream, Mode=TwoWay}" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="3"/>-->
+
     </Grid>
     
 </UserControl>

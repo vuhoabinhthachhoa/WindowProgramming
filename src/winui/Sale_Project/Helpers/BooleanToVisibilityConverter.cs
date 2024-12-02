@@ -14,7 +14,8 @@ public class BooleanToVisibilityConverter : IValueConverter
     {
         if (value is bool boolValue)
         {
-            return boolValue ? Visibility.Visible : Visibility.Collapsed;
+            bool invert = parameter != null && bool.TryParse(parameter.ToString(), out bool paramValue) && paramValue;
+            return (boolValue ^ invert) ? Visibility.Visible : Visibility.Collapsed;
         }
         return Visibility.Visible;
     }

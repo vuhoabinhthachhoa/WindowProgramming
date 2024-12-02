@@ -1,24 +1,99 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="Sale_Project.ProductUpdatePage"
+    x:Class="Sale_Project.Views.ProductUpdatePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Sale_Project"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:local="using:Sale_Project.Helpers"
+    mc:Ignorable="d">
 
-    <StackPanel HorizontalAlignment="Left">
-        <TextBlock Text="Update Product" Style="{StaticResource TitleTextBlockStyle}"/>
-        <local:ProductUserControl Width="350" 
-                                   Info="{x:Bind ViewModel.Info, Mode=TwoWay}" />
-        <StackPanel Orientation="Horizontal">
-            <Button Name="submitButton" Width="80" Height="35" Content="Submit"
-                    Click="submitButton_Click"/>
-            <Button Name="cancelButton" Width="80" Height="35" Content="Cancel"
-        Click="cancelButton_Click"/>
+    <Page.Resources>
+        <local:BusinessStatusConverter x:Key="BusinessStatusConverter" />
+        <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <local:DoubleToCurrencyConverter x:Key="DoubleToCurrencyConverter"/>
+    </Page.Resources>
+
+    <Grid x:Name="ContentArea" Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <TextBlock
+            Grid.Row="0"
+            Text="Product Details"
+            Style="{StaticResource PageTitleStyle}"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            FontSize="20"
+            FontWeight="Bold" />
+
+        <!-- Content Section -->
+        <Grid Grid.Row="1" Margin="0,20,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Margin="10">
+                <TextBlock Text="Name:" FontWeight="Bold" Margin="0,10,0,0" />
+                <TextBox Text="{Binding CurrentProduct.Name, Mode=OneWay}" IsReadOnly="True"/>
+
+                <TextBlock Text="Branch Name:" FontWeight="Bold" Margin="0,10,0,0" />
+                <TextBox Text="{Binding CurrentProduct.Branch.Name, Mode=OneWay}" IsReadOnly="True"/>
+
+                <TextBlock Text="Inventory Quantity:" FontWeight="Bold" Margin="0,10,0,0" />
+                <NumberBox Value="{Binding CurrentProduct.InventoryQuantity, Mode=TwoWay}" Minimum="0"/>
+
+                <TextBlock Text="Discount Percent:" FontWeight="Bold" Margin="0,10,0,0" />
+                <NumberBox Value="{Binding CurrentProduct.DiscountPercent, Mode=TwoWay}" Minimum="0" />
+
+                <TextBlock Text="Size:" FontWeight="Bold" Margin="0,10,0,0" />
+                <TextBox Text="{Binding CurrentProduct.Size, Mode=OneWay}" IsReadOnly="True"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="10">
+                <TextBlock Text="Category ID:" FontWeight="Bold" Margin="0,10,0,0" />
+                <TextBox Text="{Binding CurrentProduct.Category.ID, Mode=OneWay}" IsReadOnly="True"/>
+
+                <TextBlock Text="Chosoe a file:" FontWeight="Bold" Margin="0,10,0,0" />
+                <Button x:Name="UpdateAPhotoButton" Content="Open a picture" Click="UpdateAPhotoButton_Click"/>
+                <TextBlock x:Name="UpdateAPhotoOutputTextBlock" Text="{Binding UpdateAPhotoOutputTextBlock, Mode=OneWay}"/>
+
+                <TextBlock Text="Import Price:" FontWeight="Bold" Margin="0,10,0,0" />
+                <NumberBox Value="{Binding CurrentProduct.ImportPrice, Mode=TwoWay}" Minimum="0"/>
+
+                <TextBlock Text="Selling Price:" FontWeight="Bold" Margin="0,10,0,0" />
+                <NumberBox Value="{Binding CurrentProduct.SellingPrice, Mode=TwoWay}" Minimum="0" />
+
+                <!--<TextBlock Text="Address:" FontWeight="Bold" Margin="0,10,0,0" />
+                <TextBox Text="{Binding CurrentProduct.Address, Mode=TwoWay}" />-->
+            </StackPanel>
+        </Grid>
+
+        <!-- Action Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
+            <Button Content="Go Back" Margin="10" Width="Auto" Height="35" Click="GoBackButton_Click" Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" />
+            <Button Content="Update" Margin="10" Width="Auto" Height="35" Click="UpdateButton_Click" Background="#4BAC4D" FontWeight="SemiBold" Foreground="White"  />
+            <Button Content="Inactive" 
+                    Margin="10" 
+                    Width="Auto" 
+                    Height="35" 
+                    Click="MarkInactiveButton_Click"
+                    Background="#4BAC4D" FontWeight="SemiBold" Foreground="White"
+                    Visibility="{Binding CurrentProduct.BusinessStatus, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <Button Content="Active" 
+        Margin="10" 
+        Width="Auto" 
+        Height="35" 
+        Click="MarkActiveButton_Click"
+        Background="#4BAC4D" FontWeight="SemiBold" Foreground="White"
+        Visibility="{Binding CurrentProduct.BusinessStatus, ConverterParameter=True , Converter={StaticResource BooleanToVisibilityConverter}}" />
         </StackPanel>
-    </StackPanel>
+
+    </Grid>
 </Page>
+
  
