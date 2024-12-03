@@ -63,11 +63,26 @@ public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
 
     public async Task UpdateProduct()
     {
-        // TODO: Allow not updating the file (updating file is required for now)
         if (!productValidator.Validate(CurrentProduct))
         {
             return;
         }
+
+        if (File == null)
+        {
+            try
+            {
+                var httpClient = new HttpClient();
+                var imageStream = await httpClient.GetStreamAsync(CurrentProduct.ImageUrl);
+                File = new StreamContent(imageStream);
+            }
+            catch (Exception ex)
+            {
+                await _dialogService.ShowErrorAsync("Error", "Failed to load image from URL: " + ex.Message);
+                return;
+            }
+        }
+
         Product product = await _productService.UpdateProduct(CurrentProduct, File);
         if (product == null)
         {
