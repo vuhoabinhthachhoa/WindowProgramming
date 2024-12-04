@@ -11,10 +11,12 @@ public class EmployeeCreationRequestValidator
 {
 
     private readonly IDialogService _dialogService;
-    public EmployeeCreationRequestValidator()
+
+    public EmployeeCreationRequestValidator(IDialogService dialogService)
     {
-        _dialogService = App.GetService<IDialogService>();
+        _dialogService = dialogService;
     }
+
     public bool Validate(EmployeeCreationRequest employeeCreationRequest)
     {
         if (string.IsNullOrWhiteSpace(employeeCreationRequest.Name))

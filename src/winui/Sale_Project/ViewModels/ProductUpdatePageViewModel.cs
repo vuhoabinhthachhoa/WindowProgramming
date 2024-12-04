@@ -18,7 +18,7 @@ public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
     private readonly IProductService _productService;
     private readonly INavigationService _navigationService;
     private readonly IDialogService _dialogService;
-    private readonly ProductValidator productValidator = new();
+    private readonly ProductValidator _productValidator;
 
     [ObservableProperty]
     private Product _currentProduct;
@@ -28,11 +28,12 @@ public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
 
     public StreamContent File;
 
-    public ProductUpdateViewModel(IProductService productService, INavigationService navigationService, IDialogService dialogService)
+    public ProductUpdateViewModel(IProductService productService, INavigationService navigationService, IDialogService dialogService, ProductValidator productValidator)
     {
         _productService = productService;
         _navigationService = navigationService;
         _dialogService = dialogService;
+        _productValidator = productValidator;
     }
 
     public async void OnNavigatedTo(object parameter)
@@ -63,7 +64,7 @@ public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
 
     public async Task UpdateProduct()
     {
-        if (!productValidator.Validate(CurrentProduct))
+        if (!_productValidator.Validate(CurrentProduct))
         {
             return;
         }

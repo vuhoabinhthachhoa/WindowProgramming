@@ -9,9 +9,9 @@ namespace Sale_Project.Helpers;
 public class ProductValidator
 {
     private readonly IDialogService _dialogService;
-    public ProductValidator()
+    public ProductValidator(IDialogService dialogService)
     {
-        _dialogService = App.GetService<IDialogService>();
+        _dialogService = dialogService;
     }
     public bool Validate(Product product)
     {
