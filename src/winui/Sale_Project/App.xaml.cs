@@ -72,6 +72,12 @@ public partial class App : Application
             services.AddSingleton<IProductService, ProductService>();
             services.AddSingleton<IHttpService, HttpService>();
 
+            // Helpers
+            services.AddSingleton<EmployeeValidator>();
+            services.AddSingleton<EmployeeCreationRequestValidator>();
+            services.AddSingleton<ProductValidator>();
+            services.AddSingleton<ProductCreationRequestValidator>();
+
             // HTTP
             services.AddSingleton<HttpClient>();
 

@@ -14,7 +14,7 @@ public partial class ProductAddViewModel : ObservableRecipient, INavigationAware
     private readonly INavigationService _navigationService;
     private readonly IDialogService _dialogService;
     private readonly IAuthService _authService;
-    private readonly ProductCreationRequestValidator productCreationRequestValidator = new();
+    private readonly ProductCreationRequestValidator _productCreationRequestValidator;
 
     [ObservableProperty]
     private ProductCreationRequest _productCreationRequest;
@@ -31,12 +31,13 @@ public partial class ProductAddViewModel : ObservableRecipient, INavigationAware
     }
 
 
-    public ProductAddViewModel(IProductService productService, INavigationService navigationService, IDialogService dialogService, IAuthService authService)
+    public ProductAddViewModel(IProductService productService, INavigationService navigationService, IDialogService dialogService, IAuthService authService, ProductCreationRequestValidator productCreationRequestValidator)
     {
         _productService = productService;
         _navigationService = navigationService;
         _dialogService = dialogService;
         _authService = authService;
+        _productCreationRequestValidator = productCreationRequestValidator;
     }
 
     public void OnNavigatedTo(object parameter)
@@ -65,7 +66,7 @@ public partial class ProductAddViewModel : ObservableRecipient, INavigationAware
             await _dialogService.ShowErrorAsync("Error", "Product has been already added!");
             return;
         }
-        if (!productCreationRequestValidator.Validate(ProductCreationRequest))
+        if (!_productCreationRequestValidator.Validate(ProductCreationRequest))
         {
             return;
         }

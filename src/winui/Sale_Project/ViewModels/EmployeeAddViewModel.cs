@@ -13,7 +13,7 @@ public partial class EmployeeAddViewModel : ObservableRecipient, INavigationAwar
     private readonly INavigationService _navigationService;
     private readonly IDialogService _dialogService;
     private readonly IAuthService _authService;
-    private readonly EmployeeCreationRequestValidator employeeCreationRequestValidator = new();
+    private readonly EmployeeCreationRequestValidator _employeeCreationRequestValidator;
 
     [ObservableProperty]
     private EmployeeCreationRequest _employeeCreationRequest;
@@ -27,12 +27,13 @@ public partial class EmployeeAddViewModel : ObservableRecipient, INavigationAwar
     }
 
 
-    public EmployeeAddViewModel(IEmployeeService employeeService, INavigationService navigationService, IDialogService dialogService, IAuthService authService)
+    public EmployeeAddViewModel(IEmployeeService employeeService, INavigationService navigationService, IDialogService dialogService, IAuthService authService, EmployeeCreationRequestValidator employeeCreationRequestValidator)
     {
         _employeeService = employeeService;
         _navigationService = navigationService;
         _dialogService = dialogService;
         _authService = authService;
+        _employeeCreationRequestValidator = employeeCreationRequestValidator;
     }
 
     public void OnNavigatedTo(object parameter)
@@ -60,7 +61,7 @@ public partial class EmployeeAddViewModel : ObservableRecipient, INavigationAwar
             await _dialogService.ShowErrorAsync("Error", "Employee has been already added!");
             return;
         }
-        if (!employeeCreationRequestValidator.Validate(EmployeeCreationRequest))
+        if (!_employeeCreationRequestValidator.Validate(EmployeeCreationRequest))
         {
             return;
         }

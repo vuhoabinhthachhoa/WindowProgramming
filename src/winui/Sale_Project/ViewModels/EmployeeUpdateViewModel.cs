@@ -14,16 +14,17 @@ public partial class EmployeeUpdateViewModel : ObservableObject, INavigationAwar
     private readonly IEmployeeService _employeeService;
     private readonly INavigationService _navigationService;
     private readonly IDialogService _dialogService;
-    private readonly EmployeeValidator employeeValidator = new();
+    private readonly EmployeeValidator _employeeValidator;
 
     [ObservableProperty]
     private Employee _currentEmployee;
 
-    public EmployeeUpdateViewModel(IEmployeeService employeeService, INavigationService navigationService, IDialogService dialogService)
+    public EmployeeUpdateViewModel(IEmployeeService employeeService, INavigationService navigationService, IDialogService dialogService, EmployeeValidator employeeValidator)
     {
         _employeeService = employeeService;
         _navigationService = navigationService;
         _dialogService = dialogService;
+        _employeeValidator = employeeValidator; 
     }
 
     public async void OnNavigatedTo(object parameter)
@@ -43,7 +44,7 @@ public partial class EmployeeUpdateViewModel : ObservableObject, INavigationAwar
 
     public async Task UpdateEmployee()
     {
-        if (!employeeValidator.Validate(CurrentEmployee))
+        if (!_employeeValidator.Validate(CurrentEmployee))
         {
             return;
         }

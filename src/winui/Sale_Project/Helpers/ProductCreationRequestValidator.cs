@@ -11,9 +11,9 @@ public class ProductCreationRequestValidator
 {
 
     private readonly IDialogService _dialogService;
-    public ProductCreationRequestValidator()
+    public ProductCreationRequestValidator(IDialogService dialogService)
     {
-        _dialogService = App.GetService<IDialogService>();
+        _dialogService = dialogService;
     }
     public bool Validate(ProductCreationRequest productCreationRequest)
     {
