@@ -77,7 +77,7 @@
                     Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5"
                     Width="Auto"
                     Click="SearchEmployeeButton_Click" />-->
-            <Button Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5"
+            <Button Background="#4BAC4D" Foreground="White" Margin="5"
                 Width="Auto" Click="SearchEmployeeButton_Click">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <!-- Add Search Icon -->
@@ -90,11 +90,11 @@
                     Width="Auto" 
                     Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5"
                     Click="AddEmployeeButton_Click" />-->
-            <Button Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5"
+            <Button Background="#4BAC4D" Foreground="White" Margin="5"
                  Width="Auto" Click="AddEmployeeButton_Click">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <!-- Add Icon -->
-                    <FontIcon Glyph="&#xE710;" FontFamily="Segoe MDL2 Assets" FontSize="14" FontWeight="Bold" Margin="0,0,10,0" />
+                    <FontIcon Glyph="&#xE710;" FontFamily="Segoe MDL2 Assets" FontSize="14"  Margin="0,0,10,0" />
                     <!-- Add Text -->
                     <TextBlock Text="Add Employee" VerticalAlignment="Center" />
                 </StackPanel>
