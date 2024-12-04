@@ -73,14 +73,33 @@
 
         <!-- Buttons -->
         <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
-            <Button Content="Search Employee"
+            <!--<Button Content="Search Employee"
                     Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5"
                     Width="Auto"
-                    Click="SearchEmployeeButton_Click" />
-            <Button Content="Add Employee"
+                    Click="SearchEmployeeButton_Click" />-->
+            <Button Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5"
+                Width="Auto" Click="SearchEmployeeButton_Click">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <!-- Add Search Icon -->
+                    <FontIcon Glyph="&#xE721;" FontFamily="Segoe MDL2 Assets" FontSize="16" Margin="0,0,10,0" />
+                    <!-- Add Text -->
+                    <TextBlock Text="Search Employee" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <!--<Button Content="Add Employee"
                     Width="Auto" 
                     Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5"
-                    Click="AddEmployeeButton_Click" />
+                    Click="AddEmployeeButton_Click" />-->
+            <Button Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5"
+                 Width="Auto" Click="AddEmployeeButton_Click">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <!-- Add Icon -->
+                    <FontIcon Glyph="&#xE710;" FontFamily="Segoe MDL2 Assets" FontSize="14" Margin="0,0,10,0" />
+                    <!-- Add Text -->
+                    <TextBlock Text="Add Employee" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+
         </StackPanel>
 
         <!-- Sort Buttons -->
@@ -155,38 +174,41 @@
             RowBackground="White"
             ItemsSource="{x:Bind ViewModel.Employees, Mode=OneWay}"
             SelectedItem="{x:Bind ViewModel.SelectedEmployee, Mode=TwoWay}">
+
             <controls:DataGrid.Resources>
                 <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="#3498DB" />
             </controls:DataGrid.Resources>
+
             <controls:DataGrid.Columns>
-                <controls:DataGridTextColumn Binding="{Binding Id}" Header="Employee ID" Tag="ID" IsReadOnly="True" />
+                <controls:DataGridTextColumn Binding="{Binding Id}" Header="Employee ID" Tag="ID" IsReadOnly="True"/>
                 <controls:DataGridTextColumn Binding="{Binding Name}" Header="Employee Name" Tag="Name" IsReadOnly="True" />
                 <controls:DataGridTextColumn Binding="{Binding PhoneNumber}" Header="Phone Number" Tag="PhoneNumber" IsReadOnly="True" />
                 <controls:DataGridTextColumn Binding="{Binding Email}" Header="Email" Tag="Email" IsReadOnly="True" />
                 <controls:DataGridTextColumn Binding="{Binding CitizenId}" Header="Citizen ID" Tag="CitizenId" IsReadOnly="True" />
                 <controls:DataGridTextColumn Binding="{Binding JobTitle}" Header="Job Title" Tag="JobTitle" IsReadOnly="True" />
-                <!--<controls:DataGridTextColumn Binding="{Binding Salary}" Header="Salary" Tag="Salary" IsReadOnly="True" />-->
                 <controls:DataGridTextColumn Binding="{Binding Salary, Converter={StaticResource DoubleToCurrencyConverter}}" Header="Salary" Tag="Salary" IsReadOnly="True" />
                 <controls:DataGridTemplateColumn Header="Employment Status" Tag="EmploymentStatus">
                     <controls:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding EmploymentStatus, Converter={StaticResource EmploymentStatusConverter}}" />
+                            <TextBlock Text="{Binding EmploymentStatus, Converter={StaticResource EmploymentStatusConverter}}"
+                                       HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center" />
                         </DataTemplate>
                     </controls:DataGridTemplateColumn.CellTemplate>
                 </controls:DataGridTemplateColumn>
             </controls:DataGrid.Columns>
-        </controls:DataGrid>
+         </controls:DataGrid>
 
         <!-- Pagination -->
-        <StackPanel Height="40" Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
+        <StackPanel Height="40" Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" >
             <AppBarButton Click="PreviousButton_Click" Width="50" Style="{StaticResource PrimaryButtonStyle}">
-                <FontIcon Glyph="&#xE72B;"/>
+                <FontIcon Glyph="&#xE72B;" Margin="0,0,0,10" />
             </AppBarButton>
             <TextBlock VerticalAlignment="Center" Margin="10,0" FontSize="14" Foreground="#2C3E50">
                 <Run Text="{x:Bind ViewModel.CurrentPage, Mode=OneWay}" />/<Run Text="{x:Bind ViewModel.TotalPages, Mode=OneWay}" />
             </TextBlock>
             <AppBarButton Click="NextButton_Click" Width="50" Style="{StaticResource PrimaryButtonStyle}">
-                <FontIcon Glyph="&#xE72A;" />
+                <FontIcon Glyph="&#xE72A;"  Margin="0,0,0,10" />
             </AppBarButton>
         </StackPanel>
 	    <StackPanel Height="40" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2">
