@@ -118,27 +118,27 @@
                 <StackPanel>
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
                         <NumberBox Header="Employee ID" Style="{StaticResource NumberBoxStyle}"
-                                   Value="{Binding EmployeeSearchRequest.Id, Mode=TwoWay}" Minimum="0" Margin="-1,0,0,0" />
+                                   Value="{Binding EmployeeSearchRequest.Id, Mode=TwoWay}" Minimum="0" Margin="-1,0,0,0" Height="57"/>
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
-                        <TextBlock Text="Employee Name" />
-                        <TextBox Text="{Binding EmployeeSearchRequest.Name, Mode=TwoWay}" PlaceholderText=""/>
+                        <TextBlock Text="Employee Name"/>
+                        <TextBox Text="{Binding EmployeeSearchRequest.Name, Mode=TwoWay}" PlaceholderText="" Margin="0,5,0,0" Height="30"/>
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
                         <TextBlock Text="Phone Number" />
-                        <TextBox Text="{Binding EmployeeSearchRequest.PhoneNumber, Mode=TwoWay}" PlaceholderText="" />
+                        <TextBox Text="{Binding EmployeeSearchRequest.PhoneNumber, Mode=TwoWay}" PlaceholderText="" Margin="0,5,0,0" Height="30" />
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
                         <TextBlock Text="Citizen ID" />
-                        <TextBox Text="{Binding EmployeeSearchRequest.CitizenId, Mode=TwoWay}" PlaceholderText="" />
+                        <TextBox Text="{Binding EmployeeSearchRequest.CitizenId, Mode=TwoWay}" PlaceholderText=""  Margin="0,5,0,0" Height="30" />
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
                         <TextBlock Text="Job Title" />
-                        <TextBox Text="{Binding EmployeeSearchRequest.JobTitle, Mode=TwoWay}" PlaceholderText="" />
+                        <TextBox Text="{Binding EmployeeSearchRequest.JobTitle, Mode=TwoWay}" PlaceholderText=""  Margin="0,5,0,0" Height="30" />
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
@@ -153,8 +153,22 @@
 
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
                         <TextBlock Text="Employment Status" />
-                        <ComboBox Style="{StaticResource DropDownStyle}"
+                        <ComboBox
                                   SelectedItem="{Binding EmployeeSearchRequest.EmploymentStatus, Mode=TwoWay, Converter={StaticResource EmploymentStatusConverter}}">
+                            <ComboBox.Style>
+                                <Style TargetType="ComboBox">
+                                    <Setter Property="Foreground" Value="Black" />
+                                    <Setter Property="Background" Value="White" />
+                                    <Setter Property="BorderThickness" Value="1" />
+                                    <Setter Property="Padding" Value="10,8" />
+                                    <Setter Property="Margin" Value="0,7,0,0" />
+                                    <Setter Property="CornerRadius" Value="5" />
+                                    <Setter Property="FontSize" Value="14" />
+                                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                </Style>
+                            </ComboBox.Style>
+
                             <ComboBox.Items>
                                 <x:String>Employed</x:String>
                                 <x:String>Resigned</x:String>
