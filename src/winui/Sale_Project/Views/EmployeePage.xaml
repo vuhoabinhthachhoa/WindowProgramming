@@ -81,7 +81,7 @@
                 Width="Auto" Click="SearchEmployeeButton_Click">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <!-- Add Search Icon -->
-                    <FontIcon Glyph="&#xE721;" FontFamily="Segoe MDL2 Assets" FontSize="16" Margin="0,0,10,0" />
+                    <FontIcon Glyph="&#xE721;" FontFamily="Segoe MDL2 Assets" FontSize="16" FontWeight="Bold" Margin="0,0,10,0" />
                     <!-- Add Text -->
                     <TextBlock Text="Search Employee" VerticalAlignment="Center" />
                 </StackPanel>
@@ -94,7 +94,7 @@
                  Width="Auto" Click="AddEmployeeButton_Click">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <!-- Add Icon -->
-                    <FontIcon Glyph="&#xE710;" FontFamily="Segoe MDL2 Assets" FontSize="14" Margin="0,0,10,0" />
+                    <FontIcon Glyph="&#xE710;" FontFamily="Segoe MDL2 Assets" FontSize="14" FontWeight="Bold" Margin="0,0,10,0" />
                     <!-- Add Text -->
                     <TextBlock Text="Add Employee" VerticalAlignment="Center" />
                 </StackPanel>
@@ -104,11 +104,30 @@
 
         <!-- Sort Buttons -->
         <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Content="Sort by Salary Desc" x:Name="SortBySalaryAscButton" Click="SortBySalaryAscButton_Click" Width="Auto"
+            <!--<Button Content="Sort by Salary Asc" x:Name="SortBySalaryAscButton" Click="SortBySalaryAscButton_Click" Width="Auto"
                     Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5">
             </Button>
             <Button Content="Sort by Salary Desc" x:Name="SortBySalaryDescButton" Click="SortBySalaryDescButton_Click" Width="Auto"
                     Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5">
+            </Button>-->
+            <!-- Sort by Salary Asc Button -->
+            <Button x:Name="SortBySalaryAscButton" Click="SortBySalaryAscButton_Click" Width="Auto" 
+            Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Sort by Salary" Margin="0,0,8,0" />
+                    <FontIcon Glyph="&#xE74A;" FontSize="14" FontWeight="Bold"/>
+                    <!-- Up arrow icon -->
+                </StackPanel>
+            </Button>
+
+            <!-- Sort by Salary Desc Button -->
+            <Button x:Name="SortBySalaryDescButton" Click="SortBySalaryDescButton_Click" Width="Auto" 
+            Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Sort by Salary" Margin="0,0,8,0" />
+                    <FontIcon Glyph="&#xE74B;" FontSize="14" FontWeight="Bold"/>
+                    <!-- Down arrow icon -->
+                </StackPanel>
             </Button>
         </StackPanel>
 
@@ -215,15 +234,24 @@
 
         <!-- Pagination -->
         <StackPanel Height="40" Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" >
-            <AppBarButton Click="PreviousButton_Click" Width="50" Style="{StaticResource PrimaryButtonStyle}">
-                <FontIcon Glyph="&#xE72B;" Margin="0,0,0,10" />
-            </AppBarButton>
+
+            <Button Click="PreviousButton_Click" Width="50" BorderThickness="0" HorizontalAlignment="Center"
+                    Background="#4BAC4D" FontWeight="SemiBold" Foreground="White">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE72B;" />
+                </StackPanel>
+            </Button>
+
             <TextBlock VerticalAlignment="Center" Margin="10,0" FontSize="14" Foreground="#2C3E50">
-                <Run Text="{x:Bind ViewModel.CurrentPage, Mode=OneWay}" />/<Run Text="{x:Bind ViewModel.TotalPages, Mode=OneWay}" />
+    <Run Text="{x:Bind ViewModel.CurrentPage, Mode=OneWay}" />/<Run Text="{x:Bind ViewModel.TotalPages, Mode=OneWay}" />
             </TextBlock>
-            <AppBarButton Click="NextButton_Click" Width="50" Style="{StaticResource PrimaryButtonStyle}">
-                <FontIcon Glyph="&#xE72A;"  Margin="0,0,0,10" />
-            </AppBarButton>
+
+            <Button Click="NextButton_Click" Width="50" BorderThickness="0" HorizontalAlignment="Center" 
+                    Background="#4BAC4D" FontWeight="SemiBold" Foreground="White">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE72A;" />
+                </StackPanel>
+            </Button>
         </StackPanel>
 	    <StackPanel Height="40" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2">
             <TextBlock Name="infoTextBlock" Text="{x:Bind ViewModel.Info, Mode=OneWay}"/>

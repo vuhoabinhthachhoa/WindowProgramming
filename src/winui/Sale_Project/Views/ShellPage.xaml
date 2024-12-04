@@ -43,13 +43,49 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Rectangle Grid.ColumnSpan="8" Fill="#0070F4" Height="50"/>
-                <AppBarButton Grid.Column="0" Command="{x:Bind ViewModel.MenuViewsDashboardCommand}" Width="150">
-                    <TextBlock Text="Dashboard" FontSize="30" FontWeight="SemiBold" Foreground="White"/>
+                <Rectangle Grid.ColumnSpan="8" Fill="#0070F4" Height="40"/>
+
+                <Button Grid.Column="0" Command="{x:Bind ViewModel.MenuViewsDashboardCommand}" Width="150" Height="40" Background="Transparent" BorderThickness="0,0,0,0">
+                    <TextBlock Text="Dashboard" FontSize="14" FontWeight="SemiBold" Foreground="White"/>
+                </Button>
+                <Button 
+                     Grid.Column="1" Command="{x:Bind ViewModel.MenuViewsProductsCommand}" Width="150" Height="40" Background="Transparent" BorderThickness="0,0,0,0">
+                    <TextBlock Text="Products" FontSize="14" FontWeight="SemiBold" Foreground="White"/>
+                </Button>
+                <Button
+                    Grid.Column="2" Command="{x:Bind ViewModel.MenuViewsCustomerCommand}" Width="150" Height="40" Background="Transparent" BorderThickness="0,0,0,0">
+                    <TextBlock Text="Customers" FontSize="14" FontWeight="SemiBold" Foreground="White"/>
+                </Button>
+                <Button
+                     Grid.Column="3" Command="{x:Bind ViewModel.MenuViewsEmployeeCommand}" Width="150" Height="40" Background="Transparent" BorderThickness="0,0,0,0">
+                    <TextBlock Text="Employees" FontSize="14" FontWeight="SemiBold" Foreground="White"/>
+                </Button>
+                <Button Grid.Column="5" HorizontalAlignment="Left" Command="{x:Bind ViewModel.MenuViewsSaleCommand}" Width="70" Height="40" Background="Transparent" BorderThickness="0,0,0,0">
+                    <FontIcon Glyph="&#xE7EE;" Foreground="White" FontSize="16" />
+                </Button>
+                <Button Grid.Column="6" HorizontalAlignment="Left" Command="{x:Bind ViewModel.MenuViewsAccountCommand}" Width="70" Height="40" Background="Transparent" BorderThickness="0,0,0,0">
+                    <FontIcon Glyph="&#xEF58;" Foreground="White" FontSize="16" />
+                </Button>
+                <Button Grid.Column="7" x:Name="ShellMenuBarSettingsButton" x:Uid="ShellMenuBarSettingsButton"
+                    PointerEntered="ShellMenuBarSettingsButton_PointerEntered"
+                    PointerExited="ShellMenuBarSettingsButton_PointerExited"
+                    Command="{x:Bind ViewModel.MenuSettingsCommand}"
+                        Width="70" Height="40" Background="Transparent" BorderThickness="0,0,0,0">
+                    <FontIcon x:Name="ShellMenuBarSettingsButtonIcon"
+                          FontFamily="{StaticResource SymbolThemeFontFamily}" 
+                          Glyph="&#xE713;" 
+                          FontSize="16" 
+                          Foreground="White" />
+                </Button>
+
+
+
+                <!--<AppBarButton Grid.Column="0" Command="{x:Bind ViewModel.MenuViewsDashboardCommand}" Width="150" Height="40">
+                    <TextBlock Text="Dashboard" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
                 </AppBarButton>
                 <AppBarButton 
             Grid.Column="1" Command="{x:Bind ViewModel.MenuViewsProductsCommand}" Width="150">
-                    <TextBlock Text="Products" FontSize="30" FontWeight="SemiBold" Foreground="White"/>
+                    <TextBlock Text="Products" FontSize="15" FontWeight="SemiBold" Foreground="White"/>
                 </AppBarButton>
                 <AppBarButton
             Grid.Column="2" Command="{x:Bind ViewModel.MenuViewsCustomerCommand}" Width="150">
@@ -78,7 +114,7 @@
                             <FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE713;" Foreground="White"/>
                         </AnimatedIcon.FallbackIconSource>
                     </AnimatedIcon>
-                </AppBarButton>
+                </AppBarButton>-->
             </Grid>
 
             <Grid Grid.Row="2" Margin="{StaticResource MenuBarContentMargin}">
