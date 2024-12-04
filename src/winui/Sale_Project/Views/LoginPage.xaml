@@ -33,7 +33,12 @@
             <PasswordBox x:Name="PasswordBox" PlaceholderText="Password" Margin="4" Width="400" Height="50" Background="White" />
 
             <!-- Remember Me Checkbox -->
-            <CheckBox x:Name="RememberMeCheckBox" Content="Remember Me" Foreground="White" FontSize="16" Margin="100,10,0,0" HorizontalAlignment="Left" />
+            <!--<CheckBox x:Name="RememberMeCheckBox" Content="Remember Me" Foreground="White" FontSize="16" Margin="100,10,0,0" HorizontalAlignment="Left" />-->
+            <CheckBox x:Name="RememberMeCheckBox" Foreground="White" FontSize="16" Margin="100,10,0,0" HorizontalAlignment="Left">
+                <CheckBox.Content>
+                    <TextBlock Text="Remember Me" FontSize="16" Foreground="White" />
+                </CheckBox.Content>
+            </CheckBox>
 
             <!-- Login Button -->
             <Button Content="Login" Background="DodgerBlue" Foreground="White" Click="LoginButton_Click" Width="200" Height="50" CornerRadius="30" HorizontalAlignment="Center" Margin="0,20" />
