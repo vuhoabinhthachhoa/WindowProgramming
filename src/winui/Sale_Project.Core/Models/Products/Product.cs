@@ -18,8 +18,8 @@ public class Product : INotifyPropertyChanged
     private string code = string.Empty;
     private string name = string.Empty;
     private Category category = new Category();
-    private float importPrice = 0.0f;
-    private float sellingPrice = 0.0f;
+    private double importPrice = 0;
+    private double sellingPrice = 0;
     private Branch branch = new Branch();
     private int inventoryQuantity = 0;
     private string imageUrl = string.Empty;
@@ -85,7 +85,7 @@ public class Product : INotifyPropertyChanged
     }
 
     [JsonPropertyName("importPrice")]
-    public float ImportPrice
+    public double ImportPrice
     {
         get => importPrice;
         set
@@ -99,7 +99,7 @@ public class Product : INotifyPropertyChanged
     }
 
     [JsonPropertyName("sellingPrice")]
-    public float SellingPrice
+    public double SellingPrice
     {
         get => sellingPrice;
         set

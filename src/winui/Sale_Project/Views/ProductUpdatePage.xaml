@@ -1,30 +1,3 @@
-<!--<?xml version="1.0" encoding="utf-8"?>
-<Page
-    x:Class="Sale_Project.ProductUpdatePage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Sale_Project"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    <StackPanel HorizontalAlignment="Left">
-        <TextBlock Text="Update Product" Style="{StaticResource TitleTextBlockStyle}"/>
-        <local:ProductUserControl 
-                                   Info="{x:Bind ViewModel.Info, Mode=TwoWay}" 
-                                  FileStream="{x:Bind ViewModel.FileStream, Mode=TwoWay}"
-                                   IsBranchNameReadOnly="True" 
-                                  IsCategoryIDReadOnly="True"/>
-        <StackPanel Orientation="Horizontal">
-            <Button Name="submitButton" Width="80" Height="35" Content="Submit"
-                    Click="submitButton_Click"/>
-            <Button Name="cancelButton" Width="80" Height="35" Content="Cancel"
-        Click="cancelButton_Click"/>
-        </StackPanel>
-    </StackPanel>
-</Page>-->
-    
 <Page
     x:Class="Sale_Project.Views.ProductUpdatePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -83,11 +56,26 @@
 
             <StackPanel Grid.Column="1" Margin="10">
                 <TextBlock Text="Category ID:" FontWeight="Bold" Margin="0,10,0,0" />
-                <TextBox Text="{Binding CurrentProduct.Category.ID, Mode=OneWay}" IsReadOnly="True"/>
+                <TextBox Text="{Binding CurrentProduct.Category.Id, Mode=OneWay}" IsReadOnly="True"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Chosoe a file:" FontWeight="Bold" Margin="0,10,0,0" Grid.Row="0" Grid.Column="0"/>
+                    <Button x:Name="UpdateAPhotoButton" Content="Open a picture" Click="UpdateAPhotoButton_Click" Grid.Row="1" Grid.Column="0"/>
+                    <!--<TextBlock x:Name="UpdateAPhotoOutputTextBlock" Text="{Binding UpdateAPhotoOutputTextBlock, Mode=OneWay}" Grid.Row="2" Grid.Column="0"/>-->
+                    <Image Name="CurrentProductImage" Source="{Binding CurrentProduct.ImageUrl}" Width="50" Height="50" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" VerticalAlignment="Bottom"/>
+                </Grid>
 
-                <TextBlock Text="Chosoe a file:" FontWeight="Bold" Margin="0,10,0,0" />
-                <Button x:Name="UpdateAPhotoButton" Content="Open a picture" Click="UpdateAPhotoButton_Click"/>
-                <TextBlock x:Name="UpdateAPhotoOutputTextBlock" Text="{Binding UpdateAPhotoOutputTextBlock, Mode=OneWay}"/>
+
+                <!--<Image Source="{Binding PickedImage}" Width="50" Height="50"/>-->
+         
 
                 <TextBlock Text="Import Price:" FontWeight="Bold" Margin="0,10,0,0" />
                 <NumberBox Value="{Binding CurrentProduct.ImportPrice, Mode=TwoWay}" Minimum="0"/>

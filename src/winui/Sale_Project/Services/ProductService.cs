@@ -134,7 +134,13 @@ public class ProductService : IProductService
             // Deserialize the response content to the appropriate type
             var responseData = JsonSerializer.Deserialize<ApiResponse<Product>>(responseContent);
 
-            return responseData.Data;
+            var responseProduct = responseData.Data;
+            if (responseProduct.Branch.Id == 0)
+                responseProduct.Branch = product.Branch;
+            if (responseProduct.Category.Id == "")
+                responseProduct.Category = product.Category;
+
+            return responseProduct;
         }
         catch (HttpRequestException ex)
         {

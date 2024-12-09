@@ -38,7 +38,7 @@
                             <xaml:ElementTheme>Light</xaml:ElementTheme>
                         </RadioButton.CommandParameter>
                     </RadioButton>
-                    <RadioButton
+                    <!--<RadioButton
                         x:Uid="Settings_Theme_Dark"
                         Command="{x:Bind ViewModel.SwitchThemeCommand}"
                         IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}"
@@ -47,7 +47,7 @@
                         <RadioButton.CommandParameter>
                             <xaml:ElementTheme>Dark</xaml:ElementTheme>
                         </RadioButton.CommandParameter>
-                    </RadioButton>
+                    </RadioButton>-->
                     <RadioButton
                         x:Uid="Settings_Theme_Default"
                         Command="{x:Bind ViewModel.SwitchThemeCommand}"
@@ -71,9 +71,14 @@
                     Margin="{StaticResource XSmallTopMargin}"
                     Style="{ThemeResource BodyTextBlockStyle}" />
                 <HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" Margin="{StaticResource SettingsPageHyperlinkButtonMargin}" />
-                <Button Content="Logout"
-                         Foreground="White" Background="#4BAC4D" FontWeight="SemiBold"
-                        Click="LogoutButton_Click" Margin="{StaticResource SettingsPageHyperlinkButtonMargin}" />
+                <Button Background="#4BAC4D" FontWeight="SemiBold" Foreground="White"
+                    Click="LogoutButton_Click" Margin="5,0,0,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE7E8;" FontSize="16" Margin="0,0,10,0" />
+                        <TextBlock Text="Logout" FontWeight="SemiBold"  />
+                    </StackPanel>
+                </Button>
+
             </StackPanel>
         </StackPanel>
     </Grid>

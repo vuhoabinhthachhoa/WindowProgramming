@@ -42,7 +42,7 @@
         <NumberBox Text="{x:Bind Info.InventoryQuantity,Mode=TwoWay}" Grid.Column="1" Grid.Row="2"/>
 
         <TextBlock Text="Nhóm hàng" Grid.Column="2" Grid.Row="2"/>
-        <TextBox Text="{x:Bind Info.Category.ID,Mode=TwoWay}" Grid.Column="3" Grid.Row="2"/>
+        <TextBox Text="{x:Bind Info.Category.Id,Mode=TwoWay}" Grid.Column="3" Grid.Row="2"/>
 
         <TextBlock Text="Branch Name" Grid.Column="0" Grid.Row="3"/>
         <TextBox Text="{x:Bind Info.Branch.Name,Mode=TwoWay}" Grid.Column="1" Grid.Row="3" IsReadOnly="{x:Bind IsBranchNameReadOnly, Mode=OneWay}"/>

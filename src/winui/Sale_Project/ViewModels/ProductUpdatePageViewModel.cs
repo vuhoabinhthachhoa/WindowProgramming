@@ -1,32 +1,4 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using Sale_Project.Contracts.Services;
-//using Sale_Project.Core.Models.Product;
-//using Sale_Project.Services;
-
-//namespace Sale_Project;
-//public partial class ProductUpdatePageViewModel
-//{
-//    IProductDao _dao;
-//    public ProductUpdatePageViewModel()
-//    {
-//        _dao = ServiceFactory.GetChildOf(typeof(IProductDao)) as IProductDao;
-//    }
-//    public Product Info { get; set; } = new Product();
-//    public Stream FileStream
-//    {
-//        get; set;
-//    }
-//    public (bool, string) UpdateProduct()
-//    {
-//        return _dao.UpdateProduct(Info);
-//    }
-//}
-
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
@@ -39,6 +11,7 @@ using Microsoft.UI.Xaml.Navigation;
 using Sale_Project;
 using Windows.Storage.Pickers;
 using Sale_Project.Core.Models.Product;
+using Microsoft.UI.Xaml.Media.Imaging;
 
 
 public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
@@ -46,21 +19,25 @@ public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
     private readonly IProductService _productService;
     private readonly INavigationService _navigationService;
     private readonly IDialogService _dialogService;
-    private readonly ProductValidator productValidator = new();
+    private readonly ProductValidator _productValidator;
 
     [ObservableProperty]
     private Product _currentProduct;
 
+    //[ObservableProperty]
+    //private string _updateAPhotoOutputTextBlock;
+
     [ObservableProperty]
-    private string _updateAPhotoOutputTextBlock;
+    private BitmapImage _pickedImage;
 
     public StreamContent File;
 
-    public ProductUpdateViewModel(IProductService productService, INavigationService navigationService, IDialogService dialogService)
+    public ProductUpdateViewModel(IProductService productService, INavigationService navigationService, IDialogService dialogService, ProductValidator productValidator)
     {
         _productService = productService;
         _navigationService = navigationService;
         _dialogService = dialogService;
+        _productValidator = productValidator;
     }
 
     public async void OnNavigatedTo(object parameter)
@@ -76,23 +53,14 @@ public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
         };
 
         CurrentProduct = await _productService.GetSelectedProduct(productSearchRequest);
-        UpdateAPhotoOutputTextBlock = "No photo selected";
+        //UpdateAPhotoOutputTextBlock = "";
+        PickedImage = null;
     }
-
-    //public async void OnNavigatedTo(NavigationEventArgs e)
-    //{
-    //    //ViewModel.Info = e.Parameter as Product;
-
-    //    //base.OnNavigatedTo(e);
-        
-    //    var product = e.Parameter as Product;
-
-    //    CurrentProduct = await _productService.GetProductById(product.Id);
-    //}
 
     public void OnNavigatedFrom()
     {
         CurrentProduct = null;
+        PickedImage = null;
     }
 
     public void GoBack()
@@ -102,10 +70,26 @@ public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
 
     public async Task UpdateProduct()
     {
-        if (!productValidator.Validate(CurrentProduct))
+        if (!_productValidator.Validate(CurrentProduct))
         {
             return;
         }
+
+        if (File == null)
+        {
+            try
+            {
+                var httpClient = new HttpClient();
+                var imageStream = await httpClient.GetStreamAsync(CurrentProduct.ImageUrl);
+                File = new StreamContent(imageStream);
+            }
+            catch (Exception ex)
+            {
+                await _dialogService.ShowErrorAsync("Error", "Failed to load image from URL: " + ex.Message);
+                return;
+            }
+        }
+
         Product product = await _productService.UpdateProduct(CurrentProduct, File);
         if (product == null)
         {
@@ -170,7 +154,7 @@ public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
 
         if (file != null)
         {
-            UpdateAPhotoOutputTextBlock = "Picked photo: " + file.Name;
+            //UpdateAPhotoOutputTextBlock = "Picked photo: " + file.Name;
 
             try
             {
@@ -179,17 +163,27 @@ public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
 
                 // Explicitly convert IRandomAccessStream to Stream
                 File = new StreamContent(fileStream.AsStreamForRead());
+
+                // Create a BitmapImage from the file stream
+                var bitmapImage = new BitmapImage();
+                await bitmapImage.SetSourceAsync(fileStream);
+                CurrentProduct.ImageUrl = file.Path;
+                PickedImage = bitmapImage;
             }
             catch (Exception ex)
             {
-                UpdateAPhotoOutputTextBlock = "Error opening file: " + ex.Message;
+                //UpdateAPhotoOutputTextBlock = "Error opening file: " + ex.Message;
                 File = new StreamContent(Stream.Null);
+                PickedImage = null;
+
             }
         }
         else
         {
-            UpdateAPhotoOutputTextBlock = "Operation cancelled.";
+            //UpdateAPhotoOutputTextBlock = "Operation cancelled.";
             File = new StreamContent(Stream.Null);
+            PickedImage = null;
+
         }
     }
 } 
