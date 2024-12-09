@@ -69,7 +69,14 @@ public partial class App : Application
             services.AddSingleton<IAuthService, AuthService>();
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<IEmployeeService, EmployeeService>();
+            services.AddSingleton<IProductService, ProductService>();
             services.AddSingleton<IHttpService, HttpService>();
+
+            // Helpers
+            services.AddSingleton<EmployeeValidator>();
+            services.AddSingleton<EmployeeCreationRequestValidator>();
+            services.AddSingleton<ProductValidator>();
+            services.AddSingleton<ProductCreationRequestValidator>();
 
             // HTTP
             services.AddSingleton<HttpClient>();
@@ -86,6 +93,14 @@ public partial class App : Application
             services.AddTransient<EmployeeUpdatePage>();
             services.AddTransient<EmployeeViewModel>();
             services.AddTransient<EmployeePage>();
+
+            services.AddTransient<ProductAddViewModel>();
+            services.AddTransient<ProductAddPage>();
+            services.AddTransient<ProductUpdateViewModel>();
+            services.AddTransient<ProductUpdatePage>();
+            services.AddTransient<ProductViewModel>();
+            services.AddTransient<ProductPage>();
+
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
             services.AddTransient<AccountViewModel>();
@@ -98,8 +113,6 @@ public partial class App : Application
             services.AddTransient<ReportPage>();
             services.AddTransient<CustomerViewModel>();
             services.AddTransient<CustomerPage>();
-            services.AddTransient<ProductViewModel>();
-            services.AddTransient<ProductPage>();
             services.AddTransient<DashboardViewModel>();
             services.AddTransient<DashboardPage>();
             services.AddTransient<ShellPage>();

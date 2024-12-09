@@ -9,9 +9,9 @@ namespace Sale_Project.Helpers;
 public class EmployeeValidator
 {
     private readonly IDialogService _dialogService;
-    public EmployeeValidator()
+    public EmployeeValidator(IDialogService dialogService)
     {
-        _dialogService = App.GetService<IDialogService>();
+        _dialogService = dialogService;
     }
     public bool Validate(Employee employee)
     {
