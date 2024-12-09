@@ -70,6 +70,8 @@ public partial class App : Application
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<IEmployeeService, EmployeeService>();
             services.AddSingleton<IProductService, ProductService>();
+            services.AddSingleton<IBranchService, BranchService>();
+            services.AddSingleton<ICategoryService, CategoryService>();
             services.AddSingleton<IHttpService, HttpService>();
 
             // Helpers

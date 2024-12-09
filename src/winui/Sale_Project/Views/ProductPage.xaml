@@ -74,23 +74,45 @@
 
         <!-- Buttons -->
         <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
-            <Button Content="Search Product"
-                    Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5"
+            <Button Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5"
                     Width="Auto"
-                    Click="SearchProductButton_Click" />
-            <Button Content="Add Product"
-                    Width="Auto" 
+                    Click="SearchProductButton_Click">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <!-- Add Search Icon -->
+                    <FontIcon Glyph="&#xE721;" FontFamily="Segoe MDL2 Assets" FontSize="16" FontWeight="Bold" Margin="0,0,10,0" />
+                    <!-- Add Text -->
+                    <TextBlock Text="Search Product" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <Button Width="Auto" 
                     Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5"
-                    Click="AddProductButton_Click" />
+                    Click="AddProductButton_Click">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <!-- Add Icon -->
+                    <FontIcon Glyph="&#xE710;" FontFamily="Segoe MDL2 Assets" FontSize="14"  Margin="0,0,10,0" />
+                    <!-- Add Text -->
+                    <TextBlock Text="Add Product" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
         </StackPanel>
 
         <!-- Sort Buttons -->
         <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Content="Sort by ID Asc" x:Name="SortByIDAscButton" Click="SortByIDAscButton_Click" Width="Auto"
+            <Button x:Name="SortByIDAscButton" Click="SortByIDAscButton_Click" Width="Auto"
                     Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Sort by ID" Margin="0,0,8,0" />
+                    <FontIcon Glyph="&#xE74A;" FontSize="14" FontWeight="Bold"/>
+                    <!-- Up arrow icon -->
+                </StackPanel>
             </Button>
-            <Button Content="Sort by ID Desc" x:Name="SortByIDDescButton" Click="SortByIDDescButton_Click" Width="Auto"
+            <Button x:Name="SortByIDDescButton" Click="SortByIDDescButton_Click" Width="Auto"
                     Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Sort by ID" Margin="0,0,8,0" />
+                    <FontIcon Glyph="&#xE74B;" FontSize="14" FontWeight="Bold"/>
+                    <!-- Down arrow icon -->
+                </StackPanel>
             </Button>
         </StackPanel>
 
@@ -100,15 +122,30 @@
                 <StackPanel>
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
                         <TextBlock Text="Business Status" />
-                        <ComboBox Style="{StaticResource DropDownStyle}"
+                        <ComboBox 
               SelectedItem="{Binding ProductSearchRequest.BusinessStatus, Mode=TwoWay, Converter={StaticResource BusinessStatusConverter}}">
+
+                            <ComboBox.Style>
+                                <Style TargetType="ComboBox">
+                                    <Setter Property="Foreground" Value="Black" />
+                                    <Setter Property="Background" Value="White" />
+                                    <Setter Property="BorderThickness" Value="1" />
+                                    <Setter Property="Padding" Value="10,8" />
+                                    <Setter Property="Margin" Value="0,7,0,0" />
+                                    <Setter Property="CornerRadius" Value="5" />
+                                    <Setter Property="FontSize" Value="14" />
+                                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                </Style>
+                            </ComboBox.Style>
+
                             <ComboBox.Items>
                                 <x:String>Active</x:String>
                                 <x:String>Inactive</x:String>
                             </ComboBox.Items>
                         </ComboBox>
                     </StackPanel>
-
+    
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
                         <NumberBox Header="Product Code" Style="{StaticResource NumberBoxStyle}"
                                    Value="{Binding ProductSearchRequest.Code, Mode=TwoWay}" Minimum="0" Margin="-1,0,0,0" />
@@ -121,12 +158,14 @@
 
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
                         <TextBlock Text="Category Name" />
-                        <TextBox Text="{Binding ProductSearchRequest.CategoryName, Mode=TwoWay}" PlaceholderText="" />
+                        <!--<TextBox Text="{Binding ProductSearchRequest.CategoryName, Mode=TwoWay}" PlaceholderText="" />-->
+                        <ComboBox ItemsSource="{Binding Categories, Mode=OneWay}" SelectedValue="{Binding ProductSearchRequest.CategoryName, Mode=TwoWay}" Text="{Binding ProductSearchRequest.Data.CategoryName, Mode=TwoWay}"/>
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
                         <TextBlock Text="Branch Name" />
-                        <TextBox Text="{Binding ProductSearchRequest.BranchName, Mode=TwoWay}" PlaceholderText="" />
+                        <!--<TextBox Text="{Binding ProductSearchRequest.BranchName, Mode=TwoWay}" PlaceholderText="" />-->
+                        <ComboBox ItemsSource="{Binding Branches, Mode=OneWay}" SelectedValue="{Binding ProductSearchRequest.DBranchName, Mode=TwoWay}" Text="{Binding ProductSearchRequest.Data.BranchName, Mode=TwoWay}"/>
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource FieldContainerStyle}">

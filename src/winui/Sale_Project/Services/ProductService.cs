@@ -135,9 +135,9 @@ public class ProductService : IProductService
             var responseData = JsonSerializer.Deserialize<ApiResponse<Product>>(responseContent);
 
             var responseProduct = responseData.Data;
-            if (responseProduct.Branch.ID == 0)
+            if (responseProduct.Branch.Id == 0)
                 responseProduct.Branch = product.Branch;
-            if (responseProduct.Category.ID == "")
+            if (responseProduct.Category.Id == "")
                 responseProduct.Category = product.Category;
 
             return responseProduct;

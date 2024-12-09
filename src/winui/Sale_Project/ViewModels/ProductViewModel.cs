@@ -9,6 +9,7 @@ using Sale_Project.Core.Models.Product;
 using Sale_Project.Contracts.Services;
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;
+using Sale_Project.Services;
 
 namespace Sale_Project.ViewModels;
 
@@ -17,6 +18,8 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
     //private readonly ISampleDataService _sampleDataService;
     private const int _defaultRowsPerPage = 5;
     private readonly IProductService _productService;
+    private readonly IBranchService _branchService;
+    private readonly ICategoryService _categoryService;
     private readonly INavigationService _navigationService;
 
 
@@ -28,7 +31,15 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
     [ObservableProperty]
     private Product selectedProduct;
 
+    [ObservableProperty]
+    private string[] _branches;
+
+    [ObservableProperty]
+    private string[] _categories;
+
     public string Info => $"Displaying {Products.Count}/{RowsPerPage} of total {TotalItems} item(s)";
+
+    public string[] Size { get; set; } = new string[] { "S", "M", "L", "XL", "XXL" };
 
     public ObservableCollection<PageInfo> PageInfos
     {
@@ -63,17 +74,27 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
     } = SortType.ASC;
 
 
-    public ProductViewModel(INavigationService navigationService, IProductService productService)
+    public ProductViewModel(INavigationService navigationService, IBranchService branchService, ICategoryService categoryService, IProductService productService)
     {
 
         RowsPerPage = _defaultRowsPerPage;
         ProductSearchRequest = new ProductSearchRequest();
         _productService = productService;
+        _branchService = branchService;
+        _categoryService = categoryService;
         _navigationService = navigationService;
     }
 
     public async void OnNavigatedTo(object parameter)
     {
+        var branchNames = await _branchService.GetAllBranches();
+        Branches = branchNames?.Select(branch => branch.Name).ToArray();
+
+        // Fetch category names and set the Categories property
+        var categoryNames = await _categoryService.GetAllCategories();
+        Categories = categoryNames?.Select(category => category.Name).ToArray();
+
+
         await LoadData();
         // TODO: Replace with real data.
         //var data = await _sampleDataService.GetGridDataAsync();
@@ -91,6 +112,7 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
 
     public async Task LoadData()
     {
+
         // Fetch data asynchronously
         var pageData = await _productService.SearchProducts(CurrentPage, RowsPerPage, SortField, SortType, ProductSearchRequest);
 
@@ -104,6 +126,7 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
         TotalItems = pageData.TotalElements;
         TotalPages = pageData.TotalPages;
         CurrentPage = pageData.Page;
+        
     }
 
     public async Task GoToPage(int page)

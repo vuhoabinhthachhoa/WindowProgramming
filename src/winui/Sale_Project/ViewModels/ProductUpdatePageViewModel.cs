@@ -11,6 +11,7 @@ using Microsoft.UI.Xaml.Navigation;
 using Sale_Project;
 using Windows.Storage.Pickers;
 using Sale_Project.Core.Models.Product;
+using Microsoft.UI.Xaml.Media.Imaging;
 
 
 public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
@@ -23,8 +24,11 @@ public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
     [ObservableProperty]
     private Product _currentProduct;
 
+    //[ObservableProperty]
+    //private string _updateAPhotoOutputTextBlock;
+
     [ObservableProperty]
-    private string _updateAPhotoOutputTextBlock;
+    private BitmapImage _pickedImage;
 
     public StreamContent File;
 
@@ -49,12 +53,14 @@ public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
         };
 
         CurrentProduct = await _productService.GetSelectedProduct(productSearchRequest);
-        UpdateAPhotoOutputTextBlock = "No photo selected";
+        //UpdateAPhotoOutputTextBlock = "";
+        PickedImage = null;
     }
 
     public void OnNavigatedFrom()
     {
         CurrentProduct = null;
+        PickedImage = null;
     }
 
     public void GoBack()
@@ -148,7 +154,7 @@ public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
 
         if (file != null)
         {
-            UpdateAPhotoOutputTextBlock = "Picked photo: " + file.Name;
+            //UpdateAPhotoOutputTextBlock = "Picked photo: " + file.Name;
 
             try
             {
@@ -157,17 +163,27 @@ public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
 
                 // Explicitly convert IRandomAccessStream to Stream
                 File = new StreamContent(fileStream.AsStreamForRead());
+
+                // Create a BitmapImage from the file stream
+                var bitmapImage = new BitmapImage();
+                await bitmapImage.SetSourceAsync(fileStream);
+                CurrentProduct.ImageUrl = file.Path;
+                PickedImage = bitmapImage;
             }
             catch (Exception ex)
             {
-                UpdateAPhotoOutputTextBlock = "Error opening file: " + ex.Message;
+                //UpdateAPhotoOutputTextBlock = "Error opening file: " + ex.Message;
                 File = new StreamContent(Stream.Null);
+                PickedImage = null;
+
             }
         }
         else
         {
-            UpdateAPhotoOutputTextBlock = "Operation cancelled.";
+            //UpdateAPhotoOutputTextBlock = "Operation cancelled.";
             File = new StreamContent(Stream.Null);
+            PickedImage = null;
+
         }
     }
 } 

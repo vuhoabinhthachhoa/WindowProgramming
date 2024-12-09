@@ -11,12 +11,12 @@ namespace Sale_Project.Core.Models;
 
 public class Branch : INotifyPropertyChanged
 {
-    private int id = 0;
+    private int id =0;
     private string name = "";
     private bool businessStatus = true;
 
     [JsonPropertyName("id")]
-    public int ID
+    public int Id
     {
         get => id;
         set
@@ -24,7 +24,7 @@ public class Branch : INotifyPropertyChanged
             if (id != value)
             {
                 id = value;
-                OnPropertyChanged(nameof(ID));
+                OnPropertyChanged(nameof(Id));
             }
         }
     }

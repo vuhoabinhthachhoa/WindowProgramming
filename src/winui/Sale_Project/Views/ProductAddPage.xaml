@@ -42,7 +42,8 @@
                 <TextBox Text="{Binding ProductCreationRequest.Data.Name, Mode=TwoWay}" />
 
                 <TextBlock Text="Branch Name:" FontWeight="Bold" Margin="0,10,0,0" />
-                <TextBox Text="{Binding ProductCreationRequest.Data.BranchName, Mode=TwoWay}" />
+                <!--<TextBox Text="{Binding ProductCreationRequest.Data.BranchName, Mode=TwoWay}" />-->
+                <ComboBox ItemsSource="{Binding Branches, Mode=OneWay}" SelectedValue="{Binding ProductCreationRequest.Data.BranchName, Mode=TwoWay}"/>
 
                 <TextBlock Text="Inventory Quantity:" FontWeight="Bold" Margin="0,10,0,0" />
                 <NumberBox Value="{Binding ProductCreationRequest.Data.InventoryQuantity, Mode=TwoWay}" Minimum="0"/>
@@ -51,16 +52,35 @@
                 <NumberBox Value="{Binding ProductCreationRequest.Data.DiscountPercent, Mode=TwoWay}" Minimum="0" />
 
                 <TextBlock Text="Size:" FontWeight="Bold" Margin="0,10,0,0" />
-                <TextBox Text="{Binding ProductCreationRequest.Data.Size, Mode=TwoWay}" />
+                <!--<TextBox Text="{Binding ProductCreationRequest.Data.Size, Mode=TwoWay}" />-->
+                <ComboBox ItemsSource="{Binding Size, Mode=OneWay}" SelectedValue="{Binding ProductCreationRequest.Data.Size, Mode=TwoWay}"/>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Margin="10">
                 <TextBlock Text="Category ID:" FontWeight="Bold" Margin="0,10,0,0" />
-                <TextBox Text="{Binding ProductCreationRequest.Data.CategoryId, Mode=TwoWay}" />
+                <!--<TextBox Text="{Binding ProductCreationRequest.Data.CategoryId, Mode=TwoWay}" />-->
+                <ComboBox ItemsSource="{Binding Categories, Mode=OneWay}" SelectedValue="{Binding ProductCreationRequest.Data.CategoryId, Mode=TwoWay}"/>
 
-                <TextBlock Text="Chosoe a file:" FontWeight="Bold" Margin="0,10,0,0" />
+                <!--<TextBlock Text="Chosoe a file:" FontWeight="Bold" Margin="0,10,0,0" />
                 <Button x:Name="PickAPhotoButton" Content="Open a picture" Click="PickAPhotoButton_Click"/>
                 <TextBlock x:Name="PickAPhotoOutputTextBlock" Text="{Binding PickAPhotoOutputTextBlock, Mode=OneWay}"/>
+                <Image Source="{Binding PickedImage}" Width="50" Height="50"/>-->
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Chosoe a file:" FontWeight="Bold" Margin="0,10,0,0" Grid.Row="0" Grid.Column="0"/>
+                    <Button x:Name="PickAPhotoButton" Content="Open a picture" Click="PickAPhotoButton_Click" Grid.Row="1" Grid.Column="0"/>
+                    <!--<TextBlock x:Name="PickAPhotoOutputTextBlock" Text="{Binding PickAPhotoOutputTextBlock, Mode=OneWay}" Grid.Row="2" Grid.Column="0"/>-->
+                    <Image Source="{Binding PickedImage}" Width="50" Height="50" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" VerticalAlignment="Bottom"/>
+                </Grid>
 
                 <TextBlock Text="Import Price:" FontWeight="Bold" Margin="0,10,0,0" />
                 <NumberBox Value="{Binding ProductCreationRequest.Data.ImportPrice, Mode=TwoWay}" Minimum="0"/>
@@ -77,24 +97,6 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
             <Button Content="Add Product" Margin="10" Width="Auto" Height="35" Click="AddButton_Click" Foreground="White" Background="#4BAC4D" FontWeight="SemiBold"/>
         </StackPanel>
-
-        <!-- User Fields -->
-        <!--<Grid Grid.Row="3" Margin="0,20,0,20">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <StackPanel Grid.Column="0" Margin="10">
-                <TextBlock Text="Username:" FontWeight="Bold" Margin="0,10,0,0" />
-                <TextBox Text="{Binding RegistrationRequest.Username, Mode=TwoWay}" />
-            </StackPanel>
-
-            <StackPanel Grid.Column="1" Margin="10">
-                <TextBlock Text="Password:" FontWeight="Bold" Margin="0,10,0,0" />
-                <TextBox Text="{Binding RegistrationRequest.Password, Mode=TwoWay}" />
-            </StackPanel>
-        </Grid>-->
 
         <!-- AddUser Buttons -->
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">

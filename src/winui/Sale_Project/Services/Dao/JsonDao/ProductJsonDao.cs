@@ -238,7 +238,7 @@ public class ProductJsonDao : IProductDao
                     data = new
                     {
                         name = info.Name,
-                        categoryId = info.Category.ID,
+                        categoryId = info.Category.Id,
                         importPrice = info.ImportPrice,
                         sellingPrice = info.SellingPrice,
                         branchName = info.Branch.Name,
@@ -287,10 +287,10 @@ public class ProductJsonDao : IProductDao
 
         var item = Products.Find(e => e.Id == info.Id);
         item.Name = info.Name;
-        item.Category.ID = info.Category.ID;
+        item.Category.Id = info.Category.Id;
         item.ImportPrice = info.ImportPrice;
         item.SellingPrice = info.SellingPrice;
-        item.Branch.ID = info.Branch.ID;
+        item.Branch.Id = info.Branch.Id;
         item.InventoryQuantity = info.InventoryQuantity;
         item.ImageUrl = info.ImageUrl;
         item.BusinessStatus = info.BusinessStatus;
