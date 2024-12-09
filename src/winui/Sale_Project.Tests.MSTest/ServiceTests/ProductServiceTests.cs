@@ -25,7 +25,7 @@ public class ProductServiceTests
     private Mock<IAuthService> _authServiceMock;
     private Mock<IDialogService> _dialogServiceMock;
     private ProductService _productService;
-    private const string token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTczMTgyMzM4NywiZXhwIjoxNzMzNTUxMzg3LCJzY29wZSI6IkFETUlOIn0.RjX8tq9mMPzy4MTmMF7c9tLpkpinsVANV5phEJQL5OY";
+    private const string token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTczMzc1NDAxOCwiZXhwIjoxNzM1NDgyMDE4LCJzY29wZSI6IkFETUlOIn0.uO1ZJeE_1wZxzFlVlNhy8trirAezQEJW4aix-_Nm9CQ";
     private MockHttpMessageHandler _mockHttp;
     private HttpClient _httpClient;
     private IHttpService _httpService;
@@ -100,11 +100,11 @@ public class ProductServiceTests
         {
             Data = new ProductData
             {
-                Name = "Product A",
+                Name = "Product B",
                 CategoryId = "AO",
                 ImportPrice = 50,
                 SellingPrice = 100,
-                BranchName = "channel",
+                BranchName = "Channel",
                 InventoryQuantity = 10,
                 Size = "M",
                 DiscountPercent = 0.5
@@ -119,11 +119,11 @@ public class ProductServiceTests
 
         // Assert
         Assert.IsNotNull(result);
-        Assert.AreEqual("Product A", result.Name);
-        Assert.AreEqual("AO", result.Category.ID);
+        Assert.AreEqual("Product B", result.Name);
+        Assert.AreEqual("AO", result.Category.Id);
         Assert.AreEqual(50, result.ImportPrice);
         Assert.AreEqual(100, result.SellingPrice);
-        Assert.AreEqual("channel", result.Branch.Name);
+        Assert.AreEqual("Channel", result.Branch.Name);
         Assert.AreEqual(10, result.InventoryQuantity);
         Assert.AreEqual("M", result.Size);
         Assert.AreEqual(0.5, result.DiscountPercent);
@@ -178,7 +178,7 @@ public class ProductServiceTests
     public async Task GetSelectedProduct_ValidRequest_ReturnsProduct()
     {
         // Arrange
-        var searchRequest = new ProductSearchRequest { Name = "Test Product 1" };
+        var searchRequest = new ProductSearchRequest { Name = "Product B" };
         _authServiceMock.Setup(x => x.GetAccessToken()).Returns(token);
 
         // Act
@@ -186,7 +186,7 @@ public class ProductServiceTests
 
         // Assert
         Assert.IsNotNull(result);
-        Assert.AreEqual("Test Product 1", result.Name);
+        Assert.AreEqual("Product B", result.Name);
     }
 
     [TestMethod]
