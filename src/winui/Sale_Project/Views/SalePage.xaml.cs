@@ -10,6 +10,8 @@ using System.Diagnostics;
 using Windows.System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Sale_Project.Core.Models.Invoices;
+using Sale_Project.Helpers;
+using System.Globalization;
 
 namespace Sale_Project.Views;
 
@@ -31,6 +33,60 @@ public sealed partial class SalePage : Page
     private double totalDiscount;
     private double totalDue;
     private SampleCustomerDataType _selectedCustomer;
+
+    /// <summary>
+    /// Handles the click event of the "SearchProduct_TextChanged". 
+    /// Searches for a product by its name and adds it to the selected products if not already selected.
+    /// </summary>
+    /// <param name="sender">The sender of the click event.</param>
+    /// <param name="args">The event arguments.</param>
+    private async void SearchProduct_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+    {
+        if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+        {
+            var searchText = sender.Text?.ToLower();
+
+            await ViewModel.GetProducts();
+            var products = ViewModel.Products;
+
+            var filteredProducts = products.Where(p =>
+                p.Name.ToLower().Contains(searchText) 
+            ).Select(p =>
+                $"{p.Name}\nProduct ID: {p.Code}\nPrice: ${p.SellingPrice:F2}"
+            ).ToList();
+
+            sender.ItemsSource = filteredProducts;
+        }
+    }
+
+    /// <summary>
+    /// Handles the click event of the "SearchProduct_SuggestionChosen". 
+    /// Searches for a product by its name and adds it to the selected products if not already selected.
+    /// </summary>
+    /// <param name="sender">The sender of the click event.</param>
+    /// <param name="args">The event arguments.</param>
+    private async void SearchProduct_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+    {
+        var selectedProduct = args.SelectedItem as string;
+
+        if (selectedProduct != null)
+        {
+            var productName = selectedProduct.Split('\n')[0].Trim();
+
+            await ViewModel.SearchProductByName(productName);
+
+            if (ViewModel.Product != null)
+            {
+                var existingProduct = selectedProducts.FirstOrDefault(p => p.product.Id == ViewModel.Product.Id);
+
+                if (existingProduct == default)
+                {
+                    selectedProducts.Add((ViewModel.Product, 1));
+                    UpdateSelectedItemsDisplay();
+                }
+            }
+        }
+    }
 
     /// <summary>
     /// Handles the click event of the "SearchProductButton". 
@@ -259,29 +315,31 @@ public sealed partial class SalePage : Page
         var TotalAmount = (TextBlock)FindName("TotalAmount");
         var DueAmount = (TextBlock)FindName("DueAmount");
 
+        var converter = new DoubleToCurrencyConverter();
+
         if (totalAmountTextBlock != null)
         {
-            totalAmountTextBlock.Text = $"{Math.Floor(totalAmount):0} Đ";
+            totalAmountTextBlock.Text = (string)converter.Convert(totalAmount, typeof(string), null, CultureInfo.CurrentCulture.Name);
         }
 
         if (totalDiscountTextBlock != null)
         {
-            totalDiscountTextBlock.Text = $"{Math.Floor(totalDiscount):0} Đ";
+            totalDiscountTextBlock.Text = (string)converter.Convert(totalDiscount, typeof(string), null, CultureInfo.CurrentCulture.Name);
         }
 
         if (totalDueTextBlock != null)
         {
-            totalDueTextBlock.Text = $"{Math.Floor(totalDue):0} Đ";
+            totalDueTextBlock.Text = (string)converter.Convert(totalDue, typeof(string), null, CultureInfo.CurrentCulture.Name);
         }
 
         if (TotalAmount != null)
         {
-            TotalAmount.Text = $"{Math.Floor(totalDue):0} Đ";
+            TotalAmount.Text = (string)converter.Convert(totalDue, typeof(string), null, CultureInfo.CurrentCulture.Name);
         }
 
         if (DueAmount != null)
         {
-            DueAmount.Text = $"{Math.Floor(totalDue):0} Đ";
+            DueAmount.Text = (string)converter.Convert(totalDue, typeof(string), null, CultureInfo.CurrentCulture.Name);
         }
     }
 

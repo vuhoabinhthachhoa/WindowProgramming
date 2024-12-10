@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Controls;
 using Sale_Project.Core.Helpers;
 using Sale_Project.Core.Models;
+using Sale_Project.Core.Models.Accounts;
 using Sale_Project.Core.Models.Products;
 using Sale_Project.Helpers;
 
@@ -455,7 +456,7 @@ public class ProductService : IProductService
     /// <item>Deserializes the server response into a list of products and returns the first one if available.</item>
     /// </list>
     /// </remarks>
-    public async Task<Product> GetProductByName(string name)
+    public async Task<List<Product>> GetProductByName(string name)
     {
         try
         {
@@ -489,7 +490,7 @@ public class ProductService : IProductService
             var responseData = JsonSerializer.Deserialize<ApiResponse<List<Product>>>(responseContent, options);
 
             // Return the first matching product or null if no products found
-            return responseData?.Data?.FirstOrDefault();
+            return responseData?.Data;
         }
         catch (HttpRequestException ex)
         {

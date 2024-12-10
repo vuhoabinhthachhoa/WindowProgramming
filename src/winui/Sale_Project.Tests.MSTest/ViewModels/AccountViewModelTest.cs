@@ -25,8 +25,6 @@ public class AccountViewModelTest
         viewModel.LoadData();
 
         // Assert
-        Assert.IsTrue(viewModel.Countries.ContainsKey("Vietnam"));
-        Assert.AreEqual("+84", viewModel.Countries["Vietnam"]);
 
         Assert.IsTrue(viewModel.Districts.ContainsKey("An Giang"));
         CollectionAssert.AreEquivalent(new List<string> { "Châu Đốc", "Châu Phú", "Tân Châu" }, viewModel.Districts["An Giang"]);

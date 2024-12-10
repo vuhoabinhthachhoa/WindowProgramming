@@ -22,10 +22,6 @@ public partial class AccountViewModel : ObservableRecipient
     {
         get; set;
     }
-    public Dictionary<string, string> Countries
-    {
-        get; set;
-    }
 
     [ObservableProperty]
     private Account _account;
@@ -43,11 +39,7 @@ public partial class AccountViewModel : ObservableRecipient
     /// </summary>
     public void LoadData()
     {
-        var path = GetJsonFilePath("Countries.json");
-        var countriesJson = File.ReadAllText(path);
-        Countries = JsonSerializer.Deserialize<Dictionary<string, string>>(countriesJson)!;
-
-        path = GetJsonFilePath("Districts.json");
+        var path = GetJsonFilePath("Districts.json");
         var districtsJson = File.ReadAllText(path);
         Districts = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(districtsJson)!;
     }

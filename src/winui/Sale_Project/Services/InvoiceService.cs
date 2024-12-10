@@ -16,6 +16,7 @@ public class InvoiceService : IInvoiceService
     private readonly IDialogService _dialogService;
     private readonly HttpClient _httpClient;
     private readonly IHttpService _httpService;
+    private readonly IAuthService _authService;
 
     public InvoiceService(IAuthService authService, IDialogService dialogService, HttpClient httpClient, IHttpService httpService)
     {
@@ -23,6 +24,7 @@ public class InvoiceService : IInvoiceService
         _httpClient = new HttpClient { BaseAddress = new Uri(AppConstants.BaseUrl + "/invoice") };
         _dialogService = dialogService;
         _httpService = httpService;
+        _authService = authService;
     }
 
     /// <summary>
@@ -65,7 +67,7 @@ public class InvoiceService : IInvoiceService
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Add access token to HTTP headers
-            var token = GetAccessToken();
+            var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
 
             // Send POST request
@@ -74,9 +76,8 @@ public class InvoiceService : IInvoiceService
             // Handle unsuccessful response
             if (!apiResponse.IsSuccessStatusCode)
             {
-                var error = await apiResponse.Content.ReadAsStringAsync();
-                Debug.WriteLine("Server error: " + error);
-                throw new Exception(error);
+                await _httpService.HandleErrorResponse(apiResponse);
+                return null;
             }
 
             // Deserialize server response
@@ -99,25 +100,5 @@ public class InvoiceService : IInvoiceService
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
-    }
-
-    /// <summary>
-    /// Retrieves the stored access token from the application's local settings.
-    /// </summary>
-    /// <returns>
-    /// The access token as a string if it exists; otherwise, <c>null</c>.
-    /// </returns>
-    /// <example>
-    public string GetAccessToken()
-    {
-        var localSettings = ApplicationData.Current.LocalSettings;
-
-        // Retrieve the AccessToken from local settings
-        if (localSettings.Values.TryGetValue("AccessToken", out var token))
-        {
-            return token as string;
-        }
-
-        return null;
     }
 }

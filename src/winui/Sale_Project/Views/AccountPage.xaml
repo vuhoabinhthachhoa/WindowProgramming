@@ -8,10 +8,6 @@
     xmlns:local="using:Sale_Project.Helpers"
     mc:Ignorable="d">
 
-    <Page.Resources>
-        <local:DateTimeOffsetToStringConverter x:Key="DateTimeOffsetToStringConverter" />
-    </Page.Resources>
-
     <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -33,8 +29,8 @@
                 <TextBox Width="300" IsReadOnly="True" Text="{Binding Account.username, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="CitizenID: " Width="100" Margin="0 0 5 0"/>
-                <TextBox Width="300" IsReadOnly="True" Text="{Binding Account.employee.CitizenId, Mode=TwoWay}"/>
+                <TextBlock Text="ID: " Width="100" Margin="0 0 5 0"/>
+                <TextBox Width="300" IsReadOnly="True" Text="{Binding Account.id, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <TextBlock Text="Role: " Width="100" Margin="0 0 5 0"/>
@@ -42,15 +38,11 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <TextBlock Text="Phone number: " Width="100" Margin="0 0 5 0"/>
-                <AutoSuggestBox PlaceholderText="Việt Nam +84" QueryIcon="Find"
-        TextChanged="AutoSuggestBox_TextChangedPhoneNumber"
-        SuggestionChosen="AutoSuggestBox_SuggestionChosenPhoneNumber" x:Name="AutoSuggestBoxPhoneNumber"
-        Width="145" AutomationProperties.Name="Basic AutoSuggestBox"/>
-                <NumberBox x:Name="PhoneNumberNumberBlock" Margin="5 0 0 0" Width="150" Text="{Binding Account.phoneNumber, Mode=TwoWay}" Value="NaN"/>
+                <NumberBox x:Name="PhoneNumberNumberBlock" Width="300" Text="{Binding Account.phoneNumber, Mode=TwoWay}" Value="NaN"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <TextBlock Text="Date of birth: " Width="100" Margin="0 0 5 0"/>
-                <TextBox x:Name="DateOfBirthTextBlock" Width="300" Text="{Binding Account.dateOfBirth, Mode=TwoWay, Converter={StaticResource DateTimeOffsetToStringConverter}}"/>
+                <DatePicker x:Name="DateOfBirthPicker" Width="300" SelectedDate="{Binding Account.dateOfBirth, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <TextBlock Text="Email: " Width="100" Margin="0 0 5 0"/>
@@ -94,6 +86,8 @@
                 <Button Content="Save" Width="118" Background="#4BAC4D" Foreground="White" FontWeight="Bold" Click="Verification_Click"/>
             </StackPanel>
         </StackPanel>
+
+        <TextBlock x:Name="ErrorMessageTextBlock" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Visibility="Collapsed" Foreground="Red" Margin="10 45 0 0"/>
 
         <ContentDialog x:Name="VerificationDialog"
            Title="Change Account Information"

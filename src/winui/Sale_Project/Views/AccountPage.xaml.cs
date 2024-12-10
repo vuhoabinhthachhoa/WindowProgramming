@@ -4,6 +4,8 @@ using Microsoft.UI.Xaml.Controls;
 using Sale_Project.Core.Models.Accounts;
 using Sale_Project.ViewModels;
 using Windows.Storage;
+using Windows.UI.Popups;
+using Windows.UI.Core;
 
 namespace Sale_Project.Views;
 
@@ -19,39 +21,6 @@ public sealed partial class AccountPage : Page
         ViewModel = App.GetService<AccountViewModel>();
         InitializeComponent();
         this.DataContext = ViewModel;
-    }
-
-    /// <summary>
-    /// Handles the TextChanged event of the AutoSuggestBox for phone numbers. 
-    /// Filters the countries based on the user input and updates the suggestion list.
-    /// </summary>
-    /// <param name="sender">The AutoSuggestBox that triggered the event.</param>
-    /// <param name="args">The event arguments containing the text change details.</param>
-    private void AutoSuggestBox_TextChangedPhoneNumber(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-    {
-        if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
-        {
-            var suitableItems = new List<string>();
-            var splitText = sender.Text.ToLower().Split(" ");
-            var countries = ViewModel.Countries;
-
-            foreach (var country in countries)
-            {
-                var found = splitText.All((key) =>
-                {
-                    return country.Key.ToLower().Contains(key) || country.Value.Contains(key);
-                });
-                if (found)
-                {
-                    suitableItems.Add($"{country.Key} {country.Value}");
-                }
-            }
-            if (suitableItems.Count == 0)
-            {
-                suitableItems.Add("No results found");
-            }
-            sender.ItemsSource = suitableItems;
-        }
     }
 
     /// <summary>
@@ -179,13 +148,11 @@ public sealed partial class AccountPage : Page
         }
         else
         {
-            var errorDialog = new ContentDialog
-            {
-                Title = "Error",
-                Content = "Inaccurate Password.",
-                CloseButtonText = "Close"
-            };
-            await errorDialog.ShowAsync();
+            ErrorMessageTextBlock.Text = "Inaccurate Password.";
+            ErrorMessageTextBlock.Visibility = Visibility.Visible;
+
+            await Task.Delay(5000);
+            ErrorMessageTextBlock.Visibility = Visibility.Collapsed;
         }
     }
 
@@ -222,33 +189,6 @@ public sealed partial class AccountPage : Page
     private async void VerificationDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
     {
         await ViewModel.UpdateAccountAsync();
-    }
-
-    /// <summary>
-    /// Retrieves the full phone number by combining the selected country code with the phone number.
-    /// If no country is selected, defaults to "+84".
-    /// </summary>
-    /// <returns>The full phone number as a string.</returns>
-    private string GetFullPhoneNumber()
-    {
-        var input = AutoSuggestBoxPhoneNumber.Text;
-        var countryName = input.Contains('+')
-            ? input.Substring(0, input.IndexOf('+')).Trim()
-            : input.Trim();
-
-        var countryCode = ViewModel.Countries
-            .Where(c => c.Key.Equals(countryName, StringComparison.OrdinalIgnoreCase))
-            .Select(c => c.Value)
-            .FirstOrDefault();
-
-        if (string.IsNullOrEmpty(countryCode))
-        {
-            countryCode = "+84";
-        }
-
-        var phoneNumber = PhoneNumberNumberBlock.Text;
-
-        return $"{countryCode}{phoneNumber}";
     }
 
     /// <summary>

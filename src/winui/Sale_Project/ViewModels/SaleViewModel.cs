@@ -40,6 +40,17 @@ public partial class SaleViewModel : ObservableRecipient
         }
     }
 
+    private List<Product> products = new List<Product>();
+    public List<Product> Products
+    {
+        get => products;
+        set
+        {
+            SetProperty(ref products, value);
+            OnPropertyChanged(nameof(Products));
+        }
+    }
+
     public List<SampleCustomerDataType> customers
     {
         get; set;
@@ -112,6 +123,19 @@ public partial class SaleViewModel : ObservableRecipient
     /// </returns>
     public async Task SearchProductByName(string name)
     {
-        Product = await _productService.GetProductByName(name);
+        var product = await _productService.GetProductByName(name);
+
+        Product = product?.FirstOrDefault();
+    }
+
+    /// <summary>
+    /// Get all products.
+    /// </summary>
+    /// <returns>
+    /// A task that represents the asynchronous operation of loading the product list.
+    /// </returns>
+    public async Task GetProducts()
+    {
+        Products = await _productService.GetProductByName(" ");
     }
 }

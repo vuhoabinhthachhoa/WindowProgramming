@@ -29,5 +29,5 @@ public interface IProductService
 
     Task<Product?> GetSelectedProduct(ProductSearchRequest productSearchRequest);
 
-    Task<Product> GetProductByName(string name);
+    Task<List<Product>> GetProductByName(string name);
 }

@@ -107,6 +107,8 @@ public class AuthService : IAuthService
                 localSettings.Values["UserRole"] = userRole;
             }
 
+            await GetAccountAsync();
+
             return true;
         }
         else
