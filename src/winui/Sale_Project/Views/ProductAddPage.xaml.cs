@@ -1,6 +1,6 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Sale_Project.Core.Models.Product;
+using Sale_Project.Core.Models.Products;
 using Sale_Project.ViewModels;
 using Windows.Storage.Pickers;
 

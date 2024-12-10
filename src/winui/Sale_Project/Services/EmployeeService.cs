@@ -11,7 +11,7 @@ namespace Sale_Project.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sale_Project.Core.Models;
-using Sale_Project.Core.Models.Employee;
+using Sale_Project.Core.Models.Employees;
 using Sale_Project.Helpers;
 
 public class EmployeeService : IEmployeeService
@@ -60,7 +60,7 @@ public class EmployeeService : IEmployeeService
         catch (HttpRequestException ex)
         {
             // Handle or log the exception as needed
-            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
         catch (Exception ex)
@@ -96,7 +96,7 @@ public class EmployeeService : IEmployeeService
         catch (HttpRequestException ex)
         {
             // Handle or log the exception as needed
-            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
             return false;
         }
         catch (Exception ex)
@@ -146,7 +146,7 @@ public class EmployeeService : IEmployeeService
         catch (HttpRequestException ex)
         {
             // Handle or log the exception as needed
-            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
         catch (Exception ex)
@@ -184,7 +184,7 @@ public class EmployeeService : IEmployeeService
         catch (HttpRequestException ex)
         {
             // Handle or log the exception as needed
-            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
         catch (Exception ex)
@@ -245,7 +245,7 @@ public class EmployeeService : IEmployeeService
         catch (HttpRequestException ex)
         {
             // Handle or log the exception as needed
-           await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
+           await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
         catch (Exception ex)
@@ -287,7 +287,7 @@ public class EmployeeService : IEmployeeService
         catch (HttpRequestException ex)
         {
             // Handle or log the exception as needed
-            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
         catch (Exception ex)

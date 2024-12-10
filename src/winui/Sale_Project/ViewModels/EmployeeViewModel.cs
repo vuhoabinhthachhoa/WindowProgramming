@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Sale_Project.Contracts.ViewModels;
 using Sale_Project.Core.Contracts.Services;
 using Sale_Project.Core.Models;
-using Sale_Project.Core.Models.Employee;
+using Sale_Project.Core.Models.Employees;
 using Sale_Project.Contracts.Services;
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;

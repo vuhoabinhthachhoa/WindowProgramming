@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 using Sale_Project.Core.Models;
 
+namespace Sale_Project.Core.Models.Products;
+
 public class Product : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler PropertyChanged;
@@ -17,10 +19,10 @@ public class Product : INotifyPropertyChanged
     private int id = 0;
     private string code = string.Empty;
     private string name = string.Empty;
-    private Category category = new Category();
-    private float importPrice = 0.0f;
-    private float sellingPrice = 0.0f;
-    private Branch branch = new Branch();
+    private Category category;
+    private double importPrice = 0.0;
+    private double sellingPrice = 0.0;
+    private Branch branch;
     private int inventoryQuantity = 0;
     private string imageUrl = string.Empty;
     private string cloudinaryImageId = string.Empty;
@@ -85,7 +87,7 @@ public class Product : INotifyPropertyChanged
     }
 
     [JsonPropertyName("importPrice")]
-    public float ImportPrice
+    public double ImportPrice
     {
         get => importPrice;
         set
@@ -99,7 +101,7 @@ public class Product : INotifyPropertyChanged
     }
 
     [JsonPropertyName("sellingPrice")]
-    public float SellingPrice
+    public double SellingPrice
     {
         get => sellingPrice;
         set

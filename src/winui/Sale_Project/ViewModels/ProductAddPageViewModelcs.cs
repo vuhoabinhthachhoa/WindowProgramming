@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Sale_Project.Contracts.Services;
 using Sale_Project.Helpers;
-using Sale_Project.Core.Models.Product;
+using Sale_Project.Core.Models.Products;
 using Sale_Project.Contracts.ViewModels;
 using Sale_Project.Core.Models;
 using Windows.Storage.Pickers;

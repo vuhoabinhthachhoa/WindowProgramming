@@ -1,0 +1,50 @@
+﻿[
+  {
+    "Id": "1",
+    "FirstName": "Marcus",
+    "FamilyName": "Perryman",
+    "Email": "marcus.perryman@example.com",
+    "Phone": "123-456-7890",
+    "Address": "123 Elm St",
+    "City": "Springfield",
+    "State": "IL",
+    "Zip": "62701",
+    "Voucher": "VOUCHER1"
+  },
+  {
+    "Id": "2",
+    "FirstName": "Michael",
+    "FamilyName": "Hawker",
+    "Email": "michael.hawker@example.com",
+    "Phone": "234-567-8901",
+    "Address": "234 Oak St",
+    "City": "Springfield",
+    "State": "IL",
+    "Zip": "62702",
+    "Voucher": "VOUCHER2"
+  },
+  {
+    "Id": "3",
+    "FirstName": "Matt",
+    "FamilyName": "Lacey",
+    "Email": "matt.lacey@example.com",
+    "Phone": "345-678-9012",
+    "Address": "345 Pine St",
+    "City": "Springfield",
+    "State": "IL",
+    "Zip": "62703",
+    "Voucher": "VOUCHER3"
+  },
+  {
+    "Id": "27",
+    "FirstName": "Pradeep",
+    "FamilyName": "Gupta",
+    "Email": "pradeep.gupta@example.com",
+    "Phone": "789-012-3458",
+    "Address": "2727 Willow St",
+    "City": "Springfield",
+    "State": "IL",
+    "Zip": "62727",
+    "Voucher": "VOUCHER27"
+  }
+]

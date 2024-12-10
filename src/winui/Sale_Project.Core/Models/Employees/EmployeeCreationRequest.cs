@@ -5,7 +5,8 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Sale_Project.Core.Models.Employee;
+namespace Sale_Project.Core.Models.Employees;
+
 public class EmployeeCreationRequest
 {
     [JsonPropertyName("name")]

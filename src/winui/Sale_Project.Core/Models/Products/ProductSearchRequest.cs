@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 using System.Diagnostics;
 
-namespace Sale_Project.Core.Models.Product;
+namespace Sale_Project.Core.Models.Products;
 
 public class ProductSearchRequest : INotifyPropertyChanged
 {

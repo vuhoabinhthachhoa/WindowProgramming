@@ -57,6 +57,6 @@ public class HttpService : IHttpService
     {
         var errorMessage = await GetErrorMessageAsync(response);
 
-        _dialogService.ShowErrorAsync("Error", errorMessage);
+        await _dialogService.ShowErrorAsync("Error", errorMessage);
     }
 }

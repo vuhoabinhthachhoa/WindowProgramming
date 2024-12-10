@@ -22,24 +22,11 @@ public sealed partial class ShellPage : Page
         get;
     }
 
-    //public Grid Startup => this._startupFeature;
-    //public Grid Main => this._mainFeature;
-
-    //private readonly Grid _startupFeature;
-    //private readonly Grid _mainFeature;
-
     public ShellPage(ShellViewModel viewModel)
     {
         ViewModel = viewModel;
-        // this.DataContext = ViewModel;
+
         InitializeComponent();
-
-        //var uiManager = App.GetService<UIManagerService>();
-        //uiManager.ShellPage = this;
-        //_header = (Grid)FindName("Header");
-
-        //_startupFeature = (Grid)FindName("StartupFeature");
-        //_mainFeature = (Grid)FindName("MainFeature");
 
         ViewModel.NavigationService.Frame = NavigationFrame;
 
