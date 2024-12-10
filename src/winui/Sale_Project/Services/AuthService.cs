@@ -169,7 +169,7 @@ public class AuthService : IAuthService
             };
             var responseData = JsonSerializer.Deserialize<ApiResponse<Account>>(responseContent, options);
 
-            // Update local settings with the employee ID, if available
+            // Update local settings with the employee ID
             var localSettings = ApplicationData.Current.LocalSettings;
             if (responseData!.Data.employee != null)
             {
