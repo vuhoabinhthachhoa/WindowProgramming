@@ -450,13 +450,18 @@ public sealed partial class SalePage : Page
             }
         }
 
-        var totalAmountText = System.Text.RegularExpressions.Regex.Match(TotalAmountTextBlock.Text, @"\d+").Value;
-        var totalDueText = System.Text.RegularExpressions.Regex.Match(TotalDueTextBlock.Text, @"\d+").Value;
+        var converter = new DoubleToCurrencyConverter();
+
+        var totalAmountText = TotalAmountTextBlock.Text;
+        var totalDueText = TotalDueTextBlock.Text;
+
+        var totalAmount = (double)converter.ConvertBack(totalAmountText, typeof(double), null, CultureInfo.CurrentCulture.Name);
+        var totalDue = (double)converter.ConvertBack(totalDueText, typeof(double), null, CultureInfo.CurrentCulture.Name);
 
         await ViewModel.CreateInvoiceAsync(new InvoiceCreationRequest
         {
-            totalAmount = decimal.Parse(totalAmountText),
-            realAmount = decimal.Parse(totalDueText),
+            totalAmount = (decimal)totalAmount,
+            realAmount = (decimal)totalDue,
             productQuantity = productQuantities
         });
     }
