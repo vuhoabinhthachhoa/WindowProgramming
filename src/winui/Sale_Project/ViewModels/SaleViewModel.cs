@@ -115,20 +115,6 @@ public partial class SaleViewModel : ObservableRecipient
     }
 
     /// <summary>
-    /// Searches for a product by its name.
-    /// </summary>
-    /// <param name="name">The name of the product to search for.</param>
-    /// <returns>
-    /// A task that represents the asynchronous operation of searching for the product by name.
-    /// </returns>
-    public async Task SearchProductByName(string name)
-    {
-        var product = await _productService.GetProductByName(name);
-
-        Product = product?.FirstOrDefault();
-    }
-
-    /// <summary>
     /// Get all products.
     /// </summary>
     /// <returns>

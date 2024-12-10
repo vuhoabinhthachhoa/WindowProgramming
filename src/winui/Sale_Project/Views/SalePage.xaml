@@ -27,14 +27,6 @@
                 <AutoSuggestBox x:Name="SearchProduct" PlaceholderText="Type to search product..." 
                  Width="250" Height="30" Margin="10,0" TextChanged="SearchProduct_TextChanged"
                 SuggestionChosen="SearchProduct_SuggestionChosen"/>
-                <Button x:Name="SearchProductButton" Content="Search" Margin="10,0,0,0" Click="SearchProductButton_Click">
-                    <Button.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#aaffc8" Offset="0.0"/>
-                            <GradientStop Color="#86e57f" Offset="1.0"/>
-                        </LinearGradientBrush>
-                    </Button.Background>
-                </Button>
             </StackPanel>
 
             <ScrollViewer Grid.Row="1" Grid.Column="0" Padding="10" BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Margin="10">

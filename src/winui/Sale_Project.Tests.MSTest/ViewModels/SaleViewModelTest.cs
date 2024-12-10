@@ -59,33 +59,6 @@ public class SaleViewModelTest
     }
 
     [TestMethod]
-    public async Task SearchProductByName_ShouldReturnCorrectProduct()
-    {
-        // Arrange
-        var mockInvoiceService = new Mock<IInvoiceService>();
-        var mockDialogService = new Mock<IDialogService>();
-        var mockProductService = new Mock<IProductService>();
-
-        var viewModel = new SaleViewModel(mockInvoiceService.Object, mockDialogService.Object, mockProductService.Object);
-
-        var productName = "Laptop";
-        var expectedProduct = new Product { Id = 1, Name = "Laptop", SellingPrice = 1000 };
-        var products = new List<Product> { expectedProduct };
-
-        mockProductService
-            .Setup(service => service.GetProductByName(productName))
-            .ReturnsAsync(products);
-
-        // Act
-        await viewModel.SearchProductByName(productName);
-
-        // Assert
-        Assert.IsNotNull(viewModel.Product);
-        Assert.AreEqual(expectedProduct.Id, viewModel.Product.Id);
-        Assert.AreEqual(expectedProduct.Name, viewModel.Product.Name);
-    }
-
-    [TestMethod]
     public void GetJsonFilePath_ShouldReturnCorrectPath()
     {
         // Arrange

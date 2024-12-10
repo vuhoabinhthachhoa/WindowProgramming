@@ -64,7 +64,7 @@ public partial class AccountViewModel : ObservableRecipient
         {
             var basePath = fullPath.Substring(0, index);
 
-            return Path.Combine(basePath, @"Sale_Project\MockData\", fileName);
+            return Path.Combine(basePath, @"Sale_Project\StaticData\", fileName);
         }
         else
         {

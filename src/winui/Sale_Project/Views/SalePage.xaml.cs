@@ -50,9 +50,9 @@ public sealed partial class SalePage : Page
             var products = ViewModel.Products;
 
             var filteredProducts = products.Where(p =>
-                p.Name.ToLower().Contains(searchText) 
+                p.Name.ToLower().Contains(searchText)
             ).Select(p =>
-                $"{p.Name}\nProduct ID: {p.Code}\nPrice: ${p.SellingPrice:F2}"
+                $"• {p.Name}\n   Product ID: {p.Code}\n   Price: {p.SellingPrice:F2}"
             ).ToList();
 
             sender.ItemsSource = filteredProducts;
@@ -73,44 +73,19 @@ public sealed partial class SalePage : Page
         {
             var productName = selectedProduct.Split('\n')[0].Trim();
 
-            await ViewModel.SearchProductByName(productName);
+            var product = ViewModel.Products.FirstOrDefault(p => p.Name.Equals(productName, StringComparison.OrdinalIgnoreCase));
 
-            if (ViewModel.Product != null)
+            if (product != null)
             {
-                var existingProduct = selectedProducts.FirstOrDefault(p => p.product.Id == ViewModel.Product.Id);
+                var existingProduct = selectedProducts.FirstOrDefault(p => p.product.Id == product.Id);
 
                 if (existingProduct == default)
                 {
-                    selectedProducts.Add((ViewModel.Product, 1));
+                    selectedProducts.Add((product, 1));
                     UpdateSelectedItemsDisplay();
                 }
             }
         }
-    }
-
-    /// <summary>
-    /// Handles the click event of the "SearchProductButton". 
-    /// Searches for a product by its name and adds it to the selected products if not already selected.
-    /// </summary>
-    /// <param name="sender">The sender of the click event.</param>
-    /// <param name="e">The event arguments.</param>
-    private async void SearchProductButton_Click(object sender, RoutedEventArgs e)
-    {
-        var productName = SearchProduct.Text;
-        await ViewModel.SearchProductByName(productName);
-
-        if (ViewModel.Product != null)
-        {
-            var existingProduct = selectedProducts.FirstOrDefault(p => p.product.Id == ViewModel.Product.Id);
-
-            if (existingProduct == default)
-            {
-                selectedProducts.Add((ViewModel.Product, 1));
-                UpdateSelectedItemsDisplay();
-            }
-        }
-
-        SearchProduct.Text = string.Empty;
     }
 
     /// <summary>
