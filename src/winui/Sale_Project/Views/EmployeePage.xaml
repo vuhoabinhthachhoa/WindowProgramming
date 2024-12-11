@@ -47,6 +47,16 @@
             <Setter Property="Orientation" Value="Vertical"/>
         </Style>
 
+        <Style TargetType="controls:DataGridCell" x:Key="CenterDataGridCell">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="ContentControl" x:Key="CenterDataGridHeader">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
         <local:EmploymentStatusConverter x:Key="EmploymentStatusConverter"/>
         <local:DoubleToCurrencyConverter x:Key="DoubleToCurrencyConverter"/>
 
@@ -206,7 +216,8 @@
             AlternatingRowBackground="#F7F9F9"
             RowBackground="White"
             ItemsSource="{x:Bind ViewModel.Employees, Mode=OneWay}"
-            SelectedItem="{x:Bind ViewModel.SelectedEmployee, Mode=TwoWay}">
+            SelectedItem="{x:Bind ViewModel.SelectedEmployee, Mode=TwoWay}"
+            ColumnHeaderStyle="{StaticResource CenterDataGridHeader}">
 
             <controls:DataGrid.Resources>
                 <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="#3498DB" />

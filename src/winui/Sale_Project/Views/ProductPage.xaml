@@ -48,6 +48,17 @@
             <Setter Property="Orientation" Value="Vertical"/>
         </Style>
 
+        <Style TargetType="controls:DataGridCell" x:Key="CenterDataGridCell">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="ContentControl" x:Key="CenterDataGridHeader">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Width" Value="Auto"/>
+        </Style>
+
         <local:BusinessStatusConverter x:Key="BusinessStatusConverter"/>
         <local:DoubleToCurrencyConverter x:Key="DoubleToCurrencyConverter"/>
 
@@ -220,7 +231,8 @@
             AlternatingRowBackground="#F7F9F9"
             RowBackground="White"
             ItemsSource="{x:Bind ViewModel.Products, Mode=OneWay}"
-            SelectedItem="{x:Bind ViewModel.SelectedProduct, Mode=TwoWay}">
+            SelectedItem="{x:Bind ViewModel.SelectedProduct, Mode=TwoWay}"
+            ColumnHeaderStyle="{StaticResource CenterDataGridHeader}">
             <controls:DataGrid.Resources>
                 <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="#3498DB" />
             </controls:DataGrid.Resources>
@@ -241,7 +253,7 @@
                 </controls:DataGridTemplateColumn>
                 <controls:DataGridTextColumn Binding="{Binding Category.Name}" Header="Category Name" Tag="Category ID" IsReadOnly="True" />
                 <controls:DataGridTextColumn Binding="{Binding Brand.Name}" Header="Brand Name" Tag="Brand Name" IsReadOnly="True" />
-                <controls:DataGridTextColumn Binding="{Binding InventoryQuantity}" Header="Inventory Quantity" Tag="Inventory Quantity" IsReadOnly="True" />
+                <controls:DataGridTextColumn Binding="{Binding InventoryQuantity}" Header="Inventory Quantity" Tag="Inventory Quantity" IsReadOnly="True" CellStyle="{StaticResource CenterDataGridCell}" />
                 <controls:DataGridTextColumn Binding="{Binding Size}" Header="Size" Tag="Size" IsReadOnly="True" />
                 <controls:DataGridTextColumn Binding="{Binding ImportPrice, Converter={StaticResource DoubleToCurrencyConverter}}" Header="Import Price" Tag="Import Price" IsReadOnly="True" />
                 <controls:DataGridTextColumn Binding="{Binding SellingPrice, Converter={StaticResource DoubleToCurrencyConverter}}" Header="Selling Price" Tag="Selling Price" IsReadOnly="True" />
@@ -254,7 +266,7 @@
                         </DataTemplate>
                     </controls:DataGridTemplateColumn.CellTemplate>
                 </controls:DataGridTemplateColumn>
-                <controls:DataGridTextColumn Binding="{Binding DiscountPercent}" Header="Discount Percent" Tag="Discount Percent" IsReadOnly="True" />
+                <controls:DataGridTextColumn Binding="{Binding DiscountPercent}" Header="Discount Percent" Tag="Discount Percent" IsReadOnly="True" CellStyle="{StaticResource CenterDataGridCell}"/>
 
             </controls:DataGrid.Columns>
         </controls:DataGrid>
