@@ -39,7 +39,7 @@
                 <AutoSuggestBox QueryIcon="Find" TextChanged="AutoSuggestBox_TextChangedCustomer"
                             SuggestionChosen="AutoSuggestBox_SuggestionChosenCustomer"  x:Name="SearchCustomer"
                             Width="250" Height="30" PlaceholderText="Type to search customer..." />
-                <Button x:Name="OpenDetailsButton" Content="Xem Chi Tiết" Margin="10,0,0,0" 
+                <Button x:Name="OpenDetailsButton" Content="Details" Margin="10,0,0,0" 
                     Click="OpenDetailsButton_Click" IsEnabled="False" />
             </StackPanel>
 
