@@ -70,7 +70,7 @@ public class EmployeeService : IEmployeeService
         }
         catch (HttpRequestException ex)
         {
-            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null;
         }
         catch (Exception ex)
@@ -104,7 +104,7 @@ public class EmployeeService : IEmployeeService
         }
         catch (HttpRequestException ex)
         {
-            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return false;
         }
         catch (Exception ex)
@@ -148,7 +148,7 @@ public class EmployeeService : IEmployeeService
         }
         catch (HttpRequestException ex)
         {
-            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null;
         }
         catch (Exception ex)
@@ -183,7 +183,7 @@ public class EmployeeService : IEmployeeService
         }
         catch (HttpRequestException ex)
         {
-            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null;
         }
         catch (Exception ex)
@@ -241,7 +241,7 @@ public class EmployeeService : IEmployeeService
         }
         catch (HttpRequestException ex)
         {
-            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null;
         }
         catch (Exception ex)
@@ -279,7 +279,7 @@ public class EmployeeService : IEmployeeService
         }
         catch (HttpRequestException ex)
         {
-            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null;
         }
         catch (Exception ex)

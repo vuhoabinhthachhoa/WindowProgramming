@@ -63,58 +63,53 @@ public class AuthService : IAuthService
     /// </exception>
     public async Task<bool> LoginAsync(string username, string password)
     {
-        // Create an anonymous object with the username and password
-        var loginData = new { username, password };
-
-        // Serialize the login data to JSON
-        var json = Newtonsoft.Json.JsonConvert.SerializeObject(loginData);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        // Send login request as JSON and get response
-        var apiResponse = await _httpClient.PostAsync(_httpClient.BaseAddress + "/login", content);
-
-        // Check if the response indicates success
-        if (!apiResponse.IsSuccessStatusCode)
+        try
         {
-            return false;
-        }
+            var loginData = new { username, password };
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(loginData);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var apiResponse = await _httpClient.PostAsync(_httpClient.BaseAddress + "/login", content);
 
-        // Read the response content as a string
-        var responseContent = await apiResponse.Content.ReadAsStringAsync();
-
-        // Deserialize the response content to the appropriate type
-        var responseData = JsonSerializer.Deserialize<ApiResponse<Token>>(responseContent);
-        System.Diagnostics.Debug.WriteLine($"Response Content: {responseContent}");
-
-        if (responseData != null)
-        {
-            var token = responseData.Data;
-
-            // Store the access token in local settings
-            var localSettings = ApplicationData.Current.LocalSettings;
-            localSettings.Values["AccessToken"] = token.Value;
-
-            // Get the role from token and store it in local settings
-            var handler = new JwtSecurityTokenHandler();
-            var jwtToken = handler.ReadJwtToken(token.Value);
-
-            // Extract the scope claim
-            var userRole = jwtToken.Claims.FirstOrDefault(c => c.Type == "scope")?.Value;
-
-            if (userRole != null)
+            if (!apiResponse.IsSuccessStatusCode)
             {
-                // Store the scope in local settings
-                localSettings.Values["UserRole"] = userRole;
+                await _httpService.HandleErrorResponse(apiResponse);
+                return false;
             }
 
-            await GetAccountAsync();
+            var responseContent = await apiResponse.Content.ReadAsStringAsync();
+            var responseData = JsonSerializer.Deserialize<ApiResponse<Token>>(responseContent);
+            System.Diagnostics.Debug.WriteLine($"Response Content: {responseContent}");
 
-            return true;
+            if (responseData != null)
+            {
+                var token = responseData.Data;
+                var localSettings = ApplicationData.Current.LocalSettings;
+                localSettings.Values["AccessToken"] = token.Value;
+
+                var handler = new JwtSecurityTokenHandler();
+                var jwtToken = handler.ReadJwtToken(token.Value);
+                var userRole = jwtToken.Claims.FirstOrDefault(c => c.Type == "scope")?.Value;
+
+                if (userRole != null)
+                {
+                    localSettings.Values["UserRole"] = userRole;
+                }
+
+                await GetAccountAsync();
+                return true;
+            }
+            else
+            {
+                await _dialogService.ShowErrorAsync("Error", "Error response data");
+            }
         }
-        else
+        catch (HttpRequestException ex)
         {
-            // Show error dialog if response data is null
-            await _dialogService.ShowErrorAsync("Error", "Error response data");
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
+        }
+        catch (Exception ex)
+        {
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
         }
 
         return false;
@@ -183,7 +178,7 @@ public class AuthService : IAuthService
         catch (HttpRequestException ex)
         {
             // Handle HTTP request exceptions
-            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null!;
         }
         catch (Exception ex)
@@ -317,7 +312,7 @@ public class AuthService : IAuthService
         catch (HttpRequestException ex)
         {
             // Handle HTTP request exceptions
-            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null!;
         }
         catch (Exception ex)
@@ -410,21 +405,32 @@ public class AuthService : IAuthService
     /// </exception>
     public async Task<bool> Register(RegistrationRequest registrationRequest)
     {
-        var json = JsonSerializer.Serialize(registrationRequest);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        var token = GetAccessToken();
-        _httpService.AddTokenToHeader(token, _httpClient);
-
-        // Send registration request as JSON and get response
-        var apiResponse = await _httpClient.PostAsync(_httpClient.BaseAddress + "/register", content);
-
-        if (!apiResponse.IsSuccessStatusCode)
+        try
         {
-            await _httpService.HandleErrorResponse(apiResponse);
-            return false;
+            var json = JsonSerializer.Serialize(registrationRequest);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var apiResponse = await _httpClient.PostAsync(_httpClient.BaseAddress + "/register", content);
+
+            var token = GetAccessToken();
+            _httpService.AddTokenToHeader(token, _httpClient);
+
+            if (!apiResponse.IsSuccessStatusCode)
+            {
+                await _httpService.HandleErrorResponse(apiResponse);
+                return false;
+            }
+
+            return true;
+        }
+        catch (HttpRequestException ex)
+        {
+            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
+        }
+        catch (Exception ex)
+        {
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
         }
 
-        return true;
+        return false;
     }
 }

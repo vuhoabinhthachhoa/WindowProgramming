@@ -66,12 +66,12 @@ public partial class LoginViewModel : ObservableRecipient
                    "Success",
                    "Login successful!");
             }
-            else
-            {
-                await _dialogService.ShowErrorAsync(
-                   "Login Failed",
-                   "Invalid username or password.");
-            }
+            //else
+            //{
+            //    await _dialogService.ShowErrorAsync(
+            //       "Login Failed",
+            //       "Invalid username or password.");
+            //}
         }
         catch (Exception ex)
         {

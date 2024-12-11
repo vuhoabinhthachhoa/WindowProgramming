@@ -409,7 +409,7 @@ public class ProductService : IProductService
         catch (HttpRequestException ex)
         {
             // Handle HTTP request exceptions
-            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null;
         }
         catch (Exception ex)
