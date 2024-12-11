@@ -10,6 +10,7 @@ using Sale_Project.ViewModels;
 using System.Text.Json;
 using Sale_Project.Core.Models.Invoices;
 using Sale_Project.Core.Models.Products;
+using Sale_Project.Helpers;
 
 namespace Sale_Project.Tests.MSTest.ViewModels;
 

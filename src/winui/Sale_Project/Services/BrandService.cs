@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Microsoft.UI.Xaml.Controls;
 using Sale_Project.Core.Models;
-using Sale_Project.Core.Models.Employee;
-using Sale_Project.Core.Models.Product;
+using Sale_Project.Core.Models.Employees;
+using Sale_Project.Core.Models.Products;
 using Sale_Project.Helpers;
 
 /// <summary>

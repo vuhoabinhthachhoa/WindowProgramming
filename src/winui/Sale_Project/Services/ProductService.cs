@@ -9,10 +9,11 @@ using Sale_Project.Contracts.Services;
 namespace Sale_Project.Services;
 
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Controls;
 using Sale_Project.Core.Models;
-using Sale_Project.Core.Models.Product;
+using Sale_Project.Core.Models.Products;
 using Sale_Project.Helpers;
 
 /// <summary>
@@ -347,6 +348,73 @@ public class ProductService : IProductService
         }
         catch (Exception ex)
         {
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Retrieves a product by its name by sending a request to the server.
+    /// </summary>
+    /// <param name="name">The name of the product to search for.</param>
+    /// <returns>
+    /// A <see cref="Task{Product}"/> representing the asynchronous operation. 
+    /// Returns the first matching <see cref="Product"/> if found; otherwise, <c>null</c>.
+    /// </returns>
+    /// <remarks>
+    /// This method performs the following operations:
+    /// <list type="number">
+    /// <item>Retrieves the access token and adds it to the HTTP headers.</item>
+    /// <item>Sends a GET request with the product name as a query parameter.</item>
+    /// <item>Handles server responses, including errors.</item>
+    /// <item>Deserializes the server response into a list of products and returns the first one if available.</item>
+    /// </list>
+    /// </remarks>
+    public async Task<List<Product>> GetProductByName(string name)
+    {
+        try
+        {
+            // Retrieve the access token
+            var token = _authService.GetAccessToken();
+            // Add the token to the HTTP headers
+            _httpService.AddTokenToHeader(token, _httpClient);
+
+            // Construct the request URL with the product name as a query parameter
+            var requestUrl = $"{_httpClient.BaseAddress}/searchByName?name={name}";
+            var apiResponse = await _httpClient.GetAsync(requestUrl);
+
+            // Handle unsuccessful response
+            if (!apiResponse.IsSuccessStatusCode)
+            {
+                await _httpService.HandleErrorResponse(apiResponse);
+                return null;
+            }
+
+            // Read the response content as a string
+            var responseContent = await apiResponse.Content.ReadAsStringAsync();
+
+            // Configure JSON deserialization options
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true, // Allows case-insensitive property matching
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull // Ignores null properties
+            };
+
+            // Deserialize the server response into a list of products
+            var responseData = JsonSerializer.Deserialize<ApiResponse<List<Product>>>(responseContent, options);
+
+            // Return the first matching product or null if no products found
+            return responseData?.Data;
+        }
+        catch (HttpRequestException ex)
+        {
+            // Handle HTTP request exceptions
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            return null;
+        }
+        catch (Exception ex)
+        {
+            // Handle general exceptions
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }

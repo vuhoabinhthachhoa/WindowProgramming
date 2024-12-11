@@ -10,7 +10,7 @@ using Sale_Project.Helpers;
 using Microsoft.UI.Xaml.Navigation;
 using Sale_Project;
 using Windows.Storage.Pickers;
-using Sale_Project.Core.Models.Product;
+using Sale_Project.Core.Models.Products;
 using Microsoft.UI.Xaml.Media.Imaging;
 
 /// <summary>

@@ -120,7 +120,7 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" Margin="0,0,20,0">
             <Grid>
                 <StackPanel>
-                    <StackPanel Style="{StaticResource FieldContainerStyle}">
+                    <StackPanel Style="{StaticResource FieldContainerStyle}" Width="200" HorizontalAlignment="Left">
                         <TextBlock Text="Business Status" />
                         <ComboBox 
               SelectedItem="{Binding ProductSearchRequest.BusinessStatus, Mode=TwoWay, Converter={StaticResource BusinessStatusConverter}}">
@@ -145,28 +145,28 @@
                             </ComboBox.Items>
                         </ComboBox>
                     </StackPanel>
-    
-                    <StackPanel Style="{StaticResource FieldContainerStyle}">
+
+                    <StackPanel Style="{StaticResource FieldContainerStyle}" Width="200" HorizontalAlignment="Left">
                         <TextBlock Text="Product Code" />
                         <TextBox Text="{Binding ProductSearchRequest.Code, Mode=TwoWay}" PlaceholderText=""/>
                     </StackPanel>
 
-                    <StackPanel Style="{StaticResource FieldContainerStyle}">
+                    <StackPanel Style="{StaticResource FieldContainerStyle}" Width="200" HorizontalAlignment="Left">
                         <TextBlock Text="Product Name" />
                         <TextBox Text="{Binding ProductSearchRequest.Name, Mode=TwoWay}" PlaceholderText=""/>
                     </StackPanel>
 
-                    <StackPanel Style="{StaticResource FieldContainerStyle}">
+                    <StackPanel Style="{StaticResource FieldContainerStyle}" Width="200" HorizontalAlignment="Left">
                         <TextBlock Text="Category Name" />
                         <ComboBox ItemsSource="{Binding Categories, Mode=OneWay}" SelectedValue="{Binding ProductSearchRequest.CategoryName, Mode=TwoWay}" Text="{Binding ProductSearchRequest.CategoryName, Mode=TwoWay}"/>
                     </StackPanel>
 
-                    <StackPanel Style="{StaticResource FieldContainerStyle}">
+                    <StackPanel Style="{StaticResource FieldContainerStyle}" Width="200" HorizontalAlignment="Left">
                         <TextBlock Text="Brand Name" />
                         <ComboBox ItemsSource="{Binding Brands, Mode=OneWay}" SelectedValue="{Binding ProductSearchRequest.BrandName, Mode=TwoWay}" Text="{Binding ProductSearchRequest.BrandName, Mode=TwoWay}"/>
                     </StackPanel>
 
-                    <StackPanel Style="{StaticResource FieldContainerStyle}">
+                    <StackPanel Style="{StaticResource FieldContainerStyle}" Width="200" HorizontalAlignment="Left">
                         <TextBlock Text="Selling Price" />
                         <StackPanel>
                             <NumberBox Header="From" Style="{StaticResource NumberBoxStyle}"
@@ -176,7 +176,7 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <StackPanel Style="{StaticResource FieldContainerStyle}">
+                    <StackPanel Style="{StaticResource FieldContainerStyle}" Width="200" HorizontalAlignment="Left">
                         <TextBlock Text="Import Price" />
                         <StackPanel>
                             <NumberBox Header="From" Style="{StaticResource NumberBoxStyle}"
@@ -186,7 +186,7 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <StackPanel Style="{StaticResource FieldContainerStyle}">
+                    <StackPanel Style="{StaticResource FieldContainerStyle}" Width="200" HorizontalAlignment="Left">
                         <TextBlock Text="Inventory Quantity" />
                         <StackPanel>
                             <NumberBox Header="From" Style="{StaticResource NumberBoxStyle}"
@@ -197,7 +197,7 @@
                     </StackPanel>
                     
                     
-                    <StackPanel Style="{StaticResource FieldContainerStyle}">
+                    <StackPanel Style="{StaticResource FieldContainerStyle}" Width="200" HorizontalAlignment="Left">
                         <TextBlock Text="Discount Percent" />
                         <StackPanel>
                             <NumberBox Header="From" Style="{StaticResource NumberBoxStyle}"

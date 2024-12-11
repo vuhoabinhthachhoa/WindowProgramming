@@ -11,11 +11,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\UserControl\ProductUserControl.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Update="Views\ProductAddPage.xaml">
       <SubType>Designer</SubType>

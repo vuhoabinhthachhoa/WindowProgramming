@@ -19,10 +19,8 @@
 
 	<ItemGroup>
 		<None Remove="Views\LoginPage.xaml" />
-		<None Remove="Views\UserControl\EmployeeUserControl.xaml" />
 		<None Remove="Views\ProductAddPage.xaml" />
 		<None Remove="Views\ProductUpdatePage.xaml" />
-		<None Remove="Views\UserControl\ProductUserControl.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -54,9 +52,6 @@
 			<Generator>MSBuild:Compile</Generator>
 		</Page>
 		<Page Update="Views\ProductUpdatePage.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-		<Page Update="Views\UserControl\ProductUserControl.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</Page>
 		<Page Update="Views\ProductAddPage.xaml">
