@@ -259,4 +259,9 @@ public class Product : INotifyPropertyChanged
             }
         }
     }
+
+    public override string ToString()
+    {
+        return string.Empty;
+    }
 }
