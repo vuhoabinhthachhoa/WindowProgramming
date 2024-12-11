@@ -9,6 +9,7 @@ using Sale_Project.Views;
 using Microsoft.UI.Xaml;
 using System.Text.Json;
 using System.Reflection;
+using Sale_Project.Helpers;
 using System.Diagnostics;
 
 namespace Sale_Project.ViewModels;
@@ -39,7 +40,7 @@ public partial class AccountViewModel : ObservableRecipient
     /// </summary>
     public void LoadData()
     {
-        var path = GetJsonFilePath("Districts.json");
+        var path = FileHelper.GetJsonFilePath("Districts.json");
         var districtsJson = File.ReadAllText(path);
         Districts = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(districtsJson)!;
     }
@@ -54,23 +55,23 @@ public partial class AccountViewModel : ObservableRecipient
     /// <exception cref="InvalidOperationException">
     /// Thrown if the path to the "Sale_Project" directory cannot be found.
     /// </exception>
-    public string GetJsonFilePath(string fileName)
-    {
-        var fullPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+    //public string GetJsonFilePath(string fileName)
+    //{
+    //    var fullPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-        var index = fullPath.IndexOf(@"Sale_Project");
+    //    var index = fullPath.IndexOf(@"Sale_Project");
 
-        if (index != -1)
-        {
-            var basePath = fullPath.Substring(0, index);
+    //    if (index != -1)
+    //    {
+    //        var basePath = fullPath.Substring(0, index);
 
-            return Path.Combine(basePath, @"Sale_Project\StaticData\", fileName);
-        }
-        else
-        {
-            throw new InvalidOperationException("Invalid path");
-        }
-    }
+    //        return Path.Combine(basePath, @"Sale_Project\StaticData\", fileName);
+    //    }
+    //    else
+    //    {
+    //        throw new InvalidOperationException("Invalid path");
+    //    }
+    //}
 
     /// <summary>
     /// Loads account data asynchronously by retrieving the account information from the authentication service.

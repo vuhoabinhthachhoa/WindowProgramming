@@ -7,6 +7,7 @@ using Moq;
 using Sale_Project.Contracts.Services;
 using Sale_Project.Core.Models.Accounts;
 using Sale_Project.ViewModels;
+using Sale_Project.Helpers;
 
 namespace Sale_Project.Tests.MSTest.ViewModels;
 
@@ -42,7 +43,7 @@ public class AccountViewModelTest
         var expectedPath = @"Sale_Project\MockData\Test.json";
 
         // Act
-        var result = viewModel.GetJsonFilePath(fileName);
+        var result = FileHelper.GetJsonFilePath(fileName);
 
         // Assert
         StringAssert.Contains(result, expectedPath);
