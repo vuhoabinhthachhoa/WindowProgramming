@@ -18,7 +18,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Remove="Views\CustomerDetailPage.xaml" />
 		<None Remove="Views\LoginPage.xaml" />
 		<None Remove="Views\UserControl\EmployeeUserControl.xaml" />
 		<None Remove="Views\ProductAddPage.xaml" />
@@ -52,9 +51,6 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<Page Update="Views\LoginPage.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-		<Page Update="Views\CustomerDetailPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</Page>
 		<Page Update="Views\ProductUpdatePage.xaml">
