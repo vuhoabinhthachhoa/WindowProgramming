@@ -10,6 +10,9 @@ using Sale_Project.Helpers;
 using Sale_Project.Core.Models.Employees;
 
 
+/// <summary>
+/// ViewModel for updating an employee.
+/// </summary>
 public partial class EmployeeUpdateViewModel : ObservableObject, INavigationAware
 {
     private readonly IEmployeeService _employeeService;
@@ -20,29 +23,50 @@ public partial class EmployeeUpdateViewModel : ObservableObject, INavigationAwar
     [ObservableProperty]
     private Employee _currentEmployee;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EmployeeUpdateViewModel"/> class.
+    /// </summary>
+    /// <param name="employeeService">The employee service.</param>
+    /// <param name="navigationService">The navigation service.</param>
+    /// <param name="dialogService">The dialog service.</param>
+    /// <param name="employeeValidator">The employee validator.</param>
     public EmployeeUpdateViewModel(IEmployeeService employeeService, INavigationService navigationService, IDialogService dialogService, EmployeeValidator employeeValidator)
     {
         _employeeService = employeeService;
         _navigationService = navigationService;
         _dialogService = dialogService;
-        _employeeValidator = employeeValidator; 
+        _employeeValidator = employeeValidator;
     }
 
+    /// <summary>
+    /// Called when navigated to the view.
+    /// </summary>
+    /// <param name="parameter">The navigation parameter.</param>
     public async void OnNavigatedTo(object parameter)
     {
-       CurrentEmployee = await _employeeService.GetEmployeeById((long)parameter);
+        CurrentEmployee = await _employeeService.GetEmployeeById((long)parameter);
     }
 
+    /// <summary>
+    /// Called when navigated from the view.
+    /// </summary>
     public void OnNavigatedFrom()
     {
         CurrentEmployee = null;
     }
 
+    /// <summary>
+    /// Navigates back to the previous view.
+    /// </summary>
     public void GoBack()
     {
         _navigationService.NavigateTo(typeof(EmployeeViewModel).FullName!);
     }
 
+    /// <summary>
+    /// Updates the current employee.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     public async Task UpdateEmployee()
     {
         if (!_employeeValidator.Validate(CurrentEmployee))
@@ -50,7 +74,7 @@ public partial class EmployeeUpdateViewModel : ObservableObject, INavigationAwar
             return;
         }
         Employee employee = await _employeeService.UpdateEmployee(CurrentEmployee);
-        if(employee == null)
+        if (employee == null)
         {
             return;
         }
@@ -58,6 +82,10 @@ public partial class EmployeeUpdateViewModel : ObservableObject, INavigationAwar
         CurrentEmployee = employee;
     }
 
+    /// <summary>
+    /// Marks the current employee as unemployed.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     public async Task MarkEmployeeUnemployed()
     {
         bool confirm = await _dialogService.ShowConfirmAsync("Confirm", "Are you sure you want to mark this employee as unemployed?");
@@ -77,3 +105,4 @@ public partial class EmployeeUpdateViewModel : ObservableObject, INavigationAwar
         await _dialogService.ShowSuccessAsync("Success", "Employee marked as unemployed successfully.");
     }
 }
+

@@ -14,6 +14,9 @@ using Sale_Project.Core.Models;
 using Sale_Project.Core.Models.Employees;
 using Sale_Project.Helpers;
 
+/// <summary>
+/// Service class for managing employees.
+/// </summary>
 public class EmployeeService : IEmployeeService
 {
     private readonly HttpClient _httpClient;
@@ -21,6 +24,13 @@ public class EmployeeService : IEmployeeService
     private readonly IAuthService _authService;
     private readonly IDialogService _dialogService;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EmployeeService"/> class.
+    /// </summary>
+    /// <param name="httpClient">The HTTP client.</param>
+    /// <param name="httpService">The HTTP service.</param>
+    /// <param name="authService">The authentication service.</param>
+    /// <param name="dialogService">The dialog service.</param>
     public EmployeeService(HttpClient httpClient, IHttpService httpService, IAuthService authService, IDialogService dialogService)
     {
         _httpClient = httpClient;
@@ -29,7 +39,12 @@ public class EmployeeService : IEmployeeService
         _authService = authService;
         _dialogService = dialogService;
     }
-    // Add a new employee to the system
+
+    /// <summary>
+    /// Adds a new employee to the system.
+    /// </summary>
+    /// <param name="employeeCreationRequest">The employee creation request.</param>
+    /// <returns>The created employee.</returns>
     public async Task<Employee> AddEmployee(EmployeeCreationRequest employeeCreationRequest)
     {
         try
@@ -40,7 +55,6 @@ public class EmployeeService : IEmployeeService
             var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
 
-            // Send login request as JSON and get response
             var apiResponse = await _httpClient.PostAsync(_httpClient.BaseAddress, content);
 
             if (!apiResponse.IsSuccessStatusCode)
@@ -49,30 +63,28 @@ public class EmployeeService : IEmployeeService
                 return null;
             }
 
-            // Read the response content as a string
             var responseContent = await apiResponse.Content.ReadAsStringAsync();
-
-            // Deserialize the response content to the appropriate type
             var responseData = JsonSerializer.Deserialize<ApiResponse<Employee>>(responseContent);
 
             return responseData.Data;
         }
         catch (HttpRequestException ex)
         {
-            // Handle or log the exception as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
         catch (Exception ex)
         {
-            // Handle or log other exceptions as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
-        
     }
 
-    // Mark an employee as unemployed (inactive)
+    /// <summary>
+    /// Marks an employee as unemployed (inactive).
+    /// </summary>
+    /// <param name="employeeId">The employee identifier.</param>
+    /// <returns>True if the operation was successful; otherwise, false.</returns>
     public async Task<bool> UnemployedEmployee(long employeeId)
     {
         try
@@ -80,10 +92,7 @@ public class EmployeeService : IEmployeeService
             var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
 
-            // Prepare the request URL
             var requestUrl = $"{_httpClient.BaseAddress}/status/unemployed?employeeId={employeeId}";
-
-            // Send the PATCH request
             var apiResponse = await _httpClient.PatchAsync(requestUrl, null);
 
             if (!apiResponse.IsSuccessStatusCode)
@@ -95,38 +104,35 @@ public class EmployeeService : IEmployeeService
         }
         catch (HttpRequestException ex)
         {
-            // Handle or log the exception as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return false;
         }
         catch (Exception ex)
         {
-            // Handle or log other exceptions as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return false;
         }
-        
     }
 
-    // Update an existing employee's details
+    /// <summary>
+    /// Updates an existing employee's details.
+    /// </summary>
+    /// <param name="employee">The employee to update.</param>
+    /// <returns>The updated employee.</returns>
     public async Task<Employee> UpdateEmployee(Employee employee)
     {
         try
         {
-            // remove the time and timezone from the dateOfBirth
             var options = new JsonSerializerOptions
             {
                 Converters = { new DateTimeConverter() }
             };
             var json = JsonSerializer.Serialize(employee, options);
-
-
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
 
-            // Send login request as JSON and get response
             var apiResponse = await _httpClient.PutAsync(_httpClient.BaseAddress, content);
 
             if (!apiResponse.IsSuccessStatusCode)
@@ -135,30 +141,27 @@ public class EmployeeService : IEmployeeService
                 return null;
             }
 
-            // Read the response content as a string
             var responseContent = await apiResponse.Content.ReadAsStringAsync();
-
-            // Deserialize the response content to the appropriate type
             var responseData = JsonSerializer.Deserialize<ApiResponse<Employee>>(responseContent);
 
             return responseData.Data;
         }
         catch (HttpRequestException ex)
         {
-            // Handle or log the exception as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
         catch (Exception ex)
         {
-            // Handle or log other exceptions as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
-
-       
     }
 
+    /// <summary>
+    /// Gets all employees.
+    /// </summary>
+    /// <returns>A list of all employees.</returns>
     public async Task<IEnumerable<Employee>> GetAllEmployees()
     {
         try
@@ -173,29 +176,32 @@ public class EmployeeService : IEmployeeService
                 return null;
             }
 
-            // Read the response content as a string
             var responseContent = await apiResponse.Content.ReadAsStringAsync();
-
-            // Deserialize the response content to the appropriate type
             var responseData = JsonSerializer.Deserialize<ApiResponse<List<Employee>>>(responseContent);
 
             return responseData?.Data;
         }
         catch (HttpRequestException ex)
         {
-            // Handle or log the exception as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
         catch (Exception ex)
         {
-            // Handle or log other exceptions as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
-        
     }
 
+    /// <summary>
+    /// Searches for employees based on the specified criteria.
+    /// </summary>
+    /// <param name="page">The page number.</param>
+    /// <param name="size">The page size.</param>
+    /// <param name="sortField">The field to sort by.</param>
+    /// <param name="sortType">The sort type (ascending or descending).</param>
+    /// <param name="employeeSearchRequest">The employee search request.</param>
+    /// <returns>A page of employees matching the search criteria.</returns>
     public async Task<PageData<Employee>> SearchEmployees(int page, int size, string sortField, SortType sortType, EmployeeSearchRequest employeeSearchRequest)
     {
         try
@@ -203,31 +209,23 @@ public class EmployeeService : IEmployeeService
             var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
 
-            // Construct query parameters for pagination and sorting
             var queryParams = new Dictionary<string, string>
-        {
-            { "page", page.ToString() },
-            { "size", size.ToString() },
-            { "sortField", sortField },
-            { "sortType", sortType.ToString() }
-        };
+            {
+                { "page", page.ToString() },
+                { "size", size.ToString() },
+                { "sortField", sortField },
+                { "sortType", sortType.ToString() }
+            };
 
-            // Build the query string
             var queryString = string.Join("&", queryParams.Select(kvp => $"{kvp.Key}={Uri.EscapeDataString(kvp.Value)}"));
-
-            // Prepare the HTTP request URL
             var requestUrl = $"{_httpClient.BaseAddress}/search?{queryString}";
 
-            // Serialize the EmployeeSearchRequest object into JSON
             var requestBody = JsonSerializer.Serialize(employeeSearchRequest);
-
-            // Manually create the GET request with a body
             var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUrl)
             {
                 Content = new StringContent(requestBody, Encoding.UTF8, "application/json")
             };
 
-            // Send the GET request
             var apiResponse = await _httpClient.SendAsync(httpRequestMessage);
 
             if (!apiResponse.IsSuccessStatusCode)
@@ -236,7 +234,6 @@ public class EmployeeService : IEmployeeService
                 return null;
             }
 
-            // Read and deserialize the response content
             var responseContent = await apiResponse.Content.ReadAsStringAsync();
             var responseData = JsonSerializer.Deserialize<ApiResponse<PageData<Employee>>>(responseContent);
 
@@ -244,20 +241,21 @@ public class EmployeeService : IEmployeeService
         }
         catch (HttpRequestException ex)
         {
-            // Handle or log the exception as needed
-           await _dialogService.ShowErrorAsync("Error", ex.Message);
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
         catch (Exception ex)
         {
-            // Handle or log other exceptions as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
-
-       
     }
 
+    /// <summary>
+    /// Gets an employee by their identifier.
+    /// </summary>
+    /// <param name="employeeId">The employee identifier.</param>
+    /// <returns>The employee with the specified identifier.</returns>
     public async Task<Employee> GetEmployeeById(long employeeId)
     {
         try
@@ -265,9 +263,7 @@ public class EmployeeService : IEmployeeService
             var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
 
-            // Append the employeeId to the request URL
             var requestUrl = $"{_httpClient.BaseAddress}?employeeId={employeeId}";
-
             var apiResponse = await _httpClient.GetAsync(requestUrl);
 
             if (!apiResponse.IsSuccessStatusCode)
@@ -276,29 +272,21 @@ public class EmployeeService : IEmployeeService
                 return null;
             }
 
-            // Read the response content as a string
             var responseContent = await apiResponse.Content.ReadAsStringAsync();
-
-            // Deserialize the response content to the appropriate type
             var responseData = JsonSerializer.Deserialize<ApiResponse<Employee>>(responseContent);
 
             return responseData?.Data;
         }
         catch (HttpRequestException ex)
         {
-            // Handle or log the exception as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
         catch (Exception ex)
         {
-            // Handle or log other exceptions as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
-        
     }
-
-
 }
 

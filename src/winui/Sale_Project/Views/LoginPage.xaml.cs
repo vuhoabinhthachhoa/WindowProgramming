@@ -13,16 +13,23 @@ using Microsoft.UI.Xaml.Input;
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace Sale_Project.Views;
+
 /// <summary>
-/// An empty page that can be used on its own or navigated to within a Frame.
+/// Represents the login page of the application.
 /// </summary>
 public sealed partial class LoginPage : Page
 {
+    /// <summary>
+    /// Gets the view model for the login page.
+    /// </summary>
     public LoginViewModel ViewModel
     {
         get;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LoginPage"/> class.
+    /// </summary>
     public LoginPage()
     {
         ViewModel = App.GetService<LoginViewModel>();
@@ -30,6 +37,11 @@ public sealed partial class LoginPage : Page
         LoadCredentials();
     }
 
+    /// <summary>
+    /// Handles the click event of the login button.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The event data.</param>
     private async void LoginButton_Click(object sender, RoutedEventArgs e)
     {
         var username = UsernameBox.Text;
@@ -47,19 +59,9 @@ public sealed partial class LoginPage : Page
         await ViewModel.LoginAsync(username, password);
     }
 
-    //private void RegisterButtonTextBlock_OnPointerPressed(Object sender, PointerRoutedEventArgs e)
-    //{
-    //    RegisterFeature.Visibility = Visibility.Visible;
-    //    LoginFeature.Visibility = Visibility.Collapsed;
-    //}
-
-    //private void LoginButtonTextBlock_OnPointerPressed(Object sender, PointerRoutedEventArgs e)
-    //{
-    //    RegisterFeature.Visibility = Visibility.Collapsed;
-    //    LoginFeature.Visibility = Visibility.Visible;
-    //}
-
-
+    /// <summary>
+    /// Loads the saved credentials from local settings.
+    /// </summary>
     private void LoadCredentials()
     {
         var localSettings = ApplicationData.Current.LocalSettings;
@@ -71,6 +73,10 @@ public sealed partial class LoginPage : Page
         }
     }
 
+    /// <summary>
+    /// Loads the saved password from local settings.
+    /// </summary>
+    /// <param name="localSettings">The local settings container.</param>
     private void LoadPassword(ApplicationDataContainer localSettings)
     {
         if (localSettings.Values.ContainsKey("password") && localSettings.Values.ContainsKey("entropy"))
@@ -90,6 +96,11 @@ public sealed partial class LoginPage : Page
         }
     }
 
+    /// <summary>
+    /// Saves the credentials to local settings.
+    /// </summary>
+    /// <param name="username">The username to save.</param>
+    /// <param name="password">The password to save.</param>
     private void SaveCredentials(string username, string password)
     {
         var passwordInBytes = Encoding.UTF8.GetBytes(password);
@@ -113,6 +124,9 @@ public sealed partial class LoginPage : Page
         localSettings.Values["entropy"] = entropyInBase64;
     }
 
+    /// <summary>
+    /// Removes the saved credentials from local settings.
+    /// </summary>
     private void RemoveCredentials()
     {
         var localSettings = ApplicationData.Current.LocalSettings;

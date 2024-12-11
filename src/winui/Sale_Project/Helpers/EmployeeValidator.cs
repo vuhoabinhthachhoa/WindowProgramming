@@ -7,13 +7,27 @@ using Sale_Project.Contracts.Services;
 using Sale_Project.Core.Models.Employees;
 
 namespace Sale_Project.Helpers;
+/// <summary>
+/// Provides validation methods for Employee objects.
+/// </summary>
 public class EmployeeValidator
 {
     private readonly IDialogService _dialogService;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EmployeeValidator"/> class.
+    /// </summary>
+    /// <param name="dialogService">The dialog service to show error messages.</param>
     public EmployeeValidator(IDialogService dialogService)
     {
         _dialogService = dialogService;
     }
+
+    /// <summary>
+    /// Validates the specified employee.
+    /// </summary>
+    /// <param name="employee">The employee to validate.</param>
+    /// <returns><c>true</c> if the employee is valid; otherwise, <c>false</c>.</returns>
     public bool Validate(Employee employee)
     {
         if (!IsValidNumericValue(employee.Id))
@@ -44,7 +58,11 @@ public class EmployeeValidator
         return true;
     }
 
-    // Helper method to validate salary
+    /// <summary>
+    /// Determines whether the specified value is a valid numeric value.
+    /// </summary>
+    /// <param name="value">The value to validate.</param>
+    /// <returns><c>true</c> if the value is valid; otherwise, <c>false</c>.</returns>
     public bool IsValidNumericValue(double? value)
     {
         return value.HasValue &&
@@ -53,3 +71,4 @@ public class EmployeeValidator
                value.Value >= 0;
     }
 }
+

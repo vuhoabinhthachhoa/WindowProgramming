@@ -7,13 +7,27 @@ using Sale_Project.Contracts.Services;
 using Sale_Project.Core.Models.Products;
 
 namespace Sale_Project.Helpers;
+/// <summary>
+/// Provides validation methods for Product objects.
+/// </summary>
 public class ProductValidator
 {
     private readonly IDialogService _dialogService;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ProductValidator"/> class.
+    /// </summary>
+    /// <param name="dialogService">The dialog service to show error messages.</param>
     public ProductValidator(IDialogService dialogService)
     {
         _dialogService = dialogService;
     }
+
+    /// <summary>
+    /// Validates the specified product.
+    /// </summary>
+    /// <param name="product">The product to validate.</param>
+    /// <returns><c>true</c> if the product is valid; otherwise, <c>false</c>.</returns>
     public bool Validate(Product product)
     {
         if (!IsValidNumericValue(product.Id))
@@ -59,7 +73,11 @@ public class ProductValidator
         return true;
     }
 
-    // Helper method to validate salary
+    /// <summary>
+    /// Determines whether the specified value is a valid numeric value.
+    /// </summary>
+    /// <param name="value">The value to validate.</param>
+    /// <returns><c>true</c> if the value is valid; otherwise, <c>false</c>.</returns>
     public bool IsValidNumericValue(double? value)
     {
         return value.HasValue &&
@@ -68,3 +86,4 @@ public class ProductValidator
                value.Value >= 0;
     }
 }
+

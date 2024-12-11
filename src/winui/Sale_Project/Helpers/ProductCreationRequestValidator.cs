@@ -7,14 +7,27 @@ using Sale_Project.Contracts.Services;
 using Sale_Project.Core.Models.Products;
 
 namespace Sale_Project.Helpers;
+/// <summary>
+/// Validates the product creation request.
+/// </summary>
 public class ProductCreationRequestValidator
 {
-
     private readonly IDialogService _dialogService;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ProductCreationRequestValidator"/> class.
+    /// </summary>
+    /// <param name="dialogService">The dialog service.</param>
     public ProductCreationRequestValidator(IDialogService dialogService)
     {
         _dialogService = dialogService;
     }
+
+    /// <summary>
+    /// Validates the specified product creation request.
+    /// </summary>
+    /// <param name="productCreationRequest">The product creation request.</param>
+    /// <returns><c>true</c> if the request is valid; otherwise, <c>false</c>.</returns>
     public bool Validate(ProductCreationRequest productCreationRequest)
     {
         if (string.IsNullOrWhiteSpace(productCreationRequest.Data.Name))
@@ -60,7 +73,11 @@ public class ProductCreationRequestValidator
         return true;
     }
 
-    // Helper method to validate numeric value
+    /// <summary>
+    /// Determines whether the specified value is a valid numeric value.
+    /// </summary>
+    /// <param name="value">The value to validate.</param>
+    /// <returns><c>true</c> if the value is valid; otherwise, <c>false</c>.</returns>
     public bool IsValidNumericValue(double? value)
     {
         return value.HasValue &&

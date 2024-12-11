@@ -11,12 +11,21 @@ using System.Threading.Tasks;
 using Sale_Project.Views;
 
 namespace Sale_Project.ViewModels;
+/// <summary>
+/// ViewModel for handling login functionality.
+/// </summary>
 public partial class LoginViewModel : ObservableRecipient
 {
     private readonly IAuthService _authService;
     private readonly INavigationService _navigationService;
     private readonly IDialogService _dialogService;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LoginViewModel"/> class.
+    /// </summary>
+    /// <param name="authService">The authentication service.</param>
+    /// <param name="navigationService">The navigation service.</param>
+    /// <param name="dialogService">The dialog service.</param>
     public LoginViewModel(IAuthService authService, INavigationService navigationService, IDialogService dialogService)
     {
         _authService = authService;
@@ -24,6 +33,12 @@ public partial class LoginViewModel : ObservableRecipient
         _dialogService = dialogService;
     }
 
+    /// <summary>
+    /// Attempts to log in with the provided username and password.
+    /// </summary>
+    /// <param name="username">The username.</param>
+    /// <param name="password">The password.</param>
+    /// <returns>A task that represents the asynchronous login operation.</returns>
     public async Task LoginAsync(string username, string password)
     {
         try
@@ -39,16 +54,6 @@ public partial class LoginViewModel : ObservableRecipient
             var loginSuccessful = await _authService.LoginAsync(username, password);
             if (loginSuccessful)
             {
-
-                //var uiManager = App.GetService<UIManagerService>();
-
-                //if (uiManager.ShellPage != null)
-                //{
-                //    uimanager.shellpage.startup.visibility = visibility.collapsed;
-                //    uimanager.shellpage.main.visibility = visibility.visible;
-
-                //}
-                //_navigationService.NavigateTo(typeof(DashboardViewModel).FullName!);
                 var shell = App.GetService<ShellPage>();
                 App.MainWindow.Content = shell;
 
@@ -61,7 +66,6 @@ public partial class LoginViewModel : ObservableRecipient
                    "Success",
                    "Login successful!");
             }
-
             else
             {
                 await _dialogService.ShowErrorAsync(
@@ -85,8 +89,5 @@ public partial class LoginViewModel : ObservableRecipient
 
             await errorDialog.ShowAsync();
         }
-
-
     }
-
 }
