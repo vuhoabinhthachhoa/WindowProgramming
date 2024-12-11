@@ -343,6 +343,7 @@ public class AuthService : IAuthService
         // Remove the AccessToken and UserRole
         localSettings.Values.Remove("AccessToken");
         localSettings.Values.Remove("UserRole");
+        localSettings.Values.Remove("EmployeeId");
 
         // Optionally, you can log this action for debugging
         System.Diagnostics.Debug.WriteLine("AccessToken and UserRole removed from LocalSettings.");
