@@ -248,7 +248,9 @@
                 <controls:DataGridTemplateColumn Header="Business Status" Tag="BusinessStatus">
                     <controls:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock VerticalAlignment="Center" Text="{Binding BusinessStatus, Converter={StaticResource BusinessStatusConverter}}"/>
+                            <TextBlock VerticalAlignment="Center" Text="{Binding BusinessStatus, Converter={StaticResource BusinessStatusConverter}}"
+                                       HorizontalAlignment="Center" 
+                                       />
                         </DataTemplate>
                     </controls:DataGridTemplateColumn.CellTemplate>
                 </controls:DataGridTemplateColumn>
@@ -259,15 +261,21 @@
 
         <!-- Pagination -->
         <StackPanel Height="40" Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
-            <AppBarButton Click="PreviousButton_Click" Width="50" Style="{StaticResource PrimaryButtonStyle}">
-                <FontIcon Glyph="&#xE72B;"/>
-            </AppBarButton>
+            <Button Click="PreviousButton_Click" Width="50" BorderThickness="0" HorizontalAlignment="Center"
+                  Background="#4BAC4D" FontWeight="SemiBold" Foreground="White">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE72B;" />
+                </StackPanel>
+            </Button>
             <TextBlock VerticalAlignment="Center" Margin="10,0" FontSize="14" Foreground="#2C3E50">
                 <Run Text="{x:Bind ViewModel.CurrentPage, Mode=OneWay}" />/<Run Text="{x:Bind ViewModel.TotalPages, Mode=OneWay}" />
             </TextBlock>
-            <AppBarButton Click="NextButton_Click" Width="50" Style="{StaticResource PrimaryButtonStyle}">
-                <FontIcon Glyph="&#xE72A;" />
-            </AppBarButton>
+            <Button Click="NextButton_Click" Width="50" BorderThickness="0" HorizontalAlignment="Center" 
+                    Background="#4BAC4D" FontWeight="SemiBold" Foreground="White">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE72A;" />
+                </StackPanel>
+            </Button>
         </StackPanel>
         <StackPanel Height="40" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2">
             <TextBlock Name="infoTextBlock" Text="{x:Bind ViewModel.Info, Mode=OneWay}"/>
