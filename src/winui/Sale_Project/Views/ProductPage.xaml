@@ -174,7 +174,7 @@
 
                     <StackPanel Style="{StaticResource FieldContainerStyle}" Width="200" HorizontalAlignment="Left">
                         <TextBlock Text="Brand Name" />
-                        <ComboBox ItemsSource="{Binding Brands, Mode=OneWay}" SelectedValue="{Binding ProductSearchRequest.BrandName, Mode=TwoWay}" Text="{Binding ProductSearchRequest.BrandName, Mode=TwoWay}"/>
+                        <ComboBox ItemsSource="{Binding Brands, Mode=OneWay}" SelectedValue="{Binding ProductSearchRequest.BranchName, Mode=TwoWay}" Text="{Binding ProductSearchRequest.BrandName, Mode=TwoWay}"/>
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource FieldContainerStyle}" Width="200" HorizontalAlignment="Left">
