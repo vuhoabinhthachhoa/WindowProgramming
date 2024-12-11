@@ -4,7 +4,7 @@
 
 # Course Project Report - MILESTONE 02
 
-**Notion link for this report:** [CSC 13001 - Window Programming](https://www.notion.so/CSC-13001-Window-Programming-15930d59e49880edb409cfa12e10ac0d?pvs=21)
+**Notion link for this report:** [CSC 13001 - Window Programming](https://quiver-frog-6c1.notion.site/CSC-13001-Window-Programming-15930d59e49880edb409cfa12e10ac0d?pvs=74)
 
 ## Team Members
 
@@ -248,7 +248,7 @@
 2. **Work Process**
     - Team meets regularly at 9 PM every Monday for progress reports and task distribution.
     - Project documentation such as Database schema, features, workflow, and resources are posted on the team's dedicated Notion link.
-        - Notion link: [Notion – The all-in-one workspace for your notes, tasks, wikis, and databases.](https://www.notion.so/Project-Docs-11530d59e49880a6a8ffda0d8df2c4ff?pvs=21)
+        - Notion link: [Notion – The all-in-one workspace for your notes, tasks, wikis, and databases.](https://quiver-frog-6c1.notion.site/Project-Docs-11530d59e49880a6a8ffda0d8df2c4ff?pvs=74)
     - Meeting minutes: [Google Docs](https://docs.google.com/document/d/1PCO1waWsLK8V03GiTuQv9KtMi7uyXxYTcoN9CwUKMBE/edit?usp=sharing)
 3. **Working with Git**
     - Team members commit code to a shared repository.
