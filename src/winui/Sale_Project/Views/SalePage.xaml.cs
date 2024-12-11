@@ -51,8 +51,6 @@ public sealed partial class SalePage : Page
 
             var filteredProducts = products.Where(p =>
                 p.Name.ToLower().Contains(searchText)
-            ).Select(p =>
-                $"• {p.Name}\n   Product ID: {p.Code}\n   Price: {p.SellingPrice:F2}"
             ).ToList();
 
             sender.ItemsSource = filteredProducts;
@@ -65,28 +63,20 @@ public sealed partial class SalePage : Page
     /// </summary>
     /// <param name="sender">The sender of the click event.</param>
     /// <param name="args">The event arguments.</param>
-    private async void SearchProduct_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+    private void SearchProduct_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
     {
-        var selectedProduct = args.SelectedItem as string;
-
-        if (selectedProduct != null)
+        if (args.SelectedItem is Product selectedProduct)
         {
-            var productName = selectedProduct.Split('\n')[0] 
-                                             .Replace("•", "") 
-                                             .Trim();
+            ViewModel.Product = selectedProduct;
 
-            ViewModel.Product = ViewModel.Products.FirstOrDefault(p => p.Name.Equals(productName, StringComparison.OrdinalIgnoreCase));
+            var existingProduct = selectedProducts.FirstOrDefault(p => p.product.Id == ViewModel.Product.Id);
 
-            if (ViewModel.Product != null)
+            if (existingProduct == default)
             {
-                var existingProduct = selectedProducts.FirstOrDefault(p => p.product.Id == ViewModel.Product.Id);
-
-                if (existingProduct == default)
-                {
-                    selectedProducts.Add((ViewModel.Product, 1));
-                    UpdateSelectedItemsDisplay();
-                }
+                selectedProducts.Add((ViewModel.Product, 1));
+                UpdateSelectedItemsDisplay();
             }
+            sender.Text = string.Empty;
         }
     }
 
