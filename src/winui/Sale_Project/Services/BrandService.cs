@@ -17,9 +17,9 @@ using Sale_Project.Core.Models.Product;
 using Sale_Project.Helpers;
 
 /// <summary>
-/// Service for managing branch-related operations such as create, update, deactivate, and retrieve branches.
+/// Service for managing brand-related operations such as create, update, deactivate, and retrieve brands.
 /// </summary>
-public class BranchService : IBranchService
+public class BrandService : IBrandService
 {
     private readonly HttpClient _httpClient;
     private readonly IHttpService _httpService;
@@ -27,9 +27,9 @@ public class BranchService : IBranchService
     private readonly IDialogService _dialogService;
 
     /// <summary>
-    /// Initializes the BranchService with dependencies.
+    /// Initializes the BrandService with dependencies.
     /// </summary>
-    public BranchService(HttpClient httpClient, IHttpService httpService, IAuthService authService, IDialogService dialogService)
+    public BrandService(HttpClient httpClient, IHttpService httpService, IAuthService authService, IDialogService dialogService)
     {
         _httpClient = httpClient;
         _httpClient = new HttpClient { BaseAddress = new Uri(AppConstants.BaseUrl + "/branch") };
@@ -39,13 +39,13 @@ public class BranchService : IBranchService
     }
 
     /// <summary>
-    /// Creates a new branch in the system.
+    /// Creates a new brand in the system.
     /// </summary>
-    public async Task<Branch> CreateBranch(Branch branch)
+    public async Task<Brand> CreateBrand(Brand brand)
     {
         try
         {
-            var json = JsonSerializer.Serialize(branch);
+            var json = JsonSerializer.Serialize(brand);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var token = _authService.GetAccessToken();
@@ -60,7 +60,7 @@ public class BranchService : IBranchService
             }
 
             var responseContent = await apiResponse.Content.ReadAsStringAsync();
-            var responseData = JsonSerializer.Deserialize<ApiResponse<Branch>>(responseContent);
+            var responseData = JsonSerializer.Deserialize<ApiResponse<Brand>>(responseContent);
 
             return responseData.Data;
         }
@@ -77,16 +77,16 @@ public class BranchService : IBranchService
     }
 
     /// <summary>
-    /// Marks a branch as inactive.
+    /// Marks a brand as inactive.
     /// </summary>
-    public async Task<bool> InactiveBranch(string branchName)
+    public async Task<bool> InactiveBrand(string brandName)
     {
         try
         {
             var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
 
-            var requestUrl = $"{_httpClient.BaseAddress}/status/inactive?branchName={branchName}";
+            var requestUrl = $"{_httpClient.BaseAddress}/status/inactive?branchName={brandName}";
             var apiResponse = await _httpClient.PatchAsync(requestUrl, null);
 
             if (!apiResponse.IsSuccessStatusCode)
@@ -109,16 +109,16 @@ public class BranchService : IBranchService
     }
 
     /// <summary>
-    /// Updates the details of an existing branch.
+    /// Updates the details of an existing brand.
     /// </summary>
-    public async Task<Branch> UpdateBranch(Branch branch, string newBranchName)
+    public async Task<Brand> UpdateBrand(Brand brand, string newBrandName)
     {
         try
         {
             var updateRequest = new
             {
-                name = branch.Name,
-                newName = newBranchName
+                name = brand.Name,
+                newName = newBrandName
             };
 
             var json = JsonSerializer.Serialize(updateRequest);
@@ -136,7 +136,7 @@ public class BranchService : IBranchService
             }
 
             var responseContent = await apiResponse.Content.ReadAsStringAsync();
-            var responseData = JsonSerializer.Deserialize<ApiResponse<Branch>>(responseContent);
+            var responseData = JsonSerializer.Deserialize<ApiResponse<Brand>>(responseContent);
 
             return responseData.Data;
         }
@@ -153,9 +153,9 @@ public class BranchService : IBranchService
     }
 
     /// <summary>
-    /// Retrieves all branches from the system.
+    /// Retrieves all brands from the system.
     /// </summary>
-    public async Task<IEnumerable<Branch>> GetAllBranches()
+    public async Task<IEnumerable<Brand>> GetAllBrands()
     {
         try
         {
@@ -171,7 +171,7 @@ public class BranchService : IBranchService
             }
 
             var responseContent = await apiResponse.Content.ReadAsStringAsync();
-            var responseData = JsonSerializer.Deserialize<ApiResponse<List<Branch>>>(responseContent);
+            var responseData = JsonSerializer.Deserialize<ApiResponse<List<Brand>>>(responseContent);
 
             return responseData?.Data;
         }

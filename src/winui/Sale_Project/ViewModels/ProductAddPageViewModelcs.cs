@@ -18,7 +18,7 @@ public partial class ProductAddViewModel : ObservableRecipient, INavigationAware
     private readonly INavigationService _navigationService;
     private readonly IDialogService _dialogService;
     private readonly IAuthService _authService;
-    private readonly IBranchService _branchService;
+    private readonly IBrandService _brandService;
     private readonly ICategoryService _categoryService;
     private readonly ProductCreationRequestValidator _productCreationRequestValidator;
 
@@ -29,10 +29,10 @@ public partial class ProductAddViewModel : ObservableRecipient, INavigationAware
     private ProductCreationRequest _productCreationRequest;
 
     /// <summary>
-    /// Gets or sets the available branches.
+    /// Gets or sets the available brands.
     /// </summary>
     [ObservableProperty]
-    private string[] _branches;
+    private string[] _brands;
 
     /// <summary>
     /// Gets or sets the available categories.
@@ -63,16 +63,16 @@ public partial class ProductAddViewModel : ObservableRecipient, INavigationAware
     /// Initializes a new instance of the <see cref="ProductAddViewModel"/> class.
     /// </summary>
     /// <param name="productService">Service for product operations.</param>
-    /// <param name="branchService">Service for branch data.</param>
+    /// <param name="brandService">Service for brand data.</param>
     /// <param name="categoryService">Service for category data.</param>
     /// <param name="navigationService">Service for navigation operations.</param>
     /// <param name="dialogService">Service for displaying dialogs.</param>
     /// <param name="authService">Service for authentication.</param>
     /// <param name="productCreationRequestValidator">Validator for product creation requests.</param>
-    public ProductAddViewModel(IProductService productService, IBranchService branchService, ICategoryService categoryService, INavigationService navigationService, IDialogService dialogService, IAuthService authService, ProductCreationRequestValidator productCreationRequestValidator)
+    public ProductAddViewModel(IProductService productService, IBrandService brandService, ICategoryService categoryService, INavigationService navigationService, IDialogService dialogService, IAuthService authService, ProductCreationRequestValidator productCreationRequestValidator)
     {
         _productService = productService;
-        _branchService = branchService;
+        _brandService = brandService;
         _categoryService = categoryService;
         _navigationService = navigationService;
         _dialogService = dialogService;
@@ -81,16 +81,16 @@ public partial class ProductAddViewModel : ObservableRecipient, INavigationAware
     }
 
     /// <summary>
-    /// Called when navigated to this ViewModel. Initializes product creation data and fetches branch and category data.
+    /// Called when navigated to this ViewModel. Initializes product creation data and fetches brand and category data.
     /// </summary>
     /// <param name="parameter">Navigation parameter.</param>
     public async void OnNavigatedTo(object parameter)
     {
         ProductCreationRequest = new ProductCreationRequest();
 
-        // Fetch branch names and set the Branches property
-        var branchNames = await _branchService.GetAllBranches();
-        Branches = branchNames?.Select(branch => branch.Name).ToArray();
+        // Fetch brand names and set the Brands property
+        var brandNames = await _brandService.GetAllBrands();
+        Brands = brandNames?.Select(brand => brand.Name).ToArray();
 
         // Fetch category names and set the Categories property
         var categoryNames = await _categoryService.GetAllCategories();

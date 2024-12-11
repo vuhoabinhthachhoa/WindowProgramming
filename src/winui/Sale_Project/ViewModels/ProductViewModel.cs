@@ -20,7 +20,7 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
 {
     private const int _defaultRowsPerPage = 5;
     private readonly IProductService _productService;
-    private readonly IBranchService _branchService;
+    private readonly IBrandService _brandService;
     private readonly ICategoryService _categoryService;
     private readonly INavigationService _navigationService;
 
@@ -42,10 +42,10 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
     private Product selectedProduct;
 
     /// <summary>
-    /// List of branch names for filtering.
+    /// List of brand names for filtering.
     /// </summary>
     [ObservableProperty]
-    private string[] _branches;
+    private string[] _brands;
 
     /// <summary>
     /// List of category names for filtering.
@@ -118,12 +118,12 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
     /// <summary>
     /// Initializes a new instance of the ProductViewModel class.
     /// </summary>
-    public ProductViewModel(INavigationService navigationService, IBranchService branchService, ICategoryService categoryService, IProductService productService)
+    public ProductViewModel(INavigationService navigationService, IBrandService brandService, ICategoryService categoryService, IProductService productService)
     {
         RowsPerPage = _defaultRowsPerPage;
         ProductSearchRequest = new ProductSearchRequest();
         _productService = productService;
-        _branchService = branchService;
+        _brandService = brandService;
         _categoryService = categoryService;
         _navigationService = navigationService;
     }
@@ -133,8 +133,8 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
     /// </summary>
     public async void OnNavigatedTo(object parameter)
     {
-        var branchNames = await _branchService.GetAllBranches();
-        Branches = branchNames?.Select(branch => branch.Name).ToArray();
+        var brandNames = await _brandService.GetAllBrands();
+        Brands = brandNames?.Select(brand => brand.Name).ToArray();
 
         var categoryNames = await _categoryService.GetAllCategories();
         Categories = categoryNames?.Select(category => category.Name).ToArray();

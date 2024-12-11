@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 namespace Sale_Project.Core.Models;
 
 /// <summary>
-/// Represents a branch with properties for ID, name, and business status, along with property change notifications.
+/// Represents a brand with properties for ID, name, and business status, along with property change notifications.
 /// </summary>
-public class Branch : INotifyPropertyChanged
+public class Brand : INotifyPropertyChanged
 {
     private int id = 0;
     private string name = "";
     private bool businessStatus = true;
 
     /// <summary>
-    /// Gets or sets the ID of the branch.
+    /// Gets or sets the ID of the brand.
     /// </summary>
     [JsonPropertyName("id")]
     public int Id
@@ -36,7 +36,7 @@ public class Branch : INotifyPropertyChanged
     }
 
     /// <summary>
-    /// Gets or sets the name of the branch.
+    /// Gets or sets the name of the brand.
     /// </summary>
     [JsonPropertyName("name")]
     public string Name
@@ -53,7 +53,7 @@ public class Branch : INotifyPropertyChanged
     }
 
     /// <summary>
-    /// Gets or sets the business status of the branch.
+    /// Gets or sets the business status of the brand.
     /// </summary>
     [JsonPropertyName("businessStatus")]
     public bool BusinessStatus

@@ -27,9 +27,9 @@ public class ProductCreationRequestValidator
             _dialogService.ShowErrorAsync("Error", "Product Category ID is invalid");
             return false;
         }
-        if (string.IsNullOrWhiteSpace(productCreationRequest.Data.BranchName))
+        if (string.IsNullOrWhiteSpace(productCreationRequest.Data.BrandName))
         {
-            _dialogService.ShowErrorAsync("Error", "Product Branch name is invalid");
+            _dialogService.ShowErrorAsync("Error", "Product Brand name is invalid");
             return false;
         }
         if (!IsValidNumericValue(productCreationRequest.Data.ImportPrice))

@@ -44,8 +44,8 @@
         <TextBlock Text="Nhóm hàng" Grid.Column="2" Grid.Row="2"/>
         <TextBox Text="{x:Bind Info.Category.Id,Mode=TwoWay}" Grid.Column="3" Grid.Row="2"/>
 
-        <TextBlock Text="Branch Name" Grid.Column="0" Grid.Row="3"/>
-        <TextBox Text="{x:Bind Info.Branch.Name,Mode=TwoWay}" Grid.Column="1" Grid.Row="3" IsReadOnly="{x:Bind IsBranchNameReadOnly, Mode=OneWay}"/>
+        <TextBlock Text="Brand Name" Grid.Column="0" Grid.Row="3"/>
+        <TextBox Text="{x:Bind Info.Brand.Name,Mode=TwoWay}" Grid.Column="1" Grid.Row="3" IsReadOnly="{x:Bind IsBrandNameReadOnly, Mode=OneWay}"/>
 
         <TextBlock Text="Business status" Grid.Column="2" Grid.Row="3"/>
         <ComboBox ItemsSource="{x:Bind BusinessStatus, Mode=OneWay}" Text="{x:Bind Info.BusinessStatus,Mode=TwoWay}" SelectedValue="{x:Bind Info.BusinessStatus,Mode=TwoWay}" Grid.Column="3" Grid.Row="3"/>

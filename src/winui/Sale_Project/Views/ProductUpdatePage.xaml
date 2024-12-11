@@ -41,8 +41,8 @@
                 <TextBlock Text="Name:" FontWeight="Bold" Margin="0,10,0,0" />
                 <TextBox Text="{Binding CurrentProduct.Name, Mode=OneWay}" IsReadOnly="True"/>
 
-                <TextBlock Text="Branch Name:" FontWeight="Bold" Margin="0,10,0,0" />
-                <TextBox Text="{Binding CurrentProduct.Branch.Name, Mode=OneWay}" IsReadOnly="True"/>
+                <TextBlock Text="Brand Name:" FontWeight="Bold" Margin="0,10,0,0" />
+                <TextBox Text="{Binding CurrentProduct.Brand.Name, Mode=OneWay}" IsReadOnly="True"/>
 
                 <TextBlock Text="Inventory Quantity:" FontWeight="Bold" Margin="0,10,0,0" />
                 <NumberBox Value="{Binding CurrentProduct.InventoryQuantity, Mode=TwoWay}" Minimum="0"/>

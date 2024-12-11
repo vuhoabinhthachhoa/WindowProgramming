@@ -29,7 +29,7 @@ public class Product : INotifyPropertyChanged
     private Category category = new Category();
     private double importPrice = 0;
     private double sellingPrice = 0;
-    private Branch branch = new Branch();
+    private Brand brand = new Brand();
     private int inventoryQuantity = 0;
     private string imageUrl = string.Empty;
     private string cloudinaryImageId = string.Empty;
@@ -140,17 +140,17 @@ public class Product : INotifyPropertyChanged
     }
 
     /// <summary>
-    /// Gets or sets the branch associated with the product.
+    /// Gets or sets the brand associated with the product.
     /// </summary>
     [JsonPropertyName("branch")]
-    public Branch Branch
+    public Brand Brand
     {
-        get => branch;
+        get => brand;
         set
         {
-            if (branch != value)
+            if (brand != value)
             {
-                branch = value;
+                brand = value;
                 OnPropertyChanged();
             }
         }

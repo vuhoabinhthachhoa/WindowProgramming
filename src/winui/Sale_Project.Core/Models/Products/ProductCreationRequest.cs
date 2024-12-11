@@ -55,9 +55,9 @@ public class ProductData
     public double SellingPrice { get; set; } = 0;
 
     /// <summary>
-    /// The branch name associated with the product.
+    /// The brand name associated with the product.
     /// </summary>
-    public string BranchName { get; set; } = "";
+    public string BrandName { get; set; } = "";
 
     /// <summary>
     /// The inventory quantity available for the product.

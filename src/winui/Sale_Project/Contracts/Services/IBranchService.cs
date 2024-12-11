@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 using Sale_Project.Core.Models;
 
 namespace Sale_Project.Contracts.Services;
-public interface IBranchService
+public interface IBrandService
 {
     // Add a new employee to the system
-    Task<Branch> CreateBranch(Branch branch);
+    Task<Brand> CreateBrand(Brand brand);
 
     // Mark an employee as unemployed (inactive)
-    Task<bool> InactiveBranch(string branchName);
+    Task<bool> InactiveBrand(string brandName);
 
     // Update an existing employee's details
-    Task<Branch> UpdateBranch(Branch branch, string newBranchName);
+    Task<Brand> UpdateBrand(Brand brand, string newBrandName);
 
     // Optionally, add a method to list all employees
-    Task<IEnumerable<Branch>> GetAllBranches();
+    Task<IEnumerable<Brand>> GetAllBrands();
 }

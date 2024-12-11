@@ -39,7 +39,7 @@ public class ProductJsonDao : IProductDao
         //if (info.ImportPrice <= 0) return (false, "Import Price must be greater than 0");
         //if (info.SellingPrice <= 0) return (false, "Selling Price must be greater than 0");
         //if (info.SellingPrice < info.ImportPrice) return (false, "Selling Price must be greater than Import Price");
-        //if (string.IsNullOrWhiteSpace(info.Branch.Name)) return (false, "Invalid BranchID");
+        //if (string.IsNullOrWhiteSpace(info.Brand.Name)) return (false, "Invalid BrandID");
         //if (info.InventoryQuantity < 0) return (false, "Inventory Quantity cannot be negative");
         ////if (string.IsNullOrWhiteSpace(info.Images)) return (false, "Images are required");
         ////if (info.BusinessStatus == null) return (false, "Business Status is required");
@@ -142,7 +142,7 @@ public class ProductJsonDao : IProductDao
                     code = "",
                     name = keyword,
                     categoryName = "",
-                    branchName = "",
+                    brandName = "",
                     sellingPriceFrom = (int?)null,
                     sellingPriceTo = (int?)null,
                     importPriceFrom = (int?)null,
@@ -241,7 +241,7 @@ public class ProductJsonDao : IProductDao
                         categoryId = info.Category.Id,
                         importPrice = info.ImportPrice,
                         sellingPrice = info.SellingPrice,
-                        branchName = info.Branch.Name,
+                        brandName = info.Brand.Name,
                         inventoryQuantity = info.InventoryQuantity,
                         size = info.Size,
                         discountPercent = info.DiscountPercent
@@ -290,7 +290,7 @@ public class ProductJsonDao : IProductDao
         item.Category.Id = info.Category.Id;
         item.ImportPrice = info.ImportPrice;
         item.SellingPrice = info.SellingPrice;
-        item.Branch.Id = info.Branch.Id;
+        item.Brand.Id = info.Brand.Id;
         item.InventoryQuantity = info.InventoryQuantity;
         item.ImageUrl = info.ImageUrl;
         item.BusinessStatus = info.BusinessStatus;

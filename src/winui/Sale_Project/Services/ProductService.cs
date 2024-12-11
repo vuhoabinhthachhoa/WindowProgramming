@@ -52,7 +52,7 @@ public class ProductService : IProductService
                     categoryId = productCreationRequest.Data.CategoryId,
                     importPrice = productCreationRequest.Data.ImportPrice,
                     sellingPrice = productCreationRequest.Data.SellingPrice,
-                    branchName = productCreationRequest.Data.BranchName,
+                    branchName = productCreationRequest.Data.BrandName,
                     inventoryQuantity = productCreationRequest.Data.InventoryQuantity,
                     size = productCreationRequest.Data.Size,
                     discountPercent = productCreationRequest.Data.DiscountPercent
@@ -131,8 +131,8 @@ public class ProductService : IProductService
             var responseData = JsonSerializer.Deserialize<ApiResponse<Product>>(responseContent);
 
             var responseProduct = responseData.Data;
-            if (responseProduct.Branch.Id == 0)
-                responseProduct.Branch = product.Branch;
+            if (responseProduct.Brand.Id == 0)
+                responseProduct.Brand = product.Brand;
             if (responseProduct.Category.Id == "")
                 responseProduct.Category = product.Category;
 

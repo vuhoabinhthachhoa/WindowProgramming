@@ -162,8 +162,8 @@
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
-                        <TextBlock Text="Branch Name" />
-                        <ComboBox ItemsSource="{Binding Branches, Mode=OneWay}" SelectedValue="{Binding ProductSearchRequest.BranchName, Mode=TwoWay}" Text="{Binding ProductSearchRequest.BranchName, Mode=TwoWay}"/>
+                        <TextBlock Text="Brand Name" />
+                        <ComboBox ItemsSource="{Binding Brands, Mode=OneWay}" SelectedValue="{Binding ProductSearchRequest.BrandName, Mode=TwoWay}" Text="{Binding ProductSearchRequest.BrandName, Mode=TwoWay}"/>
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
@@ -240,7 +240,7 @@
                     </controls:DataGridTemplateColumn.CellTemplate>
                 </controls:DataGridTemplateColumn>
                 <controls:DataGridTextColumn Binding="{Binding Category.Name}" Header="Category Name" Tag="Category ID" IsReadOnly="True" />
-                <controls:DataGridTextColumn Binding="{Binding Branch.Name}" Header="Branch Name" Tag="Branch Name" IsReadOnly="True" />
+                <controls:DataGridTextColumn Binding="{Binding Brand.Name}" Header="Brand Name" Tag="Brand Name" IsReadOnly="True" />
                 <controls:DataGridTextColumn Binding="{Binding InventoryQuantity}" Header="Inventory Quantity" Tag="Inventory Quantity" IsReadOnly="True" />
                 <controls:DataGridTextColumn Binding="{Binding Size}" Header="Size" Tag="Size" IsReadOnly="True" />
                 <controls:DataGridTextColumn Binding="{Binding ImportPrice, Converter={StaticResource DoubleToCurrencyConverter}}" Header="Import Price" Tag="Import Price" IsReadOnly="True" />

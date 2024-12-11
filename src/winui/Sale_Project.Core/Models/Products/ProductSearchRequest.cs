@@ -88,7 +88,7 @@ public class ProductSearchRequest : INotifyPropertyChanged
     private string _branchName;
 
     /// <summary>
-    /// Gets or sets the branch name for search.
+    /// Gets or sets the brand name for search.
     /// </summary>
     [JsonPropertyName("branchName")]
     public string BranchName

@@ -25,17 +25,17 @@ public sealed partial class ProductUserControl : UserControl
     private readonly string[] Size = new string[] { "S", "M", "L", "XL" };
     private readonly bool[] BusinessStatus = new bool[] { true, false };
   
-    public static readonly DependencyProperty IsBranchNameReadOnlyProperty
+    public static readonly DependencyProperty IsBrandNameReadOnlyProperty
         = DependencyProperty.Register(
-            "IsBranchNameReadOnly", typeof(string),
+            "IsBrandNameReadOnly", typeof(string),
             typeof(ProductUserControl),
             new PropertyMetadata(null)
     );
 
-    public string IsBranchNameReadOnly
+    public string IsBrandNameReadOnly
     {
-        get => (string)GetValue(IsBranchNameReadOnlyProperty);
-        set => SetValue(IsBranchNameReadOnlyProperty, value);
+        get => (string)GetValue(IsBrandNameReadOnlyProperty);
+        set => SetValue(IsBrandNameReadOnlyProperty, value);
     }
     public static readonly DependencyProperty InfoProperty
         = DependencyProperty.Register(

@@ -68,7 +68,7 @@ public partial class ProductUpdateViewModel : ObservableObject, INavigationAware
             Code = product.Code,
             Name = product.Name,
             CategoryName = product.Category.Name,
-            BranchName = product.Branch.Name,
+            BranchName = product.Brand.Name,
             BusinessStatus = product.BusinessStatus
         };
 

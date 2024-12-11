@@ -10,7 +10,7 @@
     },
     "ImportPrice": 15000,
     "SellingPrice": 40000,
-    "Branch": {
+    "Brand": {
       "ID": 1,
       "Name": "channel",
       "BusinessStatus": true
