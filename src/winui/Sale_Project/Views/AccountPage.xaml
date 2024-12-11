@@ -87,7 +87,7 @@
             </StackPanel>
         </StackPanel>
 
-        <TextBlock x:Name="ErrorMessageTextBlock" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Visibility="Collapsed" Foreground="Red" Margin="10 45 0 0"/>
+        <!--<TextBlock x:Name="ErrorMessageTextBlock" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Visibility="Collapsed" Foreground="Red" Margin="10 45 0 0"/>-->
 
         <ContentDialog x:Name="VerificationDialog"
            Title="Change Account Information"
@@ -105,6 +105,7 @@
            CloseButtonText="Close"
            PrimaryButtonClick="ChangePasswordDialog_PrimaryButtonClick">
             <StackPanel>
+
                 <TextBlock Text="Current Password:"/>
                 <PasswordBox x:Name="CurrentPasswordBox" Margin="0 0 0 10"/>
 
@@ -117,6 +118,8 @@
 
                 <TextBlock Text="Confirm New Password:"/>
                 <PasswordBox x:Name="ConfirmPasswordBox" Margin="0 0 0 10"/>
+                <TextBlock x:Name="ErrorMessageTextBlock"  Visibility="Collapsed" Foreground="Red" Margin="0 10 0 0" TextWrapping="Wrap" Width="250"/>
+
             </StackPanel>
         </ContentDialog>
     </Grid>

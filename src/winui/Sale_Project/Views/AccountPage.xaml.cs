@@ -142,17 +142,31 @@ public sealed partial class AccountPage : Page
         var newPassword = NewPasswordBox.Password;
         var confirmPassword = ConfirmPasswordBox.Password;
 
-        if (newPassword == confirmPassword && ValidatePassword(newPassword))
+        var isPasswordValid = ValidatePassword(newPassword);
+
+        if (newPassword != confirmPassword || newPassword == currentPassword || !isPasswordValid) 
         {
-            await ViewModel.ChangePasswordAsync(currentPassword, newPassword);
+            args.Cancel = true;
+            if(newPassword != confirmPassword)
+            {
+                ErrorMessageTextBlock.Text = "Passwords do not match.";
+            }
+            else if (newPassword == currentPassword)
+            {
+                ErrorMessageTextBlock.Text = "New password cannot be the same as the current password.";
+            }
+            else
+            {
+                ErrorMessageTextBlock.Text = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.";
+            }
+            ErrorMessageTextBlock.Visibility = Visibility.Visible;
+
+            await Task.Delay(10000);
+            ErrorMessageTextBlock.Visibility = Visibility.Collapsed;
         }
         else
         {
-            ErrorMessageTextBlock.Text = "Inaccurate Password.";
-            ErrorMessageTextBlock.Visibility = Visibility.Visible;
-
-            await Task.Delay(5000);
-            ErrorMessageTextBlock.Visibility = Visibility.Collapsed;
+            await ViewModel.ChangePasswordAsync(currentPassword, newPassword);
         }
     }
 

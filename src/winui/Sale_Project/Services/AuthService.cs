@@ -233,8 +233,7 @@ public class AuthService : IAuthService
             // Check if the response indicates success
             if (!apiResponse.IsSuccessStatusCode)
             {
-                var errorContent = await apiResponse.Content.ReadAsStringAsync();
-                System.Diagnostics.Debug.WriteLine($"Error: {errorContent}");
+                await _httpService.HandleErrorResponse(apiResponse);
                 return false;
             }
 

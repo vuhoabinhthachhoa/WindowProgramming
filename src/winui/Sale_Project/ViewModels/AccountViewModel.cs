@@ -108,13 +108,13 @@ public partial class AccountViewModel : ObservableRecipient
     {
         try
         {
-            if (string.IsNullOrWhiteSpace(oldPassword) || string.IsNullOrWhiteSpace(newPassword))
-            {
-                await _dialogService.ShowErrorAsync(
-                    "Login Failed",
-                    "Username and password cannot be empty.");
-                return;
-            }
+            //if (string.IsNullOrWhiteSpace(oldPassword) || string.IsNullOrWhiteSpace(newPassword))
+            //{
+            //    await _dialogService.ShowErrorAsync(
+            //        "Login Failed",
+            //        "Username and password cannot be empty.");
+            //    return;
+            //}
 
             var result = await _authService.ChangePasswordAsync(oldPassword, newPassword);
             if (result)
@@ -123,12 +123,12 @@ public partial class AccountViewModel : ObservableRecipient
                     "Success",
                     "Password changed successfully!");
             }
-            else
-            {
-                await _dialogService.ShowErrorAsync(
-                    "Change Password Failed",
-                    "Wrong password.");
-            }
+            //else
+            //{
+            //    await _dialogService.ShowErrorAsync(
+            //        "Change Password Failed",
+            //        "Wrong password.");
+            //}
         }
         catch (Exception ex)
         {
