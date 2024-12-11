@@ -4,11 +4,20 @@ using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 using Sale_Project.Core.Models;
 
+/// <summary>
+/// Represents a product with properties for product details and notifications for property changes.
+/// </summary>
 public class Product : INotifyPropertyChanged
 {
+    /// <summary>
+    /// Event triggered when a property value changes.
+    /// </summary>
     public event PropertyChangedEventHandler PropertyChanged;
 
-    // Helper method to raise the PropertyChanged event
+    /// <summary>
+    /// Helper method to raise the PropertyChanged event.
+    /// </summary>
+    /// <param name="propertyName">The name of the property that changed.</param>
     protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -28,6 +37,9 @@ public class Product : INotifyPropertyChanged
     private string size = string.Empty;
     private double discountPercent = 0.0;
 
+    /// <summary>
+    /// Gets or sets the product ID.
+    /// </summary>
     [JsonPropertyName("id")]
     public int Id
     {
@@ -42,6 +54,9 @@ public class Product : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Gets or sets the product code.
+    /// </summary>
     [JsonPropertyName("code")]
     public string Code
     {
@@ -56,6 +71,9 @@ public class Product : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Gets or sets the product name.
+    /// </summary>
     [JsonPropertyName("name")]
     public string Name
     {
@@ -70,6 +88,9 @@ public class Product : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Gets or sets the product category.
+    /// </summary>
     [JsonPropertyName("category")]
     public Category Category
     {
@@ -84,6 +105,9 @@ public class Product : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Gets or sets the import price of the product.
+    /// </summary>
     [JsonPropertyName("importPrice")]
     public double ImportPrice
     {
@@ -98,6 +122,9 @@ public class Product : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Gets or sets the selling price of the product.
+    /// </summary>
     [JsonPropertyName("sellingPrice")]
     public double SellingPrice
     {
@@ -112,6 +139,9 @@ public class Product : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Gets or sets the branch associated with the product.
+    /// </summary>
     [JsonPropertyName("branch")]
     public Branch Branch
     {
@@ -126,6 +156,9 @@ public class Product : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Gets or sets the inventory quantity of the product.
+    /// </summary>
     [JsonPropertyName("inventoryQuantity")]
     public int InventoryQuantity
     {
@@ -140,6 +173,9 @@ public class Product : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Gets or sets the URL of the product's image.
+    /// </summary>
     [JsonPropertyName("imageUrl")]
     public string ImageUrl
     {
@@ -154,6 +190,9 @@ public class Product : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Gets or sets the Cloudinary image ID for the product.
+    /// </summary>
     [JsonPropertyName("cloudinaryImageId")]
     public string CloudinaryImageId
     {
@@ -168,6 +207,9 @@ public class Product : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Gets or sets the business status of the product.
+    /// </summary>
     [JsonPropertyName("businessStatus")]
     public bool BusinessStatus
     {
@@ -182,6 +224,9 @@ public class Product : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Gets or sets the size of the product.
+    /// </summary>
     [JsonPropertyName("size")]
     public string Size
     {
@@ -196,6 +241,9 @@ public class Product : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Gets or sets the discount percentage for the product.
+    /// </summary>
     [JsonPropertyName("discountPercent")]
     public double DiscountPercent
     {

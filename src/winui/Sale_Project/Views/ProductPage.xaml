@@ -147,8 +147,8 @@
                     </StackPanel>
     
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
-                        <NumberBox Header="Product Code" Style="{StaticResource NumberBoxStyle}"
-                                   Value="{Binding ProductSearchRequest.Code, Mode=TwoWay}" Minimum="0" Margin="-1,0,0,0" />
+                        <TextBlock Text="Product Code" />
+                        <TextBox Text="{Binding ProductSearchRequest.Code, Mode=TwoWay}" PlaceholderText=""/>
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
@@ -158,14 +158,12 @@
 
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
                         <TextBlock Text="Category Name" />
-                        <!--<TextBox Text="{Binding ProductSearchRequest.CategoryName, Mode=TwoWay}" PlaceholderText="" />-->
-                        <ComboBox ItemsSource="{Binding Categories, Mode=OneWay}" SelectedValue="{Binding ProductSearchRequest.CategoryName, Mode=TwoWay}" Text="{Binding ProductSearchRequest.Data.CategoryName, Mode=TwoWay}"/>
+                        <ComboBox ItemsSource="{Binding Categories, Mode=OneWay}" SelectedValue="{Binding ProductSearchRequest.CategoryName, Mode=TwoWay}" Text="{Binding ProductSearchRequest.CategoryName, Mode=TwoWay}"/>
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
                         <TextBlock Text="Branch Name" />
-                        <!--<TextBox Text="{Binding ProductSearchRequest.BranchName, Mode=TwoWay}" PlaceholderText="" />-->
-                        <ComboBox ItemsSource="{Binding Branches, Mode=OneWay}" SelectedValue="{Binding ProductSearchRequest.DBranchName, Mode=TwoWay}" Text="{Binding ProductSearchRequest.Data.BranchName, Mode=TwoWay}"/>
+                        <ComboBox ItemsSource="{Binding Branches, Mode=OneWay}" SelectedValue="{Binding ProductSearchRequest.BranchName, Mode=TwoWay}" Text="{Binding ProductSearchRequest.BranchName, Mode=TwoWay}"/>
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource FieldContainerStyle}">
@@ -232,6 +230,7 @@
             <controls:DataGrid.Columns>
 
                 <controls:DataGridTextColumn Binding="{Binding Id}" Header="Product ID" Tag="ID" IsReadOnly="True" />
+                <controls:DataGridTextColumn Binding="{Binding Code}" Header="Product Code" Tag="Code" IsReadOnly="True" />
                 <controls:DataGridTextColumn Binding="{Binding Name}" Header="Product Name" Tag="Name" IsReadOnly="True" />
                 <controls:DataGridTemplateColumn Header="Image">
                     <controls:DataGridTemplateColumn.CellTemplate>
@@ -246,7 +245,6 @@
                 <controls:DataGridTextColumn Binding="{Binding Size}" Header="Size" Tag="Size" IsReadOnly="True" />
                 <controls:DataGridTextColumn Binding="{Binding ImportPrice, Converter={StaticResource DoubleToCurrencyConverter}}" Header="Import Price" Tag="Import Price" IsReadOnly="True" />
                 <controls:DataGridTextColumn Binding="{Binding SellingPrice, Converter={StaticResource DoubleToCurrencyConverter}}" Header="Selling Price" Tag="Selling Price" IsReadOnly="True" />
-                <!--<controls:DataGridTextColumn Binding="{Binding Salary}" Header="Salary" Tag="Salary" IsReadOnly="True" />-->
                 <controls:DataGridTemplateColumn Header="Business Status" Tag="BusinessStatus">
                     <controls:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

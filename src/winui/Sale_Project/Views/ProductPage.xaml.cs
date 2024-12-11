@@ -6,15 +6,22 @@ using Sale_Project.ViewModels;
 
 namespace Sale_Project.Views;
 
-// TODO: Change the grid as appropriate for your app. Adjust the column definitions on DataGridPage.xaml.
-// For more details, see the documentation at https://docs.microsoft.com/windows/communitytoolkit/controls/datagrid.
+/// <summary>
+/// Code-behind for the ProductPage, providing UI logic for managing and displaying products.
+/// </summary>
 public sealed partial class ProductPage : Page
 {
+    /// <summary>
+    /// The ViewModel for this page, used for binding and managing product data.
+    /// </summary>
     public ProductViewModel ViewModel
     {
         get;
     }
 
+    /// <summary>
+    /// Initializes the ProductPage, setting up the ViewModel and DataContext.
+    /// </summary>
     public ProductPage()
     {
         ViewModel = App.GetService<ProductViewModel>();
@@ -22,37 +29,51 @@ public sealed partial class ProductPage : Page
         DataContext = ViewModel;
     }
 
+    /// <summary>
+    /// Handles the Add Product button click event to add a new product using the ViewModel.
+    /// </summary>
     private void AddProductButton_Click(object sender, RoutedEventArgs e)
     {
         ViewModel.AddProduct();
     }
+
+    /// <summary>
+    /// Handles the Search Product button click event to search for products using the ViewModel.
+    /// </summary>
     private async void SearchProductButton_Click(object sender, RoutedEventArgs e)
     {
         await ViewModel.SearchProduct();
     }
 
+    /// <summary>
+    /// Handles the Previous button click event to navigate to the previous page of products.
+    /// </summary>
     private async void PreviousButton_Click(object sender, RoutedEventArgs e)
     {
         await ViewModel.GoToPreviousPage();
     }
 
+    /// <summary>
+    /// Handles the Next button click event to navigate to the next page of products.
+    /// </summary>
     private async void NextButton_Click(object sender, RoutedEventArgs e)
     {
         await ViewModel.GoToNextPage();
     }
 
+    /// <summary>
+    /// Handles the Sort By ID Ascending button click event to sort products by ID in ascending order.
+    /// </summary>
     private async void SortByIDAscButton_Click(object sender, RoutedEventArgs e)
     {
         await ViewModel.SortByIDAsc();
     }
 
+    /// <summary>
+    /// Handles the Sort By ID Descending button click event to sort products by ID in descending order.
+    /// </summary>
     private async void SortByIDDescButton_Click(object sender, RoutedEventArgs e)
     {
         await ViewModel.SortByIDDesc();
     }
-
-    //private async void BusinessStatusChanged(object sender, DataContextChangedEventArgs e)
-    //{
-    //    await ViewModel.BusinessStatusChanged();
-    //}
 }

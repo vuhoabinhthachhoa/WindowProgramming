@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Sale_Project.Contracts.Services;
 
 namespace Sale_Project.Services;
 
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Microsoft.UI.Xaml.Controls;
 using Sale_Project.Core.Models;
 using Sale_Project.Helpers;
 
+/// <summary>
+/// Service for managing category-related operations such as create, update, deactivate, and retrieve categories.
+/// </summary>
 public class CategoryService : ICategoryService
 {
     private readonly HttpClient _httpClient;
@@ -22,6 +24,9 @@ public class CategoryService : ICategoryService
     private readonly IAuthService _authService;
     private readonly IDialogService _dialogService;
 
+    /// <summary>
+    /// Initializes the CategoryService with dependencies.
+    /// </summary>
     public CategoryService(HttpClient httpClient, IHttpService httpService, IAuthService authService, IDialogService dialogService)
     {
         _httpClient = httpClient;
@@ -30,7 +35,10 @@ public class CategoryService : ICategoryService
         _authService = authService;
         _dialogService = dialogService;
     }
-    // Add a new category to the system
+
+    /// <summary>
+    /// Creates a new category in the system.
+    /// </summary>
     public async Task<Category> CreateCategory(Category category)
     {
         try
@@ -41,7 +49,6 @@ public class CategoryService : ICategoryService
             var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
 
-            // Send login request as JSON and get response
             var apiResponse = await _httpClient.PostAsync(_httpClient.BaseAddress, content);
 
             if (!apiResponse.IsSuccessStatusCode)
@@ -50,28 +57,26 @@ public class CategoryService : ICategoryService
                 return null;
             }
 
-            // Read the response content as a string
             var responseContent = await apiResponse.Content.ReadAsStringAsync();
-
-            // Deserialize the response content to the appropriate type
             var responseData = JsonSerializer.Deserialize<ApiResponse<Category>>(responseContent);
 
             return responseData.Data;
         }
-        catch (HttpRequestException ex)
+        catch (HttpRequestException)
         {
-            // Handle or log the exception as needed
             await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null;
         }
         catch (Exception ex)
         {
-            // Handle or log other exceptions as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
     }
 
+    /// <summary>
+    /// Marks a category as inactive.
+    /// </summary>
     public async Task<bool> InactiveCategory(string categoryName)
     {
         try
@@ -79,10 +84,7 @@ public class CategoryService : ICategoryService
             var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
 
-            // Prepare the request URL
             var requestUrl = $"{_httpClient.BaseAddress}/status/inactive?categoryName={categoryName}";
-
-            // Send the PATCH request
             var apiResponse = await _httpClient.PatchAsync(requestUrl, null);
 
             if (!apiResponse.IsSuccessStatusCode)
@@ -92,20 +94,21 @@ public class CategoryService : ICategoryService
             }
             return true;
         }
-        catch (HttpRequestException ex)
+        catch (HttpRequestException)
         {
-            // Handle or log the exception as needed
             await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return false;
         }
         catch (Exception ex)
         {
-            // Handle or log other exceptions as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return false;
         }
     }
 
+    /// <summary>
+    /// Updates an existing category's name.
+    /// </summary>
     public async Task<Category> UpdateCategory(Category category, string newCategoryName)
     {
         try
@@ -122,7 +125,6 @@ public class CategoryService : ICategoryService
             var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
 
-            // Send the PUT request with form data
             var apiResponse = await _httpClient.PutAsync(_httpClient.BaseAddress, content);
 
             if (!apiResponse.IsSuccessStatusCode)
@@ -131,34 +133,33 @@ public class CategoryService : ICategoryService
                 return null;
             }
 
-            // Read the response content as a string
             var responseContent = await apiResponse.Content.ReadAsStringAsync();
-
-            // Deserialize the response content to the appropriate type
             var responseData = JsonSerializer.Deserialize<ApiResponse<Category>>(responseContent);
 
             return responseData.Data;
         }
-        catch (HttpRequestException ex)
+        catch (HttpRequestException)
         {
-            // Handle or log the exception as needed
             await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null;
         }
         catch (Exception ex)
         {
-            // Handle or log other exceptions as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
     }
 
+    /// <summary>
+    /// Retrieves all categories from the system.
+    /// </summary>
     public async Task<IEnumerable<Category>> GetAllCategories()
     {
         try
         {
             var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
+
             var apiResponse = await _httpClient.GetAsync(_httpClient.BaseAddress + "/all");
 
             if (!apiResponse.IsSuccessStatusCode)
@@ -167,28 +168,26 @@ public class CategoryService : ICategoryService
                 return null;
             }
 
-            // Read the response content as a string
             var responseContent = await apiResponse.Content.ReadAsStringAsync();
-
-            // Deserialize the response content to the appropriate type
             var responseData = JsonSerializer.Deserialize<ApiResponse<List<Category>>>(responseContent);
 
             return responseData?.Data;
         }
-        catch (HttpRequestException ex)
+        catch (HttpRequestException)
         {
-            // Handle or log the exception as needed
             await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null;
         }
         catch (Exception ex)
         {
-            // Handle or log other exceptions as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
     }
 
+    /// <summary>
+    /// Retrieves a category by its ID.
+    /// </summary>
     public async Task<Category> GetCategoryById(string categoryId)
     {
         try
@@ -196,9 +195,7 @@ public class CategoryService : ICategoryService
             var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
 
-            // Append the categoryId to the request URL
             var requestUrl = $"{_httpClient.BaseAddress}?categoryId={categoryId}";
-
             var apiResponse = await _httpClient.GetAsync(requestUrl);
 
             if (!apiResponse.IsSuccessStatusCode)
@@ -207,27 +204,20 @@ public class CategoryService : ICategoryService
                 return null;
             }
 
-            // Read the response content as a string
             var responseContent = await apiResponse.Content.ReadAsStringAsync();
-
-            // Deserialize the response content to the appropriate type
             var responseData = JsonSerializer.Deserialize<ApiResponse<Category>>(responseContent);
 
             return responseData?.Data;
         }
-        catch (HttpRequestException ex)
+        catch (HttpRequestException)
         {
-            // Handle or log the exception as needed
             await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null;
         }
         catch (Exception ex)
         {
-            // Handle or log other exceptions as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
     }
-
 }
-

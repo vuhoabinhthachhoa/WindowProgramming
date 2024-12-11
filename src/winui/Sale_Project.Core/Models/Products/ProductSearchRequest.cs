@@ -9,17 +9,30 @@ using System.Diagnostics;
 
 namespace Sale_Project.Core.Models.Product;
 
+/// <summary>
+/// Represents a request to search for products with various filter criteria.
+/// </summary>
 public class ProductSearchRequest : INotifyPropertyChanged
 {
+    /// <summary>
+    /// Event triggered when a property value changes.
+    /// </summary>
     public event PropertyChangedEventHandler PropertyChanged;
 
-    // Helper method to raise the PropertyChanged event
+    /// <summary>
+    /// Helper method to raise the PropertyChanged event.
+    /// </summary>
+    /// <param name="propertyName">The name of the property that changed.</param>
     protected void OnPropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     private string _code;
+
+    /// <summary>
+    /// Gets or sets the product code for search.
+    /// </summary>
     [JsonPropertyName("code")]
     public string Code
     {
@@ -35,6 +48,10 @@ public class ProductSearchRequest : INotifyPropertyChanged
     }
 
     private string _name;
+
+    /// <summary>
+    /// Gets or sets the product name for search.
+    /// </summary>
     [JsonPropertyName("name")]
     public string Name
     {
@@ -50,6 +67,10 @@ public class ProductSearchRequest : INotifyPropertyChanged
     }
 
     private string _categoryName;
+
+    /// <summary>
+    /// Gets or sets the category name for search.
+    /// </summary>
     [JsonPropertyName("categoryName")]
     public string CategoryName
     {
@@ -65,6 +86,10 @@ public class ProductSearchRequest : INotifyPropertyChanged
     }
 
     private string _branchName;
+
+    /// <summary>
+    /// Gets or sets the branch name for search.
+    /// </summary>
     [JsonPropertyName("branchName")]
     public string BranchName
     {
@@ -80,6 +105,10 @@ public class ProductSearchRequest : INotifyPropertyChanged
     }
 
     private double? _sellingPriceFrom;
+
+    /// <summary>
+    /// Gets or sets the minimum selling price for search.
+    /// </summary>
     [JsonPropertyName("sellingPriceFrom")]
     public double? SellingPriceFrom
     {
@@ -88,20 +117,17 @@ public class ProductSearchRequest : INotifyPropertyChanged
         {
             if (_sellingPriceFrom != value)
             {
-                if (value.HasValue && double.IsNaN(value.Value))
-                {
-                    _sellingPriceFrom = null;
-                }
-                else
-                {
-                    _sellingPriceFrom = value;
-                }
+                _sellingPriceFrom = value.HasValue && double.IsNaN(value.Value) ? null : value;
                 OnPropertyChanged(nameof(SellingPriceFrom));
             }
         }
     }
 
     private double? _sellingPriceTo;
+
+    /// <summary>
+    /// Gets or sets the maximum selling price for search.
+    /// </summary>
     [JsonPropertyName("sellingPriceTo")]
     public double? SellingPriceTo
     {
@@ -110,20 +136,17 @@ public class ProductSearchRequest : INotifyPropertyChanged
         {
             if (_sellingPriceTo != value)
             {
-                if (value.HasValue && double.IsNaN(value.Value))
-                {
-                    _sellingPriceTo = null;
-                }
-                else
-                {
-                    _sellingPriceTo = value;
-                }
+                _sellingPriceTo = value.HasValue && double.IsNaN(value.Value) ? null : value;
                 OnPropertyChanged(nameof(SellingPriceTo));
             }
         }
     }
 
     private double? _importPriceFrom;
+
+    /// <summary>
+    /// Gets or sets the minimum import price for search.
+    /// </summary>
     [JsonPropertyName("importPriceFrom")]
     public double? ImportPriceFrom
     {
@@ -132,20 +155,17 @@ public class ProductSearchRequest : INotifyPropertyChanged
         {
             if (_importPriceFrom != value)
             {
-                if (value.HasValue && double.IsNaN(value.Value))
-                {
-                    _importPriceFrom = null;
-                }
-                else
-                {
-                    _importPriceFrom = value;
-                }
+                _importPriceFrom = value.HasValue && double.IsNaN(value.Value) ? null : value;
                 OnPropertyChanged(nameof(ImportPriceFrom));
             }
         }
     }
 
     private double? _importPriceTo;
+
+    /// <summary>
+    /// Gets or sets the maximum import price for search.
+    /// </summary>
     [JsonPropertyName("importPriceTo")]
     public double? ImportPriceTo
     {
@@ -154,20 +174,17 @@ public class ProductSearchRequest : INotifyPropertyChanged
         {
             if (_importPriceTo != value)
             {
-                if (value.HasValue && double.IsNaN(value.Value))
-                {
-                    _importPriceTo = null;
-                }
-                else
-                {
-                    _importPriceTo = value;
-                }
+                _importPriceTo = value.HasValue && double.IsNaN(value.Value) ? null : value;
                 OnPropertyChanged(nameof(ImportPriceTo));
             }
         }
     }
 
     private double? _inventoryQuantityFrom;
+
+    /// <summary>
+    /// Gets or sets the minimum inventory quantity for search.
+    /// </summary>
     [JsonPropertyName("inventoryQuantityFrom")]
     public double? InventoryQuantityFrom
     {
@@ -176,20 +193,17 @@ public class ProductSearchRequest : INotifyPropertyChanged
         {
             if (_inventoryQuantityFrom != value)
             {
-                if (value.HasValue && double.IsNaN(value.Value))
-                {
-                    _inventoryQuantityFrom = null;
-                }
-                else
-                {
-                    _inventoryQuantityFrom = value;
-                }
+                _inventoryQuantityFrom = value.HasValue && double.IsNaN(value.Value) ? null : value;
                 OnPropertyChanged(nameof(InventoryQuantityFrom));
             }
         }
     }
 
     private double? _inventoryQuantityTo;
+
+    /// <summary>
+    /// Gets or sets the maximum inventory quantity for search.
+    /// </summary>
     [JsonPropertyName("inventoryQuantityTo")]
     public double? InventoryQuantityTo
     {
@@ -198,20 +212,17 @@ public class ProductSearchRequest : INotifyPropertyChanged
         {
             if (_inventoryQuantityTo != value)
             {
-                if (value.HasValue && double.IsNaN(value.Value))
-                {
-                    _inventoryQuantityTo = null;
-                }
-                else
-                {
-                    _inventoryQuantityTo = value;
-                }
+                _inventoryQuantityTo = value.HasValue && double.IsNaN(value.Value) ? null : value;
                 OnPropertyChanged(nameof(InventoryQuantityTo));
             }
         }
     }
 
     private double? _discountPercentFrom;
+
+    /// <summary>
+    /// Gets or sets the minimum discount percentage for search.
+    /// </summary>
     [JsonPropertyName("discountPercentFrom")]
     public double? DiscountPercentFrom
     {
@@ -220,20 +231,17 @@ public class ProductSearchRequest : INotifyPropertyChanged
         {
             if (_discountPercentFrom != value)
             {
-                if (value.HasValue && double.IsNaN(value.Value))
-                {
-                    _discountPercentFrom = null;
-                }
-                else
-                {
-                    _discountPercentFrom = value;
-                }
+                _discountPercentFrom = value.HasValue && double.IsNaN(value.Value) ? null : value;
                 OnPropertyChanged(nameof(DiscountPercentFrom));
             }
         }
     }
 
     private double? _discountPercentTo;
+
+    /// <summary>
+    /// Gets or sets the maximum discount percentage for search.
+    /// </summary>
     [JsonPropertyName("discountPercentTo")]
     public double? DiscountPercentTo
     {
@@ -242,20 +250,17 @@ public class ProductSearchRequest : INotifyPropertyChanged
         {
             if (_discountPercentTo != value)
             {
-                if (value.HasValue && double.IsNaN(value.Value))
-                {
-                    _discountPercentTo = null;
-                }
-                else
-                {
-                    _discountPercentTo = value;
-                }
+                _discountPercentTo = value.HasValue && double.IsNaN(value.Value) ? null : value;
                 OnPropertyChanged(nameof(DiscountPercentTo));
             }
         }
     }
 
     private bool _businessStatus = true;
+
+    /// <summary>
+    /// Gets or sets the business status for search.
+    /// </summary>
     [JsonPropertyName("businessStatus")]
     public bool BusinessStatus
     {

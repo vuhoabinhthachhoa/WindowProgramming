@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Sale_Project.Contracts.Services;
 
 namespace Sale_Project.Services;
 
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Microsoft.UI.Xaml.Controls;
@@ -17,6 +16,9 @@ using Sale_Project.Core.Models.Employee;
 using Sale_Project.Core.Models.Product;
 using Sale_Project.Helpers;
 
+/// <summary>
+/// Service for managing branch-related operations such as create, update, deactivate, and retrieve branches.
+/// </summary>
 public class BranchService : IBranchService
 {
     private readonly HttpClient _httpClient;
@@ -24,6 +26,9 @@ public class BranchService : IBranchService
     private readonly IAuthService _authService;
     private readonly IDialogService _dialogService;
 
+    /// <summary>
+    /// Initializes the BranchService with dependencies.
+    /// </summary>
     public BranchService(HttpClient httpClient, IHttpService httpService, IAuthService authService, IDialogService dialogService)
     {
         _httpClient = httpClient;
@@ -32,7 +37,10 @@ public class BranchService : IBranchService
         _authService = authService;
         _dialogService = dialogService;
     }
-    // Add a new employee to the system
+
+    /// <summary>
+    /// Creates a new branch in the system.
+    /// </summary>
     public async Task<Branch> CreateBranch(Branch branch)
     {
         try
@@ -43,7 +51,6 @@ public class BranchService : IBranchService
             var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
 
-            // Send login request as JSON and get response
             var apiResponse = await _httpClient.PostAsync(_httpClient.BaseAddress, content);
 
             if (!apiResponse.IsSuccessStatusCode)
@@ -52,28 +59,26 @@ public class BranchService : IBranchService
                 return null;
             }
 
-            // Read the response content as a string
             var responseContent = await apiResponse.Content.ReadAsStringAsync();
-
-            // Deserialize the response content to the appropriate type
             var responseData = JsonSerializer.Deserialize<ApiResponse<Branch>>(responseContent);
 
             return responseData.Data;
         }
-        catch (HttpRequestException ex)
+        catch (HttpRequestException)
         {
-            // Handle or log the exception as needed
             await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null;
         }
         catch (Exception ex)
         {
-            // Handle or log other exceptions as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
     }
 
+    /// <summary>
+    /// Marks a branch as inactive.
+    /// </summary>
     public async Task<bool> InactiveBranch(string branchName)
     {
         try
@@ -81,10 +86,7 @@ public class BranchService : IBranchService
             var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
 
-            // Prepare the request URL
             var requestUrl = $"{_httpClient.BaseAddress}/status/inactive?branchName={branchName}";
-
-            // Send the PATCH request
             var apiResponse = await _httpClient.PatchAsync(requestUrl, null);
 
             if (!apiResponse.IsSuccessStatusCode)
@@ -94,20 +96,21 @@ public class BranchService : IBranchService
             }
             return true;
         }
-        catch (HttpRequestException ex)
+        catch (HttpRequestException)
         {
-            // Handle or log the exception as needed
             await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return false;
         }
         catch (Exception ex)
         {
-            // Handle or log other exceptions as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return false;
         }
     }
 
+    /// <summary>
+    /// Updates the details of an existing branch.
+    /// </summary>
     public async Task<Branch> UpdateBranch(Branch branch, string newBranchName)
     {
         try
@@ -124,7 +127,6 @@ public class BranchService : IBranchService
             var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
 
-            // Send the PUT request with form data
             var apiResponse = await _httpClient.PutAsync(_httpClient.BaseAddress, content);
 
             if (!apiResponse.IsSuccessStatusCode)
@@ -133,35 +135,34 @@ public class BranchService : IBranchService
                 return null;
             }
 
-            // Read the response content as a string
             var responseContent = await apiResponse.Content.ReadAsStringAsync();
-
-            // Deserialize the response content to the appropriate type
             var responseData = JsonSerializer.Deserialize<ApiResponse<Branch>>(responseContent);
 
             return responseData.Data;
         }
-        catch (HttpRequestException ex)
+        catch (HttpRequestException)
         {
-            // Handle or log the exception as needed
             await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null;
         }
         catch (Exception ex)
         {
-            // Handle or log other exceptions as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
     }
 
+    /// <summary>
+    /// Retrieves all branches from the system.
+    /// </summary>
     public async Task<IEnumerable<Branch>> GetAllBranches()
     {
         try
         {
             var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
-            var apiResponse = await _httpClient.GetAsync(_httpClient.BaseAddress+"/all");
+
+            var apiResponse = await _httpClient.GetAsync(_httpClient.BaseAddress + "/all");
 
             if (!apiResponse.IsSuccessStatusCode)
             {
@@ -169,26 +170,20 @@ public class BranchService : IBranchService
                 return null;
             }
 
-            // Read the response content as a string
             var responseContent = await apiResponse.Content.ReadAsStringAsync();
-
-            // Deserialize the response content to the appropriate type
             var responseData = JsonSerializer.Deserialize<ApiResponse<List<Branch>>>(responseContent);
 
             return responseData?.Data;
         }
-        catch (HttpRequestException ex)
+        catch (HttpRequestException)
         {
-            // Handle or log the exception as needed
             await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
             return null;
         }
         catch (Exception ex)
         {
-            // Handle or log other exceptions as needed
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
     }
 }
-
