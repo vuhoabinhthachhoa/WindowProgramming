@@ -15,12 +15,17 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/DensityStyles/Compact.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <!--<local:RoleToVisibilityConverter x:Key="RoleToVisibilityConverter" />-->
         </ResourceDictionary>
     </Page.Resources>
 
     <Grid>
-        <Grid >
+        <Grid>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#E9F9ED" Offset="0"/>
+                    <GradientStop Color="#EDF6F2" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="32"/>
                 <RowDefinition Height="48" />
@@ -77,44 +82,6 @@
                           FontSize="16" 
                           Foreground="White" />
                 </Button>
-
-
-
-                <!--<AppBarButton Grid.Column="0" Command="{x:Bind ViewModel.MenuViewsDashboardCommand}" Width="150" Height="40">
-                    <TextBlock Text="Dashboard" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
-                </AppBarButton>
-                <AppBarButton 
-            Grid.Column="1" Command="{x:Bind ViewModel.MenuViewsProductsCommand}" Width="150">
-                    <TextBlock Text="Products" FontSize="15" FontWeight="SemiBold" Foreground="White"/>
-                </AppBarButton>
-                <AppBarButton
-            Grid.Column="2" Command="{x:Bind ViewModel.MenuViewsCustomerCommand}" Width="150">
-                    <TextBlock Text="Customers" FontSize="30" FontWeight="SemiBold" Foreground="White"/>
-                </AppBarButton>
-                <AppBarButton
-            Grid.Column="3" Command="{x:Bind ViewModel.MenuViewsEmployeeCommand}" Width="150">
-                    <TextBlock Text="Employees" FontSize="30" FontWeight="SemiBold" Foreground="White"/>
-                </AppBarButton>
-                <AppBarButton Grid.Column="5" HorizontalAlignment="Left" Command="{x:Bind ViewModel.MenuViewsSaleCommand}">
-                    <FontIcon Glyph="&#xE7EE;" Foreground="White" />
-                </AppBarButton>
-                <AppBarButton Grid.Column="6" HorizontalAlignment="Left" Command="{x:Bind ViewModel.MenuViewsAccountCommand}">
-                    <FontIcon Glyph="&#xEF58;" Foreground="White" />
-                </AppBarButton>
-                <AppBarButton Grid.Column="7" x:Name="ShellMenuBarSettingsButton" x:Uid="ShellMenuBarSettingsButton"
-                      AnimatedIcon.State="Normal"
-                      PointerEntered="ShellMenuBarSettingsButton_PointerEntered"
-                      PointerExited="ShellMenuBarSettingsButton_PointerExited"
-                      Command="{x:Bind ViewModel.MenuSettingsCommand}">
-                    <AnimatedIcon x:Name="ShellMenuBarSettingsButtonIcon">
-                        <AnimatedIcon.Source>
-                            <animatedvisuals:AnimatedSettingsVisualSource/>
-                        </AnimatedIcon.Source>
-                        <AnimatedIcon.FallbackIconSource>
-                            <FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE713;" Foreground="White"/>
-                        </AnimatedIcon.FallbackIconSource>
-                    </AnimatedIcon>
-                </AppBarButton>-->
             </Grid>
 
             <Grid Grid.Row="2" Margin="{StaticResource MenuBarContentMargin}">

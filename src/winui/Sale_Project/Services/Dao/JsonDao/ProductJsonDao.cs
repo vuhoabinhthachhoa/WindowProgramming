@@ -16,16 +16,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.VisualBasic;
-using Sale_Project.Contracts.Services;
 using Windows.Storage;
 using System.IdentityModel.Tokens.Jwt;
 using Newtonsoft.Json.Linq;
 using static Sale_Project.Services.AuthService;
-using Sale_Project.Core.Models.Product;
+using Sale_Project.Core.Models.Products;
 
 namespace Sale_Project.Services.Dao.JsonDao;
 public class ProductJsonDao : IProductDao
@@ -115,8 +112,7 @@ public class ProductJsonDao : IProductDao
     public async Task<Tuple<List<Product>, int>> GetProducts(
     int page, int rowsPerPage,
     string keyword,
-    Dictionary<string, SortType> sortOptions
-)
+    Dictionary<string, SortType> sortOptions)
     {
         try
         {
@@ -167,7 +163,7 @@ public class ProductJsonDao : IProductDao
 
                 var apiResponse = await httpClient.SendAsync(request);
 
-                string responseContent = await apiResponse.Content.ReadAsStringAsync();
+                var responseContent = await apiResponse.Content.ReadAsStringAsync();
 
                 var responseData = JsonSerializer.Deserialize<ApiResponse<ProductApiResponse<List<Product>>>>(responseContent, new JsonSerializerOptions
                 {
@@ -183,7 +179,7 @@ public class ProductJsonDao : IProductDao
                 return new Tuple<List<Product>, int>(new List<Product>(), 0);
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return new Tuple<List<Product>, int>(new List<Product>(), 0);
         }

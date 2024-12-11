@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel; // Required for INotifyPropertyChanged
+using System.ComponentModel; 
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 using System.Diagnostics;
 
-namespace Sale_Project.Core.Models.Employee;
+namespace Sale_Project.Core.Models.Employees;
 
 public class EmployeeSearchRequest : INotifyPropertyChanged
 {

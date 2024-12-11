@@ -72,6 +72,7 @@ public partial class App : Application
             services.AddSingleton<IProductService, ProductService>();
             services.AddSingleton<IBrandService, BrandService>();
             services.AddSingleton<ICategoryService, CategoryService>();
+            services.AddSingleton<IInvoiceService, InvoiceService>();
             services.AddSingleton<IHttpService, HttpService>();
 
             // Helpers

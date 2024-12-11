@@ -95,8 +95,8 @@
             <Border Grid.Row="2" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="30" Margin="0 0 20 50">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                        <GradientStop Color="#6a5dae" Offset="0"/>
-                        <GradientStop Color="#54479c" Offset="1.2"/>
+                        <GradientStop Color="#aaffc8" Offset="0"/>
+                        <GradientStop Color="#EDF6F2" Offset="1.2"/>
                     </LinearGradientBrush>
                 </Border.Background>
 
@@ -106,10 +106,10 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Border Background="#6e60b5" BorderThickness="2" BorderBrush="#8276c0" CornerRadius="30" Margin="0 0 0 -10"/>
+                    <Border Background="#aaffc8" BorderThickness="2" BorderBrush="#A0F0BC" CornerRadius="30" Margin="0 0 0 -10"/>
 
-                    <TextBlock Grid.Row="0" Text="Top Employee" Foreground="#f0eff6" FontSize="18" FontWeight="SemiBold" Margin="35 25 0 0"/>
-                    <TextBlock Grid.Row="0" Text="Monthly" Foreground="#f0eff6" FontSize="18" FontWeight="SemiBold" Margin="0 25 35 25" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="0" Text="Top Employee" Foreground="Black" FontSize="18" FontWeight="SemiBold" Margin="35 25 0 0"/>
+                    <TextBlock Grid.Row="0" Text="Monthly" Foreground="Black" FontSize="18" FontWeight="SemiBold" Margin="0 25 35 25" HorizontalAlignment="Right"/>
 
                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                         <ListView Margin="35 25" 

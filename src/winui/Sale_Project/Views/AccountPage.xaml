@@ -4,6 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Sale_Project.ViewModels"  
+    xmlns:local="using:Sale_Project.Helpers"
     mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
@@ -23,102 +25,101 @@
 
         <StackPanel Grid.Row="1" Grid.Column="0" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Tên người dùng: " Width="100" Margin="0 0 5 0"/>
-                <TextBox Width="300"/>
+                <TextBlock Text="Username: " Width="100" Margin="0 0 5 0"/>
+                <TextBox Width="300" IsReadOnly="True" Text="{Binding Account.username, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Tên đăng nhập: " Width="100" Margin="0 0 5 0"/>
-                <TextBox Width="300"/>
+                <TextBlock Text="ID: " Width="100" Margin="0 0 5 0"/>
+                <TextBox Width="300" IsReadOnly="True" Text="{Binding Account.id, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Vai trò: " Width="100" Margin="0 0 5 0"/>
-                <TextBox Width="300"/>
+                <TextBlock Text="Role: " Width="100" Margin="0 0 5 0"/>
+                <TextBox Width="300" Text="{Binding Account.role.description, Mode=TwoWay}" IsReadOnly="True"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Điện thoại: " Width="100" Margin="0 0 5 0"/>
-                <AutoSuggestBox PlaceholderText="Việt Nam +84" QueryIcon="Find"
-                TextChanged="AutoSuggestBox_TextChangedPhoneNumber"
-                SuggestionChosen="AutoSuggestBox_SuggestionChosenPhoneNumber"
-                Width="145" AutomationProperties.Name="Basic AutoSuggestBox"/>
-                <NumberBox Margin="5 0 0 0" Width="150" Value="NaN"/>
+                <TextBlock Text="Phone number: " Width="100" Margin="0 0 5 0"/>
+                <NumberBox x:Name="PhoneNumberNumberBlock" Width="300" Text="{Binding Account.phoneNumber, Mode=TwoWay}" Value="NaN"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Ngày sinh: " Width="100" Margin="0 0 5 0"/>
-                <TextBox Width="300"/>
+                <TextBlock Text="Date of birth: " Width="100" Margin="0 0 5 0"/>
+                <DatePicker x:Name="DateOfBirthPicker" Width="300" SelectedDate="{Binding Account.dateOfBirth, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <TextBlock Text="Email: " Width="100" Margin="0 0 5 0"/>
-                <TextBox Width="300"/>
+                <TextBox x:Name="EmailTextBlock" Width="300" Text="{Binding Account.email, Mode=TwoWay}"/>
             </StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="10 10 10 10" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Địa chỉ: " Width="100" Margin="0 0 5 0"/>
-                <TextBox Width="300"/>
+                <TextBlock Text="Address: " Width="100" Margin="0 0 5 0"/>
+                <TextBox x:Name="AddressTextBlock" Width="300" Text="{Binding Account.address, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Khu vực: " Width="100" Margin="0 0 5 0"/>
+                <TextBlock Text="Locality: " Width="100" Margin="0 0 5 0"/>
                 <AutoSuggestBox TextChanged="AutoSuggestBox_TextChangedProvince" QueryIcon="Find"
-                    SuggestionChosen="AutoSuggestBox_SuggestionChosenProvince"
-                    Width="300" AutomationProperties.Name="Basic AutoSuggestBox"/>
+            SuggestionChosen="AutoSuggestBox_SuggestionChosenProvince" x:Name="SuggestionOutputProvince"
+            Width="300" AutomationProperties.Name="Basic AutoSuggestBox"
+            Text="{Binding Account.area, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Phường xã: " Width="100" Margin="0 0 5 0"/>
+                <TextBlock Text="Ward: " Width="100" Margin="0 0 5 0"/>
                 <AutoSuggestBox TextChanged="AutoSuggestBox_TextChangedDistrict" QueryIcon="Find"
-                    SuggestionChosen="AutoSuggestBox_SuggestionChosenDistrict"
-                    Width="300" AutomationProperties.Name="Basic AutoSuggestBox"/>
+            SuggestionChosen="AutoSuggestBox_SuggestionChosenDistrict" x:Name="SuggestionOutputDistrict"
+            Width="300" AutomationProperties.Name="Basic AutoSuggestBox"
+            Text="{Binding Account.ward, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Ghi chú: " Width="100" Margin="0 0 5 0"/>
-                <TextBox Width="300"/>
+                <TextBlock Text="Note: " Width="100" Margin="0 0 5 0"/>
+                <TextBox x:Name="NoteTextBlock" Width="300" Text="{Binding Account.notes, Mode=TwoWay}"/>
             </StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Margin="10">
-            <TextBlock Text="Đăng nhập và bảo mật" FontWeight="Bold" FontSize="16" Margin="0 0 0 10"/>
+            <TextBlock Text="Login and Security" FontWeight="Bold" FontSize="16" Margin="0 0 0 10"/>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Đổi mật khẩu: " Width="115" Margin="0 0 5 0"/>
-                <Button Content="Chỉnh sửa" Width="100" Click="ChangePasswordButton_Click"/>
+                <TextBlock Text="Change password: " Width="115" Margin="0 0 100 0"/>
+                <Button Content="Edit" Width="118" Background="#4BAC4D" Foreground="White" FontWeight="Bold" Click="ChangePasswordButton_Click"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <TextBlock Text="Bật xác thực 2 lớp: " Width="Auto" Margin="0 0 5 0"/>
-                <Button Content="Bật tính năng" Width="Auto" Click="TwoLayerVerification"/>
+                <TextBlock Text="Save change: " Width="Auto" Margin="0 0 134 0"/>
+                <Button Content="Save" Width="118" Background="#4BAC4D" Foreground="White" FontWeight="Bold" Click="Verification_Click"/>
             </StackPanel>
         </StackPanel>
 
+        <!--<TextBlock x:Name="ErrorMessageTextBlock" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Visibility="Collapsed" Foreground="Red" Margin="10 45 0 0"/>-->
+
         <ContentDialog x:Name="VerificationDialog"
-           Title="Xác thực số điện thoại"
-           PrimaryButtonText="Lưu"
-           CloseButtonText="Đóng"
-           PrimaryButtonClick="TwoLayerVerificationDialog_PrimaryButtonClick">
+           Title="Change Account Information"
+           PrimaryButtonText="Save"
+           CloseButtonText="Cancel"
+           PrimaryButtonClick="VerificationDialog_PrimaryButtonClick">
             <StackPanel>
-                <TextBlock Text="Nhập số điện thoại gốc:"/>
-                <TextBox x:Name="OriginalPhoneNumberTextBox" Width="200" Margin="0 5 0 10"/>
-                <TextBlock Text="Nhập số điện thoại xác thực:" />
-                <TextBox x:Name="VerifyPhoneNumberTextBox" Width="200" Margin="0 5 0 10" />
+                <TextBlock Text="Are you sure you want to save?"/>
             </StackPanel>
         </ContentDialog>
 
         <ContentDialog x:Name="ChangePasswordDialog"
-           Title="Đổi mật khẩu"
-           PrimaryButtonText="Lưu"
-           SecondaryButtonText="Hủy"
-           CloseButtonText="Đóng"
+           Title="Login and Security"
+           PrimaryButtonText="Save"
+           CloseButtonText="Close"
            PrimaryButtonClick="ChangePasswordDialog_PrimaryButtonClick">
             <StackPanel>
-                <TextBlock Text="Mật khẩu hiện tại:"/>
+
+                <TextBlock Text="Current Password:"/>
                 <PasswordBox x:Name="CurrentPasswordBox" Margin="0 0 0 10"/>
 
-                <TextBlock Text="Mật khẩu mới:">
+                <TextBlock Text="New Password:">
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="- Dài tối thiểu 8 ký tự. /n - Chứa chữ hoa, chữ thường và số. /n - Không trùng với 3 mật khẩu gần nhất." VerticalOffset="-80"/>
+                    <ToolTip Content="- Minimum 8 characters long. /n - Contains uppercase, lowercase and numbers. /n - Cannot match the last 3 passwords." VerticalOffset="-80"/>
                 </ToolTipService.ToolTip>
                 </TextBlock>
                 <PasswordBox x:Name="NewPasswordBox" Margin="0 0 0 10"/>
 
-                <TextBlock Text="Xác nhận mật khẩu mới:"/>
+                <TextBlock Text="Confirm New Password:"/>
                 <PasswordBox x:Name="ConfirmPasswordBox" Margin="0 0 0 10"/>
+                <TextBlock x:Name="ErrorMessageTextBlock"  Visibility="Collapsed" Foreground="Red" Margin="0 10 0 0" TextWrapping="Wrap" Width="250"/>
+
             </StackPanel>
         </ContentDialog>
     </Grid>

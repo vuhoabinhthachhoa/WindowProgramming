@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sale_Project.Contracts.Services;
-using Sale_Project.Core.Models.Product;
+using Sale_Project.Core.Models.Products;
 
 namespace Sale_Project.Helpers;
 public class ProductCreationRequestValidator

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sale_Project.Core.Models;
-using Sale_Project.Core.Models.Product;
+using Sale_Project.Core.Models.Products;
 
 namespace Sale_Project.Contracts.Services;
 public interface IProductService
@@ -27,6 +27,7 @@ public interface IProductService
 
     Task<PageData<Product>> SearchProducts(int page, int size, string sortField, SortType sortType, ProductSearchRequest productSearchRequest);
 
-    Task<Product> GetSelectedProduct(ProductSearchRequest productSearchRequest);
+    Task<Product?> GetSelectedProduct(ProductSearchRequest productSearchRequest);
 
+    Task<List<Product>> GetProductByName(string name);
 }

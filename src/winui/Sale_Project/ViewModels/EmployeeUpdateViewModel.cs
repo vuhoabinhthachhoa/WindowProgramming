@@ -7,6 +7,7 @@ using Sale_Project.Contracts.Services;
 using Sale_Project.Services;
 using Sale_Project.ViewModels;
 using Sale_Project.Helpers;
+using Sale_Project.Core.Models.Employees;
 
 
 public partial class EmployeeUpdateViewModel : ObservableObject, INavigationAware

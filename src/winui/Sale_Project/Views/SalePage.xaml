@@ -6,124 +6,186 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="ContentArea">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="2*"/>
-        </Grid.ColumnDefinitions>
-
-        <TextBlock
-            Grid.Row="0"
-            x:Uid="Sale_Title"
-            Style="{StaticResource PageTitleStyle}" FontSize="40" FontWeight="Bold" Margin="20 0 0 20"/>
-
-        <AutoSuggestBox QueryIcon="Find" TextChanged="AutoSuggestBox_TextChangedProduct"
-                        SuggestionChosen="AutoSuggestBox_SuggestionChosenProduct"
-                        Width="250" Height="30"
-                        PlaceholderText="Type to search product..." />
-
-        <ScrollViewer Grid.Row="1" Grid.Column="0" Padding="10" BorderBrush="Gray" BorderThickness="1" CornerRadius="10">
-            <StackPanel Padding="10">
-                <RichTextBlock x:Name="SelectedItemsDisplayProduct" Width="auto"/>
-            </StackPanel>
-        </ScrollViewer>
-        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <AutoSuggestBox  QueryIcon="Find" TextChanged="AutoSuggestBox_TextChangedCustomer"
-                        SuggestionChosen="AutoSuggestBox_SuggestionChosenCustomer"
-                        Width="250" Height="30"
-                        PlaceholderText="Type to search customer..." />
-            <Button x:Name="OpenDetailsButton" Content="Xem Chi Tiết" Margin="10,0,0,0"
-            Click="OpenDetailsButton_Click" IsEnabled="False" />
-        </StackPanel>
-        <ScrollViewer Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="1" CornerRadius="30">
-            <StackPanel Padding="20"  Height="auto">
-                <TextBlock Text="Thông tin khách hàng" FontSize="24" FontWeight="Bold" Margin="0 0 0 10"/>
-                <StackPanel>
-                    <TextBox x:Name="NameTextBox" PlaceholderText="Tên người nhận" Margin="0 0 0 10"/>
-                    <TextBox x:Name="PhoneTextBox" PlaceholderText="Số điện thoại" Margin="0 0 0 10"/>
-                    <TextBox x:Name="AddressTextBox" PlaceholderText="Địa chỉ chi tiết" Margin="0 0 0 10"/>
-                    <TextBox x:Name="CityTextBox" PlaceholderText="Tỉnh/thành phố" Margin="0 0 0 10"/>
-                    <TextBox x:Name="DistrictTextBox" PlaceholderText="Phường/xã" Margin="0 0 0 10"/>
-                </StackPanel>
-
-                <TextBlock Text="Thông tin gói hàng" FontSize="24" FontWeight="Bold" Margin="0 0 0 10"/>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Khối lượng (gram): " Margin="0 0 10 10"/>
-                    <TextBox PlaceholderText="500" Margin="0 0 0 10"/>
-                    <TextBlock Text="Kích thước gói hàng (cm): " Margin="30 0 10 10"/>
-                    <TextBox PlaceholderText="Kích thước gói hàng (cm)" Width="100" Margin="0 0 0 10" Text="10x10x10"/>
-                </StackPanel>
-
-                <TextBlock Text="Thông tin thanh toán" FontSize="24" FontWeight="Bold" Margin="0 0 0 10"/>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Hóa đơn (COD)" FontSize="16" Margin="0 0 0 10"/>
-                    <TextBlock Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Text="3,000,000 VND" FontSize="16" FontWeight="Black"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Voucher" FontSize="16" Margin="0 0 0 10"/>
-                    <TextBox x:Name="VoucherTextBox" Grid.Row="1" Grid.Column="3" PlaceholderText="VOUCHER0" FontSize="16" FontWeight="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Số tiền cần thu: " FontSize="16"/>
-                    <TextBlock Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Text="2,590,120 VND" FontSize="16" FontWeight="Black"/>
-
-                    <Button Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Content="THANH TOÁN" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#6a5dae" Margin="0 40 0 20"/>
-                </Grid>
-            </StackPanel>
-        </ScrollViewer>
-        <Grid Grid.Row="2" Grid.Column="0" BorderBrush="Gray" BorderThickness="2" CornerRadius="30" Margin="0 0 20 20">
+    <Grid>
+        <Grid x:Name="ContentArea" Visibility="Visible">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBox Grid.Row="0" Grid.Column="0" PlaceholderText="Ghi chú" Margin="15 10 0 0"/>
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="Tổng cộng: " FontSize="15" Margin="10 10 20 0"/>
-            <TextBlock Grid.Row="0" Grid.Column="2" Text="3,809,000 VND" FontSize="15" Margin="10 10 20 0"/>
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="Tổng giảm giá: " FontSize="15" Margin="10 10 20 0"/>
-            <TextBlock Grid.Row="1" Grid.Column="2" Text="1,218,880 VND" FontSize="15" Margin="10 10 20 0"/>
-            <TextBlock Grid.Row="2" Grid.Column="1" Text="Tổng cần thu: " FontSize="15" FontWeight="Black" Margin="10 10 20 0"/>
-            <TextBlock Grid.Row="2" Grid.Column="2" Text="2,590,120 VND" FontSize="15" FontWeight="Black" Margin="10 10 20 0"/>
-        </Grid>
-        <Grid Grid.Row="2" Grid.Column="1" BorderBrush="Gray" BorderThickness="2" CornerRadius="30" Margin="0 10 0 20">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="6*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="20 0 40 0">
-                <FontIcon Glyph="&#xE717;" Foreground="Blue" FontSize="18" Margin="0,0,10,0" />
-                <TextBlock Text="Phone Number: (123) 456-7890" FontSize="18" FontWeight="Bold"/>
+            <TextBlock
+            Grid.Row="0"
+            x:Uid="Sale_Title"
+            Style="{StaticResource PageTitleStyle}" FontSize="40" FontWeight="Bold" Margin="20,10,20,10"/>
+
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10">
+                <AutoSuggestBox x:Name="SearchProduct" PlaceholderText="Type to search product..." 
+                 Width="250" Height="30" Margin="10,0" TextChanged="SearchProduct_TextChanged"
+                SuggestionChosen="SearchProduct_SuggestionChosen"/>
             </StackPanel>
 
-            <Button Grid.Column="1" Click="InstructionButton_Click" Width="55" Height="55" Background="#0078D4" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="30">
-                <TextBlock Text="?" FontSize="30" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Button>
+            <ScrollViewer Grid.Row="1" Grid.Column="0" Padding="10" BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Margin="10">
+                <StackPanel Padding="10">
+                    <StackPanel x:Name="SelectedItemsDisplayProduct"/>
+                </StackPanel>
+            </ScrollViewer>
 
-            <Button Grid.Column="2" Click="FeedbackButton_Click" Width="55" Height="55" Background="#FF5733" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="30">
-                <FontIcon Glyph="&#xE70F;" FontSize="30" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Button>
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+                <AutoSuggestBox QueryIcon="Find" TextChanged="AutoSuggestBox_TextChangedCustomer"
+                            SuggestionChosen="AutoSuggestBox_SuggestionChosenCustomer"  x:Name="SearchCustomer"
+                            Width="250" Height="30" PlaceholderText="Type to search customer..." />
+                <Button x:Name="OpenDetailsButton" Content="Details" Margin="10,0,0,0" 
+                    Click="OpenDetailsButton_Click" IsEnabled="False" />
+            </StackPanel>
+
+            <ScrollViewer Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="1" CornerRadius="30" Margin="10">
+                <StackPanel Padding="20">
+                    <TextBlock Text="Customer Information" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
+                    <StackPanel>
+                        <TextBox x:Name="NameTextBox" PlaceholderText="Recipient Name" Margin="0,0,0,10"/>
+                        <TextBox x:Name="PhoneTextBox" PlaceholderText="Phone Number" Margin="0,0,0,10"/>
+                        <TextBox x:Name="AddressTextBox" PlaceholderText="Address" Margin="0,0,0,10"/>
+                        <TextBox x:Name="CityTextBox" PlaceholderText="City" Margin="0,0,0,10"/>
+                        <TextBox x:Name="DistrictTextBox" PlaceholderText="District" Margin="0,0,0,10"/>
+                    </StackPanel>
+
+                    <TextBlock Text="Payment Information" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Invoice" FontSize="16" Margin="0,0,0,10"/>
+                        <TextBlock Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" x:Name="TotalAmount" Text="0.00" FontSize="16" FontWeight="Black"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Voucher" FontSize="16" Margin="0,0,0,10"/>
+                        <TextBox x:Name="VoucherTextBox" Grid.Row="1" Grid.Column="3" PlaceholderText="VOUCHER0" FontSize="16" FontWeight="Black"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Amount: " FontSize="16"/>
+                        <TextBlock Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" x:Name="DueAmount" Text="0.00" FontSize="16" FontWeight="Black"/>
+
+                        <Button x:Name="CreateInvoiceButton" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Content="Create Invoice" Click="CreateInvoiceButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#86e57f" Margin="0,40,0,20"/>
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+
+            <Grid Grid.Row="2" Grid.Column="0" BorderBrush="Gray" BorderThickness="2" CornerRadius="30" Margin="20,0,20,40">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Row="0" Grid.Column="0" PlaceholderText="Note:" Margin="15 10 0 0"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="Total amount " FontSize="15" Margin="10 10 20 0"/>
+                <TextBlock Grid.Row="0" Grid.Column="2" x:Name="TotalAmountTextBlock" Text="0.00" FontSize="15" Margin="10 10 20 0"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="Total discount " FontSize="15" Margin="10 0 20 0"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" x:Name="TotalDiscountTextBlock" Text="0.00" FontSize="15" Margin="10 0 20 0"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="Real amount " FontSize="15" Margin="10 5 20 10"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" x:Name="TotalDueTextBlock" Text="0.00" FontSize="15" Margin="10 5 20 10"/>
+            </Grid>
+
+            <Grid Grid.Row="2" Grid.Column="1" BorderBrush="Gray" BorderThickness="2" CornerRadius="30" Margin="10,0,10,40">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="11*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="20 0 30 0">
+                    <FontIcon Glyph="&#xE717;" Foreground="Blue" FontSize="18" Margin="0,0,10,0" />
+                    <TextBlock Text="Phone Number: (123) 456-7890" FontSize="18" FontWeight="Bold"/>
+                </StackPanel>
+
+                <Button Grid.Column="1" Click="InstructionButton_Click" Width="50" Height="50" Background="#0078D4" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="30">
+                    <TextBlock Text="?" FontSize="30" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+
+                <Button Grid.Column="2" Click="FeedbackButton_Click" Width="50" Height="50" Background="#FF5733" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="30">
+                    <FontIcon Glyph="&#xE70F;" FontSize="30" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+            </Grid>
         </Grid>
+
+        <FlipView x:Name="InstructionFlipView" Visibility="Collapsed" Background="#EDF6F2">
+            <FlipViewItem>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition FromHorizontalOffset="100" />
+                        </TransitionCollection>
+                    </StackPanel.Transitions>
+                    <TextBlock Text="Welcome to Clothing Store Manager!" FontSize="24" FontWeight="Bold" Margin="0,0,0,5" />
+                    <TextBlock Text="This application helps you manage sales effectively.." TextWrapping="Wrap" Margin="0,0,0,30" />
+                    <Image Source="ms-appx:///Assets/step1.jpg" Height="300" Width="Auto" Margin="0,10,0,0" />
+                </StackPanel>
+            </FlipViewItem>
+            <FlipViewItem>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition FromHorizontalOffset="-100" />
+                        </TransitionCollection>
+                    </StackPanel.Transitions>
+                    <TextBlock Text="Search for products" FontSize="24" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <TextBlock Text="Use the search box to find the product you want." TextWrapping="Wrap" Margin="0,0,0,10" />
+                    <Image Source="ms-appx:///Assets/step2.png" Height="350" Margin="0,10,0,10" />
+                </StackPanel>
+            </FlipViewItem>
+            <FlipViewItem>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition FromHorizontalOffset="100" />
+                        </TransitionCollection>
+                    </StackPanel.Transitions>
+                    <TextBlock Text="Adjust quantity" FontSize="24" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <TextBlock Text="Click on +, - to change. Select X if you want to remove unwanted products." TextWrapping="Wrap" Margin="0,0,0,10" />
+                    <Image Source="ms-appx:///Assets/step3.png" Height="350" Margin="0,10,0,0" />
+                </StackPanel>
+            </FlipViewItem>
+            <FlipViewItem>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition FromHorizontalOffset="-100" />
+                        </TransitionCollection>
+                    </StackPanel.Transitions>
+                    <TextBlock Text="Search for customers" FontSize="24" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <TextBlock Text="Use the search box to search for your favorite customers." TextWrapping="Wrap" Margin="0,0,0,10" />
+                    <Image Source="ms-appx:///Assets/step4.png" Height="350" Margin="0,10,0,0" />
+                </StackPanel>
+            </FlipViewItem>
+            <FlipViewItem>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition FromHorizontalOffset="100" />
+                        </TransitionCollection>
+                    </StackPanel.Transitions>
+                    <TextBlock Text="Create invoices" FontSize="24" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <TextBlock Text="Click the 'Create Invoice' button to create an invoice for the order." TextWrapping="Wrap" Margin="0,0,0,10" />
+                    <Image Source="ms-appx:///Assets/step5.png" Height="300" Margin="0,10,0,0" />
+                    <Button Content="End" Click="EndInstructionButton_Click" FontWeight="Medium" Foreground="White" Background="#e60023" Margin="0,20,0,0" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </FlipViewItem>
+        </FlipView>
     </Grid>
 </Page>

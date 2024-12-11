@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 using Sale_Project.Core.Models;
 
+namespace Sale_Project.Core.Models.Products;
+
 /// <summary>
 /// Represents a product with properties for product details and notifications for property changes.
 /// </summary>

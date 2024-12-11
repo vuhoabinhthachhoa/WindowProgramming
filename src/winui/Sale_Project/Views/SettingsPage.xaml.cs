@@ -22,9 +22,8 @@ public sealed partial class SettingsPage : Page
     }
 
 
-    private void LogoutButton_Click(object sender, RoutedEventArgs e)
+    private async void LogoutButton_Click(object sender, RoutedEventArgs e)
     {
-        ViewModel.LogoutAsync();
-
+        await ViewModel.LogoutAsync();
     }
 }

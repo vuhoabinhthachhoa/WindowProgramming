@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json.Serialization;
 
-namespace Sale_Project.Core.Models.Product;
+namespace Sale_Project.Core.Models.Products;
 
 /// <summary>
 /// Represents a request to create a new product, including its data and an optional file.

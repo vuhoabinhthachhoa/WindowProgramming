@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 
+namespace Sale_Project.Core.Models.Employees;
+
 public class Employee : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler PropertyChanged;
