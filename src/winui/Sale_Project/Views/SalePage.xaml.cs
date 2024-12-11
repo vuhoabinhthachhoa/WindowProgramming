@@ -76,6 +76,7 @@ public sealed partial class SalePage : Page
                 selectedProducts.Add((ViewModel.Product, 1));
                 UpdateSelectedItemsDisplay();
             }
+
             sender.Text = string.Empty;
         }
     }
@@ -174,6 +175,7 @@ public sealed partial class SalePage : Page
                 stackPanel.Children.Add(deleteButton);
 
                 SelectedItemsDisplayProduct.Children.Add(stackPanel);
+                SearchProduct.Text = string.Empty;
                 CalculateTotals();
             }
         });
