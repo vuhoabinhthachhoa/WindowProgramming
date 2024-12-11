@@ -71,17 +71,19 @@ public sealed partial class SalePage : Page
 
         if (selectedProduct != null)
         {
-            var productName = selectedProduct.Split('\n')[0].Trim();
+            var productName = selectedProduct.Split('\n')[0] 
+                                             .Replace("•", "") 
+                                             .Trim();
 
-            var product = ViewModel.Products.FirstOrDefault(p => p.Name.Equals(productName, StringComparison.OrdinalIgnoreCase));
+            ViewModel.Product = ViewModel.Products.FirstOrDefault(p => p.Name.Equals(productName, StringComparison.OrdinalIgnoreCase));
 
-            if (product != null)
+            if (ViewModel.Product != null)
             {
-                var existingProduct = selectedProducts.FirstOrDefault(p => p.product.Id == product.Id);
+                var existingProduct = selectedProducts.FirstOrDefault(p => p.product.Id == ViewModel.Product.Id);
 
                 if (existingProduct == default)
                 {
-                    selectedProducts.Add((product, 1));
+                    selectedProducts.Add((ViewModel.Product, 1));
                     UpdateSelectedItemsDisplay();
                 }
             }
