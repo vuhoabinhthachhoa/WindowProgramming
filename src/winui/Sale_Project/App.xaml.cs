@@ -80,6 +80,7 @@ public partial class App : Application
             services.AddSingleton<EmployeeCreationRequestValidator>();
             services.AddSingleton<ProductValidator>();
             services.AddSingleton<ProductCreationRequestValidator>();
+            services.AddSingleton<PdfExporter>();
 
             // HTTP
             services.AddSingleton<HttpClient>();
