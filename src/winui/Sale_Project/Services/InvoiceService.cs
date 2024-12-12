@@ -9,6 +9,9 @@ using Sale_Project.Core.Models.Invoices;
 using Sale_Project.Contracts.Services;
 using Windows.Storage;
 using System.Diagnostics;
+using Sale_Project.Core.Models.Employees;
+using Sale_Project.Core.Models.Products;
+using Sale_Project.Helpers;
 
 namespace Sale_Project.Services;
 public class InvoiceService : IInvoiceService
@@ -17,14 +20,16 @@ public class InvoiceService : IInvoiceService
     private readonly HttpClient _httpClient;
     private readonly IHttpService _httpService;
     private readonly IAuthService _authService;
+    private readonly PdfExporter _pdfExporter;
 
-    public InvoiceService(IAuthService authService, IDialogService dialogService, HttpClient httpClient, IHttpService httpService)
+    public InvoiceService(IAuthService authService, IDialogService dialogService, HttpClient httpClient, IHttpService httpService, PdfExporter pdfExporter)
     {
         _httpClient = httpClient;
         _httpClient = new HttpClient { BaseAddress = new Uri(AppConstants.BaseUrl + "/invoice") };
         _dialogService = dialogService;
         _httpService = httpService;
         _authService = authService;
+        _pdfExporter = pdfExporter;
     }
 
     /// <summary>
@@ -86,7 +91,9 @@ public class InvoiceService : IInvoiceService
 
             // Notify success
             await _dialogService.ShowSuccessAsync("Success", "Invoice created successfully!");
+            GenerateInvoicePdf(responseData?.Data);
             return responseData?.Data;
+
         }
         catch (HttpRequestException ex)
         {
@@ -101,4 +108,15 @@ public class InvoiceService : IInvoiceService
             return null;
         }
     }
+
+    public void GenerateInvoicePdf(Invoice invoice)
+    {
+        string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Invoice.pdf");
+       
+        _pdfExporter.ExportInvoiceToPdf(invoice, filePath);
+
+        // Optionally inform the user that the PDF has been created
+        _dialogService.ShowSuccessAsync("Sucess", "Invoice exported successfully!");
+    }
+
 }
