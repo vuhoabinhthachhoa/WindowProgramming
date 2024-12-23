@@ -11,4 +11,7 @@ namespace Sale_Project.Contracts.Services;
 public interface IInvoiceService
 {
     Task<Invoice> CreateInvoiceAsync(InvoiceCreationRequest invoiceCreationRequest);
+
+
 }
+
