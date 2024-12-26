@@ -5,63 +5,39 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Sale_Project.Contracts.ViewModels;
 using Sale_Project.Core.Contracts.Services;
 using Sale_Project.Core.Models;
-using Sale_Project.Core.Models.Products;
 using Sale_Project.Contracts.Services;
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;
 using Sale_Project.Services;
+using Sale_Project.Core.Models.Categories;
 
 namespace Sale_Project.ViewModels;
 
 /// <summary>
-/// ViewModel for managing and displaying a list of products with pagination, sorting, and search capabilities.
+/// ViewModel for managing and displaying a list of categorys with pagination, sorting, and search capabilities.
 /// </summary>
-public partial class ProductViewModel : ObservableRecipient, INavigationAware
+public partial class CategoryViewModel : ObservableRecipient, INavigationAware
 {
     private const int _defaultRowsPerPage = 5;
-    private readonly IProductService _productService;
-    private readonly IBrandService _brandService;
     private readonly ICategoryService _categoryService;
+    private readonly IBrandService _brandService;
     private readonly INavigationService _navigationService;
 
     /// <summary>
-    /// Collection of products to be displayed.
+    /// Collection of categorys to be displayed.
     /// </summary>
-    public ObservableCollection<Product> Products { get; set; } = new ObservableCollection<Product>();
+    public ObservableCollection<Category> Categories { get; set; } = new ObservableCollection<Category>();
 
     /// <summary>
-    /// Search request object containing filters for product search.
+    /// Currently selected category in the list.
     /// </summary>
     [ObservableProperty]
-    private ProductSearchRequest productSearchRequest;
-
-    /// <summary>
-    /// Currently selected product in the list.
-    /// </summary>
-    [ObservableProperty]
-    private Product selectedProduct;
-
-    /// <summary>
-    /// List of brand names for filtering.
-    /// </summary>
-    [ObservableProperty]
-    private string[] _brands;
-
-    /// <summary>
-    /// List of category names for filtering.
-    /// </summary>
-    [ObservableProperty]
-    private string[] _categories;
+    private Category selectedCategory;
 
     /// <summary>
     /// Information string displaying pagination details.
     /// </summary>
-    public string Info => $"Displaying {Products.Count}/{RowsPerPage} of total {TotalItems} item(s)";
-
-    /// <summary>
-    /// Array of available sizes for products.
-    /// </summary>
-    public string[] Size { get; set; } = new string[] { "S", "M", "L", "XL", "XXL" };
+    public string Info => $"Displaying {Categories.Count}/{RowsPerPage} of total {TotalItems} item(s)";
 
     /// <summary>
     /// Collection of pagination details.
@@ -103,27 +79,24 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
     public int RowsPerPage
     {
         get; set;
-    }
+    } = 5;
 
     /// <summary>
-    /// Field by which products are sorted.
+    /// Field by which categorys are sorted.
     /// </summary>
     public string SortField { get; set; } = "id";
 
     /// <summary>
-    /// Sort direction for products (ascending or descending).
+    /// Sort direction for categorys (ascending or descending).
     /// </summary>
     public SortType SortType { get; set; } = SortType.ASC;
 
     /// <summary>
-    /// Initializes a new instance of the ProductViewModel class.
+    /// Initializes a new instance of the CategoryViewModel class.
     /// </summary>
-    public ProductViewModel(INavigationService navigationService, IBrandService brandService, ICategoryService categoryService, IProductService productService)
+    public CategoryViewModel(INavigationService navigationService, ICategoryService categoryService)
     {
         RowsPerPage = _defaultRowsPerPage;
-        ProductSearchRequest = new ProductSearchRequest();
-        _productService = productService;
-        _brandService = brandService;
         _categoryService = categoryService;
         _navigationService = navigationService;
     }
@@ -133,39 +106,33 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
     /// </summary>
     public async void OnNavigatedTo(object parameter)
     {
-        var brandNames = await _brandService.GetAllBrands();
-        Brands = brandNames?.Select(brand => brand.Name).ToArray();
-
-        var categoryNames = await _categoryService.GetAllCategories();
-        Categories = categoryNames?.Select(category => category.Name).ToArray();
-
         await LoadData();
     }
 
     /// <summary>
-    /// Handles navigation away from this view model, clearing product data.
+    /// Handles navigation away from this view model, clearing category data.
     /// </summary>
     public void OnNavigatedFrom()
     {
-        Products.Clear();
+        Categories.Clear();
     }
 
     /// <summary>
-    /// Loads product data with current filters, pagination, and sorting.
+    /// Loads category data with current filters, pagination, and sorting.
     /// </summary>
     public async Task LoadData()
     {
-        var pageData = await _productService.SearchProducts(CurrentPage, RowsPerPage, SortField, SortType, ProductSearchRequest);
+        var categories = await _categoryService.GetAllCategories();
 
-        if (pageData == null)
+        if (categories == null)
         {
             return;
         }
 
-        Products = new ObservableCollection<Product>(pageData.Data);
-        TotalItems = pageData.TotalElements;
-        TotalPages = pageData.TotalPages;
-        CurrentPage = pageData.Page;
+        Categories = new ObservableCollection<Category>(categories);
+        TotalItems = categories.ToList().Count;
+        TotalPages = TotalItems / RowsPerPage;
+        CurrentPage = 1;
     }
 
     /// <summary>
@@ -180,23 +147,23 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
     /// <summary>
     /// Performs a search based on the current filters.
     /// </summary>
-    public async Task SearchProduct()
+    public async Task SearchCategory()
     {
         CurrentPage = 1;
         await LoadData();
     }
 
     /// <summary>
-    /// Navigates to the Add Product view model.
+    /// Navigates to the Add Category view model.
     /// </summary>
-    public void AddProduct()
+    public void AddCategory()
     {
-        _navigationService.NavigateTo(typeof(ProductAddViewModel).FullName!);
+        _navigationService.NavigateTo(typeof(CategoryAddViewModel).FullName!);
     }
 
-    public void GoToCategoryPage()
+    public void GoToProductPage()
     {
-        _navigationService.NavigateTo(typeof(CategoryViewModel).FullName!);
+        _navigationService.NavigateTo(typeof(ProductViewModel).FullName!);
     }
 
     public void GoToBrandPage()
@@ -229,7 +196,7 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
     }
 
     /// <summary>
-    /// Sorts products by ID in ascending order.
+    /// Sorts categorys by ID in ascending order.
     /// </summary>
     public async Task SortByIDAsc()
     {
@@ -247,7 +214,7 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
     }
 
     /// <summary>
-    /// Sorts products by ID in descending order.
+    /// Sorts categorys by ID in descending order.
     /// </summary>
     public async Task SortByIDDesc()
     {
@@ -275,13 +242,13 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
     }
 
     /// <summary>
-    /// Handles changes to the selected product, navigating to the Update Product view model.
+    /// Handles changes to the selected category, navigating to the Update Category view model.
     /// </summary>
-    partial void OnSelectedProductChanged(Product value)
+    partial void OnSelectedCategoryChanged(Category value)
     {
         if (value != null)
         {
-            _navigationService.NavigateTo(typeof(ProductUpdateViewModel).FullName!, value);
+            _navigationService.NavigateTo(typeof(CategoryUpdateViewModel).FullName!, value);
         }
     }
 }

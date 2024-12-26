@@ -2,7 +2,8 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
-using Sale_Project.Core.Models;
+using Sale_Project.Core.Models.Brands;
+using Sale_Project.Core.Models.Categories;
 
 namespace Sale_Project.Core.Models.Products;
 

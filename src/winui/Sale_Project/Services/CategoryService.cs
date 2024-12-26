@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Microsoft.UI.Xaml.Controls;
 using Sale_Project.Core.Models;
+using Sale_Project.Core.Models.Categories;
 using Sale_Project.Helpers;
 
 /// <summary>
@@ -39,11 +40,11 @@ public class CategoryService : ICategoryService
     /// <summary>
     /// Creates a new category in the system.
     /// </summary>
-    public async Task<Category> CreateCategory(Category category)
+    public async Task<Category> CreateCategory(CategoryCreationRequest categoryCreationRequest)
     {
         try
         {
-            var json = JsonSerializer.Serialize(category);
+            var json = JsonSerializer.Serialize(categoryCreationRequest);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var token = _authService.GetAccessToken();
@@ -115,8 +116,8 @@ public class CategoryService : ICategoryService
         {
             var updateRequest = new
             {
-                name = category.Name,
-                newName = newCategoryName
+                id = category.Id,
+                name = newCategoryName,
             };
 
             var json = JsonSerializer.Serialize(updateRequest);

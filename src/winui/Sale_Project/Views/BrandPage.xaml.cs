@@ -7,46 +7,46 @@ using Sale_Project.ViewModels;
 namespace Sale_Project.Views;
 
 /// <summary>
-/// Code-behind for the ProductPage, providing UI logic for managing and displaying products.
+/// Code-behind for the BrandPage, providing UI logic for managing and displaying brands.
 /// </summary>
-public sealed partial class ProductPage : Page
+public sealed partial class BrandPage : Page
 {
     /// <summary>
-    /// The ViewModel for this page, used for binding and managing product data.
+    /// The ViewModel for this page, used for binding and managing brand data.
     /// </summary>
-    public ProductViewModel ViewModel
+    public BrandViewModel ViewModel
     {
         get;
     }
 
     /// <summary>
-    /// Initializes the ProductPage, setting up the ViewModel and DataContext.
+    /// Initializes the BrandPage, setting up the ViewModel and DataContext.
     /// </summary>
-    public ProductPage()
+    public BrandPage()
     {
-        ViewModel = App.GetService<ProductViewModel>();
+        ViewModel = App.GetService<BrandViewModel>();
         InitializeComponent();
         DataContext = ViewModel;
     }
 
     /// <summary>
-    /// Handles the Add Product button click event to add a new product using the ViewModel.
+    /// Handles the Add Brand button click event to add a new brand using the ViewModel.
     /// </summary>
-    private void AddProductButton_Click(object sender, RoutedEventArgs e)
+    private void AddBrandButton_Click(object sender, RoutedEventArgs e)
     {
-        ViewModel.AddProduct();
+        ViewModel.AddBrand();
     }
 
     /// <summary>
-    /// Handles the Search Product button click event to search for products using the ViewModel.
+    /// Handles the Search Brand button click event to search for brands using the ViewModel.
     /// </summary>
-    private async void SearchProductButton_Click(object sender, RoutedEventArgs e)
+    private async void SearchBrandButton_Click(object sender, RoutedEventArgs e)
     {
-        await ViewModel.SearchProduct();
+        await ViewModel.SearchBrand();
     }
 
     /// <summary>
-    /// Handles the Previous button click event to navigate to the previous page of products.
+    /// Handles the Previous button click event to navigate to the previous page of brands.
     /// </summary>
     private async void PreviousButton_Click(object sender, RoutedEventArgs e)
     {
@@ -54,7 +54,7 @@ public sealed partial class ProductPage : Page
     }
 
     /// <summary>
-    /// Handles the Next button click event to navigate to the next page of products.
+    /// Handles the Next button click event to navigate to the next page of brands.
     /// </summary>
     private async void NextButton_Click(object sender, RoutedEventArgs e)
     {
@@ -62,7 +62,7 @@ public sealed partial class ProductPage : Page
     }
 
     /// <summary>
-    /// Handles the Sort By ID Ascending button click event to sort products by ID in ascending order.
+    /// Handles the Sort By ID Ascending button click event to sort brands by ID in ascending order.
     /// </summary>
     private async void SortByIDAscButton_Click(object sender, RoutedEventArgs e)
     {
@@ -70,7 +70,7 @@ public sealed partial class ProductPage : Page
     }
 
     /// <summary>
-    /// Handles the Sort By ID Descending button click event to sort products by ID in descending order.
+    /// Handles the Sort By ID Descending button click event to sort brands by ID in descending order.
     /// </summary>
     private async void SortByIDDescButton_Click(object sender, RoutedEventArgs e)
     {
@@ -81,11 +81,11 @@ public sealed partial class ProductPage : Page
     {
         if (ChangePage.SelectedIndex == 1)
         {
-            ViewModel.GoToCategoryPage();
+            ViewModel.GoToProductPage();
         }
         else if (ChangePage.SelectedIndex == 2)
         {
-            ViewModel.GoToBrandPage();
+            ViewModel.GoToCategoryPage();
         }
     }
 }

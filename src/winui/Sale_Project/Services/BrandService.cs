@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Microsoft.UI.Xaml.Controls;
 using Sale_Project.Core.Models;
+using Sale_Project.Core.Models.Brands;
 using Sale_Project.Core.Models.Employees;
 using Sale_Project.Core.Models.Products;
 using Sale_Project.Helpers;
@@ -41,11 +42,11 @@ public class BrandService : IBrandService
     /// <summary>
     /// Creates a new brand in the system.
     /// </summary>
-    public async Task<Brand> CreateBrand(Brand brand)
+    public async Task<Brand> CreateBrand(BrandCreationRequest brandCreationRequest)
     {
         try
         {
-            var json = JsonSerializer.Serialize(brand);
+            var json = JsonSerializer.Serialize(brandCreationRequest);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var token = _authService.GetAccessToken();
@@ -111,14 +112,14 @@ public class BrandService : IBrandService
     /// <summary>
     /// Updates the details of an existing brand.
     /// </summary>
-    public async Task<Brand> UpdateBrand(Brand brand, string newBrandName)
+    public async Task<Brand> UpdateBrand(Brand brand, string oldBrandName)
     {
         try
         {
             var updateRequest = new
             {
-                name = brand.Name,
-                newName = newBrandName
+                name = oldBrandName,
+                newName = brand.Name
             };
 
             var json = JsonSerializer.Serialize(updateRequest);
