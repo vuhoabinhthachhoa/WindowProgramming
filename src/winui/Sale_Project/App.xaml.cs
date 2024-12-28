@@ -20,6 +20,8 @@ namespace Sale_Project;
 
 public partial class App : Application
 {
+    private GlobalMouseHook _globalMouseHook;
+
     public IHost Host
     {
         get;
@@ -154,9 +156,34 @@ public partial class App : Application
 
         // Handle task-related exceptions
         TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
-        
+
         // Handle non-UI thread exceptions
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
+        _globalMouseHook = new GlobalMouseHook();
+        _globalMouseHook.SetHook();
+        _globalMouseHook.MouseClickDetected += OnMouseClickDetected;
+    }
+
+    private async void OnMouseClickDetected(object sender, string clickType)
+    {
+        // Handle global mouse click detection
+        System.Diagnostics.Debug.WriteLine($"Global Mouse Event: {clickType}");
+
+        if (clickType == "Right Click Detected")
+        {
+            var dialogService = App.GetService<IDialogService>();
+            var authService = App.GetService<IAuthService>();
+
+            var result = await dialogService.ShowConfirmAsync("Logout", "Do you want to logout?");
+
+            if (result)
+            {
+                authService.Logout();
+                await dialogService.ShowSuccessAsync("Success", "Logout successful!");
+                App.MainWindow.Content = App.GetService<LoginPage>();
+            }
+        }
     }
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)

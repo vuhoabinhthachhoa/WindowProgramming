@@ -17,6 +17,9 @@ public partial class EmployeeAddViewModel : ObservableRecipient, INavigationAwar
     private readonly IDialogService _dialogService;
     private readonly IAuthService _authService;
     private readonly EmployeeCreationRequestValidator _employeeCreationRequestValidator;
+    private GlobalKeyboardHook _globalKeyboardHook;
+
+
 
     /// <summary>
     /// Gets or sets the employee creation request.
@@ -63,6 +66,14 @@ public partial class EmployeeAddViewModel : ObservableRecipient, INavigationAwar
     {
         EmployeeCreationRequest = new EmployeeCreationRequest();
         RegistrationRequest = new RegistrationRequest();
+
+        // Initialize the hook
+        _globalKeyboardHook = new GlobalKeyboardHook();
+        _globalKeyboardHook.SetHook();
+
+        // Hook up the event
+        _globalKeyboardHook.KeyPressed += OnGlobalKeyPressed;
+
     }
 
     /// <summary>
@@ -73,6 +84,23 @@ public partial class EmployeeAddViewModel : ObservableRecipient, INavigationAwar
         EmployeeCreationRequest = null;
         RegistrationRequest = null;
         CreatedEmployee = null;
+
+        // Unhook and clean up
+        if (_globalKeyboardHook != null)
+        {
+            _globalKeyboardHook.KeyPressed -= OnGlobalKeyPressed;
+            _globalKeyboardHook.Unhook();
+            _globalKeyboardHook = null;
+        }
+    }
+
+    private async void OnGlobalKeyPressed(object sender, (int KeyCode, bool IsCtrlPressed) keyInfo)
+    {
+        // Detect Ctrl + S (KeyCode: 0x53 for 'S')
+        if (keyInfo.KeyCode == 0x53 && keyInfo.IsCtrlPressed)
+        {
+            await AddEmployee();
+        }
     }
 
     /// <summary>

@@ -112,7 +112,7 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
 
     /// <summary>
     /// Sort direction for products (ascending or descending).
-    /// </summary>
+    /// </summary
     public SortType SortType { get; set; } = SortType.ASC;
 
     /// <summary>
