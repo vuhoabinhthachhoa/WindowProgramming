@@ -48,7 +48,7 @@ public class GlobalMouseHook
         UnhookWindowsHookEx(_hookID);
     }
 
-    private IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+    public IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
     {
         if (nCode >= 0)
         {
