@@ -99,6 +99,7 @@
 					<Setter Property="HorizontalAlignment" Value="Left" />
 					<Setter Property="VerticalAlignment" Value="Center" />
 					<Setter Property="FontSize" Value="20"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
 				</Style>
 			</ComboBox.Style>
 

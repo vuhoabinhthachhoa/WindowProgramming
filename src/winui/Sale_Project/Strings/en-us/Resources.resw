@@ -233,4 +233,11 @@
     <value>BrandUpdate</value>
     <comment>Page title for BrandUpdatePage</comment>
   </data>
+  <data name="ShellMenuItem_Views_Report.Text" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="Report_Title.Text" xml:space="preserve">
+    <value>Report</value>
+    <comment>Page title for ReportPage</comment>
+  </data>
 </root>
