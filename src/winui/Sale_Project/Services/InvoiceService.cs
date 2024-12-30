@@ -164,4 +164,46 @@ public class InvoiceService : IInvoiceService
         }
     }
 
+
+    public async Task<IEnumerable<Invoice>> GetAllInvoices(
+    DateOnly startDate, DateOnly endDate)
+    {
+        try
+        {
+            // Prepare request URL with query parameters
+            var requestUrl = $"{_httpClient.BaseAddress}/all?startDate={startDate:yyyy-MM-dd}&endDate={endDate:yyyy-MM-dd}";
+
+            // Add access token to HTTP headers
+            var token = _authService.GetAccessToken();
+            _httpService.AddTokenToHeader(token, _httpClient);
+
+            // Send GET request
+            var apiResponse = await _httpClient.GetAsync(requestUrl);
+
+            // Handle unsuccessful response
+            if (!apiResponse.IsSuccessStatusCode)
+            {
+                await _httpService.HandleErrorResponse(apiResponse);
+                return null;
+            }
+
+            // Deserialize server response
+            var responseContent = await apiResponse.Content.ReadAsStringAsync();
+            var responseData = JsonSerializer.Deserialize<ApiResponse<List<Invoice>>>(responseContent);
+
+            return responseData?.Data;
+        }
+        catch (HttpRequestException ex)
+        {
+            // Handle HTTP request exceptions
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            return null;
+        }
+        catch (Exception ex)
+        {
+            // Handle general exceptions
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            return null;
+        }
+    }
 }
