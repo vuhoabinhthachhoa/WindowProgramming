@@ -112,16 +112,6 @@
 
 		<!-- Buttons -->
 		<StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
-			<Button Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5"
-                    Width="Auto"
-                    Click="SearchCategoryButton_Click">
-				<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-					<!-- Add Search Icon -->
-					<FontIcon Glyph="&#xE721;" FontFamily="Segoe MDL2 Assets" FontSize="16" FontWeight="Bold" Margin="0,0,10,0" />
-					<!-- Add Text -->
-					<TextBlock Text="Search Category" VerticalAlignment="Center" />
-				</StackPanel>
-			</Button>
 			<Button Width="Auto"
                     Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5"
                     Click="AddCategoryButton_Click">
@@ -135,13 +125,13 @@
 		</StackPanel>
 
 		<!-- Sort Buttons -->
-		<StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+		<!--<StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
 			<Button x:Name="SortByIDAscButton" Click="SortByIDAscButton_Click" Width="Auto"
                     Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5">
 				<StackPanel Orientation="Horizontal">
 					<TextBlock Text="Sort by ID" Margin="0,0,8,0" />
 					<FontIcon Glyph="&#xE74A;" FontSize="14" FontWeight="Bold"/>
-					<!-- Up arrow icon -->
+					--><!-- Up arrow icon --><!--
 				</StackPanel>
 			</Button>
 			<Button x:Name="SortByIDDescButton" Click="SortByIDDescButton_Click" Width="Auto"
@@ -149,10 +139,10 @@
 				<StackPanel Orientation="Horizontal">
 					<TextBlock Text="Sort by ID" Margin="0,0,8,0" />
 					<FontIcon Glyph="&#xE74B;" FontSize="14" FontWeight="Bold"/>
-					<!-- Down arrow icon -->
+					--><!-- Down arrow icon --><!--
 				</StackPanel>
 			</Button>
-		</StackPanel>
+		</StackPanel>-->
 
 		<!-- Search Fields -->
 		<!--<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" Margin="0,0,20,0">
