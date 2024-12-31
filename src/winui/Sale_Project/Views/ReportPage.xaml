@@ -75,7 +75,7 @@
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="350" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -111,10 +111,9 @@
         </StackPanel>
 
         <!-- Search Fields -->
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" Margin="0,0,20,0">
-            <Grid>
+            <Grid Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" Margin="0,0,20,0">
                 <StackPanel>
-                    <StackPanel Style="{StaticResource FieldContainerStyle}" Width="200" HorizontalAlignment="Left">
+                    <StackPanel Style="{StaticResource FieldContainerStyle}" Width="300" HorizontalAlignment="Left">
                         <TextBlock Text="Display" />
                         <ComboBox SelectedValue="Sales Report"
                                   SelectionChanged="ChangeChart_SelectionChanged"
@@ -145,25 +144,28 @@
                     <StackPanel Style="{StaticResource FieldContainerStyle}" Width="Auto" HorizontalAlignment="Left">
                         <TextBlock Text="Time Range" />
                         <StackPanel>
-                            <Viewbox MaxHeight="35" MaxWidth="200" HorizontalAlignment="Left" Stretch="Fill">
+                            <Viewbox MaxHeight="45" MaxWidth="300" HorizontalAlignment="Left" Stretch="Fill">
                                 <DatePicker Width="Auto" Header="From" SelectedDate="{x:Bind ViewModel.TimeRange.StartDate, Converter={StaticResource DateOnlyConverter}, Mode=TwoWay}" Height="Auto"  Margin="-1,0,0,0"/>
                             </Viewbox>
-                            <Viewbox MaxHeight="35" MaxWidth="200" HorizontalAlignment="Left" Stretch="Fill">
+                            <Viewbox MaxHeight="45" MaxWidth="300" HorizontalAlignment="Left" Stretch="Fill">
                                 <DatePicker Width="Auto" Header="To" SelectedDate="{x:Bind ViewModel.TimeRange.EndDate, Converter={StaticResource DateOnlyConverter},Mode=TwoWay}" Height="Auto"  Margin="-1,0,0,0"/>
                             </Viewbox>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </Grid>
-        </ScrollViewer>
+
+
+
+        <!--Background="#FFF3F3F3"
+                          Foreground="Black"-->
 
         <Grid Grid.Row="2" Grid.Column="1">
             <oxy:PlotView x:Name="DailyRevenuePlotModel"
                       Model="{x:Bind ViewModel.DailyRevenuePlotModel, Mode=OneWay}"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
-                          Background="Black"
-                          Foreground="White"
+
                           Visibility="Visible"
                      />
 
@@ -171,8 +173,7 @@
                       Model="{x:Bind ViewModel.PlotModel, Mode=OneWay}"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
-                          Background="Black"
-                          Foreground="White"
+
                           Visibility="Collapsed"
                      />
         </Grid>
