@@ -57,7 +57,9 @@ public class InvoiceServiceTests
         mockDialogService.Setup(dialog => dialog.ShowErrorAsync(It.IsAny<string>(), It.IsAny<string>()));
 
         var authService = new AuthService(httpClient, mockHttpService.Object, mockDialogService.Object);
-        var invoiceService = new InvoiceService(authService, mockDialogService.Object, httpClient, mockHttpService.Object);
+        var mockPdfExporter = new Mock<PdfExporter>(); // Mock the PdfExporter
+
+        var invoiceService = new InvoiceService(authService, mockDialogService.Object, httpClient, mockHttpService.Object, mockPdfExporter.Object);
 
         // Act: 
         var result = await invoiceService.CreateInvoiceAsync(invoiceRequest);
@@ -100,7 +102,9 @@ public class InvoiceServiceTests
         mockDialogService.Setup(dialog => dialog.ShowErrorAsync(It.IsAny<string>(), It.IsAny<string>()));
 
         var authService = new Mock<IAuthService>();
-        var invoiceService = new InvoiceService(authService.Object, mockDialogService.Object, httpClient, mockHttpService.Object);
+        var mockPdfExporter = new Mock<PdfExporter>(); // Mock the PdfExporter
+
+        var invoiceService = new InvoiceService(authService.Object, mockDialogService.Object, httpClient, mockHttpService.Object, mockPdfExporter.Object);
 
         // Act: 
         var result = await invoiceService.CreateInvoiceAsync(invoiceRequest);
@@ -139,7 +143,9 @@ public class InvoiceServiceTests
         mockDialogService.Setup(dialog => dialog.ShowErrorAsync(It.IsAny<string>(), It.IsAny<string>()));
 
         var authService = new Mock<IAuthService>();
-        var invoiceService = new InvoiceService(authService.Object, mockDialogService.Object, httpClient, mockHttpService.Object);
+        var mockPdfExporter = new Mock<PdfExporter>(); // Mock the PdfExporter
+
+        var invoiceService = new InvoiceService(authService.Object, mockDialogService.Object, httpClient, mockHttpService.Object, mockPdfExporter.Object);
 
         // Act: 
         var result = await invoiceService.CreateInvoiceAsync(invoiceRequest);
