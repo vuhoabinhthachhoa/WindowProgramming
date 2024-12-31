@@ -12,6 +12,9 @@ using Sale_Project.Core.Models.Products;
 
 namespace Sale_Project.ViewModels;
 
+/// <summary>
+/// ViewModel for handling the reports related to invoices and plotting revenue data.
+/// </summary>
 public partial class ReportViewModel : ObservableRecipient
 {
     private readonly IInvoiceService _invoiceService;
@@ -25,6 +28,10 @@ public partial class ReportViewModel : ObservableRecipient
     [ObservableProperty]
     private PlotModel _dailyRevenuePlotModel;
 
+    /// <summary>
+    /// Initializes a new instance of the ReportViewModel class.
+    /// </summary>
+    /// <param name="invoiceService">Service to interact with invoice data.</param>
     public ReportViewModel(IInvoiceService invoiceService)
     {
         _invoiceService = invoiceService;
@@ -35,6 +42,9 @@ public partial class ReportViewModel : ObservableRecipient
         LoadDailyRevenueData();
     }
 
+    /// <summary>
+    /// Loads and plots product data based on total revenue within a specified time range.
+    /// </summary>
     public async void LoadProductData()
     {
         var invoices = await _invoiceService.GetAllInvoices(TimeRange.StartDate, TimeRange.EndDate);
@@ -74,6 +84,9 @@ public partial class ReportViewModel : ObservableRecipient
         }
     }
 
+    /// <summary>
+    /// Loads and plots daily revenue data based on real amount totals by day within a specified time range.
+    /// </summary>
     public async void LoadDailyRevenueData()
     {
         var invoices = await _invoiceService.GetAllInvoices(TimeRange.StartDate, TimeRange.EndDate);
@@ -102,7 +115,7 @@ public partial class ReportViewModel : ObservableRecipient
             DailyRevenuePlotModel.Series.Add(series);
 
             DailyRevenuePlotModel.Axes.Clear();
-            var categoryAxis = new CategoryAxis{Position = AxisPosition.Left,};
+            var categoryAxis = new CategoryAxis { Position = AxisPosition.Left, };
             categoryAxis.Labels.AddRange(dailyRevenue.Select(d => d.Date.ToString("MM/dd")));
             DailyRevenuePlotModel.Axes.Add(categoryAxis);
             DailyRevenuePlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Revenue" });
@@ -111,10 +124,11 @@ public partial class ReportViewModel : ObservableRecipient
         }
     }
 
+    /// <summary>
+    /// Generates CSV files of invoices within a specified time range.
+    /// </summary>
     public async void GenerateInvoicesCsv()
     {
         await _invoiceService.GenerateInvoicesCsv(TimeRange.StartDate, TimeRange.EndDate);
     }
 }
-
-

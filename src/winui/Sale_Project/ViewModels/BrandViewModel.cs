@@ -160,14 +160,20 @@ public partial class BrandViewModel : ObservableRecipient, INavigationAware
         _navigationService.NavigateTo(typeof(BrandAddViewModel).FullName!);
     }
 
+    /// <summary>
+    /// Navigates to the product page using the navigation service.
+    /// </summary>
     public void GoToProductPage()
     {
-        _navigationService.NavigateTo(typeof(ProductViewModel).FullName!);
+        _navigationService.NavigateTo(typeof(ProductViewModel).FullName!); // Correctly navigates to the Product page.
     }
 
+    /// <summary>
+    /// Navigates to the category page using the navigation service.
+    /// </summary>
     public void GoToCategoryPage()
     {
-        _navigationService.NavigateTo(typeof(BrandViewModel).FullName!);
+        _navigationService.NavigateTo(typeof(CategoryViewModel).FullName!); // Corrected to navigate to the Category page, not Brand.
     }
 
     /// <summary>

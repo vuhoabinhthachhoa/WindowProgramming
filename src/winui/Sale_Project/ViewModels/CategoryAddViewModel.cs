@@ -35,11 +35,6 @@ public partial class CategoryAddViewModel : ObservableRecipient, INavigationAwar
     }
 
     /// <summary>
-    /// Gets the available sizes for the category.
-    /// </summary>
-    public string[] Size { get; set; } = new string[] { "S", "M", "L", "XL", "XXL" };
-
-    /// <summary>
     /// Initializes a new instance of the <see cref="CategoryAddViewModel"/> class.
     /// </summary>
     /// <param name="categoryService">Service for category operations.</param>

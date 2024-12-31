@@ -34,11 +34,6 @@ public partial class BrandAddViewModel : ObservableRecipient, INavigationAware
     }
 
     /// <summary>
-    /// Gets the available sizes for the brand.
-    /// </summary>
-    public string[] Size { get; set; } = new string[] { "S", "M", "L", "XL", "XXL" };
-
-    /// <summary>
     /// Initializes a new instance of the <see cref="BrandAddViewModel"/> class.
     /// </summary>
     /// <param name="brandService">Service for brand operations.</param>

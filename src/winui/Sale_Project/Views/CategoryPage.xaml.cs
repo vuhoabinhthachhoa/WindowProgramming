@@ -38,14 +38,6 @@ public sealed partial class CategoryPage : Page
     }
 
     /// <summary>
-    /// Handles the Search Category button click event to search for categorys using the ViewModel.
-    /// </summary>
-    private async void SearchCategoryButton_Click(object sender, RoutedEventArgs e)
-    {
-        await ViewModel.SearchCategory();
-    }
-
-    /// <summary>
     /// Handles the Previous button click event to navigate to the previous page of categorys.
     /// </summary>
     private async void PreviousButton_Click(object sender, RoutedEventArgs e)
@@ -62,30 +54,17 @@ public sealed partial class CategoryPage : Page
     }
 
     /// <summary>
-    /// Handles the Sort By ID Ascending button click event to sort categorys by ID in ascending order.
+    /// Handles changes in the page selection via a selector component, navigating to different pages based on selection.
     /// </summary>
-    private async void SortByIDAscButton_Click(object sender, RoutedEventArgs e)
-    {
-        await ViewModel.SortByIDAsc();
-    }
-
-    /// <summary>
-    /// Handles the Sort By ID Descending button click event to sort categorys by ID in descending order.
-    /// </summary>
-    private async void SortByIDDescButton_Click(object sender, RoutedEventArgs e)
-    {
-        await ViewModel.SortByIDDesc();
-    }
-
     private void ChangePage_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (ChangePage.SelectedIndex == 1)
         {
-            ViewModel.GoToProductPage();
+            ViewModel.GoToProductPage(); // Navigates to the Product page.
         }
         else if (ChangePage.SelectedIndex == 2)
         {
-            ViewModel.GoToBrandPage();
+            ViewModel.GoToBrandPage(); // Navigates to the Brand page.
         }
     }
 }
