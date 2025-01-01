@@ -131,7 +131,7 @@ public partial class CategoryViewModel : ObservableRecipient, INavigationAware
 
         Categories = new ObservableCollection<Category>(categories);
         TotalItems = categories.ToList().Count;
-        TotalPages = TotalItems / RowsPerPage;
+        TotalPages = (TotalItems + RowsPerPage - 1) / RowsPerPage;
         CurrentPage = 1;
     }
 

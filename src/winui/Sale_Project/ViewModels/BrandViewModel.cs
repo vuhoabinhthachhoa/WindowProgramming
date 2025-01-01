@@ -130,7 +130,7 @@ public partial class BrandViewModel : ObservableRecipient, INavigationAware
 
         Brands = new ObservableCollection<Brand>(brands);
         TotalItems = brands.ToList().Count;
-        TotalPages = TotalItems / RowsPerPage;
+        TotalPages = (TotalItems + RowsPerPage - 1) / RowsPerPage;
         CurrentPage = 1;
     }
 
@@ -140,15 +140,6 @@ public partial class BrandViewModel : ObservableRecipient, INavigationAware
     public async Task GoToPage(int page)
     {
         CurrentPage = page;
-        await LoadData();
-    }
-
-    /// <summary>
-    /// Performs a search based on the current filters.
-    /// </summary>
-    public async Task SearchBrand()
-    {
-        CurrentPage = 1;
         await LoadData();
     }
 
@@ -198,42 +189,6 @@ public partial class BrandViewModel : ObservableRecipient, INavigationAware
             CurrentPage++;
             await LoadData();
         }
-    }
-
-    /// <summary>
-    /// Sorts brands by ID in ascending order.
-    /// </summary>
-    public async Task SortByIDAsc()
-    {
-        if (SortField == "id" && SortType == SortType.ASC)
-        {
-            SetDefaultValue();
-        }
-        else
-        {
-            SortField = "id";
-            SortType = SortType.ASC;
-            CurrentPage = 1;
-        }
-        await LoadData();
-    }
-
-    /// <summary>
-    /// Sorts brands by ID in descending order.
-    /// </summary>
-    public async Task SortByIDDesc()
-    {
-        if (SortField == "id" && SortType == SortType.DESC)
-        {
-            SetDefaultValue();
-        }
-        else
-        {
-            SortField = "id";
-            SortType = SortType.DESC;
-            CurrentPage = 1;
-        }
-        await LoadData();
     }
 
     /// <summary>

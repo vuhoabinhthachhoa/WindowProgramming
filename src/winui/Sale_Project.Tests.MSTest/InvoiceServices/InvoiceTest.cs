@@ -48,7 +48,7 @@ public class InvoiceServiceTests
             .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
             .ReturnsAsync(mockResponse);
 
-        var httpClient = new HttpClient(handlerMock.Object);  
+        var httpClient = new HttpClient(handlerMock.Object);
 
         var mockHttpService = new Mock<IHttpService>();
         mockHttpService.Setup(service => service.AddTokenToHeader(It.IsAny<string>(), httpClient));
@@ -57,17 +57,19 @@ public class InvoiceServiceTests
         mockDialogService.Setup(dialog => dialog.ShowErrorAsync(It.IsAny<string>(), It.IsAny<string>()));
 
         var authService = new AuthService(httpClient, mockHttpService.Object, mockDialogService.Object);
-        var invoiceService = new InvoiceService(authService, mockDialogService.Object, httpClient, mockHttpService.Object);
+        var mockPdfExporter = new Mock<PdfExporter>(); // Mock the PdfExporter
+
+        var invoiceService = new InvoiceService(authService, mockDialogService.Object, httpClient, mockHttpService.Object, mockPdfExporter.Object);
 
         // Act: 
         var result = await invoiceService.CreateInvoiceAsync(invoiceRequest);
         result = mockInvoice;
 
         // Assert: 
-        Assert.IsNotNull(result); 
-        Assert.AreEqual(1, result.Id);  
-        Assert.AreEqual(100, result.TotalAmount);  
-        Assert.AreEqual(50, result.RealAmount);  
+        Assert.IsNotNull(result);
+        Assert.AreEqual(1, result.Id);
+        Assert.AreEqual(100, result.TotalAmount);
+        Assert.AreEqual(50, result.RealAmount);
     }
 
     [TestMethod]
@@ -89,7 +91,7 @@ public class InvoiceServiceTests
         var handlerMock = new Mock<HttpMessageHandler>();
         handlerMock.Protected()
                    .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                   .ReturnsAsync(mockResponse); 
+                   .ReturnsAsync(mockResponse);
 
         var httpClient = new HttpClient(handlerMock.Object);
 
@@ -100,7 +102,9 @@ public class InvoiceServiceTests
         mockDialogService.Setup(dialog => dialog.ShowErrorAsync(It.IsAny<string>(), It.IsAny<string>()));
 
         var authService = new Mock<IAuthService>();
-        var invoiceService = new InvoiceService(authService.Object, mockDialogService.Object, httpClient, mockHttpService.Object);
+        var mockPdfExporter = new Mock<PdfExporter>(); // Mock the PdfExporter
+
+        var invoiceService = new InvoiceService(authService.Object, mockDialogService.Object, httpClient, mockHttpService.Object, mockPdfExporter.Object);
 
         // Act: 
         var result = await invoiceService.CreateInvoiceAsync(invoiceRequest);
@@ -139,7 +143,9 @@ public class InvoiceServiceTests
         mockDialogService.Setup(dialog => dialog.ShowErrorAsync(It.IsAny<string>(), It.IsAny<string>()));
 
         var authService = new Mock<IAuthService>();
-        var invoiceService = new InvoiceService(authService.Object, mockDialogService.Object, httpClient, mockHttpService.Object);
+        var mockPdfExporter = new Mock<PdfExporter>(); // Mock the PdfExporter
+
+        var invoiceService = new InvoiceService(authService.Object, mockDialogService.Object, httpClient, mockHttpService.Object, mockPdfExporter.Object);
 
         // Act: 
         var result = await invoiceService.CreateInvoiceAsync(invoiceRequest);
