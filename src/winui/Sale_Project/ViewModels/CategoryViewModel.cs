@@ -79,7 +79,7 @@ public partial class CategoryViewModel : ObservableRecipient, INavigationAware
     public int RowsPerPage
     {
         get; set;
-    } = 5;
+    } = 10;
 
     /// <summary>
     /// Field by which categorys are sorted.
@@ -131,7 +131,7 @@ public partial class CategoryViewModel : ObservableRecipient, INavigationAware
 
         Categories = new ObservableCollection<Category>(categories);
         TotalItems = categories.ToList().Count;
-        TotalPages = TotalItems / RowsPerPage;
+        TotalPages = (TotalItems + RowsPerPage - 1) / RowsPerPage;
         CurrentPage = 1;
     }
 
@@ -141,15 +141,6 @@ public partial class CategoryViewModel : ObservableRecipient, INavigationAware
     public async Task GoToPage(int page)
     {
         CurrentPage = page;
-        await LoadData();
-    }
-
-    /// <summary>
-    /// Performs a search based on the current filters.
-    /// </summary>
-    public async Task SearchCategory()
-    {
-        CurrentPage = 1;
         await LoadData();
     }
 
@@ -200,52 +191,6 @@ public partial class CategoryViewModel : ObservableRecipient, INavigationAware
             CurrentPage++;
             await LoadData();
         }
-    }
-
-    /// <summary>
-    /// Sorts categorys by ID in ascending order.
-    /// </summary>
-    public async Task SortByIDAsc()
-    {
-        if (SortField == "id" && SortType == SortType.ASC)
-        {
-            SetDefaultValue();
-        }
-        else
-        {
-            SortField = "id";
-            SortType = SortType.ASC;
-            CurrentPage = 1;
-        }
-        await LoadData();
-    }
-
-    /// <summary>
-    /// Sorts categorys by ID in descending order.
-    /// </summary>
-    public async Task SortByIDDesc()
-    {
-        if (SortField == "id" && SortType == SortType.DESC)
-        {
-            SetDefaultValue();
-        }
-        else
-        {
-            SortField = "id";
-            SortType = SortType.DESC;
-            CurrentPage = 1;
-        }
-        await LoadData();
-    }
-
-    /// <summary>
-    /// Resets sorting to default values.
-    /// </summary>
-    public void SetDefaultValue()
-    {
-        CurrentPage = 1;
-        SortType = SortType.ASC;
-        SortField = "id";
     }
 
     /// <summary>
