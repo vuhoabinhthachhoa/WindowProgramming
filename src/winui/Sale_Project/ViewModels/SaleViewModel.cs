@@ -40,7 +40,7 @@ public partial class SaleViewModel : ObservableRecipient
         }
     }
 
-    private List<Product> products = new List<Product>();
+    private List<Product> products = new ();
     public List<Product> Products
     {
         get => products;
