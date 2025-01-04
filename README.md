@@ -4,7 +4,7 @@
 
 # Course Project Report - MILESTONE 02
 
-**Notion link for this report:** [CSC 13001 - Window Programming](https://quiver-frog-6c1.notion.site/CSC-13001-Window-Programming-15930d59e49880edb409cfa12e10ac0d?pvs=74)
+**Notion link for this report:**  [Notion – The all-in-one workspace for your notes, tasks, wikis, and databases.](https://www.notion.so/CSC-13001-Window-Programming-17030d59e498807baeefd425c3bbce5a?pvs=21)
 
 ## Team Members
 
@@ -18,27 +18,21 @@
 
 ### Summary
 
-- **Backend**:
-    - Complete all features and deploy on [Railway.com](http://railway.com/)
-- **Frontend**:
-    - Migrate **Employee**, **Product**, **Account**, and **Sale** features from mock data to real data on the server.
-        - **Employee**:  Add, edit, search, and display employees with pagination
-        - **Product:** Add, edit, search, and display products with pagination. Additionally, display product images in high quality and allow users to upload images from their devices.
-        - **Account:** display, update account infomation, change password
-        - **Sale:** Search product and add it to the order, apply discount and calculate the amount.
-    - Improve the UI for better aesthetics.
-    - Correct shortcomings in the design pattern structure:
-        - Remove hard-coded values.
-        - Apply advanced design patterns.
+- Implement generate invoices to pdf and csv files feature
+- Implement hook to intercept keyboard and mouse click event:
+    - In EmployeeUpdatePage, if user press Ctrl + S, the employee will be updated
+    - If user right click, logout dialog will be shown
+- Integrated the brand and category management within the Product page for streamlined operations.
+- Report page
+    - Display the top 10 products with the highest revenue and daily revenue reporting within a specified time range.
+    - Utilized OxyPlot for graphical representation of revenue data.
+- Dashboard page
+    - Display the top employees based on the highest revenue within a specified time range, with the ability to adjust the time range settings as needed.
+    - Show the total revenue for the current month.
+    - Automatically send notifications when stock levels are running low (<5 units).
 
-### Details
+### Details.
 
-- **UI/UX**
-    - Add icons to buttons.
-    - Change the colors of the background, header, and buttons to enhance visual appeal.
-    - Add padding and margin to input fields for a cleaner layout.
-    - Validates user input for missing data and incorrect formats.
-    - Use **DialogService** to display notifications.
 - **Design Pattern and Structure**
     - **Structure**
         1. **Contracts**: Contains interfaces that define the contracts for services.
@@ -237,9 +231,112 @@
             }
             ```
             
+        - **DateTimeConverter:** is a custom `JsonConverter` for handling `DateTimeOffset` objects during JSON serialization and deserialization. This custom converter ensures that `DateTimeOffset` objects are serialized and deserialized in a specific format (with just the date, excluding time) during JSON operations.
+            
+            ```csharp
+            public class DateTimeConverter : JsonConverter<DateTimeOffset>
+            {
+            /// <summary>
+            /// Reads and converts the JSON to <see cref="DateTimeOffset"/>.
+            /// </summary>
+            /// <param name="reader">The <see cref="Utf8JsonReader"/> to read from.</param>
+            /// <param name="typeToConvert">The type to convert.</param>
+            /// <param name="options">Options to control the conversion behavior.</param>
+            /// <returns>The converted <see cref="DateTimeOffset"/>.</returns>
+            public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+            return DateTimeOffset.Parse(reader.GetString());
+            }
+            
+            /// <summary>
+            /// Writes a <see cref="DateTimeOffset"/> as a JSON string.
+            /// </summary>
+            /// <param name="writer">The <see cref="Utf8JsonWriter"/> to write to.</param>
+            /// <param name="value">The value to convert.</param>
+            /// <param name="options">Options to control the conversion behavior.</param>
+            public override void Write(Utf8JsonWriter writer, DateTimeOffset value, JsonSerializerOptions options)
+            {
+                writer.WriteStringValue(value.ToString("yyyy-MM-dd"));
+            }
+            public class DateTimeConverter : JsonConverter<DateTimeOffset>
+            {
+                public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+                {
+                    return DateTimeOffset.Parse(reader.GetString());
+                }
+            
+                public override void Write(Utf8JsonWriter writer, DateTimeOffset value, JsonSerializerOptions options)
+                {
+                    writer.WriteStringValue(value.ToString("yyyy-MM-dd"));
+                }
+            }
+            ```
+            
+        - **DateOnlyToDateTimeOffsetConverter:** implements the `IValueConverter` interface and provides conversion logic for transforming between `DateOnly` and `DateTimeOffset` types. This converter is useful when working with `DateOnly` and `DateTimeOffset` types in UI-bound data scenarios, ensuring proper conversion between these types during data binding operations.
+            
+            ```jsx
+            public class DateOnlyToDateTimeOffsetConverter : IValueConverter
+            {
+                
+                public object Convert(object value, Type targetType, object parameter, string language)
+                {
+                    if (value is DateOnly date)
+                    {
+                        // Convert DateOnly to DateTimeOffset by creating a DateTime with the minimum time.
+                        return new DateTimeOffset(date.ToDateTime(TimeOnly.MinValue));
+                    }
+                    return value; // Returns the original value if it is not a DateOnly.
+                }
+            
+               
+                public object ConvertBack(object value, Type targetType, object parameter, string language)
+                {
+                    if (value is DateTimeOffset dateTimeOffset)
+                    {
+                        // Convert DateTimeOffset back to DateOnly by extracting the Date part of the DateTime.
+                        return DateOnly.FromDateTime(dateTimeOffset.DateTime);
+                    }
+                    return value; // Returns the original value if it is not a DateTimeOffset.
+                }
+            }
+            ```
+            
+    6. **File exporters**
+        - **PdfExporter**
+            
+            The **PdfExporter** class is responsible for exporting invoice data to a PDF file. It uses the **Syncfusion PDF library** to create and format the PDF document.
+            
+            **ExportInvoiceToPdf(Invoice invoice, string filePath)**: This method takes an Invoice object and a file path as parameters. It creates a PDF document with the invoice details, including the invoice ID, employee name, created date, total amount, real amount, and a table of invoice details.
+            
+        - **CsvExporter**
+            
+            The **CsvExporter** class is responsible for exporting a list of invoices to a CSV file. It uses the **EPPlus library** to create and format the CSV file.
+            
+            **ExportInvoicesToCsv(List<Invoice> invoices, string filePath):** This method takes a list of Invoice objects and a file path as parameters. It creates a CSV file with the invoice details, including the invoice ID, employee name, created date, total amount, and real amount.
+            
+    7. **Hook**
+        - **GlobalKeyBoardHook**
+            - **Purpose**: Captures global keyboard events, including key presses and modifier states (e.g., Ctrl key).
+            - **Key Features**:
+                - Utilizes the `SetWindowsHookEx` function with `WH_KEYBOARD_LL` to install a low-level keyboard hook.
+                - Handles the `WM_KEYDOWN` message to detect key press events.
+                - Determines if the Ctrl key is pressed using `GetKeyState(VK_CONTROL)`.
+                - Exposes an event, `KeyPressed`, which provides the key code and Ctrl state to subscribers.
+            - **Use Case**: Intercept "Ctrl+S" for automatically updade employee.
+        - **GlobalMouseHook**
+            - **Purpose**: Captures global mouse events, specifically left and right mouse button clicks.
+            - **Key Features**:
+                - Utilizes the `SetWindowsHookEx` function with `WH_MOUSE_LL` to install a low-level mouse hook.
+                - Handles the `WM_LBUTTONDOWN` and `WM_RBUTTONDOWN` messages to detect left and right mouse clicks.
+                - Exposes an event, `MouseClickDetected`, which notifies subscribers of the type of mouse click ("Left" or "Right").
+            - **Use Case**: Intercept right mouse clicks to show logout dialog
+    8. **Advanced Charting with OxyPlot**
+        
+        Developed dynamic bar charts using `BarSeries` in OxyPlot to visualize top product revenues and daily revenue trends, with data sourced in real-time from our REST API.
+        
 - **Quality Assurance**
     - Created unit tests to test features before merging into main source code.
-    - Evidence screenshots: [https://drive.google.com/drive/folders/172W6vXROOqYkkvB5pYm5p7guMshf04Di?usp=sharing](https://drive.google.com/drive/folders/172W6vXROOqYkkvB5pYm5p7guMshf04Di?usp=sharing)
+    - Evidence screenshots: [https://drive.google.com/drive/folders/1aK_0RVFv45kY1vKge6uFNpECG_CVpPuW?usp=sharing](https://drive.google.com/drive/folders/1aK_0RVFv45kY1vKge6uFNpECG_CVpPuW?usp=sharing)
 
 ## Team work
 
@@ -248,7 +345,7 @@
 2. **Work Process**
     - Team meets regularly at 9 PM every Monday for progress reports and task distribution.
     - Project documentation such as Database schema, features, workflow, and resources are posted on the team's dedicated Notion link.
-        - Notion link: [Notion – The all-in-one workspace for your notes, tasks, wikis, and databases.](https://quiver-frog-6c1.notion.site/Project-Docs-11530d59e49880a6a8ffda0d8df2c4ff?pvs=74)
+        - Notion link: [Notion – The all-in-one workspace for your notes, tasks, wikis, and databases.](https://www.notion.so/Project-Docs-11530d59e49880a6a8ffda0d8df2c4ff?pvs=21)
     - Meeting minutes: [Google Docs](https://docs.google.com/document/d/1PCO1waWsLK8V03GiTuQv9KtMi7uyXxYTcoN9CwUKMBE/edit?usp=sharing)
 3. **Working with Git**
     - Team members commit code to a shared repository.
@@ -257,7 +354,6 @@
 ## **Sources**
 
 - Repository link: [vuhoabinhthachhoa/WindowProgramming](https://github.com/vuhoabinhthachhoa/WindowProgramming)
-- Video: [(16) WP Project - Milestone 1 - Demo - YouTube](https://www.youtube.com/watch?v=RH5zzlCKwNA&feature=youtu.be)
 
 ## Self-Assessment
 
