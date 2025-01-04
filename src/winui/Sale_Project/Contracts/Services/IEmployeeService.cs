@@ -28,4 +28,6 @@ public interface IEmployeeService
 
     Task<Employee> GetEmployeeById(long employeeId);
 
+    // Get the total number of invoices for each employee within a given date range
+    Task<List<EmployeeTotalInvoices>> GetEmployeeByTotalInvoice(string startDate, string endDate);
 }

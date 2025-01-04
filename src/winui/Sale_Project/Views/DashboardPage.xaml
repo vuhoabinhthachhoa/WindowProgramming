@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:Sale_Project.Core.Models"
+    xmlns:models="using:Sale_Project.Core.Models.Employees"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -12,7 +12,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/DensityStyles/Compact.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <DataTemplate x:Key="ContactListViewTemplate" x:DataType="models:TopSale">
+            <DataTemplate x:Key="ContactListViewTemplate" x:DataType="models:Employee">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -23,24 +23,24 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Ellipse x:Name="Ellipse"
-                             Grid.RowSpan="2"
-                             Width="32"
-                             Height="32"
-                             Margin="6"
-                             VerticalAlignment="Center"
-                             HorizontalAlignment="Center"
-                             Fill="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
+                 Grid.RowSpan="2"
+                 Width="32"
+                 Height="32"
+                 Margin="6"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center"
+                 Fill="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
                     <TextBlock Grid.Column="1"
-                               Text="{x:Bind Name}" 
-                               x:Phase="1"
-                               Style="{ThemeResource BaseTextBlockStyle}"
-                               Margin="12,6,0,0"/>
-                    <TextBlock Grid.Column="1"
-                               Grid.Row="1"
-                               Text="{x:Bind Address}" 
-                               x:Phase="2"
-                               Style="{ThemeResource BodyTextBlockStyle}"
-                               Margin="12,0,0,6"/>
+                   Text="{x:Bind Name}" 
+                   x:Phase="1"
+                   Style="{ThemeResource BaseTextBlockStyle}"
+                   Margin="12,6,0,0"/>
+                    <TextBlock Grid.Row="2"
+                   Grid.Column="2"
+                   Text="{x:Bind Address}" 
+                   x:Phase="2"
+                   Style="{ThemeResource BodyTextBlockStyle}"
+                   Margin="12,0,0,6"/>
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
@@ -71,27 +71,35 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Kết quả bán hàng hôm nay" FontSize="18" FontWeight="Bold" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" Margin="0 0 20 0" MaxWidth="150">
-                    <TextBlock Text="0 Hóa đơn" Foreground="Black" FontSize="16" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Monthly Revenue" FontSize="18" FontWeight="Bold" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" Margin="40 0 20 0" MaxWidth="150">
                     <Grid Width="40" Height="40">
                         <Ellipse Fill="Blue" />
                         <TextBlock Text="$" Foreground="White" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
-                    <TextBlock Text="0 Doanh thu" Foreground="Gray" FontSize="10" HorizontalAlignment="Center" TextWrapping="Wrap"/>
-                </StackPanel>
-                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" MaxWidth="150">
-                    <TextBlock Text="0 phiếu" Foreground="Black" FontSize="16" HorizontalAlignment="Center" TextWrapping="Wrap"/>
-                    <Grid Width="40" Height="40">
-                        <Ellipse Fill="Orange" />
-                        <TextBlock Text="↩" Foreground="White" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Grid>
-                    <TextBlock Text="0 Trả hàng" Foreground="Gray" FontSize="10" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="Revenue" Text="0" Foreground="Gray" FontSize="16" HorizontalAlignment="Center" TextWrapping="Wrap"/>
                 </StackPanel>
             </Grid>
-            <Border Grid.Row="1" Grid.Column="0">
-                <DatePicker FontWeight="SemiBold" Header="Select a month" DayVisible="False"/>
-            </Border>
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                <Grid>
+                    <Popup x:Name="CalendarPopup" IsLightDismissEnabled="True" HorizontalOffset="50" VerticalOffset="50">
+                        <Border Background="White" BorderBrush="Gray" BorderThickness="1" Padding="10">
+                            <CalendarView 
+                    x:Name="DateRangePicker" 
+                    SelectionMode="Multiple"
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Top" />
+                        </Border>
+                    </Popup>
+                    <Button Content="Change date range" Click="OpenCalendarPopup" />
+                </Grid>
+                <Button Content="Select" Click="OnSelectButtonClick" Margin="10,0,0,0" />
+            </StackPanel>
+            <Popup Grid.Row="1" Grid.Column="0" Margin="80 0 0 60" x:Name="ErrorPopup" IsLightDismissEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border Background="White" BorderBrush="Gray" BorderThickness="1" Padding="20" CornerRadius="30">
+                    <TextBlock x:Name="ErrorTextBlock" Foreground="Red" />
+                </Border>
+            </Popup>
             <Border Grid.Row="2" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="30" Margin="0 0 20 50">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
@@ -115,7 +123,7 @@
                         <ListView Margin="35 25" 
                           SelectionMode="None"
                           ItemTemplate="{StaticResource ContactListViewTemplate}"
-                          ItemsSource="{x:Bind ViewModel.Contacts, Mode=OneWay}"/>
+                          ItemsSource="{x:Bind ViewModel.SortedEmployees, Mode=OneWay}"/>
                     </ScrollViewer>
                 </Grid>
             </Border>
@@ -127,36 +135,12 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Thông báo" FontSize="24" FontWeight="SemiBold" Margin="30 20 10 10"/>
-                <ScrollViewer Grid.Row="1" Grid.RowSpan="4">
-                    <StackPanel Padding="10">
+                <TextBlock Text="Notification" FontSize="24" FontWeight="SemiBold" Margin="30 20 10 10"/>
+                <ScrollViewer x:Name="Notification" Grid.Row="1" Grid.RowSpan="4">
+                    <StackPanel x:Name="NotificationStackPanel" Padding="10">
                         <ItemsControl>
                             <ItemsControl.Items>
-                                <InfoBar Margin="5" CornerRadius="30"
-                    IsOpen="True"
-                    Severity="Success"
-                    Title="Title 1"
-                    Message="Essential app message for your users to be informed of, acknowledge, or take action on." />
-                                <InfoBar Margin="5" CornerRadius="30"
-                    IsOpen="True"
-                    Severity="Success"
-                    Title="Title 2"
-                    Message="Another important message for users." />
-                                <InfoBar Margin="5" CornerRadius="30"
-                    IsOpen="True"
-                    Severity="Success"
-                    Title="Title 3"
-                    Message="Ensure users are informed of this message." />
-                                <InfoBar Margin="5" CornerRadius="30"
-                    IsOpen="True"
-                    Severity="Success"
-                    Title="Title 4"
-                    Message="Additional information for users." />
-                                <InfoBar Margin="5" CornerRadius="30"
-                    IsOpen="True"
-                    Severity="Success"
-                    Title="Title 5"
-                    Message="Take action if necessary based on this message." />
+                                <!-- InfoBar items -->
                             </ItemsControl.Items>
                         </ItemsControl>
                     </StackPanel>

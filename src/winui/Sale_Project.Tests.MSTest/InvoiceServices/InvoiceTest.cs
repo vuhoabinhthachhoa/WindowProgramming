@@ -57,7 +57,7 @@ public class InvoiceServiceTests
         mockDialogService.Setup(dialog => dialog.ShowErrorAsync(It.IsAny<string>(), It.IsAny<string>()));
 
         var authService = new AuthService(httpClient, mockHttpService.Object, mockDialogService.Object);
-        var invoiceService = new InvoiceService(authService, mockDialogService.Object, httpClient, mockHttpService.Object);
+        var invoiceService = new InvoiceService(authService, mockDialogService.Object, httpClient, mockHttpService.Object, new PdfExporter(mockDialogService.Object));
 
         // Act: 
         var result = await invoiceService.CreateInvoiceAsync(invoiceRequest);
@@ -100,7 +100,7 @@ public class InvoiceServiceTests
         mockDialogService.Setup(dialog => dialog.ShowErrorAsync(It.IsAny<string>(), It.IsAny<string>()));
 
         var authService = new Mock<IAuthService>();
-        var invoiceService = new InvoiceService(authService.Object, mockDialogService.Object, httpClient, mockHttpService.Object);
+        var invoiceService = new InvoiceService(authService.Object, mockDialogService.Object, httpClient, mockHttpService.Object, new PdfExporter(mockDialogService.Object));
 
         // Act: 
         var result = await invoiceService.CreateInvoiceAsync(invoiceRequest);
@@ -139,12 +139,118 @@ public class InvoiceServiceTests
         mockDialogService.Setup(dialog => dialog.ShowErrorAsync(It.IsAny<string>(), It.IsAny<string>()));
 
         var authService = new Mock<IAuthService>();
-        var invoiceService = new InvoiceService(authService.Object, mockDialogService.Object, httpClient, mockHttpService.Object);
+        var invoiceService = new InvoiceService(authService.Object, mockDialogService.Object, httpClient, mockHttpService.Object, new PdfExporter(mockDialogService.Object));
 
         // Act: 
         var result = await invoiceService.CreateInvoiceAsync(invoiceRequest);
 
         // Assert: 
+        Assert.IsNull(result);
+    }
+
+    [TestMethod]
+    public async Task GetInvoiceAggregationAsync_ShouldReturnInvoiceAggregation_WhenResponseIsSuccessful()
+    {
+        // Arrange
+        var startDate = "2024-01-01";
+        var endDate = "2024-12-31";
+
+        var mockResponse = new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent("{\"data\": {\"startDate\": \"2024-01-01T00:00:00\", \"endDate\": \"2024-12-31T00:00:00\", \"totalAmount\": 1000, \"totalRealAmount\": 900, \"totalDiscountAmount\": 100}}")
+        };
+
+        var handlerMock = new Mock<HttpMessageHandler>();
+        handlerMock.Protected()
+            .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+            .ReturnsAsync(mockResponse);
+
+        var httpClient = new HttpClient(handlerMock.Object);
+
+        var mockHttpService = new Mock<IHttpService>();
+        mockHttpService.Setup(service => service.AddTokenToHeader(It.IsAny<string>(), httpClient));
+
+        var mockDialogService = new Mock<IDialogService>();
+        mockDialogService.Setup(dialog => dialog.ShowErrorAsync(It.IsAny<string>(), It.IsAny<string>()));
+
+        var authService = new Mock<IAuthService>();
+        authService.Setup(service => service.GetAccessToken()).Returns("fake-token");
+
+        var invoiceService = new InvoiceService(authService.Object, mockDialogService.Object, httpClient, mockHttpService.Object, new PdfExporter(mockDialogService.Object));
+
+        // Act
+        var result = await invoiceService.GetInvoiceAggregationAsync(startDate, endDate);
+
+        // Assert
+        Assert.IsNull(result);
+    }
+
+    [TestMethod]
+    public async Task GetInvoiceAggregationAsync_ShouldReturnNull_WhenApiResponseIsNotSuccessful()
+    {
+        // Arrange
+        var startDate = "2024-01-01";
+        var endDate = "2024-12-31";
+
+        var mockResponse = new HttpResponseMessage(HttpStatusCode.BadRequest)
+        {
+            Content = new StringContent("Error fetching invoice aggregation")
+        };
+
+        var handlerMock = new Mock<HttpMessageHandler>();
+        handlerMock.Protected()
+            .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+            .ReturnsAsync(mockResponse);
+
+        var httpClient = new HttpClient(handlerMock.Object);
+
+        var mockHttpService = new Mock<IHttpService>();
+        mockHttpService.Setup(service => service.AddTokenToHeader(It.IsAny<string>(), httpClient));
+
+        var mockDialogService = new Mock<IDialogService>();
+        mockDialogService.Setup(dialog => dialog.ShowErrorAsync(It.IsAny<string>(), It.IsAny<string>()));
+
+        var authService = new Mock<IAuthService>();
+        authService.Setup(service => service.GetAccessToken()).Returns("fake-token");
+
+        var invoiceService = new InvoiceService(authService.Object, mockDialogService.Object, httpClient, mockHttpService.Object, new PdfExporter(mockDialogService.Object));
+
+        // Act
+        var result = await invoiceService.GetInvoiceAggregationAsync(startDate, endDate);
+
+        // Assert
+        Assert.IsNull(result);
+    }
+
+    [TestMethod]
+    public async Task GetInvoiceAggregationAsync_ShouldHandleException_WhenHttpRequestFails()
+    {
+        // Arrange
+        var startDate = "2024-01-01";
+        var endDate = "2024-12-31";
+
+        var handlerMock = new Mock<HttpMessageHandler>();
+        handlerMock.Protected()
+            .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+            .ThrowsAsync(new HttpRequestException("Request failed"));
+
+        var httpClient = new HttpClient(handlerMock.Object);
+
+        var mockHttpService = new Mock<IHttpService>();
+        mockHttpService.Setup(service => service.AddTokenToHeader(It.IsAny<string>(), httpClient));
+
+        var mockDialogService = new Mock<IDialogService>();
+        mockDialogService.Setup(dialog => dialog.ShowErrorAsync(It.IsAny<string>(), It.IsAny<string>()));
+
+        var authService = new Mock<IAuthService>();
+        authService.Setup(service => service.GetAccessToken()).Returns("fake-token");
+
+        var invoiceService = new InvoiceService(authService.Object, mockDialogService.Object, httpClient, mockHttpService.Object, new PdfExporter(mockDialogService.Object));
+
+        // Act
+        var result = await invoiceService.GetInvoiceAggregationAsync(startDate, endDate);
+
+        // Assert
         Assert.IsNull(result);
     }
 }

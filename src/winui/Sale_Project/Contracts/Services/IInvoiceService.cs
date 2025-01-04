@@ -10,7 +10,11 @@ namespace Sale_Project.Contracts.Services;
 
 public interface IInvoiceService
 {
+    //Add a new invoice to the system
     Task<Invoice> CreateInvoiceAsync(InvoiceCreationRequest invoiceCreationRequest);
+
+    //Get an invoice by its ID
+    Task<InvoiceAggregation> GetInvoiceAggregationAsync(string startDate, string endDate);
     Task<IEnumerable<Invoice>> GetAllInvoices(DateOnly startDate, DateOnly endDate);
     Task GenerateInvoicesCsv(DateOnly startDate, DateOnly endDate);
 }

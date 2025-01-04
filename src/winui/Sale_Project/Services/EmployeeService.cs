@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sale_Project.Core.Models;
 using Sale_Project.Core.Models.Employees;
+using Sale_Project.Core.Models.Invoices;
 using Sale_Project.Helpers;
 
 /// <summary>
@@ -280,6 +281,70 @@ public class EmployeeService : IEmployeeService
         catch (HttpRequestException ex)
         {
             await _dialogService.ShowErrorAsync("Error", "An error occurred while connecting to the server. Please check your internet connection and try again.");
+            return null;
+        }
+        catch (Exception ex)
+        {
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Retrieves the total invoices for employees within a specified date range by sending a request to the server.
+    /// </summary>
+    /// <param name="startDate">
+    /// The start date of the date range in "yyyy-MM-dd" format.
+    /// </param>
+    /// <param name="endDate">
+    /// The end date of the date range in "yyyy-MM-dd" format.
+    /// </param>
+    /// <returns>
+    /// A <see cref="Task{List{EmployeeTotalInvoices}}"/> representing the asynchronous operation.
+    /// Returns a list of <see cref="EmployeeTotalInvoices"/> objects containing the total invoices data for employees if successful; otherwise, <c>null</c>.
+    /// </returns>
+    /// <remarks>
+    /// This method performs the following operations:
+    /// <list type="number">
+    /// <item>Retrieves the access token from the authentication service.</item>
+    /// <item>Appends the access token to the request header.</item>
+    /// <item>Constructs the API request URL using the provided date range parameters.</item>
+    /// <item>Sends the GET request to the server to fetch employee total invoices data.</item>
+    /// <item>Handles the server's response, including error responses.</item>
+    /// <item>Deserializes the response data into a list of <see cref="EmployeeTotalInvoices"/> objects.</item>
+    /// </list>
+    /// </remarks>
+    /// <exception cref="HttpRequestException">
+    /// Thrown if there are issues with the HTTP request, such as network problems.
+    /// </exception>
+    /// <exception cref="Exception">
+    /// Thrown for general errors, including server-side issues or unexpected conditions.
+    /// </exception>
+    public async Task<List<EmployeeTotalInvoices>> GetEmployeeByTotalInvoice(string startDate, string endDate)
+    {
+        try
+        {
+            var token = _authService.GetAccessToken();
+            _httpService.AddTokenToHeader(token, _httpClient);
+
+            var requestUrl = $"{_httpClient.BaseAddress}/total-invoices?startDate={startDate}&endDate={endDate}";
+
+            var apiResponse = await _httpClient.GetAsync(requestUrl);
+
+            if (!apiResponse.IsSuccessStatusCode)
+            {
+                await _httpService.HandleErrorResponse(apiResponse);
+                return null;
+            }
+
+            var responseContent = await apiResponse.Content.ReadAsStringAsync();
+            var responseData = JsonSerializer.Deserialize<ApiResponse<List<EmployeeTotalInvoices>>>(responseContent);
+
+            return responseData?.Data;
+        }
+        catch (HttpRequestException ex)
+        {
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
         catch (Exception ex)

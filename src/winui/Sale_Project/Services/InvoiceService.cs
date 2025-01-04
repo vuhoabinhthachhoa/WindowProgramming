@@ -167,4 +167,68 @@ public class InvoiceService : IInvoiceService
             return null;
         }
     }
+
+    /// <summary>
+    /// Retrieves the invoice aggregation data for a specified date range by sending a request to the server.
+    /// </summary>
+    /// <param name="startDate">
+    /// The start date of the date range in "yyyy-MM-dd" format.
+    /// </param>
+    /// <param name="endDate">
+    /// The end date of the date range in "yyyy-MM-dd" format.
+    /// </param>
+    /// <returns>
+    /// A <see cref="Task{InvoiceAggregation}"/> representing the asynchronous operation.
+    /// Returns the <see cref="InvoiceAggregation"/> object containing aggregated data if successful; otherwise, <c>null</c>.
+    /// </returns>
+    /// <remarks>
+    /// This method performs the following operations:
+    /// <list type="number">
+    /// <item>Retrieves the access token from the authentication service.</item>
+    /// <item>Appends the access token to the request header.</item>
+    /// <item>Constructs the API request URL using the provided date range parameters.</item>
+    /// <item>Sends the GET request to the server to fetch invoice aggregation data.</item>
+    /// <item>Handles the server's response, including error responses.</item>
+    /// <item>Deserializes the response data into an <see cref="InvoiceAggregation"/> object.</item>
+    /// </list>
+    /// </remarks>
+    /// <exception cref="HttpRequestException">
+    /// Thrown if there are issues with the HTTP request, such as network problems.
+    /// </exception>
+    /// <exception cref="Exception">
+    /// Thrown for general errors, including server-side issues or unexpected conditions.
+    /// </exception>
+    public async Task<InvoiceAggregation> GetInvoiceAggregationAsync(string startDate, string endDate)
+    {
+        try
+        {
+            var token = _authService.GetAccessToken();
+            _httpService.AddTokenToHeader(token, _httpClient);
+
+            var requestUrl = $"{_httpClient.BaseAddress}/aggregation?startDate={startDate}&endDate={endDate}";
+
+            var apiResponse = await _httpClient.GetAsync(requestUrl);
+
+            if (!apiResponse.IsSuccessStatusCode)
+            {
+                await _httpService.HandleErrorResponse(apiResponse);
+                return null;
+            }
+
+            var responseContent = await apiResponse.Content.ReadAsStringAsync();
+            var responseData = JsonSerializer.Deserialize<ApiResponse<InvoiceAggregation>>(responseContent);
+
+            return responseData?.Data;
+        }
+        catch (HttpRequestException ex)
+        {
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            return null;
+        }
+        catch (Exception ex)
+        {
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            return null;
+        }
+    }
 }
