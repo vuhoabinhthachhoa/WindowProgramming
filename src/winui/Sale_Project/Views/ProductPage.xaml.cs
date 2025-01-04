@@ -76,4 +76,16 @@ public sealed partial class ProductPage : Page
     {
         await ViewModel.SortByIDDesc();
     }
+
+    private void ChangePage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (ChangePage.SelectedIndex == 1)
+        {
+            ViewModel.GoToCategoryPage();
+        }
+        else if (ChangePage.SelectedIndex == 2)
+        {
+            ViewModel.GoToBrandPage();
+        }
+    }
 }

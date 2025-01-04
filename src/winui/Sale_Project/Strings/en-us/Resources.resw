@@ -191,4 +191,53 @@
     <value>EmployeeAdd</value>
     <comment>Page title for EmployeeAddPage</comment>
   </data>
+  <data name="ShellMenuItem_Views_Category.Text" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Category_Title.Text" xml:space="preserve">
+    <value>Category</value>
+    <comment>Page title for CategoryPage</comment>
+  </data>
+  <data name="ShellMenuItem_Views_CategoryAdd.Text" xml:space="preserve">
+    <value>CategoryAdd</value>
+  </data>
+  <data name="CategoryAdd_Title.Text" xml:space="preserve">
+    <value>CategoryAdd</value>
+    <comment>Page title for CategoryAddPage</comment>
+  </data>
+  <data name="ShellMenuItem_Views_CategoryUpdate.Text" xml:space="preserve">
+    <value>CategoryUpdate</value>
+  </data>
+  <data name="CategoryUpdate_Title.Text" xml:space="preserve">
+    <value>CategoryUpdate</value>
+    <comment>Page title for CategoryUpdatePage</comment>
+  </data>
+  <data name="ShellMenuItem_Views_Brand.Text" xml:space="preserve">
+    <value>Brand</value>
+  </data>
+  <data name="Brand_Title.Text" xml:space="preserve">
+    <value>Brand</value>
+    <comment>Page title for BrandPage</comment>
+  </data>
+  <data name="ShellMenuItem_Views_BrandAdd.Text" xml:space="preserve">
+    <value>BrandAdd</value>
+  </data>
+  <data name="BrandAdd_Title.Text" xml:space="preserve">
+    <value>BrandAdd</value>
+    <comment>Page title for BrandAddPage</comment>
+  </data>
+  <data name="ShellMenuItem_Views_BrandUpdate.Text" xml:space="preserve">
+    <value>BrandUpdate</value>
+  </data>
+  <data name="BrandUpdate_Title.Text" xml:space="preserve">
+    <value>BrandUpdate</value>
+    <comment>Page title for BrandUpdatePage</comment>
+  </data>
+  <data name="ShellMenuItem_Views_Report.Text" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="Report_Title.Text" xml:space="preserve">
+    <value>Report</value>
+    <comment>Page title for ReportPage</comment>
+  </data>
 </root>

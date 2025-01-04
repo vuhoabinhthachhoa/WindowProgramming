@@ -112,7 +112,7 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
 
     /// <summary>
     /// Sort direction for products (ascending or descending).
-    /// </summary>
+    /// </summary
     public SortType SortType { get; set; } = SortType.ASC;
 
     /// <summary>
@@ -192,6 +192,16 @@ public partial class ProductViewModel : ObservableRecipient, INavigationAware
     public void AddProduct()
     {
         _navigationService.NavigateTo(typeof(ProductAddViewModel).FullName!);
+    }
+
+    public void GoToCategoryPage()
+    {
+        _navigationService.NavigateTo(typeof(CategoryViewModel).FullName!);
+    }
+
+    public void GoToBrandPage()
+    {
+        _navigationService.NavigateTo(typeof(BrandViewModel).FullName!);
     }
 
     /// <summary>

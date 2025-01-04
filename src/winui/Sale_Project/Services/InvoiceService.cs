@@ -14,6 +14,10 @@ using Sale_Project.Core.Models.Products;
 using Sale_Project.Helpers;
 
 namespace Sale_Project.Services;
+
+/// <summary>
+/// Provides services related to managing invoices, including creation, PDF export, and CSV export.
+/// </summary>
 public class InvoiceService : IInvoiceService
 {
     private readonly IDialogService _dialogService;
@@ -22,9 +26,11 @@ public class InvoiceService : IInvoiceService
     private readonly IAuthService _authService;
     private readonly PdfExporter _pdfExporter;
 
+    /// <summary>
+    /// Constructs the InvoiceService with necessary services and initializers.
+    /// </summary>
     public InvoiceService(IAuthService authService, IDialogService dialogService, HttpClient httpClient, IHttpService httpService, PdfExporter pdfExporter)
     {
-        _httpClient = httpClient;
         _httpClient = new HttpClient { BaseAddress = new Uri(AppConstants.BaseUrl + "/invoice") };
         _dialogService = dialogService;
         _httpService = httpService;
@@ -33,90 +39,133 @@ public class InvoiceService : IInvoiceService
     }
 
     /// <summary>
-    /// Creates an invoice by sending an invoice creation request to the server.
+    /// Asynchronously creates an invoice by posting it to the server and handles the response.
     /// </summary>
-    /// <param name="invoiceCreationRequest">
-    /// The <see cref="InvoiceCreationRequest"/> object containing details required for creating the invoice.
-    /// </param>
-    /// <returns>
-    /// A <see cref="Task{Invoice}"/> representing the asynchronous operation.
-    /// Returns the created <see cref="Invoice"/> object if successful; otherwise, <c>null</c>.
-    /// </returns>
-    /// <remarks>
-    /// This method performs the following operations:
-    /// <list type="number">
-    /// <item>Assigns the employee ID from local settings to the request object.</item>
-    /// <item>Serializes the request object to JSON and sends it in a POST request.</item>
-    /// <item>Handles the server response, including errors.</item>
-    /// <item>Notifies the user of the operation's success or failure.</item>
-    /// </list>
-    /// </remarks>
-    /// <exception cref="HttpRequestException">
-    /// Thrown if there are issues with the HTTP request.
-    /// </exception>
-    /// <exception cref="Exception">
-    /// Thrown for general errors, including server-side issues.
-    /// </exception>
+    /// <param name="invoiceCreationRequest">Details needed to create the invoice.</param>
+    /// <returns>The created invoice or null if the operation fails.</returns>
     public async Task<Invoice> CreateInvoiceAsync(InvoiceCreationRequest invoiceCreationRequest)
     {
         try
         {
             var localSettings = ApplicationData.Current.LocalSettings;
 
-            // Retrieve and assign employee ID from local settings
+            // Assigns the employee ID from the local settings to the invoice request.
             invoiceCreationRequest.employeeId = Convert.ToInt64(localSettings.Values["EmployeeId"]);
 
-            // Serialize request data to JSON
             var json = JsonSerializer.Serialize(invoiceCreationRequest);
             Debug.WriteLine("Request JSON: " + json);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-            // Add access token to HTTP headers
             var token = _authService.GetAccessToken();
             _httpService.AddTokenToHeader(token, _httpClient);
 
-            // Send POST request
             var apiResponse = await _httpClient.PostAsync(_httpClient.BaseAddress, data);
 
-            // Handle unsuccessful response
             if (!apiResponse.IsSuccessStatusCode)
             {
                 await _httpService.HandleErrorResponse(apiResponse);
                 return null;
             }
 
-            // Deserialize server response
             var responseContent = await apiResponse.Content.ReadAsStringAsync();
             var responseData = JsonSerializer.Deserialize<ApiResponse<Invoice>>(responseContent);
 
-            // Notify success
             await _dialogService.ShowSuccessAsync("Success", "Invoice created successfully!");
             GenerateInvoicePdf(responseData?.Data);
-            return responseData?.Data;
 
+            return responseData?.Data;
         }
         catch (HttpRequestException ex)
         {
-            // Handle HTTP request exceptions
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
         catch (Exception ex)
         {
-            // Handle general exceptions
             await _dialogService.ShowErrorAsync("Error", ex.Message);
             return null;
         }
     }
 
+    /// <summary>
+    /// Exports the provided invoice to a PDF file.
+    /// </summary>
+    /// <param name="invoice">The invoice to export.</param>
     public void GenerateInvoicePdf(Invoice invoice)
     {
         string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Invoice.pdf");
-       
         _pdfExporter.ExportInvoiceToPdf(invoice, filePath);
+        _dialogService.ShowSuccessAsync("Sucess", "Invoice exported to pdf successfully!");
+    }
 
-        // Optionally inform the user that the PDF has been created
-        _dialogService.ShowSuccessAsync("Sucess", "Invoice exported successfully!");
+    /// <summary>
+    /// Asynchronously exports a range of invoices to a CSV file.
+    /// </summary>
+    public async Task GenerateInvoicesCsv(DateOnly startDate, DateOnly endDate)
+    {
+        try
+        {
+            var requestUrl = $"{_httpClient.BaseAddress}/all?startDate={startDate:yyyy-MM-dd}&endDate={endDate:yyyy-MM-dd}";
+            var token = _authService.GetAccessToken();
+            _httpService.AddTokenToHeader(token, _httpClient);
+
+            var apiResponse = await _httpClient.GetAsync(requestUrl);
+            if (!apiResponse.IsSuccessStatusCode)
+            {
+                await _httpService.HandleErrorResponse(apiResponse);
+                return;
+            }
+
+            var responseContent = await apiResponse.Content.ReadAsStringAsync();
+            var responseData = JsonSerializer.Deserialize<ApiResponse<List<Invoice>>>(responseContent);
+
+            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Invoices.csv");
+            CsvExporter.ExportInvoicesToCsv(responseData?.Data, filePath);
+            await _dialogService.ShowSuccessAsync("Success", "Invoices exported to csv successfully!");
+        }
+        catch (HttpRequestException ex)
+        {
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
+        }
+        catch (Exception ex)
+        {
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// Retrieves all invoices within the specified date range.
+    /// </summary>
+    public async Task<IEnumerable<Invoice>> GetAllInvoices(DateOnly startDate, DateOnly endDate)
+    {
+        try
+        {
+            var requestUrl = $"{_httpClient.BaseAddress}/all?startDate={startDate:yyyy-MM-dd}&endDate={endDate:yyyy-MM-dd}";
+            var token = _authService.GetAccessToken();
+            _httpService.AddTokenToHeader(token, _httpClient);
+
+            var apiResponse = await _httpClient.GetAsync(requestUrl);
+            if (!apiResponse.IsSuccessStatusCode)
+            {
+                await _httpService.HandleErrorResponse(apiResponse);
+                return null;
+            }
+
+            var responseContent = await apiResponse.Content.ReadAsStringAsync();
+            var responseData = JsonSerializer.Deserialize<ApiResponse<List<Invoice>>>(responseContent);
+
+            return responseData?.Data;
+        }
+        catch (HttpRequestException ex)
+        {
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            return null;
+        }
+        catch (Exception ex)
+        {
+            await _dialogService.ShowErrorAsync("Error", ex.Message);
+            return null;
+        }
     }
 
     /// <summary>

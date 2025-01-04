@@ -4,22 +4,180 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:local="using:Sale_Project.Helpers"
+    xmlns:oxy="using:OxyPlot"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <!-- Styles for the page -->
+        <Style TargetType="TextBlock" x:Key="HeaderTextStyle">
+            <Setter Property="FontSize" Value="20"/>
+            <!-- Increased font size from 20 to 24 -->
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="5,10,5,0"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="PrimaryButtonStyle">
+            <Setter Property="Background" Value="#4BAC4D"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="5,5,5,0"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <!--<Setter Property="BorderThickness" Value="0"/>-->
+        </Style>
+
+        <Style TargetType="ComboBox" x:Key="DropDownStyle">
+            <Setter Property="Margin" Value="5,5,5,0"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Background" Value="#ECF0F1"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+        </Style>
+
+        <Style TargetType="NumberBox" x:Key="NumberBoxStyle">
+            <Setter Property="Margin" Value="5,5,5,0"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="#F5F5F5"/>
+        </Style>
+
+        <Style TargetType="StackPanel" x:Key="FieldContainerStyle">
+            <Setter Property="Margin" Value="10,10,0,0"/>
+            <Setter Property="Orientation" Value="Vertical"/>
+        </Style>
+
+        <Style TargetType="controls:DataGridCell" x:Key="CenterDataGridCell">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="ContentControl" x:Key="CenterDataGridHeader">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Width" Value="Auto"/>
+        </Style>
+
+        <local:BusinessStatusConverter x:Key="BusinessStatusConverter"/>
+        <local:DoubleToCurrencyConverter x:Key="DoubleToCurrencyConverter"/>
+        <local:DateOnlyToDateTimeOffsetConverter x:Key="DateOnlyConverter"/>
+
+    </Page.Resources>
+    
     <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
             <RowDefinition Height="48" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="30" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
+        <!-- Title of the page -->
         <TextBlock
             Grid.Row="0"
             x:Uid="Report_Title"
-            Style="{StaticResource PageTitleStyle}" />
+            Style="{StaticResource HeaderTextStyle}" />
 
-        <Grid Grid.Row="1">
-            
+        <!-- Buttons -->
+        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
+            <Button Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5"
+            Width="Auto"
+            Click="ApplyTimeRangeButton_Click">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <!-- Add Icon -->
+                    <FontIcon Glyph="&#xE8BC;" FontFamily="Segoe MDL2 Assets" FontSize="16" FontWeight="Bold" Margin="0,0,10,0" />
+                    <!-- Add Text -->
+                    <TextBlock Text="Apply Time range" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button x:Name="InvoiceToCsvButton" Click="InvoiceToCsvButton_Click" Width="Auto"
+            Background="#4BAC4D" FontWeight="SemiBold" Foreground="White" Margin="5">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Export Invoices to CSV" Margin="0,0,8,0" />
+                    <!-- Add Icon -->
+                    <FontIcon Glyph="&#xE7C3;" FontSize="14" FontWeight="Bold"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <!-- Search Fields -->
+            <Grid Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" Margin="0,0,20,0">
+                <StackPanel>
+                    <StackPanel Style="{StaticResource FieldContainerStyle}" Width="300" HorizontalAlignment="Left">
+                        <TextBlock Text="Display" />
+                        <ComboBox SelectedValue="Sales Report"
+                                  SelectionChanged="ChangeChart_SelectionChanged"
+                                  x:Name="ChangeChart_ComboBox"
+                        >
+
+                            <ComboBox.Style>
+                                <Style TargetType="ComboBox">
+                                    <Setter Property="Foreground" Value="Black" />
+                                    <Setter Property="Background" Value="White" />
+                                    <Setter Property="BorderThickness" Value="1" />
+                                    <Setter Property="Padding" Value="10,8" />
+                                    <Setter Property="Margin" Value="0,7,0,0" />
+                                    <Setter Property="CornerRadius" Value="5" />
+                                    <Setter Property="FontSize" Value="14" />
+                                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                </Style>
+                            </ComboBox.Style>
+
+                            <ComboBox.Items>
+                                <x:String>Sales Report</x:String>
+                                <x:String>Product Report</x:String>
+                            </ComboBox.Items>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Style="{StaticResource FieldContainerStyle}" Width="Auto" HorizontalAlignment="Left">
+                        <TextBlock Text="Time Range" />
+                        <StackPanel>
+                            <Viewbox MaxHeight="45" MaxWidth="300" HorizontalAlignment="Left" Stretch="Fill">
+                                <DatePicker Width="Auto" Header="From" SelectedDate="{x:Bind ViewModel.TimeRange.StartDate, Converter={StaticResource DateOnlyConverter}, Mode=TwoWay}" Height="Auto"  Margin="-1,0,0,0"/>
+                            </Viewbox>
+                            <Viewbox MaxHeight="45" MaxWidth="300" HorizontalAlignment="Left" Stretch="Fill">
+                                <DatePicker Width="Auto" Header="To" SelectedDate="{x:Bind ViewModel.TimeRange.EndDate, Converter={StaticResource DateOnlyConverter},Mode=TwoWay}" Height="Auto"  Margin="-1,0,0,0"/>
+                            </Viewbox>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+
+
+
+        <!--Background="#FFF3F3F3"
+                          Foreground="Black"-->
+
+        <Grid Grid.Row="2" Grid.Column="1">
+            <oxy:PlotView x:Name="DailyRevenuePlotModel"
+                      Model="{x:Bind ViewModel.DailyRevenuePlotModel, Mode=OneWay}"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+
+                          Visibility="Visible"
+                     />
+
+            <oxy:PlotView x:Name="PlotView"
+                      Model="{x:Bind ViewModel.PlotModel, Mode=OneWay}"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+
+                          Visibility="Collapsed"
+                     />
         </Grid>
-        
     </Grid>
 </Page>
+
+

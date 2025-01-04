@@ -19,6 +19,8 @@ public partial class EmployeeUpdateViewModel : ObservableObject, INavigationAwar
     private readonly INavigationService _navigationService;
     private readonly IDialogService _dialogService;
     private readonly EmployeeValidator _employeeValidator;
+    private GlobalKeyboardHook _globalKeyboardHook;
+
 
     [ObservableProperty]
     private Employee _currentEmployee;
@@ -45,6 +47,12 @@ public partial class EmployeeUpdateViewModel : ObservableObject, INavigationAwar
     public async void OnNavigatedTo(object parameter)
     {
         CurrentEmployee = await _employeeService.GetEmployeeById((long)parameter);
+        // Initialize the hook
+        _globalKeyboardHook = new GlobalKeyboardHook();
+        _globalKeyboardHook.SetHook();
+
+        // Hook up the event
+        _globalKeyboardHook.KeyPressed += OnGlobalKeyPressed;
     }
 
     /// <summary>
@@ -53,6 +61,22 @@ public partial class EmployeeUpdateViewModel : ObservableObject, INavigationAwar
     public void OnNavigatedFrom()
     {
         CurrentEmployee = null;
+        // Unhook and clean up
+        if (_globalKeyboardHook != null)
+        {
+            _globalKeyboardHook.KeyPressed -= OnGlobalKeyPressed;
+            _globalKeyboardHook.Unhook();
+            _globalKeyboardHook = null;
+        }
+    }
+
+    private async void OnGlobalKeyPressed(object sender, (int KeyCode, bool IsCtrlPressed) keyInfo)
+    {
+        // Detect Ctrl + S (KeyCode: 0x53 for 'S')
+        if (keyInfo.KeyCode == 0x53 && keyInfo.IsCtrlPressed)
+        {
+            await UpdateEmployee();
+        }
     }
 
     /// <summary>

@@ -7,7 +7,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Sale_Project.Core.Models;
+namespace Sale_Project.Core.Models.Categories;
 
 /// <summary>
 /// Represents a category with properties for ID, name, and business status, along with property change notifications.
@@ -25,7 +25,7 @@ public class Category : INotifyPropertyChanged
     /// <param name="propertyName">The name of the property that changed.</param>
     protected void OnPropertyChanged(string propertyName)
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     private string id = "";

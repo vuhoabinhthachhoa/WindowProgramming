@@ -26,6 +26,7 @@ public sealed partial class SalePage : Page
     {
         ViewModel = App.GetService<SaleViewModel>();
         InitializeComponent();
+        DataContext = ViewModel;
     }
 
     private readonly List<(Product product, int quantity)> selectedProducts = new();

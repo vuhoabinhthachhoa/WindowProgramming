@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation.Collections;
 
-namespace Sale_Project;
+namespace Sale_Project.Helpers;
 public sealed class ObservableCollection<T> : System.Collections.ObjectModel.ObservableCollection<T>
     where T : INotifyPropertyChanged
 {
@@ -21,7 +21,7 @@ public sealed class ObservableCollection<T> : System.Collections.ObjectModel.Obs
     {
         foreach (var item in pItems)
         {
-            this.Add(item);
+            Add(item);
         }
     }
 
@@ -45,7 +45,7 @@ public sealed class ObservableCollection<T> : System.Collections.ObjectModel.Obs
 
     private void ItemPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        NotifyCollectionChangedEventArgs args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, sender, sender, IndexOf((T)sender));
+        var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, sender, sender, IndexOf((T)sender));
         OnCollectionChanged(args);
     }
 }

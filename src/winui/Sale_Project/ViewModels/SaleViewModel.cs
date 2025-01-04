@@ -7,6 +7,10 @@ using Sale_Project.Core.Models;
 using Sale_Project.Core.Models.Invoices;
 using Sale_Project.Core.Models.Products;
 using System.Text.Json;
+using Sale_Project.Core.Models.Employees;
+using Sale_Project.Helpers;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 
 namespace Sale_Project.ViewModels;
 
@@ -15,6 +19,8 @@ public partial class SaleViewModel : ObservableRecipient
     public IInvoiceService _invoiceService;
     public IDialogService _dialogService;
     public IProductService _productService;
+
+
 
     private Invoice _invoice = new();
 
@@ -61,6 +67,7 @@ public partial class SaleViewModel : ObservableRecipient
         _invoiceService = invoiceService;
         _dialogService = dialogService;
         _productService = productService;
+
         LoadData();
     }
 
@@ -124,4 +131,16 @@ public partial class SaleViewModel : ObservableRecipient
     {
         Products = await _productService.GetProductByName(" ");
     }
+
+    public void OnNavigatedTo(object parameter)
+    {
+
+    }
+
+    public void OnNavigatedFrom()
+    {
+
+    }
+
+
 }

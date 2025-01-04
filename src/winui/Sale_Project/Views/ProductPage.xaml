@@ -78,10 +78,37 @@
         </Grid.ColumnDefinitions>
 
         <!-- Title of the page -->
-        <TextBlock
+        <!--<TextBlock
             Grid.Row="0"
             x:Uid="Product_Title"
-            Style="{StaticResource HeaderTextStyle}" />
+            Style="{StaticResource HeaderTextStyle}" />-->
+
+        <ComboBox SelectedValue="Products"
+                  SelectionChanged="ChangePage_SelectionChanged"
+                  x:Name="ChangePage">
+            <ComboBox.Style>
+                <Style TargetType="ComboBox">
+                    <Setter Property="Width" Value="Auto"/>
+                    <Setter Property="Foreground" Value="Black" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Padding" Value="10,8" />
+                    <Setter Property="Margin" Value="0,7,0,0" />
+                    <Setter Property="CornerRadius" Value="5" />
+                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="FontSize" Value="20"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+            </ComboBox.Style>
+
+            <ComboBox.Items>
+                <x:String>Products</x:String>
+                <x:String>Categories</x:String>
+                <x:String>Brands</x:String>
+            </ComboBox.Items>
+        </ComboBox>
 
         <!-- Buttons -->
         <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
