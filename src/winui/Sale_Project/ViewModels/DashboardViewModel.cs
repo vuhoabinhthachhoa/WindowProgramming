@@ -102,6 +102,10 @@ public partial class DashboardViewModel : ObservableRecipient
     public async Task GetInvoiceAggregationAsync(string startDate, string endDate)
     {
         Aggregation = await _invoiceService.GetInvoiceAggregationAsync(startDate, endDate);
+        if(Aggregation == null)
+        {
+            return;
+        }
     }
 
     /// <summary>
@@ -125,5 +129,9 @@ public partial class DashboardViewModel : ObservableRecipient
     {
         EmployeeTotalInvoices = await _employeeService.GetEmployeeByTotalInvoice(startDate, endDate);
         SortedEmployees = new ObservableCollection<Employee>(EmployeeTotalInvoices.OrderByDescending(e => e.invoiceCount).Select(e => e.employeeResponse));
+        if (EmployeeTotalInvoices == null)
+        {
+            return;
+        }
     }
 }
