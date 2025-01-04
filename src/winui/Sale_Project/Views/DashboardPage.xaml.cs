@@ -39,7 +39,7 @@ public sealed partial class DashboardPage : Page
     {
         await ViewModel.GetProducts();
         var products = ViewModel.Products;
-        var productsAlmostOutOfStock = products.Where(p => p.InventoryQuantity > 5).ToList();
+        var productsAlmostOutOfStock = products.Where(p => p.InventoryQuantity < 5).ToList();
         NotificationStackPanel.Children.Clear();
 
         foreach (var product in productsAlmostOutOfStock)
