@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Sale_Project.Core.Models.Invoices;
 using Sale_Project.Helpers;
 using Sale_Project.ViewModels;
 using static System.Runtime.InteropServices.JavaScript.JSType;

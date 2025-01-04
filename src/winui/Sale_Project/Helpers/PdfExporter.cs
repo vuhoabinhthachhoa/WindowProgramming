@@ -23,6 +23,11 @@ public class PdfExporter
     {
         _dialogService = dialogService;
     }
+    /// <summary>
+    /// Exports the given invoice to a PDF file at the specified file path.
+    /// </summary>
+    /// <param name="invoice">The invoice to export.</param>
+    /// <param name="filePath">The file path where the PDF will be saved.</param>
     public void ExportInvoiceToPdf(Invoice invoice, string filePath)
     {
         try

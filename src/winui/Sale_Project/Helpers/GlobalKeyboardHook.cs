@@ -4,6 +4,9 @@ using System.Runtime.InteropServices;
 
 namespace Sale_Project.Helpers;
 
+/// <summary>
+/// A class to set a global keyboard hook to capture keyboard events.
+/// </summary>
 public class GlobalKeyboardHook
 {
     private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
@@ -26,13 +29,22 @@ public class GlobalKeyboardHook
     private const int WH_KEYBOARD_LL = 13;
     private const int WM_KEYDOWN = 0x0100;
 
+    /// <summary>
+    /// Event triggered when a key is pressed.
+    /// </summary>
     public event EventHandler<(int KeyCode, bool IsCtrlPressed)> KeyPressed;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GlobalKeyboardHook"/> class.
+    /// </summary>
     public GlobalKeyboardHook()
     {
         _proc = HookCallback;
     }
 
+    /// <summary>
+    /// Sets the keyboard hook.
+    /// </summary>
     public void SetHook()
     {
         using (Process curProcess = Process.GetCurrentProcess())
@@ -42,11 +54,21 @@ public class GlobalKeyboardHook
         }
     }
 
+    /// <summary>
+    /// Unhooks the keyboard hook.
+    /// </summary>
     public void Unhook()
     {
         UnhookWindowsHookEx(_hookID);
     }
 
+    /// <summary>
+    /// The callback method that processes the keyboard events.
+    /// </summary>
+    /// <param name="nCode">The hook code.</param>
+    /// <param name="wParam">The identifier of the keyboard message.</param>
+    /// <param name="lParam">A pointer to a KBDLLHOOKSTRUCT structure.</param>
+    /// <returns>A pointer to the next hook procedure.</returns>
     private IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
     {
         if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)

@@ -10,8 +10,18 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace Sale_Project.Helpers;
+/// <summary>
+/// Provides functionality to export invoices to a CSV file.
+/// </summary>
 public class CsvExporter
 {
+    /// <summary>
+    /// Exports a list of invoices to a CSV file at the specified file path.
+    /// </summary>
+    /// <param name="invoices">The list of invoices to export.</param>
+    /// <param name="filePath">The file path where the CSV file will be saved.</param>
+    /// <exception cref="ArgumentException">Thrown when the invoices list is null or empty.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when an error occurs during the export process.</exception>
     public static void ExportInvoicesToCsv(List<Invoice> invoices, string filePath)
     {
         if (invoices == null || invoices.Count == 0)
